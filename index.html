@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MODULAR TECH</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+header{background:#102a43;color:white;padding:18px 24px;display:flex;justify-content:space-between;align-items:center}
+header b{font-size:22px}.wrap{max-width:1200px;margin:24px auto;padding:0 16px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px}.card,.panel{background:white;border-radius:16px;padding:18px;box-shadow:0 4px 18px #0000000d}
+.card strong{font-size:28px;display:block;margin-top:8px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+button{border:0;border-radius:10px;padding:10px 14px;cursor:pointer;font-weight:bold;background:#1f6feb;color:white}
+button.gray{background:#e8eef5;color:#172033}.danger{background:#d92d20}.star{background:#fff4cc;color:#795900}
+input,select,textarea{width:100%;padding:11px;border:1px solid #d5dde8;border-radius:9px;margin:6px 0 12px;font-size:15px}
+label{font-weight:bold;font-size:13px}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+table{width:100%;border-collapse:collapse}th,td{padding:11px;border-bottom:1px solid #edf0f4;text-align:right}
+.badge{display:inline-block;padding:5px 9px;border-radius:999px;background:#eaf2ff;color:#1556a8;font-size:12px}
+.urgent{border:2px solid #e04b4b;background:#fff7f7}.muted{color:#687386}.hidden{display:none}.actions{display:flex;gap:8px;flex-wrap:wrap}
+</style><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#102a43"></head>
+<body>
+<header><b>MODULAR TECH</b><span id="roleLabel"></span></header>
+<div class="wrap">
+<div class="cards" id="stats"></div>
+<div class="grid">
+<section class="panel" id="formPanel">
+<h2>➕ إضافة طلبية</h2>
+<div class="row"><div><label>رقم الطلبية</label><input id="num"></div><div><label>اسم الزبون</label><input id="customer"></div></div>
+<div class="row"><div><label>رقم الهاتف</label><input id="phone"></div><div><label>موعد التسليم</label><input id="due" type="date"></div></div>
+<label>ملاحظات</label><textarea id="notes"></textarea>
+<label><input id="urgent" type="checkbox" style="width:auto"> ⭐ طلبية مهمة جدًا</label>
+<button onclick="addOrder()">حفظ الطلبية</button>
+</section>
+<section class="panel">
+<h2>🔎 البحث</h2><input id="search" oninput="render()" placeholder="رقم الطلبية / اسم الزبون / الهاتف">
+<p class="muted">المسار: في العمل → القص → الكنت → CNC → التركيب → الدهان → التغليف → التحميل → التسليم</p>
+</section></div>
+<section class="panel" style="margin-top:18px">
+<h2>📋 الطلبيات</h2><div id="orders"></div>
+</section>
+</div>
+<script>
+const stages=[
+["في العمل","المدير"],["تم القص","القص"],["تم الكنت","الكنت"],["تم CNC","CNC"],
+["تم التركيب","التركيب"],["تم الدهان","الدهان"],["تم التغليف","التغليف"],
+["تم التحميل","التحميل"],["تم التسليم","التسليم"]
+];
+let orders=JSON.parse(localStorage.getItem("mt_orders")||"[]");
+let role=localStorage.getItem("mt_role")||"المدير";
+document.getElementById("roleLabel").textContent="المستخدم: "+role;
+function save(){localStorage.setItem("mt_orders",JSON.stringify(orders))}
+function addOrder(){
+ if(!num.value||!customer.value||!due.value)return alert("أكمل رقم الطلبية واسم الزبون وموعد التسليم");
+ orders.unshift({id:Date.now(),num:num.value,customer:customer.value,phone:phone.value,due:due.value,notes:notes.value,urgent:urgent.checked,stage:0,history:[{stage:0,at:new Date().toLocaleString("ar")}]});
+ save();["num","customer","phone","due","notes"].forEach(x=>document.getElementById(x).value="");urgent.checked=false;render();
+}
+function next(i){
+ if(role==="المدير"){orders[i].stage=Math.min(orders[i].stage+1,stages.length-1)}
+ else{
+  const expected=stages[orders[i].stage+1]?.[1];
+  if(expected!==role)return alert("هذه الطلبية ليست في قسمك");
+  orders[i].stage++;
+ }
+ orders[i].history.push({stage:orders[i].stage,at:new Date().toLocaleString("ar"),by:role});
+ save();render();
+}
+function render(){
+ const q=document.getElementById("search").value.trim().toLowerCase();
+ const filtered=orders.filter(o=>[o.num,o.customer,o.phone].join(" ").toLowerCase().includes(q));
+ document.getElementById("stats").innerHTML=[
+ ["إجمالي الطلبيات",orders.length],["في العمل",orders.filter(o=>o.stage<stages.length-1).length],
+ ["مهمة جدًا",orders.filter(o=>o.urgent).length],["متأخرة",orders.filter(o=>new Date(o.due)<new Date()&&o.stage<stages.length-1).length]
+ ].map(x=>`<div class="card">${x[0]}<strong>${x[1]}</strong></div>`).join("");
+ document.getElementById("orders").innerHTML=filtered.length?`<table><tr><th>الطلبية</th><th>الزبون</th><th>الموعد</th><th>الحالة</th><th>إجراء</th></tr>`+
+ filtered.map((o,idx)=>{let real=orders.indexOf(o);return `<tr class="${o.urgent?'urgent':''}"><td>${o.urgent?'⭐ ':''}<b>#${o.num}</b></td><td>${o.customer}<br><span class="muted">${o.phone||''}</span></td><td>${o.due}</td><td><span class="badge">${stages[o.stage][0]}</span><br><small>${o.stage===0?'المدير':stages[o.stage][1]}</small></td><td><div class="actions">${o.stage<stages.length-1?`<button onclick="next(${real})">تم ${stages[o.stage+1][1]}</button>`:''}<button class="gray" onclick="details(${real})">التفاصيل</button></div></td></tr>`}).join("")+"</table>`:"<p class='muted'>لا توجد طلبيات.</p>";
+ document.getElementById("formPanel").classList.toggle("hidden",role!=="المدير");
+}
+function details(i){
+ const o=orders[i];
+ alert(`#${o.num}\nالزبون: ${o.customer}\nالموقع الحالي: ${stages[o.stage][1]}\nالحالة: ${stages[o.stage][0]}\nموعد التسليم: ${o.due}\n\nسجل الحركة:\n`+o.history.map(h=>`${stages[h.stage][0]} — ${h.at}${h.by?' — '+h.by:''}`).join("\n"));
+}
+render();
+</script><script>if("serviceWorker" in navigator){navigator.serviceWorker.register("./sw.js")}</script></body></html>
