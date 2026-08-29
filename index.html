@@ -10,9 +10,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 
 <style>
-*{
-box-sizing:border-box
-}
+*{box-sizing:border-box}
 
 body{
 margin:0;
@@ -21,9 +19,7 @@ background:#f1f5f9;
 color:#172033
 }
 
-.hidden{
-display:none!important
-}
+.hidden{display:none!important}
 
 #loginPage{
 min-height:100vh;
@@ -57,19 +53,25 @@ color:#687386;
 margin-bottom:25px
 }
 
-.login-box label{
+label{
 display:block;
 font-weight:bold;
 font-size:14px;
 margin-bottom:6px
 }
 
-.login-box input{
+input,textarea,select{
 width:100%;
-padding:14px;
+padding:12px;
+margin:6px 0 12px;
 border:1px solid #d5dde8;
-border-radius:12px;
-margin-bottom:15px;
+border-radius:9px;
+font-size:15px;
+font-family:inherit
+}
+
+.login-box input{
+padding:14px;
 font-size:16px
 }
 
@@ -194,25 +196,6 @@ margin-top:0
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:10px
-}
-
-label{
-font-size:13px;
-font-weight:bold
-}
-
-input,textarea{
-width:100%;
-padding:11px;
-margin:6px 0 12px;
-border:1px solid #d5dde8;
-border-radius:9px;
-font-size:15px;
-font-family:inherit
-}
-
-textarea{
-resize:vertical
 }
 
 button{
@@ -393,7 +376,8 @@ width:auto;
 margin:0
 }
 
-.stage-card{
+.stage-card,
+.user-card{
 background:white;
 border:1px solid #e3e8ef;
 border-radius:14px;
@@ -401,9 +385,6 @@ padding:15px
 }
 
 .user-card{
-border:1px solid #e3e8ef;
-border-radius:14px;
-padding:15px;
 margin-bottom:10px
 }
 
@@ -414,6 +395,7 @@ grid-template-columns:repeat(2,1fr)
 }
 
 @media(max-width:600px){
+
 .container{
 padding:12px
 }
@@ -454,11 +436,14 @@ grid-template-columns:1fr 1fr
 .login-box{
 padding:24px
 }
+
 }
 </style>
 </head>
 
 <body>
+
+<!-- ================= LOGIN ================= -->
 
 <div id="loginPage">
 
@@ -474,9 +459,7 @@ MODULAR TECH
 
 <div id="loginError" class="login-error"></div>
 
-<label>
-اسم المستخدم
-</label>
+<label>اسم المستخدم</label>
 
 <input
 id="loginUsername"
@@ -484,9 +467,7 @@ autocomplete="username"
 placeholder="أدخل اسم المستخدم"
 >
 
-<label>
-كلمة المرور
-</label>
+<label>كلمة المرور</label>
 
 <input
 id="loginPassword"
@@ -506,6 +487,9 @@ onclick="login()"
 
 </div>
 
+
+<!-- ================= APP ================= -->
+
 <div id="app" class="hidden">
 
 <header>
@@ -515,7 +499,11 @@ MODULAR TECH
 </div>
 
 <div>
-<span class="user" id="currentUser"></span>
+
+<span
+class="user"
+id="currentUser"
+></span>
 
 <button
 class="logout"
@@ -527,6 +515,7 @@ onclick="logout()"
 </div>
 
 </header>
+
 
 <div class="container">
 
@@ -560,11 +549,15 @@ onclick="showSection('users',this)"
 
 </div>
 
+
+<!-- DASHBOARD -->
+
 <section id="dashboard">
 
 <div class="stats">
 
 <div class="stat">
+
 <div class="stat-title">
 إجمالي الطلبيات
 </div>
@@ -575,9 +568,12 @@ id="totalCount"
 >
 0
 </div>
+
 </div>
 
+
 <div class="stat">
+
 <div class="stat-title">
 قيد العمل
 </div>
@@ -588,9 +584,12 @@ id="activeCount"
 >
 0
 </div>
+
 </div>
 
+
 <div class="stat">
+
 <div class="stat-title">
 مهمة جدًا
 </div>
@@ -601,9 +600,12 @@ id="urgentCount"
 >
 0
 </div>
+
 </div>
 
+
 <div class="stat">
+
 <div class="stat-title">
 متأخرة
 </div>
@@ -614,9 +616,11 @@ id="overdueCount"
 >
 0
 </div>
+
 </div>
 
 </div>
+
 
 <div class="panel">
 
@@ -627,7 +631,7 @@ id="overdueCount"
 </h2>
 
 <button
-class="primary"
+class="primary admin-only"
 onclick="openAddModal()"
 >
 ➕ إضافة طلبية
@@ -640,6 +644,9 @@ onclick="openAddModal()"
 </div>
 
 </section>
+
+
+<!-- ORDERS -->
 
 <section
 id="ordersSection"
@@ -655,7 +662,7 @@ class="hidden"
 </h2>
 
 <button
-class="primary"
+class="primary admin-only"
 onclick="openAddModal()"
 >
 ➕ إضافة طلبية
@@ -680,6 +687,9 @@ class="order-list"
 
 </section>
 
+
+<!-- PRODUCTION -->
+
 <section
 id="production"
 class="hidden"
@@ -699,6 +709,9 @@ class="order-list"
 </div>
 
 </section>
+
+
+<!-- USERS -->
 
 <section
 id="users"
@@ -732,10 +745,16 @@ onclick="openUserModal()"
 
 </div>
 
+
+<!-- MESSAGE -->
+
 <div
 id="message"
 class="message"
 ></div>
+
+
+<!-- ORDER MODAL -->
 
 <div
 id="orderModal"
@@ -864,6 +883,9 @@ onclick="closeModal()"
 
 </div>
 
+
+<!-- USER MODAL -->
+
 <div
 id="userModal"
 class="modal hidden"
@@ -935,20 +957,43 @@ placeholder="كلمة المرور"
 القسم
 </label>
 
-<select
-id="newRole"
-style="width:100%;padding:11px;border:1px solid #d5dde8;border-radius:9px;margin:6px 0 12px;font-size:15px"
->
+<select id="newRole">
 
-<option value="المدير">👑 المدير</option>
-<option value="القص">✂️ القص</option>
-<option value="الكنت">🔧 الكنت</option>
-<option value="CNC">⚙️ CNC</option>
-<option value="التركيب">🛠️ التركيب</option>
-<option value="الدهان">🎨 الدهان</option>
-<option value="التغليف">📦 التغليف</option>
-<option value="التحميل">🚚 التحميل</option>
-<option value="التسليم">✅ التسليم</option>
+<option value="المدير">
+👑 المدير
+</option>
+
+<option value="القص">
+✂️ القص
+</option>
+
+<option value="الكنت">
+🔧 الكنت
+</option>
+
+<option value="CNC">
+⚙️ CNC
+</option>
+
+<option value="التركيب">
+🛠️ التركيب
+</option>
+
+<option value="الدهان">
+🎨 الدهان
+</option>
+
+<option value="التغليف">
+📦 التغليف
+</option>
+
+<option value="التحميل">
+🚚 التحميل
+</option>
+
+<option value="التسليم">
+✅ التسليم
+</option>
 
 </select>
 
@@ -989,6 +1034,7 @@ onclick="closeUserModal()"
 
 </div>
 
+
 <script>
 
 /* =====================================================
@@ -999,7 +1045,8 @@ const SUPABASE_URL =
 "https://bvrfrcmblwzuqprjknam.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_vVXVJGcWpoPvPEH_bfm23Q_dZ5eXvmE";
+"sb_publishable_vVXVJGcWpoPvPEH_bfm23Q_dZ5eXvmK";
+
 
 let orders = [];
 
@@ -1019,27 +1066,32 @@ body=null,
 query=""
 ){
 
-const options={
+const token =
+localStorage.getItem(
+"supabase_access_token"
+) || SUPABASE_KEY;
+
+const options = {
 
 method,
 
 headers:{
 "apikey":SUPABASE_KEY,
-"Authorization":"Bearer "+SUPABASE_KEY,
+"Authorization":"Bearer "+token,
 "Content-Type":"application/json",
 "Prefer":"return=representation"
 }
 
 };
 
-if(body!==null){
+if(body !== null){
 
-options.body=
+options.body =
 JSON.stringify(body);
 
 }
 
-const response=
+const response =
 await fetch(
 SUPABASE_URL+
 "/rest/v1/"+
@@ -1048,14 +1100,14 @@ query,
 options
 );
 
-const text=
+const text =
 await response.text();
 
 let data;
 
 try{
 
-data=
+data =
 text
 ?
 JSON.parse(text)
@@ -1071,16 +1123,22 @@ data=text;
 if(!response.ok){
 
 throw new Error(
+
 typeof data==="object"
+
 ?
+
 (
 data.message ||
 data.error ||
 data.hint ||
 JSON.stringify(data)
 )
+
 :
+
 data
+
 );
 
 }
@@ -1091,7 +1149,7 @@ return data;
 
 
 /* =====================================================
-AUTH REQUEST
+AUTH
 ===================================================== */
 
 async function authRequest(
@@ -1100,7 +1158,7 @@ method="POST",
 body=null
 ){
 
-const options={
+const options = {
 
 method,
 
@@ -1111,14 +1169,14 @@ headers:{
 
 };
 
-if(body!==null){
+if(body !== null){
 
-options.body=
+options.body =
 JSON.stringify(body);
 
 }
 
-const response=
+const response =
 await fetch(
 SUPABASE_URL+
 "/auth/v1/"+
@@ -1126,7 +1184,7 @@ endpoint,
 options
 );
 
-const data=
+const data =
 await response.json();
 
 if(!response.ok){
@@ -1151,18 +1209,50 @@ MESSAGE
 
 function message(text){
 
-const box=
-document.getElementById("message");
+const box =
+document.getElementById(
+"message"
+);
 
 box.textContent=text;
 
 box.style.display="block";
 
-setTimeout(()=>{
-
+setTimeout(
+()=>{
 box.style.display="none";
+},
+2500
+);
 
-},2500);
+}
+
+
+/* =====================================================
+ESCAPE
+===================================================== */
+
+function escapeHtml(value){
+
+return String(
+value ?? ""
+)
+.replace(
+/[&<>"']/g,
+function(char){
+
+return {
+
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+
+}[char];
+
+}
+);
 
 }
 
@@ -1173,25 +1263,31 @@ LOGIN
 
 async function login(){
 
-const username=
+const username =
 document
-.getElementById("loginUsername")
+.getElementById(
+"loginUsername"
+)
 .value
 .trim();
 
-const password=
+const password =
 document
-.getElementById("loginPassword")
+.getElementById(
+"loginPassword"
+)
 .value;
 
-const errorBox=
-document.getElementById("loginError");
+const errorBox =
+document.getElementById(
+"loginError"
+);
 
 errorBox.style.display="none";
 
 if(!username || !password){
 
-errorBox.textContent=
+errorBox.textContent =
 "يرجى إدخال اسم المستخدم وكلمة المرور";
 
 errorBox.style.display="block";
@@ -1202,7 +1298,11 @@ return;
 
 try{
 
-const result=
+/*
+نحصل على البريد المرتبط باسم المستخدم
+*/
+
+const result =
 await supabaseRequest(
 "rpc/get_login_email",
 "POST",
@@ -1211,16 +1311,26 @@ p_username:username
 }
 );
 
-const email=
-typeof result==="string"
-?
-result
-:
-Array.isArray(result)
-?
-result[0]
-:
+let email = null;
+
+if(typeof result === "string"){
+
+email=result;
+
+}else if(Array.isArray(result)){
+
+email =
+result[0]?.email ||
+result[0] ||
+null;
+
+}else if(result){
+
+email =
+result.email ||
 result;
+
+}
 
 if(!email){
 
@@ -1230,7 +1340,12 @@ throw new Error(
 
 }
 
-const session=
+
+/*
+تسجيل الدخول
+*/
+
+const session =
 await authRequest(
 "token?grant_type=password",
 "POST",
@@ -1240,37 +1355,37 @@ password:password
 }
 );
 
+
+/*
+حفظ الجلسة
+*/
+
 localStorage.setItem(
 "supabase_access_token",
 session.access_token
 );
+
+if(session.refresh_token){
 
 localStorage.setItem(
 "supabase_refresh_token",
 session.refresh_token
 );
 
+}
+
+
 /*
-الإصلاح:
-نرسل ID والبريد الإلكتروني.
-إذا لم يجد profiles الـ ID
-سيبحث بالبريد الإلكتروني.
+تحميل الملف الشخصي
 */
 
 await loadProfile(
 session.user.id,
-session.user.email
+email,
+username
 );
 
-document
-.getElementById("loginPage")
-.classList.add("hidden");
-
-document
-.getElementById("app")
-.classList.remove("hidden");
-
-applyPermissions();
+showApp();
 
 await loadOrders();
 
@@ -1282,7 +1397,7 @@ message(
 
 console.error(error);
 
-errorBox.textContent=
+errorBox.textContent =
 "❌ "+error.message;
 
 errorBox.style.display="block";
@@ -1293,67 +1408,88 @@ errorBox.style.display="block";
 
 
 /* =====================================================
-LOAD PROFILE - FIXED
+LOAD PROFILE
 ===================================================== */
 
-async function loadProfile(userId,userEmail=null){
+async function loadProfile(
+userId,
+email="",
+username=""
+){
 
-let data=[];
+currentProfile=null;
+
 
 /*
 المحاولة الأولى:
-البحث بواسطة Auth User ID
+عن طريق ID
 */
 
 try{
 
-data=
+const data =
 await supabaseRequest(
 "profiles",
 "GET",
 null,
-"?select=id,username,full_name,role,active,email&id=eq."+
+"?select=id,username,full_name,role,active,email"+
+"&id=eq."+
 encodeURIComponent(userId)+
 "&limit=1"
 );
 
+if(
+Array.isArray(data) &&
+data.length
+){
+
+currentProfile=data[0];
+
+}
+
 }catch(error){
 
-console.error(
-"Profile ID lookup failed:",
+console.warn(
+"Profile ID lookup:",
 error
 );
 
 }
 
+
 /*
 المحاولة الثانية:
-إذا لم نجد الملف بواسطة ID
-نبحث بواسطة البريد الإلكتروني
+عن طريق البريد
 */
 
-if(
-(!data || !data.length)
-&&
-userEmail
-){
+if(!currentProfile && email){
 
 try{
 
-data=
+const data =
 await supabaseRequest(
 "profiles",
 "GET",
 null,
-"?select=id,username,full_name,role,active,email&email=eq."+
-encodeURIComponent(userEmail)+
+"?select=id,username,full_name,role,active,email"+
+"&email=eq."+
+encodeURIComponent(email)+
 "&limit=1"
 );
 
+if(
+Array.isArray(data) &&
+data.length
+){
+
+currentProfile=data[0];
+
+}
+
 }catch(error){
 
-console.error(
-"Profile email lookup failed:",
+console.warn(
+"Profile email lookup:",
 error
 );
 
@@ -1361,29 +1497,67 @@ error
 
 }
 
+
 /*
-إذا لم نجد المستخدم بأي طريقة
+المحاولة الثالثة:
+عن طريق اسم المستخدم
 */
 
+if(!currentProfile && username){
+
+try{
+
+const data =
+await supabaseRequest(
+"profiles",
+"GET",
+null,
+"?select=id,username,full_name,role,active,email"+
+"&username=eq."+
+encodeURIComponent(username)+
+"&limit=1"
+);
+
 if(
-!data ||
-!data.length
+Array.isArray(data) &&
+data.length
 ){
 
-throw new Error(
-"لم يتم العثور على ملف المستخدم المرتبط بهذا الحساب"
+currentProfile=data[0];
+
+}
+
+}catch(error){
+
+console.warn(
+"Profile username lookup:",
+error
 );
 
 }
 
-currentProfile=data[0];
+}
+
 
 /*
-التأكد من أن الحساب فعال
+إذا لم يوجد الملف
+*/
+
+if(!currentProfile){
+
+throw new Error(
+"لم يتم العثور على ملف المستخدم. تأكد من وجود المستخدم داخل جدول profiles وربطه بحساب Auth."
+);
+
+}
+
+
+/*
+الحساب متوقف
 */
 
 if(
-!currentProfile.active
+currentProfile.active === false
 ){
 
 throw new Error(
@@ -1392,26 +1566,70 @@ throw new Error(
 
 }
 
-role=
-currentProfile.role;
+
+/*
+حفظ الدور
+*/
+
+role =
+currentProfile.role ||
+"";
+
+
+/*
+عرض المستخدم
+*/
 
 document.getElementById(
 "currentUser"
-).textContent=
-currentProfile.full_name+
-" — "+
-currentProfile.role;
+).textContent =
+
+(
+currentProfile.full_name ||
+currentProfile.username ||
+"المستخدم"
+)
+
++
+" — "
++
+role;
 
 }
 
 
 /* =====================================================
-CHECK EXISTING SESSION
+SHOW APP
+===================================================== */
+
+function showApp(){
+
+document
+.getElementById(
+"loginPage"
+)
+.classList
+.add("hidden");
+
+document
+.getElementById(
+"app"
+)
+.classList
+.remove("hidden");
+
+applyPermissions();
+
+}
+
+
+/* =====================================================
+CHECK SESSION
 ===================================================== */
 
 async function checkSession(){
 
-const token=
+const token =
 localStorage.getItem(
 "supabase_access_token"
 );
@@ -1424,7 +1642,7 @@ return;
 
 try{
 
-const response=
+const response =
 await fetch(
 SUPABASE_URL+
 "/auth/v1/user",
@@ -1443,34 +1661,28 @@ throw new Error();
 
 }
 
-const user=
+const user =
 await response.json();
 
-/*
-الإصلاح:
-إرسال ID والبريد الإلكتروني
-*/
 
 await loadProfile(
 user.id,
-user.email
+user.email,
+""
 );
 
-document
-.getElementById("loginPage")
-.classList.add("hidden");
 
-document
-.getElementById("app")
-.classList.remove("hidden");
-
-applyPermissions();
+showApp();
 
 await loadOrders();
 
+
 }catch(error){
 
-console.error(error);
+console.warn(
+"Session invalid:",
+error
+);
 
 localStorage.removeItem(
 "supabase_access_token"
@@ -1510,24 +1722,37 @@ PERMISSIONS
 
 function applyPermissions(){
 
-const isAdmin=
-role==="المدير";
+const isAdmin =
+role === "المدير";
 
-if(!isAdmin){
 
 document
-.getElementById("usersNav")
-.classList.add("hidden");
+.getElementById(
+"usersNav"
+)
+.classList
+.toggle(
+"hidden",
+!isAdmin
+);
 
-}
 
 document
 .querySelectorAll(
-".primary"
+".admin-only"
 )
-.forEach(btn=>{
+.forEach(
+button=>{
 
-});
+button
+.classList
+.toggle(
+"hidden",
+!isAdmin
+);
+
+}
+);
 
 }
 
@@ -1536,7 +1761,7 @@ document
 STAGES
 ===================================================== */
 
-const stages=[
+const stages = [
 
 ["في العمل","المدير"],
 
@@ -1567,18 +1792,19 @@ async function loadOrders(){
 
 try{
 
-const data=
+const data =
 await supabaseRequest(
 
 "orders",
 "GET",
 null,
 
-"?select=id,order_number,customer_name,phone,due_date,notes,urgent,stage,created_at,updated_at&order=created_at.desc"
+"?select=id,order_number,customer_name,phone,due_date,notes,urgent,stage,created_at,updated_at"+
+"&order=created_at.desc"
 
 );
 
-orders=
+orders =
 Array.isArray(data)
 ?
 data
@@ -1587,18 +1813,21 @@ data
 
 renderAll();
 
+
 }catch(error){
 
 console.error(error);
 
 document.getElementById(
 "latestOrders"
-).innerHTML=
-"<div class='empty'>❌ تعذر تحميل الطلبيات</div>";
+).innerHTML =
+"<div class='empty'>❌ تعذر تحميل الطلبيات<br><small>"+
+escapeHtml(error.message)+
+"</small></div>";
 
 document.getElementById(
 "ordersList"
-).innerHTML=
+).innerHTML =
 "<div class='empty'>❌ تعذر تحميل الطلبيات</div>";
 
 }
@@ -1616,19 +1845,19 @@ return{
 
 id:order.id,
 
-num:order.order_number||"",
+num:order.order_number || "",
 
-customer:order.customer_name||"",
+customer:order.customer_name || "",
 
-phone:order.phone||"",
+phone:order.phone || "",
 
-due:order.due_date||"",
+due:order.due_date || "",
 
-notes:order.notes||"",
+notes:order.notes || "",
 
 urgent:!!order.urgent,
 
-stage:Number(order.stage||0),
+stage:Number(order.stage || 0),
 
 created_at:order.created_at,
 
@@ -1652,12 +1881,18 @@ return false;
 }
 
 return(
+
 new Date(
-order.due+"T23:59:59"
-)<new Date()
+order.due+
+"T23:59:59"
+)
+<
+new Date()
+
 )
 &&
-order.stage<stages.length-1;
+order.stage <
+stages.length-1;
 
 }
 
@@ -1666,40 +1901,54 @@ order.stage<stages.length-1;
 NAVIGATION
 ===================================================== */
 
-function showSection(id,button){
+function showSection(
+id,
+button
+){
 
 document
 .querySelectorAll(
 ".container > section"
 )
-.forEach(section=>{
-section.classList.add("hidden");
-});
+.forEach(
+section=>{
+section
+.classList
+.add("hidden");
+}
+);
 
 document
 .getElementById(id)
-.classList.remove("hidden");
+.classList
+.remove("hidden");
 
 document
 .querySelectorAll(
 ".nav button"
 )
-.forEach(btn=>{
-btn.classList.remove("active");
-});
+.forEach(
+btn=>{
+btn
+.classList
+.remove("active");
+}
+);
 
-button.classList.add("active");
+button
+.classList
+.add("active");
 
 }
 
 
 /* =====================================================
-ORDER MODAL
+ADD ORDER
 ===================================================== */
 
 function openAddModal(){
 
-if(role!=="المدير"){
+if(role !== "المدير"){
 
 alert(
 "ليس لديك صلاحية إضافة طلبية"
@@ -1711,12 +1960,14 @@ return;
 
 document.getElementById(
 "modalTitle"
-).textContent=
+).textContent =
 "➕ إضافة طلبية";
 
-document.getElementById(
+document
+.getElementById(
 "orderForm"
-).reset();
+)
+.reset();
 
 document.getElementById(
 "editId"
@@ -1724,14 +1975,16 @@ document.getElementById(
 
 document.getElementById(
 "due"
-).value=
+).value =
 new Date()
 .toISOString()
 .split("T")[0];
 
 document.getElementById(
 "orderModal"
-).classList.remove("hidden");
+)
+.classList
+.remove("hidden");
 
 }
 
@@ -1739,8 +1992,11 @@ document.getElementById(
 function closeModal(){
 
 document
-.getElementById("orderModal")
-.classList.add("hidden");
+.getElementById(
+"orderModal"
+)
+.classList
+.add("hidden");
 
 }
 
@@ -1750,14 +2006,17 @@ SAVE ORDER
 ===================================================== */
 
 document
-.getElementById("orderForm")
+.getElementById(
+"orderForm"
+)
 .addEventListener(
 "submit",
 async function(e){
 
 e.preventDefault();
 
-if(role!=="المدير"){
+
+if(role !== "المدير"){
 
 alert(
 "ليس لديك صلاحية حفظ الطلبية"
@@ -1767,59 +2026,80 @@ return;
 
 }
 
-const editId=
+
+const editId =
 document.getElementById(
 "editId"
 ).value;
 
-const orderNumber=
-document.getElementById(
+
+const payload = {
+
+order_number:
+document
+.getElementById(
 "orderNum"
-).value.trim();
+)
+.value
+.trim(),
 
-const customerName=
-document.getElementById(
+customer_name:
+document
+.getElementById(
 "customer"
-).value.trim();
+)
+.value
+.trim(),
 
-const phone=
-document.getElementById(
+phone:
+document
+.getElementById(
 "phone"
-).value.trim();
+)
+.value
+.trim(),
 
-const dueDate=
-document.getElementById(
+due_date:
+document
+.getElementById(
 "due"
-).value;
+)
+.value,
 
-const notes=
-document.getElementById(
+notes:
+document
+.getElementById(
 "notes"
-).value.trim();
+)
+.value
+.trim(),
 
-const urgent=
-document.getElementById(
+urgent:
+document
+.getElementById(
 "urgent"
-).checked;
+)
+.checked,
+
+updated_at:
+new Date()
+.toISOString()
+
+};
+
 
 try{
+
 
 if(editId){
 
 await supabaseRequest(
 
 "orders",
+
 "PATCH",
 
-{
-order_number:orderNumber,
-customer_name:customerName,
-phone:phone,
-due_date:dueDate,
-notes:notes,
-urgent:urgent,
-updated_at:new Date().toISOString()
-},
+payload,
 
 "?id=eq."+
 encodeURIComponent(editId)
@@ -1830,22 +2110,22 @@ message(
 "✅ تم تعديل الطلبية"
 );
 
+
 }else{
+
+
+payload.stage=0;
+
+delete payload.updated_at;
+
 
 await supabaseRequest(
 
 "orders",
+
 "POST",
 
-{
-order_number:orderNumber,
-customer_name:customerName,
-phone:phone,
-due_date:dueDate,
-notes:notes,
-urgent:urgent,
-stage:0
-}
+payload
 
 );
 
@@ -1855,11 +2135,15 @@ message(
 
 }
 
+
 closeModal();
 
 await loadOrders();
 
+
 }catch(error){
+
+console.error(error);
 
 alert(
 "❌ فشل حفظ الطلبية\n\n"+
@@ -1872,12 +2156,12 @@ error.message
 
 
 /* =====================================================
-EDIT
+EDIT ORDER
 ===================================================== */
 
 function editOrder(id){
 
-if(role!=="المدير"){
+if(role !== "المدير"){
 
 alert(
 "ليس لديك صلاحية التعديل"
@@ -1887,52 +2171,75 @@ return;
 
 }
 
-const order=
+const order =
 orders
 .map(normalizeOrder)
 .find(
-o=>String(o.id)===String(id)
+o=>String(o.id) === String(id)
 );
 
-if(!order)return;
+if(!order){
+
+return;
+
+}
+
 
 document.getElementById(
 "modalTitle"
-).textContent=
+).textContent =
 "✏️ تعديل الطلبية #"+
 order.num;
 
+
 document.getElementById(
 "editId"
-).value=order.id;
+).value =
+order.id;
+
 
 document.getElementById(
 "orderNum"
-).value=order.num;
+).value =
+order.num;
+
 
 document.getElementById(
 "customer"
-).value=order.customer;
+).value =
+order.customer;
+
 
 document.getElementById(
 "phone"
-).value=order.phone;
+).value =
+order.phone;
+
 
 document.getElementById(
 "due"
-).value=order.due;
+).value =
+order.due;
+
 
 document.getElementById(
 "notes"
-).value=order.notes;
+).value =
+order.notes;
+
 
 document.getElementById(
 "urgent"
-).checked=order.urgent;
+).checked =
+order.urgent;
 
-document.getElementById(
+
+document
+.getElementById(
 "orderModal"
-).classList.remove("hidden");
+)
+.classList
+.remove("hidden");
 
 }
 
@@ -1943,7 +2250,7 @@ DELETE
 
 async function deleteOrder(id){
 
-if(role!=="المدير"){
+if(role !== "المدير"){
 
 alert(
 "ليس لديك صلاحية الحذف"
@@ -1953,28 +2260,41 @@ return;
 
 }
 
-const order=
+const order =
 orders
 .map(normalizeOrder)
 .find(
-o=>String(o.id)===String(id)
+o=>String(o.id) === String(id)
 );
 
-if(!order)return;
+if(!order){
 
-if(!confirm(
+return;
+
+}
+
+if(
+!confirm(
 "هل تريد حذف الطلبية #"+
 order.num+
 " ؟"
-))return;
+)
+){
+
+return;
+
+}
 
 try{
 
 await supabaseRequest(
 
 "orders",
+
 "DELETE",
+
 null,
+
 "?id=eq."+
 encodeURIComponent(id)
 
@@ -1985,6 +2305,7 @@ message(
 );
 
 await loadOrders();
+
 
 }catch(error){
 
@@ -2004,26 +2325,35 @@ NEXT STAGE
 
 async function nextStage(id){
 
-const order=
+const order =
 orders
 .map(normalizeOrder)
 .find(
-o=>String(o.id)===String(id)
+o=>String(o.id) === String(id)
 );
 
-if(!order)return;
+if(!order){
 
-const next=
-order.stage+1;
+return;
 
-if(next>=stages.length)return;
+}
 
-if(role!=="المدير"){
+const next =
+order.stage + 1;
 
-const expected=
+if(next >= stages.length){
+
+return;
+
+}
+
+
+if(role !== "المدير"){
+
+const expected =
 stages[next][1];
 
-if(expected!==role){
+if(expected !== role){
 
 alert(
 "هذه المرحلة ليست ضمن صلاحيات قسمك"
@@ -2035,16 +2365,20 @@ return;
 
 }
 
+
 try{
 
 await supabaseRequest(
 
 "orders",
+
 "PATCH",
 
 {
 stage:next,
-updated_at:new Date().toISOString()
+updated_at:
+new Date()
+.toISOString()
 },
 
 "?id=eq."+
@@ -2057,6 +2391,7 @@ message(
 );
 
 await loadOrders();
+
 
 }catch(error){
 
@@ -2076,14 +2411,18 @@ DETAILS
 
 function details(id){
 
-const order=
+const order =
 orders
 .map(normalizeOrder)
 .find(
-o=>String(o.id)===String(id)
+o=>String(o.id) === String(id)
 );
 
-if(!order)return;
+if(!order){
+
+return;
+
+}
 
 alert(
 
@@ -2096,23 +2435,23 @@ order.customer+
 
 "\n"+
 "الهاتف: "+
-(order.phone||"-")+
+(order.phone || "-")+
 
 "\n"+
 "موعد التسليم: "+
-(order.due||"-")+
+(order.due || "-")+
 
 "\n"+
 "الحالة: "+
-(stages[order.stage]?.[0]||"-")+
+(stages[order.stage]?.[0] || "-")+
 
 "\n"+
 "القسم: "+
-(stages[order.stage]?.[1]||"-")+
+(stages[order.stage]?.[1] || "-")+
 
 "\n"+
 "الملاحظات: "+
-(order.notes||"-")
+(order.notes || "-")
 
 );
 
@@ -2120,206 +2459,100 @@ order.customer+
 
 
 /* =====================================================
-DASHBOARD
+ORDER HTML
 ===================================================== */
 
-function renderDashboard(){
+function orderHtml(order){
 
-const list=
-orders.map(normalizeOrder);
+return `
 
-document.getElementById(
-"totalCount"
-).textContent=list.length;
-
-document.getElementById(
-"activeCount"
-).textContent=
-list.filter(
-o=>o.stage<stages.length-1
-).length;
-
-document.getElementById(
-"urgentCount"
-).textContent=
-list.filter(
-o=>o.urgent
-).length;
-
-document.getElementById(
-"overdueCount"
-).textContent=
-list.filter(
-o=>isOverdue(o)
-).length;
-
-const latest=
-list.slice(0,5);
-
-if(!latest.length){
-
-document.getElementById(
-"latestOrders"
-).innerHTML=
-"<div class='empty'>لا توجد طلبيات حتى الآن</div>";
-
-return;
-
-}
-
-document.getElementById(
-"latestOrders"
-).innerHTML=
-
-latest.map(order=>`
-
-<div class="order ${order.urgent?"urgent":""}">
+<div class="order ${order.urgent ? "urgent" : ""}">
 
 <div class="order-head">
 
 <div>
 
 <div class="order-number">
-${order.urgent?"⭐ ":""}#${order.num}
+
+${order.urgent ? "⭐ " : ""}
+
+#${escapeHtml(order.num)}
+
 </div>
 
 <div class="customer">
-${order.customer}
-</div>
 
-</div>
-
-<span class="badge">
-${stages[order.stage]?.[0]||"في العمل"}
-</span>
-
-</div>
-
-<div class="info">
-
-<div class="info-box">
-📞 الهاتف
-<b>${order.phone||"-"}</b>
-</div>
-
-<div class="info-box">
-📅 التسليم
-<b>${order.due||"-"}</b>
-</div>
-
-<div class="info-box">
-🏭 القسم
-<b>${stages[order.stage]?.[1]||"-"}</b>
-</div>
+${escapeHtml(order.customer)}
 
 </div>
 
 </div>
 
-`).join("");
-
-}
-
-
-/* =====================================================
-ORDERS
-===================================================== */
-
-function renderOrders(){
-
-const search=
-(
-document.getElementById(
-"search"
-)?.value||""
-)
-.trim()
-.toLowerCase();
-
-const list=
-orders.map(normalizeOrder);
-
-const filtered=
-list.filter(order=>
-
-[
-order.num,
-order.customer,
-order.phone
-]
-.join(" ")
-.toLowerCase()
-.includes(search)
-
-);
-
-if(!filtered.length){
-
-document.getElementById(
-"ordersList"
-).innerHTML=
-"<div class='empty'>لا توجد طلبيات مطابقة.</div>";
-
-return;
-
-}
-
-document.getElementById(
-"ordersList"
-).innerHTML=
-
-filtered.map(order=>`
-
-<div class="order ${order.urgent?"urgent":""}">
-
-<div class="order-head">
-
-<div>
-
-<div class="order-number">
-${order.urgent?"⭐ ":""}#${order.num}
-</div>
-
-<div class="customer">
-${order.customer}
-</div>
-
-</div>
-
-<span class="badge ${
-isOverdue(order)?"overdue":""
-}">
+<span
+class="badge ${
+isOverdue(order)
+?
+"overdue"
+:
+""
+}"
+>
 
 ${
 isOverdue(order)
 ?
 "متأخرة"
 :
-stages[order.stage]?.[0]||"في العمل"
+escapeHtml(
+stages[order.stage]?.[0] ||
+"في العمل"
+)
 }
 
 </span>
 
 </div>
 
+
 <div class="info">
 
 <div class="info-box">
+
 📞 الهاتف
-<b>${order.phone||"-"}</b>
+
+<b>
+${escapeHtml(order.phone || "-")}
+</b>
+
 </div>
 
+
 <div class="info-box">
+
 📅 التسليم
-<b>${order.due||"-"}</b>
+
+<b>
+${escapeHtml(order.due || "-")}
+</b>
+
 </div>
+
 
 <div class="info-box">
+
 🏭 القسم
-<b>${stages[order.stage]?.[1]||"-"}</b>
+
+<b>
+${escapeHtml(
+stages[order.stage]?.[1] ||
+"-"
+)}
+</b>
+
 </div>
 
 </div>
+
 
 <div class="actions">
 
@@ -2330,10 +2563,14 @@ onclick="details('${order.id}')"
 📋 التفاصيل
 </button>
 
+
 ${
-role==="المدير"
+role === "المدير"
+
 ?
+
 `
+
 <button
 class="success"
 onclick="editOrder('${order.id}')"
@@ -2347,59 +2584,204 @@ onclick="deleteOrder('${order.id}')"
 >
 🗑️ حذف
 </button>
+
 `
+
 :
+
 ""
+
 }
 
+
 ${
-order.stage<stages.length-1
+order.stage < stages.length-1
+
 ?
+
 `
+
 <button
 class="primary"
 onclick="nextStage('${order.id}')"
 >
-➡️ تم ${stages[order.stage+1][1]}
+➡️ تم ${escapeHtml(
+stages[order.stage+1][1]
+)}
 </button>
+
 `
+
 :
+
 `
+
 <span class="badge">
 ✅ مكتملة
 </span>
+
 `
+
 }
 
 </div>
 
 </div>
 
-`).join("");
+`;
 
 }
 
 
 /* =====================================================
-RENDER STAGES
+DASHBOARD
+===================================================== */
+
+function renderDashboard(){
+
+const list =
+orders.map(
+normalizeOrder
+);
+
+
+document.getElementById(
+"totalCount"
+).textContent =
+list.length;
+
+
+document.getElementById(
+"activeCount"
+).textContent =
+list.filter(
+o=>o.stage <
+stages.length-1
+).length;
+
+
+document.getElementById(
+"urgentCount"
+).textContent =
+list.filter(
+o=>o.urgent
+).length;
+
+
+document.getElementById(
+"overdueCount"
+).textContent =
+list.filter(
+isOverdue
+).length;
+
+
+const latest =
+list.slice(0,5);
+
+
+document.getElementById(
+"latestOrders"
+).innerHTML =
+
+latest.length
+
+?
+
+latest
+.map(orderHtml)
+.join("")
+
+:
+
+"<div class='empty'>لا توجد طلبيات حتى الآن</div>";
+
+}
+
+
+/* =====================================================
+ORDERS
+===================================================== */
+
+function renderOrders(){
+
+const search =
+(
+document.getElementById(
+"search"
+)?.value ||
+""
+)
+.trim()
+.toLowerCase();
+
+
+const list =
+orders.map(
+normalizeOrder
+);
+
+
+const filtered =
+list.filter(
+order=>
+
+[
+order.num,
+order.customer,
+order.phone
+]
+.join(" ")
+.toLowerCase()
+.includes(search)
+
+);
+
+
+document.getElementById(
+"ordersList"
+).innerHTML =
+
+filtered.length
+
+?
+
+filtered
+.map(orderHtml)
+.join("")
+
+:
+
+"<div class='empty'>لا توجد طلبيات مطابقة.</div>";
+
+}
+
+
+/* =====================================================
+STAGES
 ===================================================== */
 
 function renderStages(){
 
-const list=
-orders.map(normalizeOrder);
+const list =
+orders.map(
+normalizeOrder
+);
+
 
 document.getElementById(
 "stageList"
-).innerHTML=
+).innerHTML =
 
-stages.map(
+stages
+.map(
 (stage,index)=>{
 
-const stageOrders=
+const stageOrders =
 list.filter(
-o=>o.stage===index
+o=>o.stage === index
 );
+
 
 return `
 
@@ -2410,90 +2792,47 @@ return `
 <div>
 
 <div class="order-number">
+
 ${stage[0]}
+
 </div>
 
 <div class="customer">
-القسم المسؤول: ${stage[1]}
+
+القسم المسؤول:
+${stage[1]}
+
 </div>
 
 </div>
 
 <span class="badge">
-${stageOrders.length} طلبية
+
+${stageOrders.length}
+طلبية
+
 </span>
 
 </div>
+
 
 ${
 stageOrders.length
 
 ?
 
-stageOrders.map(order=>`
-
-<div class="order">
-
-<div class="order-head">
-
-<div>
-
-<div class="order-number">
-#${order.num}
-</div>
-
-<div class="customer">
-${order.customer}
-</div>
-
-</div>
-
-<span class="badge">
-${order.due||"-"}
-</span>
-
-</div>
-
-<div class="actions">
-
-<button
-class="secondary"
-onclick="details('${order.id}')"
->
-📋 التفاصيل
-</button>
-
-${
-order.stage<stages.length-1
-?
-`
-<button
-class="primary"
-onclick="nextStage('${order.id}')"
->
-➡️ تم ${stages[order.stage+1][1]}
-</button>
-`
-:
-`
-<span class="badge">
-✅ مكتملة
-</span>
-`
-}
-
-</div>
-
-</div>
-
-`).join("")
+stageOrders
+.map(orderHtml)
+.join("")
 
 :
 
 `
+
 <div class="empty">
 لا توجد طلبيات في هذه المرحلة
 </div>
+
 `
 
 }
@@ -2503,7 +2842,8 @@ onclick="nextStage('${order.id}')"
 `;
 
 }
-).join("");
+)
+.join("");
 
 }
 
@@ -2514,27 +2854,40 @@ USERS
 
 async function loadUsers(){
 
-if(role!=="المدير")return;
+if(role !== "المدير"){
+
+return;
+
+}
 
 try{
 
-const users=
+const users =
 await supabaseRequest(
+
 "profiles",
+
 "GET",
+
 null,
-"?select=id,username,full_name,role,active,email&order=created_at.desc"
+
+"?select=id,username,full_name,role,active,email"+
+"&order=created_at.desc"
+
 );
+
 
 document.getElementById(
 "usersList"
-).innerHTML=
+).innerHTML =
 
 users.length
 
 ?
 
-users.map(user=>`
+users
+.map(
+user=>`
 
 <div class="user-card">
 
@@ -2543,47 +2896,89 @@ users.map(user=>`
 <div>
 
 <div class="order-number">
-${user.full_name||user.username}
+
+${escapeHtml(
+user.full_name ||
+user.username
+)}
+
 </div>
 
 <div class="customer">
-@${user.username}
+
+@${escapeHtml(
+user.username
+)}
+
 </div>
 
 </div>
 
 <span class="badge">
-${user.role}
+
+${escapeHtml(
+user.role
+)}
+
 </span>
 
 </div>
 
+
 <div class="info">
 
 <div class="info-box">
+
 الحساب
-<b>${user.active?"فعال":"متوقف"}</b>
+
+<b>
+${user.active
+?
+"فعال"
+:
+"متوقف"}
+</b>
+
 </div>
 
+
 <div class="info-box">
+
 القسم
-<b>${user.role}</b>
+
+<b>
+${escapeHtml(
+user.role
+)}
+</b>
+
 </div>
+
 
 <div class="info-box">
+
 المستخدم
-<b>${user.username}</b>
-</div>
+
+<b>
+${escapeHtml(
+user.username
+)}
+</b>
 
 </div>
 
 </div>
 
-`).join("")
+</div>
+
+`
+)
+.join("")
 
 :
 
 "<div class='empty'>لا يوجد مستخدمون</div>";
+
 
 }catch(error){
 
@@ -2600,7 +2995,7 @@ USER MODAL
 
 function openUserModal(){
 
-if(role!=="المدير"){
+if(role !== "المدير"){
 
 alert(
 "هذه الصفحة للمدير فقط"
@@ -2610,17 +3005,26 @@ return;
 
 }
 
+
 document
-.getElementById("userForm")
+.getElementById(
+"userForm"
+)
 .reset();
 
-document
-.getElementById("newActive")
+
+document.getElementById(
+"newActive"
+)
 .checked=true;
 
+
 document
-.getElementById("userModal")
-.classList.remove("hidden");
+.getElementById(
+"userModal"
+)
+.classList
+.remove("hidden");
 
 }
 
@@ -2628,31 +3032,58 @@ document
 function closeUserModal(){
 
 document
-.getElementById("userModal")
-.classList.add("hidden");
+.getElementById(
+"userModal"
+)
+.classList
+.add("hidden");
 
 }
 
 
-/*
-ملاحظة:
-إنشاء مستخدم Auth يحتاج Edge Function
-ولا نضع Service Role Key داخل التطبيق.
-*/
+/* =====================================================
+CREATE USER
+===================================================== */
 
 document
-.getElementById("userForm")
+.getElementById(
+"userForm"
+)
 .addEventListener(
 "submit",
 async function(e){
 
 e.preventDefault();
 
+
+if(role !== "المدير"){
+
 alert(
-"تم تجهيز شاشة إنشاء المستخدم. إنشاء حساب Auth يحتاج Edge Function آمنة حتى لا يتم كشف مفتاح Service Role."
+"هذه الصفحة للمدير فقط"
 );
 
-});
+return;
+
+}
+
+
+/*
+مهم:
+لا نضع Service Role Key
+داخل index.html.
+
+إنشاء مستخدم Auth يجب أن يتم
+من خلال Edge Function آمنة.
+*/
+
+alert(
+
+"شاشة إنشاء المستخدم جاهزة، لكن إنشاء حساب Auth يحتاج Edge Function آمنة في Supabase حتى لا يتم كشف المفتاح السري."
+
+);
+
+}
+);
 
 
 /* =====================================================
@@ -2667,7 +3098,7 @@ renderOrders();
 
 renderStages();
 
-if(role==="المدير"){
+if(role === "المدير"){
 
 loadUsers();
 
