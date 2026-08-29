@@ -687,7 +687,6 @@ required
 placeholder="اسم الزبون"
 >
 
-
 <div class="row">
 
 <div>
@@ -701,7 +700,6 @@ placeholder="05xxxxxxxx"
 >
 
 </div>
-
 
 <div>
 
@@ -717,7 +715,6 @@ required
 
 </div>
 
-
 <label>ملاحظات</label>
 
 <textarea
@@ -725,7 +722,6 @@ id="notes"
 rows="4"
 placeholder="اكتب الملاحظات"
 ></textarea>
-
 
 <label class="check">
 
@@ -737,7 +733,6 @@ id="urgent"
 ⭐ هذه الطلبية مهمة جدًا
 
 </label>
-
 
 <div class="actions">
 
@@ -780,7 +775,6 @@ onclick="closeUserModal()"
 </button>
 
 </div>
-
 
 <form id="userForm">
 
@@ -835,7 +829,6 @@ placeholder="كلمة المرور"
 
 </select>
 
-
 <label class="check">
 
 <input
@@ -847,7 +840,6 @@ checked
 الحساب فعال
 
 </label>
-
 
 <div class="actions">
 
@@ -885,7 +877,6 @@ const SUPABASE_KEY =
 const CREATE_USER_FUNCTION =
 "https://bvrfrcmblwzuqprjknam.supabase.co/functions/v1/rapid-function";
 
-
 let orders = [];
 let currentProfile = null;
 let role = "";
@@ -898,8 +889,7 @@ SUPABASE REQUEST
 async function request(path,method="GET",body=null){
 
 const token =
-localStorage.getItem("supabase_access_token") ||
-SUPABASE_KEY;
+localStorage.getItem("supabase_access_token");
 
 const options = {
 
@@ -907,7 +897,7 @@ method:method,
 
 headers:{
 "apikey":SUPABASE_KEY,
-"Authorization":"Bearer "+token,
+"Authorization":"Bearer "+(token || SUPABASE_KEY),
 "Content-Type":"application/json",
 "Prefer":"return=representation"
 }
@@ -1098,9 +1088,11 @@ email=result.email || result;
 }
 
 if(!email){
+
 throw new Error(
 "اسم المستخدم غير موجود أو الحساب غير فعال"
 );
+
 }
 
 const session =
@@ -1140,7 +1132,7 @@ msg("✅ تم تسجيل الدخول");
 
 }catch(error){
 
-console.error(error);
+console.error("LOGIN ERROR:",error);
 
 errorBox.textContent =
 "❌ "+error.message;
@@ -1153,7 +1145,7 @@ errorBox.style.display="block";
 
 
 /* =========================
-LOAD PROFILE
+LOAD PROFILE - FIXED
 ========================= */
 
 async function loadProfile(
@@ -1165,7 +1157,9 @@ username=""
 currentProfile=null;
 
 
-/* البحث عن Auth ID داخل profiles.id */
+/* البحث بواسطة UUID */
+
+if(userId){
 
 try{
 
@@ -1179,17 +1173,24 @@ encodeURIComponent(userId)+
 );
 
 if(Array.isArray(data) && data.length){
+
 currentProfile=data[0];
+
 }
 
 }catch(error){
 
-console.warn("profiles by id:",error);
+console.error(
+"PROFILE UUID ERROR:",
+error
+);
+
+}
 
 }
 
 
-/* البحث بالبريد كاحتياط */
+/* البحث بالبريد */
 
 if(!currentProfile && email){
 
@@ -1205,19 +1206,24 @@ encodeURIComponent(email)+
 );
 
 if(Array.isArray(data) && data.length){
+
 currentProfile=data[0];
+
 }
 
 }catch(error){
 
-console.warn("profiles by email:",error);
+console.error(
+"PROFILE EMAIL ERROR:",
+error
+);
 
 }
 
 }
 
 
-/* البحث باسم المستخدم كاحتياط */
+/* البحث باسم المستخدم */
 
 if(!currentProfile && username){
 
@@ -1233,24 +1239,44 @@ encodeURIComponent(username)+
 );
 
 if(Array.isArray(data) && data.length){
+
 currentProfile=data[0];
+
 }
 
 }catch(error){
 
-console.warn("profiles by username:",error);
-
-}
-
-}
-
-if(!currentProfile){
-
-throw new Error(
-"لم يتم العثور على ملف المستخدم"
+console.error(
+"PROFILE USERNAME ERROR:",
+error
 );
 
 }
+
+}
+
+
+/* لم يتم العثور */
+
+if(!currentProfile){
+
+console.error(
+"PROFILE NOT FOUND",
+{
+userId:userId,
+email:email,
+username:username
+}
+);
+
+throw new Error(
+"لم يتم العثور على ملف المستخدم في profiles"
+);
+
+}
+
+
+/* الحساب غير فعال */
 
 if(currentProfile.active===false){
 
@@ -1260,8 +1286,14 @@ throw new Error(
 
 }
 
+
+/* حفظ الدور */
+
 role =
 currentProfile.role || "";
+
+
+/* عرض المستخدم */
 
 document.getElementById(
 "currentUser"
@@ -1467,19 +1499,12 @@ function norm(order){
 return{
 
 id:order.id,
-
 num:order.order_number || "",
-
 customer:order.customer_name || "",
-
 phone:order.phone || "",
-
 due:order.due_date || "",
-
 notes:order.notes || "",
-
 urgent:!!order.urgent,
-
 stage:Number(order.stage || 0)
 
 };
@@ -1526,6 +1551,10 @@ btn.classList.remove("active");
 });
 
 button.classList.add("active");
+
+if(id==="users"){
+loadUsers();
+}
 
 }
 
@@ -2110,7 +2139,7 @@ list.map(orderHtml).join("")
 
 
 /* =========================
-STAGES
+RENDER STAGES
 ========================= */
 
 function renderStages(){
@@ -2206,7 +2235,8 @@ document.getElementById(
 "usersList"
 ).innerHTML=
 
-users.map(
+(Array.isArray(users)?users:[])
+.map(
 user=>`
 
 <div class="user-card">
@@ -2281,6 +2311,11 @@ ${esc(user.email||"-")}
 
 }catch(error){
 
+console.error(
+"LOAD USERS ERROR:",
+error
+);
+
 document.getElementById(
 "usersList"
 ).innerHTML=
@@ -2335,7 +2370,7 @@ document
 
 
 /* =================================================
-إنشاء المستخدم عن طريق Edge Function
+CREATE USER THROUGH EDGE FUNCTION
 rapid-function
 ================================================= */
 
@@ -2347,7 +2382,6 @@ async function(e){
 
 e.preventDefault();
 
-
 if(role!=="المدير"){
 
 alert("هذه العملية للمدير فقط");
@@ -2355,42 +2389,35 @@ return;
 
 }
 
-
 const username =
 document.getElementById(
 "newUsername"
 ).value.trim();
-
 
 const fullName =
 document.getElementById(
 "newFullName"
 ).value.trim();
 
-
 const email =
 document.getElementById(
 "newEmail"
 ).value.trim();
-
 
 const password =
 document.getElementById(
 "newPassword"
 ).value;
 
-
 const userRole =
 document.getElementById(
 "newRole"
 ).value;
 
-
 const active =
 document.getElementById(
 "newActive"
 ).checked;
-
 
 if(
 !username ||
@@ -2407,7 +2434,6 @@ return;
 
 }
 
-
 if(password.length<6){
 
 alert(
@@ -2418,14 +2444,12 @@ return;
 
 }
 
-
 try{
 
 const token =
 localStorage.getItem(
 "supabase_access_token"
 );
-
 
 if(!token){
 
@@ -2434,7 +2458,6 @@ throw new Error(
 );
 
 }
-
 
 const response =
 await fetch(
@@ -2452,15 +2475,10 @@ headers:{
 body:JSON.stringify({
 
 username:username,
-
 full_name:fullName,
-
 email:email,
-
 password:password,
-
 role:userRole,
-
 active:active
 
 })
@@ -2468,17 +2486,14 @@ active:active
 }
 );
 
-
 const text =
 await response.text();
 
-
-let data;
-
+let data={};
 
 try{
 
-data=
+data =
 text
 ?
 JSON.parse(text)
@@ -2493,7 +2508,6 @@ message:text
 
 }
 
-
 if(!response.ok){
 
 throw new Error(
@@ -2507,27 +2521,21 @@ data.error_description ||
 
 }
 
-
 closeUserModal();
-
 
 document
 .getElementById("userForm")
 .reset();
 
-
 document
 .getElementById("newActive")
 .checked=true;
 
-
 await loadUsers();
-
 
 msg(
 "✅ تم إنشاء المستخدم بنجاح"
 );
-
 
 }catch(error){
 
