@@ -3,19 +3,52 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MODULAR TECH</title>
 <meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<title>MODULAR TECH</title>
+
 <link rel="manifest" href="manifest.webmanifest">
 
 <style>
 *{box-sizing:border-box}
+
 body{
 margin:0;
 font-family:Arial,sans-serif;
 background:#f1f5f9;
 color:#172033
 }
+
 .hidden{display:none!important}
+
+button{
+border:0;
+border-radius:9px;
+padding:10px 14px;
+cursor:pointer;
+font-weight:bold
+}
+
+input,textarea,select{
+width:100%;
+padding:12px;
+margin:6px 0 12px;
+border:1px solid #d5dde8;
+border-radius:9px;
+font-size:15px;
+font-family:inherit;
+background:#fff
+}
+
+label{
+display:block;
+font-weight:bold;
+font-size:14px;
+margin-bottom:5px
+}
+
+/* LOGIN */
 
 #loginPage{
 min-height:100vh;
@@ -37,7 +70,7 @@ box-shadow:0 20px 60px #0005
 
 .login-logo{
 text-align:center;
-font-size:28px;
+font-size:29px;
 font-weight:bold;
 color:#102a43
 }
@@ -48,33 +81,13 @@ color:#687386;
 margin:8px 0 25px
 }
 
-label{
-display:block;
-font-weight:bold;
-font-size:14px;
-margin-bottom:6px
-}
-
-input,textarea,select{
-width:100%;
-padding:12px;
-margin:6px 0 12px;
-border:1px solid #d5dde8;
-border-radius:9px;
-font-size:15px;
-font-family:inherit
-}
-
 .login-btn{
 width:100%;
 padding:14px;
 background:#1f6feb;
 color:#fff;
 font-size:16px;
-border:0;
-border-radius:12px;
-font-weight:bold;
-cursor:pointer
+border-radius:12px
 }
 
 .login-error{
@@ -84,8 +97,11 @@ padding:12px;
 border-radius:10px;
 margin-bottom:15px;
 display:none;
-font-weight:bold
+font-weight:bold;
+line-height:1.6
 }
+
+/* HEADER */
 
 header{
 background:#0f172a;
@@ -112,15 +128,18 @@ opacity:.9
 .logout{
 background:#dc2626;
 color:#fff;
-padding:8px 12px;
 margin-right:10px
 }
+
+/* CONTAINER */
 
 .container{
 max-width:1250px;
 margin:auto;
 padding:18px
 }
+
+/* NAV */
 
 .nav{
 display:flex;
@@ -131,19 +150,16 @@ margin-bottom:18px
 
 .nav button{
 white-space:nowrap;
-border:0;
-border-radius:10px;
-padding:11px 16px;
 background:#fff;
-color:#172033;
-font-weight:bold;
-cursor:pointer
+color:#172033
 }
 
 .nav button.active{
 background:#1f6feb;
 color:#fff
 }
+
+/* STATS */
 
 .stats{
 display:grid;
@@ -173,6 +189,8 @@ font-weight:bold;
 margin-top:8px
 }
 
+/* PANELS */
+
 .panel{
 padding:18px;
 margin-bottom:18px
@@ -188,13 +206,7 @@ grid-template-columns:1fr 1fr;
 gap:10px
 }
 
-button{
-border:0;
-border-radius:9px;
-padding:10px 14px;
-cursor:pointer;
-font-weight:bold
-}
+/* BUTTONS */
 
 .primary{
 background:#1f6feb;
@@ -222,6 +234,8 @@ gap:7px;
 flex-wrap:wrap;
 margin-top:10px
 }
+
+/* ORDERS */
 
 .order-list{
 display:grid;
@@ -268,13 +282,15 @@ margin-top:12px
 background:#f6f8fb;
 border-radius:9px;
 padding:9px;
-font-size:12px
+font-size:12px;
+overflow:hidden
 }
 
 .info-box b{
 display:block;
 margin-top:4px;
-font-size:13px
+font-size:13px;
+word-break:break-word
 }
 
 .badge{
@@ -298,6 +314,8 @@ padding:30px;
 color:#687386
 }
 
+/* MESSAGE */
+
 .message{
 position:fixed;
 bottom:20px;
@@ -314,6 +332,8 @@ text-align:center;
 display:none;
 z-index:100
 }
+
+/* MODAL */
 
 .modal{
 position:fixed;
@@ -373,6 +393,12 @@ padding:15px
 margin-bottom:10px
 }
 
+.loading{
+text-align:center;
+padding:25px;
+color:#687386
+}
+
 @media(max-width:900px){
 .stats{
 grid-template-columns:repeat(2,1fr)
@@ -380,6 +406,7 @@ grid-template-columns:repeat(2,1fr)
 }
 
 @media(max-width:600px){
+
 .container{
 padding:12px
 }
@@ -422,6 +449,8 @@ padding:24px
 
 <body>
 
+<!-- LOGIN -->
+
 <div id="loginPage">
 
 <div class="login-box">
@@ -454,6 +483,7 @@ placeholder="أدخل كلمة المرور"
 >
 
 <button
+id="loginButton"
 class="login-btn"
 onclick="login()"
 >
@@ -463,6 +493,8 @@ onclick="login()"
 </div>
 </div>
 
+
+<!-- APP -->
 
 <div id="app" class="hidden">
 
@@ -474,10 +506,7 @@ MODULAR TECH
 
 <div>
 
-<span
-class="user"
-id="currentUser"
-></span>
+<span id="currentUser" class="user"></span>
 
 <button
 class="logout"
@@ -524,6 +553,8 @@ onclick="showSection('users',this)"
 </div>
 
 
+<!-- DASHBOARD -->
+
 <section id="dashboard">
 
 <div class="stats">
@@ -532,53 +563,34 @@ onclick="showSection('users',this)"
 <div class="stat-title">
 إجمالي الطلبيات
 </div>
-
-<div
-class="stat-number"
-id="totalCount"
->
+<div id="totalCount" class="stat-number">
 0
 </div>
 </div>
-
 
 <div class="stat">
 <div class="stat-title">
 قيد العمل
 </div>
-
-<div
-class="stat-number"
-id="activeCount"
->
+<div id="activeCount" class="stat-number">
 0
 </div>
 </div>
-
 
 <div class="stat">
 <div class="stat-title">
 مهمة جدًا
 </div>
-
-<div
-class="stat-number"
-id="urgentCount"
->
+<div id="urgentCount" class="stat-number">
 0
 </div>
 </div>
-
 
 <div class="stat">
 <div class="stat-title">
 متأخرة
 </div>
-
-<div
-class="stat-number"
-id="overdueCount"
->
+<div id="overdueCount" class="stat-number">
 0
 </div>
 </div>
@@ -603,12 +615,18 @@ onclick="openAddModal()"
 
 </div>
 
-<div id="latestOrders"></div>
+<div id="latestOrders">
+<div class="loading">
+جارٍ التحميل...
+</div>
+</div>
 
 </div>
 
 </section>
 
+
+<!-- ORDERS -->
 
 <section
 id="ordersSection"
@@ -632,7 +650,6 @@ onclick="openAddModal()"
 
 </div>
 
-
 <input
 id="search"
 type="search"
@@ -640,15 +657,14 @@ placeholder="🔎 ابحث برقم الطلبية أو اسم الزبون أو
 oninput="renderOrders()"
 >
 
-<div
-id="ordersList"
-class="order-list"
-></div>
+<div id="ordersList" class="order-list"></div>
 
 </div>
 
 </section>
 
+
+<!-- PRODUCTION -->
 
 <section
 id="production"
@@ -661,15 +677,14 @@ class="hidden"
 🏭 مراحل العمل
 </h2>
 
-<div
-id="stageList"
-class="order-list"
-></div>
+<div id="stageList" class="order-list"></div>
 
 </div>
 
 </section>
 
+
+<!-- USERS -->
 
 <section
 id="users"
@@ -708,6 +723,8 @@ id="message"
 class="message"
 ></div>
 
+
+<!-- ORDER MODAL -->
 
 <div
 id="orderModal"
@@ -759,7 +776,6 @@ required
 placeholder="اسم الزبون"
 >
 
-
 <div class="row">
 
 <div>
@@ -775,7 +791,6 @@ placeholder="05xxxxxxxx"
 >
 
 </div>
-
 
 <div>
 
@@ -793,7 +808,6 @@ required
 
 </div>
 
-
 <label>
 ملاحظات
 </label>
@@ -803,7 +817,6 @@ id="notes"
 rows="4"
 placeholder="اكتب الملاحظات"
 ></textarea>
-
 
 <label class="check">
 
@@ -815,7 +828,6 @@ id="urgent"
 ⭐ هذه الطلبية مهمة جدًا
 
 </label>
-
 
 <div class="actions">
 
@@ -842,6 +854,8 @@ onclick="closeModal()"
 </div>
 
 
+<!-- USER MODAL -->
+
 <div
 id="userModal"
 class="modal hidden"
@@ -864,7 +878,6 @@ onclick="closeUserModal()"
 
 </div>
 
-
 <form id="userForm">
 
 <label>
@@ -877,7 +890,6 @@ required
 placeholder="مثال: ahmad"
 >
 
-
 <label>
 الاسم الكامل
 </label>
@@ -887,7 +899,6 @@ id="newFullName"
 required
 placeholder="اسم الموظف"
 >
-
 
 <label>
 البريد الإلكتروني
@@ -899,7 +910,6 @@ type="email"
 required
 placeholder="البريد المستخدم في Auth"
 >
-
 
 <label>
 كلمة المرور
@@ -913,51 +923,23 @@ minlength="6"
 placeholder="كلمة المرور"
 >
 
-
 <label>
 القسم
 </label>
 
 <select id="newRole">
 
-<option value="المدير">
-👑 المدير
-</option>
-
-<option value="القص">
-✂️ القص
-</option>
-
-<option value="الكنت">
-🔧 الكنت
-</option>
-
-<option value="CNC">
-⚙️ CNC
-</option>
-
-<option value="التركيب">
-🛠️ التركيب
-</option>
-
-<option value="الدهان">
-🎨 الدهان
-</option>
-
-<option value="التغليف">
-📦 التغليف
-</option>
-
-<option value="التحميل">
-🚚 التحميل
-</option>
-
-<option value="التسليم">
-✅ التسليم
-</option>
+<option value="المدير">👑 المدير</option>
+<option value="القص">✂️ القص</option>
+<option value="الكنت">🔧 الكنت</option>
+<option value="CNC">⚙️ CNC</option>
+<option value="التركيب">🛠️ التركيب</option>
+<option value="الدهان">🎨 الدهان</option>
+<option value="التغليف">📦 التغليف</option>
+<option value="التحميل">🚚 التحميل</option>
+<option value="التسليم">✅ التسليم</option>
 
 </select>
-
 
 <label class="check">
 
@@ -970,7 +952,6 @@ checked
 الحساب فعال
 
 </label>
-
 
 <div class="actions">
 
@@ -999,6 +980,10 @@ onclick="closeUserModal()"
 
 <script>
 
+/* =====================================================
+   SUPABASE
+===================================================== */
+
 const SUPABASE_URL =
 "https://bvrfrcmblwzuqprjknam.supabase.co";
 
@@ -1008,24 +993,85 @@ const SUPABASE_KEY =
 
 let orders = [];
 let currentProfile = null;
+let currentAuthUser = null;
 let role = "";
 
 
-/* =========================
-   SUPABASE REQUEST
-========================= */
+/* =====================================================
+   HELPERS
+===================================================== */
 
-async function request(
-path,
-method="GET",
-body=null
-){
+function esc(value){
+
+return String(value ?? "")
+.replace(/[&<>"']/g,function(char){
+
+return {
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+}[char];
+
+});
+
+}
+
+
+function showMessage(text){
+
+const box =
+document.getElementById("message");
+
+box.textContent = text;
+box.style.display = "block";
+
+setTimeout(function(){
+box.style.display = "none";
+},3000);
+
+}
+
+
+function showLoginError(text){
+
+const box =
+document.getElementById("loginError");
+
+box.textContent = "❌ " + text;
+box.style.display = "block";
+
+}
+
+
+function clearLoginError(){
+
+const box =
+document.getElementById("loginError");
+
+box.textContent = "";
+box.style.display = "none";
+
+}
+
+
+/* =====================================================
+   SUPABASE REST
+===================================================== */
+
+async function request(path,method="GET",body=null){
 
 const token =
-localStorage.getItem(
-"supabase_access_token"
-) || SUPABASE_KEY;
+localStorage.getItem("supabase_access_token");
 
+if(!token){
+
+throw new Error(
+"لا توجد جلسة دخول صالحة."
+);
+
+}
 
 const options = {
 
@@ -1040,7 +1086,6 @@ headers:{
 
 };
 
-
 if(body !== null){
 
 options.body =
@@ -1048,20 +1093,16 @@ JSON.stringify(body);
 
 }
 
-
 const response =
 await fetch(
 SUPABASE_URL + path,
 options
 );
 
-
 const text =
 await response.text();
 
-
-let data;
-
+let data = null;
 
 try{
 
@@ -1074,10 +1115,9 @@ null;
 
 }catch{
 
-data=text;
+data = text;
 
 }
-
 
 if(!response.ok){
 
@@ -1104,28 +1144,22 @@ data ||
 
 }
 
-
 return data;
 
 }
 
 
-/* =========================
-   AUTH REQUEST
-========================= */
+/* =====================================================
+   AUTH
+===================================================== */
 
-async function auth(
-path,
-body
-){
+async function authLogin(email,password){
 
 const response =
 await fetch(
 SUPABASE_URL+
-"/auth/v1/"+
-path,
+"/auth/v1/token?grant_type=password",
 {
-
 method:"POST",
 
 headers:{
@@ -1133,208 +1167,194 @@ headers:{
 "Content-Type":"application/json"
 },
 
-body:
-JSON.stringify(body)
-
+body:JSON.stringify({
+email:email,
+password:password
+})
 }
 );
-
 
 const data =
 await response.json();
 
-
 if(!response.ok){
 
 throw new Error(
-
 data.error_description ||
 data.msg ||
 data.message ||
-"فشل تسجيل الدخول"
-
+"بيانات الدخول غير صحيحة"
 );
 
 }
-
 
 return data;
 
 }
 
 
-/* =========================
-   MESSAGE
-========================= */
+/* =====================================================
+   GET USERNAME EMAIL
+===================================================== */
 
-function msg(text){
+async function getLoginEmail(username){
 
-const box =
-document.getElementById(
-"message"
-);
+/*
+هذا RPC يجب أن يكون موجودًا في Supabase.
+وظيفته تحويل اسم المستخدم إلى البريد.
+*/
 
-box.textContent=text;
+const response =
+await fetch(
+SUPABASE_URL+
+"/rest/v1/rpc/get_login_email",
+{
+method:"POST",
 
-box.style.display="block";
-
-setTimeout(
-()=>{
-box.style.display="none";
+headers:{
+"apikey":SUPABASE_KEY,
+"Content-Type":"application/json"
 },
-2500
+
+body:JSON.stringify({
+p_username:username
+})
+}
+);
+
+const text =
+await response.text();
+
+let data;
+
+try{
+
+data =
+text
+?
+JSON.parse(text)
+:
+null;
+
+}catch{
+
+data=text;
+
+}
+
+if(!response.ok){
+
+throw new Error(
+data?.message ||
+data?.hint ||
+"تعذر العثور على البريد المرتبط باسم المستخدم"
 );
 
 }
 
+if(typeof data === "string"){
 
-/* =========================
-   ESCAPE HTML
-========================= */
-
-function esc(value){
-
-return String(
-value ?? ""
-)
-
-.replace(
-/[&<>"']/g,
-function(char){
-
-return {
-
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#039;"
-
-}[char];
+return data;
 
 }
-);
+
+if(Array.isArray(data)){
+
+if(!data.length){
+return null;
+}
+
+return data[0]?.email ||
+data[0] ||
+null;
+
+}
+
+return data?.email || null;
 
 }
 
 
-/* =========================
+/* =====================================================
    LOGIN
-========================= */
+===================================================== */
 
 async function login(){
 
+clearLoginError();
+
 const username =
 document
-.getElementById(
-"loginUsername"
-)
+.getElementById("loginUsername")
 .value
 .trim();
 
-
 const password =
 document
-.getElementById(
-"loginPassword"
-)
+.getElementById("loginPassword")
 .value;
 
-
-const errorBox =
-document.getElementById(
-"loginError"
-);
-
-
-errorBox.style.display="none";
-
+const button =
+document.getElementById("loginButton");
 
 if(!username || !password){
 
-errorBox.textContent =
-"يرجى إدخال اسم المستخدم وكلمة المرور";
-
-errorBox.style.display="block";
+showLoginError(
+"يرجى إدخال اسم المستخدم وكلمة المرور"
+);
 
 return;
 
 }
 
+button.disabled = true;
+button.textContent = "⏳ جارٍ تسجيل الدخول...";
 
 try{
 
-
 /*
-نبحث عن البريد الإلكتروني
-باستخدام RPC الموجود في Supabase
+1. الحصول على البريد من اسم المستخدم
 */
 
-const result =
-await request(
-"/rest/v1/rpc/get_login_email",
-"POST",
-{
-p_username:username
-}
-);
-
-
-let email=null;
-
-
-if(typeof result === "string"){
-
-email=result;
-
-}
-
-else if(Array.isArray(result)){
-
-email =
-result[0]?.email ||
-result[0] ||
-null;
-
-}
-
-else if(result){
-
-email =
-result.email ||
-result;
-
-}
-
+const email =
+await getLoginEmail(username);
 
 if(!email){
 
 throw new Error(
-"اسم المستخدم غير موجود أو الحساب غير فعال"
+"اسم المستخدم غير موجود أو غير فعال."
 );
 
 }
 
 
 /*
-تسجيل الدخول إلى Supabase Auth
+2. تسجيل الدخول في Supabase Auth
 */
 
 const session =
-await auth(
-"token?grant_type=password",
-{
-email:email,
-password:password
-}
+await authLogin(
+email,
+password
 );
 
+if(!session.access_token){
+
+throw new Error(
+"لم يتم الحصول على جلسة دخول من Supabase."
+);
+
+}
+
+
+/*
+3. حفظ الجلسة
+*/
 
 localStorage.setItem(
 "supabase_access_token",
 session.access_token
 );
-
 
 if(session.refresh_token){
 
@@ -1342,183 +1362,288 @@ localStorage.setItem(
 "supabase_refresh_token",
 session.refresh_token
 );
-
 }
 
 
 /*
-مهم جدًا:
-نستخدم user.id القادم من Auth
-ثم نبحث عنه في profiles.id
+4. الحصول على Auth User
+*/
+
+const authUser =
+session.user;
+
+if(!authUser?.id){
+
+throw new Error(
+"لم يتم الحصول على معرف حساب Auth."
+);
+
+}
+
+currentAuthUser =
+authUser;
+
+
+/*
+5. تحميل profiles باستخدام Auth ID
 */
 
 await loadProfile(
-session.user.id,
-session.user.email,
-username
+authUser.id,
+authUser.email
 );
 
+
+/*
+6. إظهار التطبيق
+*/
 
 showApp();
 
 await loadOrders();
 
-msg(
-"✅ تم تسجيل الدخول"
+showMessage(
+"✅ تم تسجيل الدخول بنجاح"
 );
-
 
 }catch(error){
 
-console.error(error);
+console.error("LOGIN ERROR:",error);
 
-errorBox.textContent =
-"❌ "+error.message;
+localStorage.removeItem(
+"supabase_access_token"
+);
 
-errorBox.style.display="block";
+localStorage.removeItem(
+"supabase_refresh_token"
+);
+
+showLoginError(
+error.message
+);
+
+}finally{
+
+button.disabled = false;
+button.textContent = "🔐 تسجيل الدخول";
 
 }
 
 }
 
 
-/* =========================
+/* =====================================================
+   LOAD AUTH USER FROM SESSION
+===================================================== */
+
+async function getCurrentAuthUser(){
+
+const token =
+localStorage.getItem(
+"supabase_access_token"
+);
+
+if(!token){
+
+return null;
+
+}
+
+const response =
+await fetch(
+SUPABASE_URL+
+"/auth/v1/user",
+{
+method:"GET",
+
+headers:{
+"apikey":SUPABASE_KEY,
+"Authorization":"Bearer "+token
+}
+}
+);
+
+if(!response.ok){
+
+return null;
+
+}
+
+return await response.json();
+
+}
+
+
+/* =====================================================
    LOAD PROFILE
-========================= */
+===================================================== */
 
-async function loadProfile(
-userId,
-email="",
-username=""
-){
+async function loadProfile(userId,email=""){
 
-currentProfile=null;
+if(!userId){
+
+throw new Error(
+"Auth User ID غير موجود."
+);
+
+}
+
+console.log(
+"Auth User ID:",
+userId
+);
 
 
 /*
-1 - البحث باستخدام profiles.id
-وهو المفترض أن يساوي Auth user.id
+المهم هنا:
+
+profiles.id = auth.uid()
+
+ولا نستخدم auth_id
 */
 
-try{
-
-let data =
-await request(
+const url =
 "/rest/v1/profiles"+
 "?select=id,username,full_name,role,active,email"+
 "&id=eq."+
 encodeURIComponent(userId)+
-"&limit=1"
+"&limit=1";
+
+const response =
+await fetch(
+SUPABASE_URL+url,
+{
+method:"GET",
+
+headers:{
+"apikey":SUPABASE_KEY,
+"Authorization":
+"Bearer "+
+localStorage.getItem(
+"supabase_access_token"
+)
+}
+}
 );
 
+const text =
+await response.text();
 
-if(
-Array.isArray(data) &&
-data.length
-){
-
-currentProfile=data[0];
-
-}
-
-}catch(error){
-
-console.warn(
-"profiles by id:",
-error
-);
-
-}
-
-
-/*
-2 - احتياط:
-البحث بالبريد
-*/
-
-if(!currentProfile && email){
+let data;
 
 try{
 
-let data =
-await request(
+data =
+text
+?
+JSON.parse(text)
+:
+null;
+
+}catch{
+
+data=null;
+
+}
+
+console.log(
+"PROFILE RESPONSE:",
+data
+);
+
+if(!response.ok){
+
+throw new Error(
+"فشل قراءة profiles: "+
+(
+data?.message ||
+data?.hint ||
+JSON.stringify(data)
+)
+);
+
+}
+
+if(
+!Array.isArray(data) ||
+data.length === 0
+){
+
+/*
+محاولة ثانية بالبريد
+*/
+
+if(email){
+
+const emailUrl =
 "/rest/v1/profiles"+
 "?select=id,username,full_name,role,active,email"+
 "&email=eq."+
 encodeURIComponent(email)+
-"&limit=1"
+"&limit=1";
+
+const emailResponse =
+await fetch(
+SUPABASE_URL+emailUrl,
+{
+headers:{
+"apikey":SUPABASE_KEY,
+"Authorization":
+"Bearer "+
+localStorage.getItem(
+"supabase_access_token"
+)
+}
+}
 );
 
+const emailData =
+await emailResponse.json();
 
 if(
-Array.isArray(data) &&
-data.length
+Array.isArray(emailData) &&
+emailData.length
 ){
 
-currentProfile=data[0];
+currentProfile =
+emailData[0];
 
-}
-
-}catch(error){
-
-console.warn(
-"profiles by email:",
-error
-);
-
-}
-
-}
-
-
-/*
-3 - احتياط:
-البحث باسم المستخدم
-*/
-
-if(!currentProfile && username){
-
-try{
-
-let data =
-await request(
-"/rest/v1/profiles"+
-"?select=id,username,full_name,role,active,email"+
-"&username=eq."+
-encodeURIComponent(username)+
-"&limit=1"
-);
-
-
-if(
-Array.isArray(data) &&
-data.length
-){
-
-currentProfile=data[0];
-
-}
-
-}catch(error){
-
-console.warn(
-"profiles by username:",
-error
-);
-
-}
-
-}
-
-
-/*
-إذا لم نجد الملف
-*/
-
-if(!currentProfile){
+}else{
 
 throw new Error(
-"لم يتم العثور على ملف المستخدم عبر id. تأكد من أن profiles.id يساوي Auth User ID وأن RLS تسمح للمستخدم بقراءة صفه."
+"لم يتم العثور على ملف المستخدم. Auth ID = "+
+userId+
+". يجب أن يكون profiles.id مساويًا لهذا الرقم."
+);
+
+}
+
+}else{
+
+throw new Error(
+"لم يتم العثور على ملف المستخدم. Auth ID = "+
+userId+
+". يجب أن يكون profiles.id مساويًا لهذا الرقم."
+);
+
+}
+
+}else{
+
+currentProfile =
+data[0];
+
+}
+
+
+if(
+String(currentProfile.id)
+!==
+String(userId)
+){
+
+throw new Error(
+"تم العثور على Profile ولكن الـ ID غير مطابق لحساب Auth."
 );
 
 }
@@ -1529,16 +1654,14 @@ currentProfile.active === false
 ){
 
 throw new Error(
-"هذا الحساب غير فعال"
+"هذا الحساب غير فعال."
 );
 
 }
 
-
 role =
 currentProfile.role ||
 "";
-
 
 document.getElementById(
 "currentUser"
@@ -1555,82 +1678,70 @@ currentProfile.username ||
 +
 role;
 
+console.log(
+"PROFILE LOADED:",
+currentProfile
+);
+
 }
 
 
-/* =========================
+/* =====================================================
    SHOW APP
-========================= */
+===================================================== */
 
 function showApp(){
 
 document
-.getElementById(
-"loginPage"
-)
+.getElementById("loginPage")
 .classList
 .add("hidden");
 
-
 document
-.getElementById(
-"app"
-)
+.getElementById("app")
 .classList
 .remove("hidden");
-
 
 applyPermissions();
 
 }
 
 
-/* =========================
-   CHECK SESSION
-========================= */
+/* =====================================================
+   SESSION CHECK
+===================================================== */
 
 async function checkSession(){
 
-const token =
-localStorage.getItem(
-"supabase_access_token"
-);
+try{
 
+const user =
+await getCurrentAuthUser();
 
-if(!token){
+if(!user){
 
 return;
 
 }
 
-
-try{
-
-const user =
-await request(
-"/auth/v1/user"
-);
-
+currentAuthUser =
+user;
 
 await loadProfile(
 user.id,
-user.email,
-""
+user.email
 );
-
 
 showApp();
 
 await loadOrders();
 
-
 }catch(error){
 
 console.warn(
-"Session invalid:",
+"SESSION ERROR:",
 error
 );
-
 
 localStorage.removeItem(
 "supabase_access_token"
@@ -1645,11 +1756,41 @@ localStorage.removeItem(
 }
 
 
-/* =========================
+/* =====================================================
    LOGOUT
-========================= */
+===================================================== */
 
-function logout(){
+async function logout(){
+
+try{
+
+const token =
+localStorage.getItem(
+"supabase_access_token"
+);
+
+if(token){
+
+await fetch(
+SUPABASE_URL+
+"/auth/v1/logout",
+{
+method:"POST",
+
+headers:{
+"apikey":SUPABASE_KEY,
+"Authorization":"Bearer "+token
+}
+}
+);
+
+}
+
+}catch(error){
+
+console.warn(error);
+
+}
 
 localStorage.removeItem(
 "supabase_access_token"
@@ -1664,37 +1805,29 @@ location.reload();
 }
 
 
-/* =========================
+/* =====================================================
    PERMISSIONS
-========================= */
+===================================================== */
 
 function applyPermissions(){
 
 const isAdmin =
 role === "المدير";
 
-
 document
-.getElementById(
-"usersNav"
-)
+.getElementById("usersNav")
 .classList
 .toggle(
 "hidden",
 !isAdmin
 );
 
-
 document
-.querySelectorAll(
-".admin-only"
-)
+.querySelectorAll(".admin-only")
 .forEach(
-button=>{
+element=>{
 
-button
-.classList
-.toggle(
+element.classList.toggle(
 "hidden",
 !isAdmin
 );
@@ -1705,36 +1838,28 @@ button
 }
 
 
-/* =========================
+/* =====================================================
    STAGES
-========================= */
+===================================================== */
 
 const stages = [
 
 ["في العمل","المدير"],
-
 ["تم القص","القص"],
-
 ["تم الكنت","الكنت"],
-
 ["تم CNC","CNC"],
-
 ["تم التركيب","التركيب"],
-
 ["تم الدهان","الدهان"],
-
 ["تم التغليف","التغليف"],
-
 ["تم التحميل","التحميل"],
-
 ["تم التسليم","التسليم"]
 
 ];
 
 
-/* =========================
+/* =====================================================
    LOAD ORDERS
-========================= */
+===================================================== */
 
 async function loadOrders(){
 
@@ -1747,7 +1872,6 @@ await request(
 "&order=created_at.desc"
 );
 
-
 orders =
 Array.isArray(data)
 ?
@@ -1755,14 +1879,14 @@ data
 :
 [];
 
-
 renderAll();
-
 
 }catch(error){
 
-console.error(error);
-
+console.error(
+"ORDERS ERROR:",
+error
+);
 
 document.getElementById(
 "latestOrders"
@@ -1775,20 +1899,25 @@ esc(error.message)+
 "</small>"+
 "</div>";
 
-
 document.getElementById(
 "ordersList"
 ).innerHTML =
-"<div class='empty'>❌ تعذر تحميل الطلبيات</div>";
+
+"<div class='empty'>"+
+"❌ تعذر تحميل الطلبيات<br>"+
+"<small>"+
+esc(error.message)+
+"</small>"+
+"</div>";
 
 }
 
 }
 
 
-/* =========================
+/* =====================================================
    NORMALIZE ORDER
-========================= */
+===================================================== */
 
 function norm(order){
 
@@ -1797,74 +1926,53 @@ return{
 id:order.id,
 
 num:
-order.order_number ||
-"",
+order.order_number || "",
 
 customer:
-order.customer_name ||
-"",
+order.customer_name || "",
 
 phone:
-order.phone ||
-"",
+order.phone || "",
 
 due:
-order.due_date ||
-"",
+order.due_date || "",
 
 notes:
-order.notes ||
-"",
+order.notes || "",
 
 urgent:
 !!order.urgent,
 
 stage:
-Number(
-order.stage ||
-0
-)
+Number(order.stage || 0)
 
 };
 
 }
 
 
-/* =========================
+/* =====================================================
    OVERDUE
-========================= */
+===================================================== */
 
 function overdue(order){
 
 return(
-
 order.due &&
-
 new Date(
-order.due+
-"T23:59:59"
-)
-<
-new Date()
-
-&&
-
-order.stage <
-stages.length-1
-
+order.due+"T23:59:59"
+) < new Date() &&
+order.stage < stages.length-1
 );
 
 }
 
 
-/* =========================
-   SECTIONS
-========================= */
+/* =====================================================
+   SECTION
+===================================================== */
 
-function showSection(
-id,
-button
-){
+function showSection(id,button){
 
 document
 .querySelectorAll(
@@ -1872,91 +1980,66 @@ document
 )
 .forEach(
 section=>{
-
-section
-.classList
-.add("hidden");
-
+section.classList.add("hidden");
 }
 );
-
 
 document
 .getElementById(id)
 .classList
 .remove("hidden");
 
-
 document
-.querySelectorAll(
-".nav button"
-)
+.querySelectorAll(".nav button")
 .forEach(
 btn=>{
-
-btn
-.classList
-.remove("active");
-
+btn.classList.remove("active");
 }
 );
 
-
-button
-.classList
-.add("active");
+button.classList.add("active");
 
 }
 
 
-/* =========================
-   ADD ORDER
-========================= */
+/* =====================================================
+   ADD MODAL
+===================================================== */
 
 function openAddModal(){
 
 if(role !== "المدير"){
 
 alert(
-"ليس لديك صلاحية إضافة طلبية"
+"ليس لديك صلاحية إضافة طلبية."
 );
 
 return;
 
 }
 
-
 document
-.getElementById(
-"orderForm"
-)
+.getElementById("orderForm")
 .reset();
-
 
 document.getElementById(
 "modalTitle"
 ).textContent =
 "➕ إضافة طلبية";
 
-
 document.getElementById(
 "editId"
-).value="";
-
+).value = "";
 
 document.getElementById(
 "due"
 ).value =
-
 new Date()
 .toISOString()
 .slice(0,10);
 
-
 document
-.getElementById(
-"orderModal"
-)
+.getElementById("orderModal")
 .classList
 .remove("hidden");
 
@@ -1966,106 +2049,78 @@ document
 function closeModal(){
 
 document
-.getElementById(
-"orderModal"
-)
+.getElementById("orderModal")
 .classList
 .add("hidden");
 
 }
 
 
-/* =========================
+/* =====================================================
    SAVE ORDER
-========================= */
+===================================================== */
 
 document
-.getElementById(
-"orderForm"
-)
+.getElementById("orderForm")
 .addEventListener(
 "submit",
-async function(e){
+async function(event){
 
-e.preventDefault();
-
+event.preventDefault();
 
 if(role !== "المدير"){
 
 alert(
-"ليس لديك صلاحية حفظ الطلبية"
+"ليس لديك صلاحية حفظ الطلبية."
 );
 
 return;
 
 }
 
-
 const id =
-document
-.getElementById(
+document.getElementById(
 "editId"
-)
-.value;
-
+).value;
 
 const payload = {
 
 order_number:
-document
-.getElementById(
+document.getElementById(
 "orderNum"
-)
-.value
-.trim(),
+).value.trim(),
 
 customer_name:
-document
-.getElementById(
+document.getElementById(
 "customer"
-)
-.value
-.trim(),
+).value.trim(),
 
 phone:
-document
-.getElementById(
+document.getElementById(
 "phone"
-)
-.value
-.trim(),
+).value.trim(),
 
 due_date:
-document
-.getElementById(
+document.getElementById(
 "due"
-)
-.value,
+).value,
 
 notes:
-document
-.getElementById(
+document.getElementById(
 "notes"
-)
-.value
-.trim(),
+).value.trim(),
 
 urgent:
-document
-.getElementById(
+document.getElementById(
 "urgent"
-)
-.checked,
+).checked,
 
 updated_at:
-new Date()
-.toISOString()
+new Date().toISOString()
 
 };
 
-
 try{
-
 
 if(id){
 
@@ -2076,11 +2131,9 @@ encodeURIComponent(id),
 payload
 );
 
-
-msg(
+showMessage(
 "✅ تم تعديل الطلبية"
 );
-
 
 }else{
 
@@ -2088,25 +2141,21 @@ payload.stage=0;
 
 delete payload.updated_at;
 
-
 await request(
 "/rest/v1/orders",
 "POST",
 payload
 );
 
-
-msg(
+showMessage(
 "✅ تم حفظ الطلبية"
 );
 
 }
 
-
 closeModal();
 
 await loadOrders();
-
 
 }catch(error){
 
@@ -2122,37 +2171,39 @@ error.message
 });
 
 
-/* =========================
+/* =====================================================
    EDIT ORDER
-========================= */
+===================================================== */
 
 function editOrder(id){
 
 if(role !== "المدير"){
 
 alert(
-"ليس لديك صلاحية التعديل"
+"ليس لديك صلاحية التعديل."
 );
 
 return;
 
 }
-
 
 const order =
 orders
 .map(norm)
 .find(
-x=>String(x.id) === String(id)
+item =>
+String(item.id) === String(id)
 );
 
-
 if(!order){
+
+alert(
+"لم يتم العثور على الطلبية."
+);
 
 return;
 
 }
-
 
 document.getElementById(
 "modalTitle"
@@ -2160,83 +2211,72 @@ document.getElementById(
 "✏️ تعديل الطلبية #"+
 order.num;
 
-
 document.getElementById(
 "editId"
 ).value =
 order.id;
-
 
 document.getElementById(
 "orderNum"
 ).value =
 order.num;
 
-
 document.getElementById(
 "customer"
 ).value =
 order.customer;
-
 
 document.getElementById(
 "phone"
 ).value =
 order.phone;
 
-
 document.getElementById(
 "due"
 ).value =
 order.due;
-
 
 document.getElementById(
 "notes"
 ).value =
 order.notes;
 
-
 document.getElementById(
 "urgent"
 ).checked =
 order.urgent;
 
-
 document
-.getElementById(
-"orderModal"
-)
+.getElementById("orderModal")
 .classList
 .remove("hidden");
 
 }
 
 
-/* =========================
+/* =====================================================
    DELETE ORDER
-========================= */
+===================================================== */
 
 async function deleteOrder(id){
 
 if(role !== "المدير"){
 
 alert(
-"ليس لديك صلاحية الحذف"
+"ليس لديك صلاحية الحذف."
 );
 
 return;
 
 }
 
-
 const order =
 orders
 .map(norm)
 .find(
-x=>String(x.id) === String(id)
+item =>
+String(item.id) === String(id)
 );
-
 
 if(
 !order ||
@@ -2251,7 +2291,6 @@ return;
 
 }
 
-
 try{
 
 await request(
@@ -2260,13 +2299,11 @@ encodeURIComponent(id),
 "DELETE"
 );
 
-
 await loadOrders();
 
-msg(
+showMessage(
 "🗑️ تم حذف الطلبية"
 );
-
 
 }catch(error){
 
@@ -2280,9 +2317,9 @@ error.message
 }
 
 
-/* =========================
+/* =====================================================
    NEXT STAGE
-========================= */
+===================================================== */
 
 async function nextStage(id){
 
@@ -2290,9 +2327,9 @@ const order =
 orders
 .map(norm)
 .find(
-x=>String(x.id) === String(id)
+item =>
+String(item.id) === String(id)
 );
-
 
 if(!order){
 
@@ -2300,10 +2337,8 @@ return;
 
 }
 
-
 const next =
 order.stage + 1;
-
 
 if(next >= stages.length){
 
@@ -2311,20 +2346,18 @@ return;
 
 }
 
-
 if(
 role !== "المدير" &&
 stages[next][1] !== role
 ){
 
 alert(
-"هذه المرحلة ليست ضمن صلاحيات قسمك"
+"هذه المرحلة ليست ضمن صلاحيات قسمك."
 );
 
 return;
 
 }
-
 
 try{
 
@@ -2335,19 +2368,15 @@ encodeURIComponent(id),
 {
 stage:next,
 updated_at:
-new Date()
-.toISOString()
+new Date().toISOString()
 }
 );
 
-
 await loadOrders();
 
-
-msg(
+showMessage(
 "✅ تم تحديث المرحلة"
 );
-
 
 }catch(error){
 
@@ -2361,9 +2390,9 @@ error.message
 }
 
 
-/* =========================
+/* =====================================================
    DETAILS
-========================= */
+===================================================== */
 
 function details(id){
 
@@ -2371,16 +2400,15 @@ const order =
 orders
 .map(norm)
 .find(
-x=>String(x.id) === String(id)
+item =>
+String(item.id) === String(id)
 );
-
 
 if(!order){
 
 return;
 
 }
-
 
 alert(
 
@@ -2416,15 +2444,18 @@ order.customer+
 }
 
 
-/* =========================
+/* =====================================================
    ORDER HTML
-========================= */
+===================================================== */
 
 function orderHtml(order){
 
+const isOverdue =
+overdue(order);
+
 return `
 
-<div class="order ${order.urgent?'urgent':''}">
+<div class="order ${order.urgent ? "urgent" : ""}">
 
 <div class="order-head">
 
@@ -2446,11 +2477,10 @@ ${esc(order.customer)}
 
 </div>
 
-
-<span class="badge ${overdue(order)?'overdue':''}">
+<span class="badge ${isOverdue ? "overdue" : ""}">
 
 ${
-overdue(order)
+isOverdue
 ?
 "متأخرة"
 :
@@ -2495,8 +2525,7 @@ ${esc(order.due || "-")}
 
 <b>
 ${esc(
-stages[order.stage]?.[1] ||
-"-"
+stages[order.stage]?.[1] || "-"
 )}
 </b>
 
@@ -2539,7 +2568,6 @@ onclick="deleteOrder('${order.id}')"
 `
 
 :
-
 ""
 }
 
@@ -2556,7 +2584,7 @@ class="primary"
 onclick="nextStage('${order.id}')"
 >
 ➡️ تم ${esc(
-stages[order.stage+1][1]
+stages[order.stage+1]?.[1] || ""
 )}
 </button>
 
@@ -2583,41 +2611,38 @@ stages[order.stage+1][1]
 }
 
 
-/* =========================
+/* =====================================================
    DASHBOARD
-========================= */
+===================================================== */
 
 function renderDashboard(){
 
 const list =
 orders.map(norm);
 
-
 document.getElementById(
 "totalCount"
 ).textContent =
 list.length;
-
 
 document.getElementById(
 "activeCount"
 ).textContent =
 
 list.filter(
-o=>
-o.stage <
+order =>
+order.stage <
 stages.length-1
 ).length;
-
 
 document.getElementById(
 "urgentCount"
 ).textContent =
 
 list.filter(
-o=>o.urgent
+order =>
+order.urgent
 ).length;
-
 
 document.getElementById(
 "overdueCount"
@@ -2626,7 +2651,6 @@ document.getElementById(
 list.filter(
 overdue
 ).length;
-
 
 document.getElementById(
 "latestOrders"
@@ -2644,45 +2668,38 @@ list
 }
 
 
-/* =========================
+/* =====================================================
    SEARCH
-========================= */
+===================================================== */
 
 function renderOrders(){
 
-const q =
+const input =
+document.getElementById("search");
 
+const q =
 (
-document
-.getElementById(
-"search"
-)
-?.value ||
+input?.value ||
 ""
 )
-
 .trim()
 .toLowerCase();
-
 
 const list =
 orders
 .map(norm)
 .filter(
-order=>
+order =>
 
 [
 order.num,
 order.customer,
 order.phone
 ]
-
 .join(" ")
 .toLowerCase()
 .includes(q)
-
 );
-
 
 document.getElementById(
 "ordersList"
@@ -2699,32 +2716,28 @@ list
 }
 
 
-/* =========================
+/* =====================================================
    STAGES
-========================= */
+===================================================== */
 
 function renderStages(){
 
 const list =
 orders.map(norm);
 
-
 document.getElementById(
 "stageList"
 ).innerHTML =
 
 stages
-
 .map(
 (stage,index)=>{
 
 const stageOrders =
-
 list.filter(
-order=>
+order =>
 order.stage === index
 );
-
 
 return `
 
@@ -2743,18 +2756,15 @@ ${stage[0]}
 <div class="customer">
 
 القسم المسؤول:
-
 ${stage[1]}
 
 </div>
 
 </div>
 
-
 <span class="badge">
 
 ${stageOrders.length}
-
 طلبية
 
 </span>
@@ -2776,9 +2786,7 @@ stageOrders
 `
 
 <div class="empty">
-
 لا توجد طلبيات في هذه المرحلة
-
 </div>
 
 `
@@ -2790,17 +2798,15 @@ stageOrders
 `;
 
 }
-
 )
-
 .join("");
 
 }
 
 
-/* =========================
+/* =====================================================
    USERS
-========================= */
+===================================================== */
 
 async function loadUsers(){
 
@@ -2810,7 +2816,6 @@ return;
 
 }
 
-
 try{
 
 const users =
@@ -2819,7 +2824,6 @@ await request(
 "?select=id,username,full_name,role,active,email"+
 "&order=created_at.desc"
 );
-
 
 document.getElementById(
 "usersList"
@@ -2839,7 +2843,8 @@ user=>`
 
 ${esc(
 user.full_name ||
-user.username
+user.username ||
+""
 )}
 
 </div>
@@ -2847,18 +2852,17 @@ user.username
 <div class="customer">
 
 @${esc(
-user.username
+user.username || ""
 )}
 
 </div>
 
 </div>
 
-
 <span class="badge">
 
 ${esc(
-user.role
+user.role || ""
 )}
 
 </span>
@@ -2874,11 +2878,13 @@ user.role
 
 <b>
 
-${user.active
+${
+user.active
 ?
 "فعال"
 :
-"متوقف"}
+"متوقف"
+}
 
 </b>
 
@@ -2890,11 +2896,7 @@ ${user.active
 القسم
 
 <b>
-
-${esc(
-user.role
-)}
-
+${esc(user.role || "-")}
 </b>
 
 </div>
@@ -2905,12 +2907,7 @@ user.role
 البريد
 
 <b>
-
-${esc(
-user.email ||
-"-"
-)}
-
+${esc(user.email || "-")}
 </b>
 
 </div>
@@ -2921,15 +2918,18 @@ user.email ||
 
 `
 )
-
 .join("")
 
 ||
 
 "<div class='empty'>لا يوجد مستخدمون</div>";
 
-
 }catch(error){
+
+console.error(
+"USERS ERROR:",
+error
+);
 
 document.getElementById(
 "usersList"
@@ -2947,40 +2947,32 @@ esc(error.message)+
 }
 
 
-/* =========================
+/* =====================================================
    USER MODAL
-========================= */
+===================================================== */
 
 function openUserModal(){
 
 if(role !== "المدير"){
 
 alert(
-"هذه الصفحة للمدير فقط"
+"هذه الصفحة للمدير فقط."
 );
 
 return;
 
 }
 
-
 document
-.getElementById(
-"userForm"
-)
+.getElementById("userForm")
 .reset();
-
 
 document.getElementById(
 "newActive"
-)
-.checked=true;
-
+).checked = true;
 
 document
-.getElementById(
-"userModal"
-)
+.getElementById("userModal")
 .classList
 .remove("hidden");
 
@@ -2990,9 +2982,7 @@ document
 function closeUserModal(){
 
 document
-.getElementById(
-"userModal"
-)
+.getElementById("userModal")
 .classList
 .add("hidden");
 
@@ -3000,35 +2990,31 @@ document
 
 
 /*
-لا ننشئ Auth user من المتصفح.
-يجب إنشاء المستخدم بواسطة Edge Function
-تستخدم service_role بشكل آمن.
+إنشاء Auth User يحتاج Edge Function
+آمنة تحتوي service_role.
+
+لا نضع service_role داخل index.html.
 */
 
 document
-.getElementById(
-"userForm"
-)
+.getElementById("userForm")
 .addEventListener(
 "submit",
-function(e){
+function(event){
 
-e.preventDefault();
-
+event.preventDefault();
 
 alert(
-
-"إنشاء مستخدم Auth يحتاج Edge Function آمنة في Supabase. لا تضع service_role key داخل index.html."
-
+"ميزة إنشاء مستخدم Auth تحتاج Edge Function آمنة في Supabase."
 );
 
 }
 );
 
 
-/* =========================
+/* =====================================================
    RENDER ALL
-========================= */
+===================================================== */
 
 function renderAll(){
 
@@ -3037,7 +3023,6 @@ renderDashboard();
 renderOrders();
 
 renderStages();
-
 
 if(role === "المدير"){
 
@@ -3048,23 +3033,24 @@ loadUsers();
 }
 
 
-/* =========================
+/* =====================================================
    START
-========================= */
+===================================================== */
 
 checkSession();
 
 
-if(
-"serviceWorker"
-in navigator
-){
+if("serviceWorker" in navigator){
 
 navigator
 .serviceWorker
 .register("./sw.js")
 .catch(
-console.log
+error =>
+console.warn(
+"Service Worker:",
+error
+)
 );
 
 }
