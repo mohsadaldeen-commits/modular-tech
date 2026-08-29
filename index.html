@@ -2,422 +2,803 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
 <title>MODULAR TECH</title>
-<meta name="theme-color" content="#0f172a">
+
+<meta name="theme-color" content="#0b1220">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 <link rel="manifest" href="manifest.webmanifest">
 
 <style>
-*{box-sizing:border-box}
+:root{
+  --bg:#f4f7fb;
+  --card:#ffffff;
+  --text:#172033;
+  --muted:#718096;
+  --border:#e5eaf1;
+  --primary:#2563eb;
+  --primary2:#1d4ed8;
+  --success:#16a34a;
+  --danger:#dc2626;
+  --warning:#f59e0b;
+  --dark:#0b1220;
+  --dark2:#111b2e;
+  --shadow:0 10px 35px rgba(15,23,42,.08);
+  --radius:20px;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
 
 body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#f1f5f9;
-color:#172033
+  margin:0;
+  font-family:
+    Arial,
+    "Noto Sans Hebrew",
+    "Segoe UI",
+    sans-serif;
+  background:
+    radial-gradient(circle at top right,#eaf2ff 0,transparent 30%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
 }
 
-.hidden{display:none!important}
-
-#loginPage{
-min-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:20px;
-background:linear-gradient(135deg,#0f172a,#1e3a5f)
-}
-
-.login-box{
-width:100%;
-max-width:420px;
-background:#fff;
-border-radius:24px;
-padding:30px;
-box-shadow:0 20px 60px #0005
-}
-
-.login-logo{
-text-align:center;
-font-size:28px;
-font-weight:bold;
-color:#102a43
-}
-
-.login-sub{
-text-align:center;
-color:#687386;
-margin:8px 0 25px
-}
-
-label{
-display:block;
-font-weight:bold;
-font-size:14px;
-margin-bottom:6px
-}
-
-input,textarea,select{
-width:100%;
-padding:12px;
-margin:6px 0 12px;
-border:1px solid #d5dde8;
-border-radius:9px;
-font-size:15px;
-font-family:inherit
-}
-
-.login-btn{
-width:100%;
-padding:14px;
-background:#1f6feb;
-color:#fff;
-font-size:16px;
-border:0;
-border-radius:12px;
-font-weight:bold;
-cursor:pointer
-}
-
-.login-error{
-background:#fee2e2;
-color:#991b1b;
-padding:12px;
-border-radius:10px;
-margin-bottom:15px;
-display:none;
-font-weight:bold;
-white-space:pre-line
-}
-
-header{
-background:#0f172a;
-color:#fff;
-padding:15px 20px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-position:sticky;
-top:0;
-z-index:20
-}
-
-.logo{
-font-size:21px;
-font-weight:bold
-}
-
-.user{
-font-size:13px;
-opacity:.9
-}
-
-.logout{
-background:#dc2626;
-color:#fff;
-padding:8px 12px;
-margin-right:10px
-}
-
-.container{
-max-width:1250px;
-margin:auto;
-padding:18px
-}
-
-.nav{
-display:flex;
-gap:8px;
-overflow-x:auto;
-margin-bottom:18px
-}
-
-.nav button{
-white-space:nowrap;
-border:0;
-border-radius:10px;
-padding:11px 16px;
-background:#fff;
-color:#172033;
-font-weight:bold;
-cursor:pointer
-}
-
-.nav button.active{
-background:#1f6feb;
-color:#fff
-}
-
-.stats{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:14px;
-margin-bottom:18px
-}
-
-.stat,.panel{
-background:#fff;
-border-radius:16px;
-box-shadow:0 3px 14px #0000000b
-}
-
-.stat{
-padding:18px
-}
-
-.stat-title{
-font-size:13px;
-color:#687386
-}
-
-.stat-number{
-font-size:30px;
-font-weight:bold;
-margin-top:8px
-}
-
-.panel{
-padding:18px;
-margin-bottom:18px
-}
-
-.panel h2{
-margin-top:0
-}
-
-.row{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px
+button,
+input,
+textarea,
+select{
+  font-family:inherit;
 }
 
 button{
-border:0;
-border-radius:9px;
-padding:10px 14px;
-cursor:pointer;
-font-weight:bold
+  cursor:pointer;
 }
 
-.primary{
-background:#1f6feb;
-color:#fff
+.hidden{
+  display:none!important;
 }
 
-.success{
-background:#198754;
-color:#fff
-}
+/* =========================
+LOGIN
+========================= */
 
-.danger{
-background:#d92d20;
-color:#fff
-}
-
-.secondary{
-background:#e8eef5;
-color:#172033
-}
-
-.actions{
-display:flex;
-gap:7px;
-flex-wrap:wrap;
-margin-top:10px
-}
-
-.order-list{
-display:grid;
-gap:12px
-}
-
-.order{
-border:1px solid #e3e8ef;
-border-radius:14px;
-padding:15px;
-background:#fff
-}
-
-.order.urgent{
-border:2px solid #e04b4b;
-background:#fff8f8
-}
-
-.order-head{
-display:flex;
-justify-content:space-between;
-gap:10px;
-align-items:center
-}
-
-.order-number{
-font-size:18px;
-font-weight:bold
-}
-
-.customer{
-margin-top:8px;
-font-weight:bold
-}
-
-.info{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:8px;
-margin-top:12px
-}
-
-.info-box{
-background:#f6f8fb;
-border-radius:9px;
-padding:9px;
-font-size:12px
-}
-
-.info-box b{
-display:block;
-margin-top:4px;
-font-size:13px
-}
-
-.badge{
-display:inline-block;
-padding:6px 10px;
-border-radius:999px;
-background:#eaf2ff;
-color:#1556a8;
-font-size:12px;
-font-weight:bold
-}
-
-.overdue{
-background:#ffe8e8;
-color:#a61b1b
-}
-
-.empty{
-text-align:center;
-padding:30px;
-color:#687386
-}
-
-.message{
-position:fixed;
-bottom:20px;
-left:20px;
-right:20px;
-max-width:500px;
-margin:auto;
-padding:14px;
-border-radius:12px;
-background:#198754;
-color:#fff;
-font-weight:bold;
-text-align:center;
-display:none;
-z-index:100
-}
-
-.modal{
-position:fixed;
-inset:0;
-background:#0008;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:15px;
-z-index:90
-}
-
-.modal-box{
-background:#fff;
-width:100%;
-max-width:600px;
-max-height:90vh;
-overflow:auto;
-border-radius:18px;
-padding:20px
-}
-
-.modal-head{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:10px
-}
-
-.close{
-background:#e8eef5;
-font-size:20px;
-padding:6px 12px
-}
-
-.check{
-display:flex;
-align-items:center;
-gap:8px;
-margin:5px 0 12px;
-font-weight:bold
-}
-
-.check input{
-width:auto;
-margin:0
-}
-
-.stage-card,.user-card{
-background:#fff;
-border:1px solid #e3e8ef;
-border-radius:14px;
-padding:15px
-}
-
-.user-card{
-margin-bottom:10px
-}
-
-@media(max-width:900px){
-.stats{
-grid-template-columns:repeat(2,1fr)
-}
-}
-
-@media(max-width:600px){
-.container{
-padding:12px
-}
-
-.logo{
-font-size:18px
-}
-
-.user{
-font-size:11px
-}
-
-.stats{
-grid-template-columns:1fr 1fr;
-gap:9px
-}
-
-.stat{
-padding:13px
-}
-
-.stat-number{
-font-size:24px
-}
-
-.row{
-grid-template-columns:1fr
-}
-
-.info{
-grid-template-columns:1fr 1fr
+#loginPage{
+  min-height:100vh;
+  min-height:100dvh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:
+    radial-gradient(circle at 20% 20%,rgba(59,130,246,.22),transparent 30%),
+    radial-gradient(circle at 80% 80%,rgba(14,165,233,.16),transparent 30%),
+    linear-gradient(135deg,#07101f,#0f1f38 55%,#123a64);
 }
 
 .login-box{
-padding:24px
+  width:100%;
+  max-width:440px;
+  background:rgba(255,255,255,.98);
+  border:1px solid rgba(255,255,255,.3);
+  border-radius:30px;
+  padding:34px;
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.25),
+    0 5px 20px rgba(0,0,0,.08);
+  animation:loginIn .45s ease;
+}
+
+@keyframes loginIn{
+  from{
+    opacity:0;
+    transform:translateY(20px) scale(.98);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+.login-icon{
+  width:76px;
+  height:76px;
+  margin:0 auto 18px;
+  border-radius:24px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#2563eb,#0ea5e9);
+  color:white;
+  font-size:34px;
+  box-shadow:0 12px 30px rgba(37,99,235,.3);
+}
+
+.login-logo{
+  text-align:center;
+  font-size:29px;
+  font-weight:900;
+  letter-spacing:.5px;
+  color:#102a43;
+}
+
+.login-sub{
+  text-align:center;
+  color:var(--muted);
+  margin:8px 0 26px;
+  font-size:14px;
+}
+
+.login-language{
+  display:flex;
+  justify-content:center;
+  margin-bottom:20px;
+}
+
+.lang-switch{
+  display:flex;
+  gap:4px;
+  padding:4px;
+  background:#edf2f7;
+  border-radius:12px;
+}
+
+.lang-switch button{
+  border:0;
+  background:transparent;
+  color:#64748b;
+  padding:8px 13px;
+  border-radius:9px;
+  font-weight:800;
+}
+
+.lang-switch button.active{
+  background:white;
+  color:#1d4ed8;
+  box-shadow:0 2px 8px #00000012;
+}
+
+label{
+  display:block;
+  font-weight:800;
+  font-size:13px;
+  margin-bottom:7px;
+}
+
+input,
+textarea,
+select{
+  width:100%;
+  padding:13px 14px;
+  margin:5px 0 15px;
+  border:1px solid #dbe3ed;
+  border-radius:12px;
+  font-size:15px;
+  background:#fff;
+  color:var(--text);
+  outline:none;
+  transition:.2s;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+  border-color:#60a5fa;
+  box-shadow:0 0 0 4px rgba(37,99,235,.1);
+}
+
+.login-btn{
+  width:100%;
+  padding:14px;
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  color:#fff;
+  font-size:16px;
+  border:0;
+  border-radius:13px;
+  font-weight:900;
+  box-shadow:0 10px 20px rgba(37,99,235,.22);
+  transition:.2s;
+}
+
+.login-btn:hover{
+  transform:translateY(-1px);
+}
+
+.login-error{
+  background:#fff1f2;
+  color:#b91c1c;
+  border:1px solid #fecdd3;
+  padding:12px;
+  border-radius:12px;
+  margin-bottom:15px;
+  display:none;
+  font-weight:bold;
+  line-height:1.6;
+}
+
+/* =========================
+HEADER
+========================= */
+
+header{
+  background:
+    linear-gradient(135deg,#0b1220,#111c31);
+  color:#fff;
+  padding:13px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:50;
+  box-shadow:0 5px 25px rgba(0,0,0,.16);
+  backdrop-filter:blur(12px);
+}
+
+.logo-area{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo-mini{
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  background:linear-gradient(135deg,#2563eb,#0ea5e9);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  box-shadow:0 7px 20px rgba(37,99,235,.25);
+}
+
+.logo{
+  font-size:20px;
+  font-weight:900;
+  letter-spacing:.4px;
+}
+
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.user-box{
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;
+  padding:8px 12px;
+}
+
+.user{
+  font-size:13px;
+  opacity:.95;
+}
+
+.header-lang{
+  background:rgba(255,255,255,.08);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.12);
+  padding:8px 11px;
+  border-radius:10px;
+  font-weight:800;
+}
+
+.logout{
+  background:#dc2626;
+  color:#fff;
+  padding:9px 13px;
+  border:0;
+  border-radius:10px;
+  font-weight:800;
+}
+
+/* =========================
+CONTAINER
+========================= */
+
+.container{
+  max-width:1350px;
+  margin:auto;
+  padding:22px;
+}
+
+/* =========================
+NAV
+========================= */
+
+.nav{
+  display:flex;
+  gap:9px;
+  overflow-x:auto;
+  margin-bottom:22px;
+  padding:4px;
+  scrollbar-width:none;
+}
+
+.nav::-webkit-scrollbar{
+  display:none;
+}
+
+.nav button{
+  white-space:nowrap;
+  border:1px solid var(--border);
+  border-radius:13px;
+  padding:11px 17px;
+  background:#fff;
+  color:#334155;
+  font-weight:800;
+  transition:.2s;
+  box-shadow:0 3px 10px #00000006;
+}
+
+.nav button:hover{
+  transform:translateY(-1px);
+}
+
+.nav button.active{
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  color:#fff;
+  border-color:transparent;
+  box-shadow:0 8px 18px rgba(37,99,235,.2);
+}
+
+/* =========================
+STATS
+========================= */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.stat{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  box-shadow:var(--shadow);
+  padding:20px;
+  position:relative;
+  overflow:hidden;
+}
+
+.stat::after{
+  content:"";
+  position:absolute;
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  background:#2563eb10;
+  left:-25px;
+  bottom:-30px;
+}
+
+.stat-title{
+  font-size:13px;
+  color:var(--muted);
+  font-weight:700;
+}
+
+.stat-number{
+  font-size:32px;
+  font-weight:900;
+  margin-top:8px;
+  color:#172033;
+}
+
+/* =========================
+PANELS
+========================= */
+
+.panel{
+  background:rgba(255,255,255,.96);
+  border:1px solid var(--border);
+  border-radius:22px;
+  box-shadow:var(--shadow);
+  padding:20px;
+  margin-bottom:20px;
+}
+
+.panel h2{
+  margin:0;
+  font-size:20px;
+}
+
+.section-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.section-icon{
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#eff6ff;
+  color:#2563eb;
+}
+
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+button{
+  border:0;
+  border-radius:11px;
+  padding:10px 14px;
+  font-weight:800;
+  transition:.18s;
+}
+
+button:hover{
+  transform:translateY(-1px);
+}
+
+.primary{
+  background:#2563eb;
+  color:#fff;
+}
+
+.primary:hover{
+  background:#1d4ed8;
+}
+
+.success{
+  background:#16a34a;
+  color:#fff;
+}
+
+.danger{
+  background:#dc2626;
+  color:#fff;
+}
+
+.secondary{
+  background:#edf2f7;
+  color:#253449;
+}
+
+.actions{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  margin-top:13px;
+}
+
+/* =========================
+ORDERS
+========================= */
+
+.order-list{
+  display:grid;
+  gap:13px;
+}
+
+.order{
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:16px;
+  background:#fff;
+  transition:.2s;
+}
+
+.order:hover{
+  box-shadow:0 8px 25px #0000000b;
+  transform:translateY(-1px);
+}
+
+.order.urgent{
+  border:2px solid #f87171;
+  background:#fff8f8;
+}
+
+.order-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+}
+
+.order-number{
+  font-size:18px;
+  font-weight:900;
+}
+
+.customer{
+  margin-top:6px;
+  font-weight:800;
+}
+
+.info{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+  margin-top:13px;
+}
+
+.info-box{
+  background:#f7f9fc;
+  border:1px solid #eef2f7;
+  border-radius:11px;
+  padding:10px;
+  font-size:12px;
+  color:#718096;
+}
+
+.info-box b{
+  display:block;
+  margin-top:5px;
+  font-size:13px;
+  color:#263449;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#eaf2ff;
+  color:#1556a8;
+  font-size:12px;
+  font-weight:900;
+}
+
+.overdue{
+  background:#ffe8e8;
+  color:#a61b1b;
+}
+
+.empty{
+  text-align:center;
+  padding:35px 20px;
+  color:var(--muted);
+  line-height:1.7;
+}
+
+/* =========================
+STAGES
+========================= */
+
+.stage-card,
+.user-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:16px;
+  box-shadow:0 3px 14px #00000006;
+}
+
+.user-card{
+  margin-bottom:11px;
+}
+
+/* =========================
+MODALS
+========================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(2,6,23,.68);
+  backdrop-filter:blur(5px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+  z-index:100;
+}
+
+.modal-box{
+  background:#fff;
+  width:100%;
+  max-width:620px;
+  max-height:92vh;
+  overflow:auto;
+  border-radius:23px;
+  padding:22px;
+  box-shadow:0 30px 80px #0005;
+  animation:modalIn .25s ease;
+}
+
+@keyframes modalIn{
+  from{
+    opacity:0;
+    transform:translateY(15px) scale(.98);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:13px;
+}
+
+.modal-head h2{
+  margin:0;
+}
+
+.close{
+  background:#edf2f7;
+  color:#334155;
+  font-size:20px;
+  padding:6px 12px;
+}
+
+.check{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:5px 0 12px;
+  font-weight:800;
+}
+
+.check input{
+  width:auto;
+  margin:0;
+  accent-color:#2563eb;
+}
+
+/* =========================
+SEARCH
+========================= */
+
+#search{
+  background:#f8fafc;
+  border-radius:13px;
+  padding:14px;
+  margin:16px 0;
+}
+
+/* =========================
+MESSAGE
+========================= */
+
+.message{
+  position:fixed;
+  bottom:20px;
+  left:20px;
+  right:20px;
+  max-width:520px;
+  margin:auto;
+  padding:14px 17px;
+  border-radius:14px;
+  background:#16a34a;
+  color:#fff;
+  font-weight:900;
+  text-align:center;
+  display:none;
+  z-index:200;
+  box-shadow:0 12px 30px #0003;
+}
+
+/* =========================
+MOBILE
+========================= */
+
+@media(max-width:900px){
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+}
+
+@media(max-width:650px){
+
+  header{
+    padding:11px 12px;
+  }
+
+  .logo-mini{
+    width:37px;
+    height:37px;
+  }
+
+  .logo{
+    font-size:16px;
+  }
+
+  .user-box{
+    display:none;
+  }
+
+  .header-lang{
+    padding:7px 9px;
+    font-size:12px;
+  }
+
+  .logout{
+    padding:8px 10px;
+    font-size:12px;
+  }
+
+  .container{
+    padding:12px;
+  }
+
+  .panel{
+    padding:15px;
+    border-radius:18px;
+  }
+
+  .stats{
+    gap:9px;
+  }
+
+  .stat{
+    padding:14px;
+    border-radius:16px;
+  }
+
+  .stat-number{
+    font-size:25px;
+  }
+
+  .stat-title{
+    font-size:11px;
+  }
+
+  .row{
+    grid-template-columns:1fr;
+  }
+
+  .info{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .order-head{
+    align-items:flex-start;
+  }
+
+  .order-number{
+    font-size:16px;
+  }
+
+  .customer{
+    font-size:14px;
+  }
+
+  .actions button{
+    flex:1;
+    min-width:110px;
+  }
+
+  .login-box{
+    padding:25px 20px;
+    border-radius:24px;
+  }
+
+}
+
+@media(max-width:380px){
+
+  .info{
+    grid-template-columns:1fr;
+  }
+
 }
 </style>
 </head>
@@ -430,43 +811,59 @@ LOGIN
 
 <div id="loginPage">
 
-<div class="login-box">
+  <div class="login-box">
 
-<div class="login-logo">
-MODULAR TECH
-</div>
+    <div class="login-icon">📦</div>
 
-<div class="login-sub">
-نظام إدارة الطلبيات
-</div>
+    <div class="login-logo">
+      MODULAR TECH
+    </div>
 
-<div id="loginError" class="login-error"></div>
+    <div class="login-sub" data-i18n="appSubtitle">
+      نظام إدارة الطلبيات
+    </div>
 
-<label>اسم المستخدم</label>
+    <div class="login-language">
+      <div class="lang-switch">
+        <button id="loginArBtn" onclick="setLanguage('ar')">العربية</button>
+        <button id="loginHeBtn" onclick="setLanguage('he')">עברית</button>
+      </div>
+    </div>
 
-<input
-id="loginUsername"
-autocomplete="username"
-placeholder="أدخل اسم المستخدم"
->
+    <div id="loginError" class="login-error"></div>
 
-<label>كلمة المرور</label>
+    <label data-i18n="username">
+      اسم المستخدم
+    </label>
 
-<input
-id="loginPassword"
-type="password"
-autocomplete="current-password"
-placeholder="أدخل كلمة المرور"
->
+    <input
+      id="loginUsername"
+      autocomplete="username"
+      placeholder="أدخل اسم المستخدم"
+      data-i18n-placeholder="usernamePlaceholder"
+    >
 
-<button
-class="login-btn"
-onclick="login()"
->
-🔐 تسجيل الدخول
-</button>
+    <label data-i18n="password">
+      كلمة المرور
+    </label>
 
-</div>
+    <input
+      id="loginPassword"
+      type="password"
+      autocomplete="current-password"
+      placeholder="أدخل كلمة المرور"
+      data-i18n-placeholder="passwordPlaceholder"
+    >
+
+    <button
+      class="login-btn"
+      onclick="login()"
+      data-i18n="login"
+    >
+      🔐 تسجيل الدخول
+    </button>
+
+  </div>
 </div>
 
 
@@ -478,58 +875,82 @@ APP
 
 <header>
 
-<div class="logo">
-MODULAR TECH
-</div>
+  <div class="logo-area">
 
-<div>
+    <div class="logo-mini">
+      📦
+    </div>
 
-<span
-class="user"
-id="currentUser"
-></span>
+    <div class="logo">
+      MODULAR TECH
+    </div>
 
-<button
-class="logout"
-onclick="logout()"
->
-خروج
-</button>
+  </div>
 
-</div>
+  <div class="header-right">
+
+    <div class="user-box">
+      <span class="user" id="currentUser"></span>
+    </div>
+
+    <button
+      class="header-lang"
+      id="languageButton"
+      onclick="toggleLanguage()"
+    >
+      עברית
+    </button>
+
+    <button
+      class="logout"
+      onclick="logout()"
+      data-i18n="logout"
+    >
+      خروج
+    </button>
+
+  </div>
 
 </header>
 
 
 <div class="container">
 
+<!-- =====================================================
+NAV
+===================================================== -->
+
 <div class="nav">
 
-<button
-class="active"
-onclick="showSection('dashboard',this)"
->
-🏠 الرئيسية
-</button>
+  <button
+    class="active"
+    onclick="showSection('dashboard',this)"
+    data-i18n="dashboard"
+  >
+    🏠 الرئيسية
+  </button>
 
-<button
-onclick="showSection('ordersSection',this)"
->
-📋 الطلبيات
-</button>
+  <button
+    onclick="showSection('ordersSection',this)"
+    data-i18n="orders"
+  >
+    📋 الطلبيات
+  </button>
 
-<button
-onclick="showSection('production',this)"
->
-🏭 مراحل العمل
-</button>
+  <button
+    onclick="showSection('production',this)"
+    data-i18n="production"
+  >
+    🏭 مراحل العمل
+  </button>
 
-<button
-id="usersNav"
-onclick="showSection('users',this)"
->
-👥 المستخدمون
-</button>
+  <button
+    id="usersNav"
+    onclick="showSection('users',this)"
+    data-i18n="users"
+  >
+    👥 المستخدمون
+  </button>
 
 </div>
 
@@ -540,49 +961,66 @@ DASHBOARD
 
 <section id="dashboard">
 
-<div class="stats">
+  <div class="stats">
 
-<div class="stat">
-<div class="stat-title">إجمالي الطلبيات</div>
-<div class="stat-number" id="totalCount">0</div>
-</div>
+    <div class="stat">
+      <div class="stat-title" data-i18n="totalOrders">
+        إجمالي الطلبيات
+      </div>
+      <div class="stat-number" id="totalCount">0</div>
+    </div>
 
-<div class="stat">
-<div class="stat-title">قيد العمل</div>
-<div class="stat-number" id="activeCount">0</div>
-</div>
+    <div class="stat">
+      <div class="stat-title" data-i18n="inProgress">
+        قيد العمل
+      </div>
+      <div class="stat-number" id="activeCount">0</div>
+    </div>
 
-<div class="stat">
-<div class="stat-title">مهمة جدًا</div>
-<div class="stat-number" id="urgentCount">0</div>
-</div>
+    <div class="stat">
+      <div class="stat-title" data-i18n="urgent">
+        مهمة جدًا
+      </div>
+      <div class="stat-number" id="urgentCount">0</div>
+    </div>
 
-<div class="stat">
-<div class="stat-title">متأخرة</div>
-<div class="stat-number" id="overdueCount">0</div>
-</div>
+    <div class="stat">
+      <div class="stat-title" data-i18n="overdue">
+        متأخرة
+      </div>
+      <div class="stat-number" id="overdueCount">0</div>
+    </div>
 
-</div>
+  </div>
 
 
-<div class="panel">
+  <div class="panel">
 
-<div class="order-head">
+    <div class="order-head">
 
-<h2>📋 آخر الطلبيات</h2>
+      <div class="section-title">
 
-<button
-class="primary admin-only"
-onclick="openAddModal()"
->
-➕ إضافة طلبية
-</button>
+        <div class="section-icon">📋</div>
 
-</div>
+        <h2 data-i18n="latestOrders">
+          آخر الطلبيات
+        </h2>
 
-<div id="latestOrders"></div>
+      </div>
 
-</div>
+      <button
+        class="primary admin-only"
+        onclick="openAddModal()"
+        data-i18n="addOrder"
+      >
+        ➕ إضافة طلبية
+      </button>
+
+    </div>
+
+    <div id="latestOrders"></div>
+
+  </div>
 
 </section>
 
@@ -593,31 +1031,41 @@ ORDERS
 
 <section id="ordersSection" class="hidden">
 
-<div class="panel">
+  <div class="panel">
 
-<div class="order-head">
+    <div class="order-head">
 
-<h2>📋 إدارة الطلبيات</h2>
+      <div class="section-title">
 
-<button
-class="primary admin-only"
-onclick="openAddModal()"
->
-➕ إضافة طلبية
-</button>
+        <div class="section-icon">📋</div>
 
-</div>
+        <h2 data-i18n="manageOrders">
+          إدارة الطلبيات
+        </h2>
 
-<input
-id="search"
-type="search"
-placeholder="🔎 ابحث برقم الطلبية أو اسم الزبون أو الهاتف"
-oninput="renderOrders()"
->
+      </div>
 
-<div id="ordersList" class="order-list"></div>
+      <button
+        class="primary admin-only"
+        onclick="openAddModal()"
+        data-i18n="addOrder"
+      >
+        ➕ إضافة طلبية
+      </button>
 
-</div>
+    </div>
+
+    <input
+      id="search"
+      type="search"
+      placeholder="🔎 ابحث برقم الطلبية أو اسم الزبون أو الهاتف"
+      data-i18n-placeholder="searchPlaceholder"
+      oninput="renderOrders()"
+    >
+
+    <div id="ordersList" class="order-list"></div>
+
+  </div>
 
 </section>
 
@@ -628,13 +1076,21 @@ PRODUCTION
 
 <section id="production" class="hidden">
 
-<div class="panel">
+  <div class="panel">
 
-<h2>🏭 مراحل العمل</h2>
+    <div class="section-title">
 
-<div id="stageList" class="order-list"></div>
+      <div class="section-icon">🏭</div>
 
-</div>
+      <h2 data-i18n="workStages">
+        مراحل العمل
+      </h2>
+
+    </div>
+
+    <div id="stageList" class="order-list"></div>
+
+  </div>
 
 </section>
 
@@ -645,36 +1101,49 @@ USERS
 
 <section id="users" class="hidden">
 
-<div class="panel">
+  <div class="panel">
 
-<div class="order-head">
+    <div class="order-head">
 
-<h2>👥 المستخدمون</h2>
+      <div class="section-title">
 
-<button
-class="primary"
-onclick="openUserModal()"
->
-➕ إضافة مستخدم
-</button>
+        <div class="section-icon">👥</div>
 
-</div>
+        <h2 data-i18n="users">
+          المستخدمون
+        </h2>
 
-<div id="usersList">
+      </div>
 
-<div class="empty">
-⏳ جاري تحميل المستخدمين...
-</div>
+      <button
+        class="primary"
+        onclick="openUserModal()"
+        data-i18n="addUser"
+      >
+        ➕ إضافة مستخدم
+      </button>
 
-</div>
+    </div>
 
-</div>
+    <div id="usersList">
+
+      <div class="empty" data-i18n="loadingUsers">
+        ⏳ جاري تحميل المستخدمين...
+      </div>
+
+    </div>
+
+  </div>
 
 </section>
 
 </div>
 </div>
 
+
+<!-- =====================================================
+MESSAGE
+===================================================== -->
 
 <div id="message" class="message"></div>
 
@@ -685,111 +1154,128 @@ ORDER MODAL
 
 <div id="orderModal" class="modal hidden">
 
-<div class="modal-box">
+  <div class="modal-box">
 
-<div class="modal-head">
+    <div class="modal-head">
 
-<h2 id="modalTitle">➕ إضافة طلبية</h2>
+      <h2 id="modalTitle">
+        ➕ إضافة طلبية
+      </h2>
 
-<button
-class="close"
-onclick="closeModal()"
->
-×
-</button>
+      <button
+        class="close"
+        onclick="closeModal()"
+      >
+        ×
+      </button>
 
-</div>
+    </div>
 
 
-<form id="orderForm">
+    <form id="orderForm">
 
-<input type="hidden" id="editId">
+      <input type="hidden" id="editId">
 
-<label>رقم الطلبية</label>
+      <label data-i18n="orderNumber">
+        رقم الطلبية
+      </label>
 
-<input
-id="orderNum"
-required
-placeholder="مثال: 10025"
->
+      <input
+        id="orderNum"
+        required
+        placeholder="مثال: 10025"
+      >
 
-<label>اسم الزبون</label>
+      <label data-i18n="customerName">
+        اسم الزبون
+      </label>
 
-<input
-id="customer"
-required
-placeholder="اسم الزبون"
->
+      <input
+        id="customer"
+        required
+        placeholder="اسم الزبون"
+      >
 
-<div class="row">
+      <div class="row">
 
-<div>
+        <div>
 
-<label>رقم الهاتف</label>
+          <label data-i18n="phone">
+            رقم الهاتف
+          </label>
 
-<input
-id="phone"
-type="tel"
-placeholder="05xxxxxxxx"
->
+          <input
+            id="phone"
+            type="tel"
+            placeholder="05xxxxxxxx"
+          >
 
-</div>
+        </div>
 
-<div>
+        <div>
 
-<label>موعد التسليم</label>
+          <label data-i18n="deliveryDate">
+            موعد التسليم
+          </label>
 
-<input
-id="due"
-type="date"
-required
->
+          <input
+            id="due"
+            type="date"
+            required
+          >
 
-</div>
+        </div>
 
-</div>
+      </div>
 
-<label>ملاحظات</label>
+      <label data-i18n="notes">
+        ملاحظات
+      </label>
 
-<textarea
-id="notes"
-rows="4"
-placeholder="اكتب الملاحظات"
-></textarea>
+      <textarea
+        id="notes"
+        rows="4"
+        placeholder="اكتب الملاحظات"
+      ></textarea>
 
-<label class="check">
+      <label class="check">
 
-<input
-type="checkbox"
-id="urgent"
->
+        <input
+          type="checkbox"
+          id="urgent"
+        >
 
-⭐ هذه الطلبية مهمة جدًا
+        <span data-i18n="veryUrgent">
+          ⭐ هذه الطلبية مهمة جدًا
+        </span>
 
-</label>
+      </label>
 
-<div class="actions">
+      <div class="actions">
 
-<button
-type="submit"
-class="primary"
->
-💾 حفظ الطلبية
-</button>
+        <button
+          type="submit"
+          class="primary"
+          data-i18n="saveOrder"
+        >
+          💾 حفظ الطلبية
+        </button>
 
-<button
-type="button"
-class="secondary"
-onclick="closeModal()"
->
-إلغاء
-</button>
+        <button
+          type="button"
+          class="secondary"
+          onclick="closeModal()"
+          data-i18n="cancel"
+        >
+          إلغاء
+        </button>
 
-</div>
+      </div>
 
-</form>
+    </form>
 
-</div>
+  </div>
+
 </div>
 
 
@@ -799,109 +1285,126 @@ USER MODAL
 
 <div id="userModal" class="modal hidden">
 
-<div class="modal-box">
+  <div class="modal-box">
 
-<div class="modal-head">
+    <div class="modal-head">
 
-<h2>➕ إضافة مستخدم</h2>
+      <h2 data-i18n="addUser">
+        ➕ إضافة مستخدم
+      </h2>
 
-<button
-class="close"
-onclick="closeUserModal()"
->
-×
-</button>
+      <button
+        class="close"
+        onclick="closeUserModal()"
+      >
+        ×
+      </button>
 
-</div>
+    </div>
 
 
-<form id="userForm">
+    <form id="userForm">
 
-<label>اسم المستخدم</label>
+      <label data-i18n="username">
+        اسم المستخدم
+      </label>
 
-<input
-id="newUsername"
-required
-placeholder="مثال: ahmad"
->
+      <input
+        id="newUsername"
+        required
+        placeholder="مثال: ahmad"
+      >
 
-<label>الاسم الكامل</label>
+      <label data-i18n="fullName">
+        الاسم الكامل
+      </label>
 
-<input
-id="newFullName"
-required
-placeholder="اسم الموظف"
->
+      <input
+        id="newFullName"
+        required
+        placeholder="اسم الموظف"
+      >
 
-<label>البريد الإلكتروني</label>
+      <label data-i18n="email">
+        البريد الإلكتروني
+      </label>
 
-<input
-id="newEmail"
-type="email"
-required
-placeholder="البريد المستخدم في Auth"
->
+      <input
+        id="newEmail"
+        type="email"
+        required
+        placeholder="البريد المستخدم في Auth"
+      >
 
-<label>كلمة المرور</label>
+      <label data-i18n="password">
+        كلمة المرور
+      </label>
 
-<input
-id="newPassword"
-type="password"
-required
-minlength="6"
-placeholder="كلمة المرور"
->
+      <input
+        id="newPassword"
+        type="password"
+        required
+        minlength="6"
+        placeholder="كلمة المرور"
+      >
 
-<label>القسم</label>
+      <label data-i18n="department">
+        القسم
+      </label>
 
-<select id="newRole">
+      <select id="newRole">
 
-<option value="المدير">👑 المدير</option>
-<option value="القص">✂️ القص</option>
-<option value="الكنت">🔧 الكنت</option>
-<option value="CNC">⚙️ CNC</option>
-<option value="التركيب">🛠️ التركيب</option>
-<option value="الدهان">🎨 الدهان</option>
-<option value="التغليف">📦 التغليف</option>
-<option value="التحميل">🚚 التحميل</option>
-<option value="التسليم">✅ التسليم</option>
+        <option value="المدير">👑 المدير</option>
+        <option value="القص">✂️ القص</option>
+        <option value="الكنت">🔧 الكنت</option>
+        <option value="CNC">⚙️ CNC</option>
+        <option value="التركيب">🛠️ التركيب</option>
+        <option value="الدهان">🎨 الدهان</option>
+        <option value="التغليف">📦 التغليف</option>
+        <option value="التحميل">🚚 التحميل</option>
+        <option value="التسليم">✅ التسليم</option>
 
-</select>
+      </select>
 
-<label class="check">
+      <label class="check">
 
-<input
-type="checkbox"
-id="newActive"
-checked
->
+        <input
+          type="checkbox"
+          id="newActive"
+          checked
+        >
 
-الحساب فعال
+        <span data-i18n="accountActive">
+          الحساب فعال
+        </span>
 
-</label>
+      </label>
 
-<div class="actions">
+      <div class="actions">
 
-<button
-type="submit"
-class="primary"
->
-💾 إنشاء المستخدم
-</button>
+        <button
+          type="submit"
+          class="primary"
+          data-i18n="createUser"
+        >
+          💾 إنشاء المستخدم
+        </button>
 
-<button
-type="button"
-class="secondary"
-onclick="closeUserModal()"
->
-إلغاء
-</button>
+        <button
+          type="button"
+          class="secondary"
+          onclick="closeUserModal()"
+          data-i18n="cancel"
+        >
+          إلغاء
+        </button>
 
-</div>
+      </div>
 
-</form>
+    </form>
 
-</div>
+  </div>
+
 </div>
 
 
@@ -927,12 +1430,569 @@ let currentProfile = null;
 
 let role = "";
 
+let currentLanguage =
+localStorage.getItem("modular_language") || "ar";
+
 
 /* =====================================================
-GENERAL SUPABASE REQUEST
+TRANSLATIONS
 ===================================================== */
 
-async function request(path,method="GET",body=null){
+const translations = {
+
+ar:{
+
+appSubtitle:"نظام إدارة الطلبيات",
+
+username:"اسم المستخدم",
+password:"كلمة المرور",
+
+usernamePlaceholder:"أدخل اسم المستخدم",
+passwordPlaceholder:"أدخل كلمة المرور",
+
+login:"🔐 تسجيل الدخول",
+logout:"خروج",
+
+dashboard:"🏠 الرئيسية",
+orders:"📋 الطلبيات",
+production:"🏭 مراحل العمل",
+users:"👥 المستخدمون",
+
+totalOrders:"إجمالي الطلبيات",
+inProgress:"قيد العمل",
+urgent:"مهمة جدًا",
+overdue:"متأخرة",
+
+latestOrders:"آخر الطلبيات",
+manageOrders:"إدارة الطلبيات",
+
+addOrder:"➕ إضافة طلبية",
+addUser:"➕ إضافة مستخدم",
+
+searchPlaceholder:"🔎 ابحث برقم الطلبية أو اسم الزبون أو الهاتف",
+
+workStages:"مراحل العمل",
+
+orderNumber:"رقم الطلبية",
+customerName:"اسم الزبون",
+phone:"رقم الهاتف",
+deliveryDate:"موعد التسليم",
+notes:"ملاحظات",
+veryUrgent:"⭐ هذه الطلبية مهمة جدًا",
+
+saveOrder:"💾 حفظ الطلبية",
+cancel:"إلغاء",
+
+fullName:"الاسم الكامل",
+email:"البريد الإلكتروني",
+department:"القسم",
+accountActive:"الحساب فعال",
+createUser:"💾 إنشاء المستخدم",
+
+loadingUsers:"⏳ جاري تحميل المستخدمين...",
+
+noOrders:"لا توجد طلبيات حتى الآن",
+noMatchingOrders:"لا توجد طلبيات مطابقة.",
+noUsers:"لا يوجد مستخدمون في النظام",
+loadingOrders:"⏳ جاري تحميل الطلبيات...",
+
+orderDetails:"📋 التفاصيل",
+edit:"✏️ تعديل",
+delete:"🗑️ حذف",
+completed:"✅ مكتملة",
+
+phoneLabel:"📞 الهاتف",
+deliveryLabel:"📅 التسليم",
+departmentLabel:"🏭 القسم",
+
+detailsTitle:"📋 تفاصيل الطلبية",
+customerLabel:"الزبون",
+statusLabel:"الحالة",
+notesLabel:"الملاحظات",
+
+activeAccount:"🟢 الحساب فعال",
+inactiveAccount:"🔴 الحساب متوقف",
+
+addOrderTitle:"➕ إضافة طلبية",
+editOrderTitle:"✏️ تعديل الطلبية",
+
+inProgressStage:"في العمل",
+next:"➡️ تم",
+
+orderSaved:"✅ تم حفظ الطلبية",
+orderUpdated:"✅ تم تعديل الطلبية",
+orderDeleted:"🗑️ تم حذف الطلبية",
+stageUpdated:"✅ تم تحديث المرحلة",
+userCreated:"✅ تم إنشاء المستخدم بنجاح",
+
+adminOnly:"هذه العملية للمدير فقط",
+noPermissionAdd:"ليس لديك صلاحية إضافة طلبية",
+noPermissionEdit:"ليس لديك صلاحية التعديل",
+noPermissionDelete:"ليس لديك صلاحية الحذف",
+
+confirmDelete:"هل تريد حذف الطلبية",
+
+notFound:"اسم المستخدم غير موجود أو الحساب غير فعال",
+
+sessionExpired:"انتهت جلسة الدخول، سجل الدخول من جديد",
+
+completedStatus:"مكتملة"
+
+},
+
+he:{
+
+appSubtitle:"מערכת לניהול הזמנות",
+
+username:"שם משתמש",
+password:"סיסמה",
+
+usernamePlaceholder:"הזן שם משתמש",
+passwordPlaceholder:"הזן סיסמה",
+
+login:"🔐 התחברות",
+logout:"יציאה",
+
+dashboard:"🏠 ראשי",
+orders:"📋 הזמנות",
+production:"🏭 שלבי עבודה",
+users:"👥 משתמשים",
+
+totalOrders:"סה״כ הזמנות",
+inProgress:"בתהליך",
+urgent:"דחופות מאוד",
+overdue:"באיחור",
+
+latestOrders:"הזמנות אחרונות",
+manageOrders:"ניהול הזמנות",
+
+addOrder:"➕ הוסף הזמנה",
+addUser:"➕ הוסף משתמש",
+
+searchPlaceholder:"🔎 חיפוש לפי מספר הזמנה, שם לקוח או טלפון",
+
+workStages:"שלבי עבודה",
+
+orderNumber:"מספר הזמנה",
+customerName:"שם הלקוח",
+phone:"מספר טלפון",
+deliveryDate:"מועד אספקה",
+notes:"הערות",
+veryUrgent:"⭐ הזמנה דחופה מאוד",
+
+saveOrder:"💾 שמור הזמנה",
+cancel:"ביטול",
+
+fullName:"שם מלא",
+email:"דואר אלקטרוני",
+department:"מחלקה",
+accountActive:"החשבון פעיל",
+createUser:"💾 צור משתמש",
+
+loadingUsers:"⏳ טוען משתמשים...",
+
+noOrders:"אין הזמנות כרגע",
+noMatchingOrders:"לא נמצאו הזמנות מתאימות.",
+noUsers:"אין משתמשים במערכת",
+loadingOrders:"⏳ טוען הזמנות...",
+
+orderDetails:"📋 פרטים",
+edit:"✏️ עריכה",
+delete:"🗑️ מחיקה",
+completed:"✅ הושלמה",
+
+phoneLabel:"📞 טלפון",
+deliveryLabel:"📅 אספקה",
+departmentLabel:"🏭 מחלקה",
+
+detailsTitle:"📋 פרטי הזמנה",
+customerLabel:"לקוח",
+statusLabel:"סטטוס",
+notesLabel:"הערות",
+
+activeAccount:"🟢 החשבון פעיל",
+inactiveAccount:"🔴 החשבון מושבת",
+
+addOrderTitle:"➕ הוספת הזמנה",
+editOrderTitle:"✏️ עריכת הזמנה",
+
+inProgressStage:"בתהליך",
+next:"➡️ הושלם",
+
+orderSaved:"✅ ההזמנה נשמרה",
+orderUpdated:"✅ ההזמנה עודכנה",
+orderDeleted:"🗑️ ההזמנה נמחקה",
+stageUpdated:"✅ שלב העבודה עודכן",
+userCreated:"✅ המשתמש נוצר בהצלחה",
+
+adminOnly:"פעולה זו מיועדת למנהל בלבד",
+noPermissionAdd:"אין לך הרשאה להוסיף הזמנה",
+noPermissionEdit:"אין לך הרשאה לערוך",
+noPermissionDelete:"אין לך הרשאה למחוק",
+
+confirmDelete:"האם למחוק את ההזמנה",
+
+notFound:"שם המשתמש לא קיים או שהחשבון אינו פעיל",
+
+sessionExpired:"פג תוקף החיבור. יש להתחבר מחדש",
+
+completedStatus:"הושלמה"
+
+}
+
+};
+
+
+/* =====================================================
+STAGES
+===================================================== */
+
+const stages = [
+
+{
+ar:"في العمل",
+he:"בתהליך",
+role:"المدير"
+},
+
+{
+ar:"تم القص",
+he:"החיתוך הושלם",
+role:"القص"
+},
+
+{
+ar:"تم الكنت",
+he:"הקנט הושלם",
+role:"الكنت"
+},
+
+{
+ar:"تم CNC",
+he:"CNC הושלם",
+role:"CNC"
+},
+
+{
+ar:"تم التركيب",
+he:"ההרכבה הושלמה",
+role:"التركيب"
+},
+
+{
+ar:"تم الدهان",
+he:"הצביעה הושלמה",
+role:"الدهان"
+},
+
+{
+ar:"تم التغليف",
+he:"האריזה הושלמה",
+role:"التغليف"
+},
+
+{
+ar:"تم التحميل",
+he:"ההעמסה הושלמה",
+role:"التحميل"
+},
+
+{
+ar:"تم التسليم",
+he:"האספקה הושלמה",
+role:"التسليم"
+}
+
+];
+
+
+/* =====================================================
+ROLE TRANSLATION
+===================================================== */
+
+const roleNames = {
+
+"المدير":{
+ar:"المدير",
+he:"מנהל"
+},
+
+"القص":{
+ar:"القص",
+he:"חיתוך"
+},
+
+"الكنت":{
+ar:"الكنت",
+he:"קנט"
+},
+
+"CNC":{
+ar:"CNC",
+he:"CNC"
+},
+
+"التركيب":{
+ar:"التركيب",
+he:"הרכבה"
+},
+
+"الدهان":{
+ar:"الدهان",
+he:"צביעה"
+},
+
+"التغليف":{
+ar:"التغليف",
+he:"אריזה"
+},
+
+"التحميل":{
+ar:"التحميل",
+he:"העמסה"
+},
+
+"التسليم":{
+ar:"التسليم",
+he:"אספקה"
+}
+
+};
+
+
+function t(key){
+
+return translations[currentLanguage]?.[key]
+||
+translations.ar[key]
+||
+key;
+
+}
+
+
+function roleText(value){
+
+return roleNames[value]?.[currentLanguage]
+||
+value
+||
+"-";
+
+}
+
+
+function stageText(index){
+
+const stage =
+stages[index];
+
+if(!stage){
+
+return currentLanguage==="he"
+?
+"בתהליך"
+:
+"في العمل";
+
+}
+
+return stage[currentLanguage];
+
+}
+
+
+/* =====================================================
+LANGUAGE
+===================================================== */
+
+function setLanguage(lang){
+
+if(lang!=="ar" && lang!=="he"){
+
+lang="ar";
+
+}
+
+currentLanguage=lang;
+
+localStorage.setItem(
+"modular_language",
+lang
+);
+
+document.documentElement.lang =
+lang==="he"
+?
+"he"
+:
+"ar";
+
+document.documentElement.dir =
+lang==="he"
+?
+"ltr"
+:
+"rtl";
+
+document.body.dir =
+lang==="he"
+?
+"ltr"
+:
+"rtl";
+
+
+document
+.querySelectorAll("[data-i18n]")
+.forEach(element=>{
+
+const key =
+element.getAttribute("data-i18n");
+
+element.textContent =
+t(key);
+
+});
+
+
+document
+.querySelectorAll("[data-i18n-placeholder]")
+.forEach(element=>{
+
+const key =
+element.getAttribute(
+"data-i18n-placeholder"
+);
+
+element.placeholder =
+t(key);
+
+});
+
+
+const nextLanguage =
+lang==="ar"
+?
+"עברית"
+:
+"العربية";
+
+const languageButton =
+document.getElementById(
+"languageButton"
+);
+
+if(languageButton){
+
+languageButton.textContent =
+nextLanguage;
+
+}
+
+
+const arBtn =
+document.getElementById(
+"loginArBtn"
+);
+
+const heBtn =
+document.getElementById(
+"loginHeBtn"
+);
+
+if(arBtn && heBtn){
+
+arBtn.classList.toggle(
+"active",
+lang==="ar"
+);
+
+heBtn.classList.toggle(
+"active",
+lang==="he"
+);
+
+}
+
+
+updateModalLanguage();
+
+renderAll();
+
+if(role==="المدير"){
+
+loadUsers();
+
+}
+
+}
+
+
+function toggleLanguage(){
+
+setLanguage(
+currentLanguage==="ar"
+?
+"he"
+:
+"ar"
+);
+
+}
+
+
+/* =====================================================
+MODAL LANGUAGE
+===================================================== */
+
+function updateModalLanguage(){
+
+const modalTitle =
+document.getElementById(
+"modalTitle"
+);
+
+const editId =
+document.getElementById(
+"editId"
+)?.value;
+
+if(modalTitle){
+
+if(editId){
+
+modalTitle.textContent =
+t("editOrderTitle")+
+" #"+
+(
+document.getElementById(
+"orderNum"
+)?.value ||
+""
+);
+
+}else{
+
+modalTitle.textContent =
+t("addOrderTitle");
+
+}
+
+}
+
+}
+
+
+/* =====================================================
+SUPABASE REQUEST
+===================================================== */
+
+async function request(
+path,
+method="GET",
+body=null
+){
 
 const token =
 localStorage.getItem(
@@ -957,7 +2017,7 @@ headers:{
 
 if(body!==null){
 
-options.body =
+options.body=
 JSON.stringify(body);
 
 }
@@ -1022,10 +2082,13 @@ return data;
 
 
 /* =====================================================
-AUTH LOGIN
+AUTH
 ===================================================== */
 
-async function auth(path,body){
+async function auth(
+path,
+body
+){
 
 const response =
 await fetch(
@@ -1033,11 +2096,13 @@ SUPABASE_URL+
 "/auth/v1/"+
 path,
 {
+
 method:"POST",
 
 headers:{
 "apikey":SUPABASE_KEY,
-"Content-Type":"application/json"
+"Content-Type":
+"application/json"
 },
 
 body:
@@ -1099,6 +2164,11 @@ box.textContent=text;
 
 box.style.display="block";
 
+clearTimeout(
+window.messageTimer
+);
+
+window.messageTimer =
 setTimeout(()=>{
 
 box.style.display="none";
@@ -1161,6 +2231,10 @@ errorBox.style.display="none";
 if(!username || !password){
 
 errorBox.textContent =
+currentLanguage==="he"
+?
+"נא להזין שם משתמש וסיסמה"
+:
 "يرجى إدخال اسم المستخدم وكلمة المرور";
 
 errorBox.style.display="block";
@@ -1170,12 +2244,6 @@ return;
 }
 
 try{
-
-/*
--------------------------------------------------------
-الحصول على البريد من اسم المستخدم
--------------------------------------------------------
-*/
 
 const result =
 await request(
@@ -1210,17 +2278,10 @@ result;
 if(!email){
 
 throw new Error(
-"اسم المستخدم غير موجود أو الحساب غير فعال"
+t("notFound")
 );
 
 }
-
-
-/*
--------------------------------------------------------
-تسجيل الدخول في Supabase Auth
--------------------------------------------------------
-*/
 
 const session =
 await auth(
@@ -1231,15 +2292,14 @@ password:password
 }
 );
 
-if(
-!session ||
-!session.access_token ||
-!session.user ||
-!session.user.id
-){
+if(!session.access_token){
 
 throw new Error(
-"لم يتم الحصول على جلسة Auth صحيحة"
+currentLanguage==="he"
+?
+"לא התקבל חיבור מ-Supabase Auth"
+:
+"لم يتم الحصول على جلسة دخول من Auth"
 );
 
 }
@@ -1258,24 +2318,11 @@ session.refresh_token
 
 }
 
-
-/*
--------------------------------------------------------
-تحميل profile باستخدام Auth UID الحقيقي
--------------------------------------------------------
-*/
-
 await loadProfile(
 session.user.id,
-session.user.email
+session.user.email,
+username
 );
-
-
-/*
--------------------------------------------------------
-إظهار التطبيق
--------------------------------------------------------
-*/
 
 showApp();
 
@@ -1287,7 +2334,13 @@ await loadUsers();
 
 }
 
-msg("✅ تم تسجيل الدخول بنجاح");
+msg(
+currentLanguage==="he"
+?
+"✅ ההתחברות הצליחה"
+:
+"✅ تم تسجيل الدخول"
+);
 
 }catch(error){
 
@@ -1307,99 +2360,65 @@ errorBox.style.display="block";
 
 
 /* =====================================================
-الحل النهائي لربط AUTH مع PROFILES
+LOAD PROFILE
 ===================================================== */
 
-async function loadProfile(userId,userEmail=""){
+async function loadProfile(
+userId,
+email="",
+username=""
+){
 
 currentProfile=null;
 
-if(!userId){
-
-throw new Error(
-"لم يتم الحصول على Auth User ID"
-);
-
-}
-
-
-/*
--------------------------------------------------------
-مهم جدًا:
-
-نبحث في profiles باستخدام ID الخاص بـ Auth مباشرة.
-
-profiles.id = auth.users.id
-
-ولا نعتمد على username
-ولا email
-ولا RPC get_my_profile
--------------------------------------------------------
-*/
-
-const query =
-"/rest/v1/profiles"+
-"?select=id,username,full_name,role,active,email"+
-"&id=eq."+
-encodeURIComponent(userId)+
-"&limit=1";
-
-
-let data;
-
 try{
 
-data =
+const data =
 await request(
-query,
-"GET"
+"/rest/v1/rpc/get_my_profile",
+"POST",
+{}
 );
+
+if(
+Array.isArray(data) &&
+data.length>0
+){
+
+currentProfile=data[0];
+
+}
 
 }catch(error){
 
 console.error(
-"PROFILES QUERY ERROR:",
+"get_my_profile ERROR:",
 error
 );
 
 throw new Error(
-"تعذر قراءة جدول profiles: "+
+currentLanguage==="he"
+?
+"לא ניתן לקרוא את פרופיל המשתמש: "+
+error.message
+:
+"تعذر الوصول إلى ملف المستخدم في Supabase: "+
 error.message
 );
 
 }
 
-
-/*
--------------------------------------------------------
-يجب أن تكون النتيجة صفًا واحدًا
--------------------------------------------------------
-*/
-
-if(
-!Array.isArray(data) ||
-data.length===0
-){
+if(!currentProfile){
 
 throw new Error(
-"لم يتم العثور على ملف المستخدم في profiles.\n\n"+
-"Auth User ID:\n"+
-userId+
-"\n\n"+
-"يجب أن يكون profiles.id مطابقًا تمامًا لـ auth.users.id."
+currentLanguage==="he"
+?
+"לא נמצא פרופיל משתמש. יש לוודא שהפרופיל מקושר לאותו Auth User ID."
+:
+"لم يتم العثور على ملف المستخدم في profiles. تأكد من وجود سجل مرتبط بـ Auth User ID."
 );
 
 }
-
-
-currentProfile=data[0];
-
-
-/*
--------------------------------------------------------
-تحقق إضافي من ID
--------------------------------------------------------
-*/
 
 if(
 String(currentProfile.id).toLowerCase() !==
@@ -1407,61 +2426,30 @@ String(userId).toLowerCase()
 ){
 
 throw new Error(
-"خطأ في ربط المستخدم.\n\n"+
-"profiles.id:\n"+
-currentProfile.id+
-"\n\n"+
-"Auth User ID:\n"+
-userId+
-"\n\n"+
-"القيمتان يجب أن تكونا متطابقتين تمامًا."
+currentLanguage==="he"
+?
+"פגם בקישור המשתמש: profiles.id אינו תואם ל-Auth User ID."
+:
+"خطأ في ربط المستخدم: profiles.id لا يطابق Auth User ID."
 );
 
 }
 
-
-/*
--------------------------------------------------------
-الحساب فعال
--------------------------------------------------------
-*/
-
-if(
-currentProfile.active === false
-){
+if(currentProfile.active===false){
 
 throw new Error(
-"اسم المستخدم موجود ولكن الحساب غير فعال."
+currentLanguage==="he"
+?
+"החשבון אינו פעיל"
+:
+"هذا الحساب غير فعال"
 );
 
 }
-
-
-/*
--------------------------------------------------------
-الدور
--------------------------------------------------------
-*/
 
 role =
 currentProfile.role ||
 "";
-
-
-if(!role){
-
-throw new Error(
-"تم العثور على المستخدم ولكن لم يتم تحديد القسم أو الدور في profiles."
-);
-
-}
-
-
-/*
--------------------------------------------------------
-عرض بيانات المستخدم
--------------------------------------------------------
-*/
 
 document.getElementById(
 "currentUser"
@@ -1469,15 +2457,37 @@ document.getElementById(
 (
 currentProfile.full_name ||
 currentProfile.username ||
+(
+currentLanguage==="he"
+?
+"משתמש"
+:
 "المستخدم"
+)
 )+
 " — "+
-role;
+roleText(role);
 
-console.log(
-"PROFILE LOADED:",
-currentProfile
-);
+}
+
+
+/* =====================================================
+SHOW APP
+===================================================== */
+
+function showApp(){
+
+document
+.getElementById("loginPage")
+.classList
+.add("hidden");
+
+document
+.getElementById("app")
+.classList
+.remove("hidden");
+
+applyPermissions();
 
 }
 
@@ -1495,6 +2505,8 @@ localStorage.getItem(
 
 if(!token){
 
+setLanguage(currentLanguage);
+
 return;
 
 }
@@ -1506,20 +2518,18 @@ await request(
 "/auth/v1/user"
 );
 
-if(
-!user ||
-!user.id
-){
+if(!user || !user.id){
 
 throw new Error(
-"جلسة Auth غير صالحة"
+"Invalid session"
 );
 
 }
 
 await loadProfile(
 user.id,
-user.email
+user.email,
+""
 );
 
 showApp();
@@ -1586,27 +2596,6 @@ location.reload();
 
 
 /* =====================================================
-SHOW APP
-===================================================== */
-
-function showApp(){
-
-document
-.getElementById("loginPage")
-.classList
-.add("hidden");
-
-document
-.getElementById("app")
-.classList
-.remove("hidden");
-
-applyPermissions();
-
-}
-
-
-/* =====================================================
 PERMISSIONS
 ===================================================== */
 
@@ -1635,33 +2624,6 @@ button.classList.toggle(
 });
 
 }
-
-
-/* =====================================================
-STAGES
-===================================================== */
-
-const stages=[
-
-["في العمل","المدير"],
-
-["تم القص","القص"],
-
-["تم الكنت","الكنت"],
-
-["تم CNC","CNC"],
-
-["تم التركيب","التركيب"],
-
-["تم الدهان","الدهان"],
-
-["تم التغليف","التغليف"],
-
-["تم التحميل","التحميل"],
-
-["تم التسليم","التسليم"]
-
-];
 
 
 /* =====================================================
@@ -1699,17 +2661,30 @@ document.getElementById(
 "latestOrders"
 ).innerHTML =
 "<div class='empty'>"+
-"❌ تعذر تحميل الطلبيات<br>"+
-"<small>"+
+"❌ "+
+(
+currentLanguage==="he"
+?
+"לא ניתן לטעון הזמנות"
+:
+"تعذر تحميل الطلبيات"
+)+
+"<br><small>"+
 esc(error.message)+
-"</small>"+
-"</div>";
+"</small></div>";
 
 document.getElementById(
 "ordersList"
 ).innerHTML =
 "<div class='empty'>"+
-"❌ تعذر تحميل الطلبيات"+
+"❌ "+
+(
+currentLanguage==="he"
+?
+"לא ניתן לטעון הזמנות"
+:
+"تعذر تحميل الطلبيات"
+)+
 "</div>";
 
 }
@@ -1718,7 +2693,7 @@ document.getElementById(
 
 
 /* =====================================================
-NORMALIZE ORDER
+NORMALIZE
 ===================================================== */
 
 function norm(order){
@@ -1782,7 +2757,10 @@ stages.length-1
 SECTIONS
 ===================================================== */
 
-function showSection(id,button){
+function showSection(
+id,
+button
+){
 
 document
 .querySelectorAll(
@@ -1839,7 +2817,7 @@ function openAddModal(){
 if(role!=="المدير"){
 
 alert(
-"ليس لديك صلاحية إضافة طلبية"
+t("noPermissionAdd")
 );
 
 return;
@@ -1853,7 +2831,7 @@ document
 document.getElementById(
 "modalTitle"
 ).textContent =
-"➕ إضافة طلبية";
+t("addOrderTitle");
 
 document.getElementById(
 "editId"
@@ -1899,7 +2877,7 @@ e.preventDefault();
 if(role!=="المدير"){
 
 alert(
-"ليس لديك صلاحية حفظ الطلبية"
+t("noPermissionAdd")
 );
 
 return;
@@ -1959,9 +2937,7 @@ encodeURIComponent(id),
 payload
 );
 
-msg(
-"✅ تم تعديل الطلبية"
-);
+msg(t("orderUpdated"));
 
 }else{
 
@@ -1975,9 +2951,7 @@ await request(
 payload
 );
 
-msg(
-"✅ تم حفظ الطلبية"
-);
+msg(t("orderSaved"));
 
 }
 
@@ -1987,13 +2961,18 @@ await loadOrders();
 
 }catch(error){
 
-console.error(
-"SAVE ORDER ERROR:",
-error
-);
+console.error(error);
 
 alert(
-"❌ فشل الحفظ\n\n"+
+"❌ "+
+(
+currentLanguage==="he"
+?
+"שמירת ההזמנה נכשלה"
+:
+"فشل حفظ الطلبية"
+)+
+"\n\n"+
 error.message
 );
 
@@ -2010,9 +2989,7 @@ function editOrder(id){
 
 if(role!=="المدير"){
 
-alert(
-"ليس لديك صلاحية التعديل"
-);
+alert(t("noPermissionEdit"));
 
 return;
 
@@ -2035,7 +3012,8 @@ return;
 document.getElementById(
 "modalTitle"
 ).textContent =
-"✏️ تعديل الطلبية #"+
+t("editOrderTitle")+
+" #"+
 order.num;
 
 document.getElementById(
@@ -2089,9 +3067,7 @@ async function deleteOrder(id){
 
 if(role!=="المدير"){
 
-alert(
-"ليس لديك صلاحية الحذف"
-);
+alert(t("noPermissionDelete"));
 
 return;
 
@@ -2108,7 +3084,8 @@ String(id)
 if(
 !order ||
 !confirm(
-"هل تريد حذف الطلبية #"+
+t("confirmDelete")+
+" #"+
 order.num+
 " ؟"
 )
@@ -2128,14 +3105,12 @@ encodeURIComponent(id),
 
 await loadOrders();
 
-msg(
-"🗑️ تم حذف الطلبية"
-);
+msg(t("orderDeleted"));
 
 }catch(error){
 
 alert(
-"❌ فشل الحذف\n\n"+
+"❌ "+
 error.message
 );
 
@@ -2177,10 +3152,14 @@ return;
 
 if(
 role!=="المدير" &&
-stages[next][1]!==role
+stages[next].role!==role
 ){
 
 alert(
+currentLanguage==="he"
+?
+"אין לך הרשאה לשלב זה"
+:
 "هذه المرحلة ليست ضمن صلاحيات قسمك"
 );
 
@@ -2203,14 +3182,12 @@ new Date().toISOString()
 
 await loadOrders();
 
-msg(
-"✅ تم تحديث المرحلة"
-);
+msg(t("stageUpdated"));
 
 }catch(error){
 
 alert(
-"❌ فشل تحديث المرحلة\n\n"+
+"❌ "+
 error.message
 );
 
@@ -2239,42 +3216,64 @@ return;
 
 }
 
+const title =
+t("detailsTitle");
+
+const customer =
+t("customerLabel");
+
+const phone =
+t("phoneLabel");
+
+const delivery =
+t("deliveryLabel");
+
+const status =
+t("statusLabel");
+
+const department =
+t("departmentLabel");
+
+const notes =
+t("notesLabel");
+
 alert(
 
-"📋 الطلبية #"+
+title+
+" #"+
 order.num+
 
 "\n\n"+
-"الزبون: "+
+customer+
+": "+
 order.customer+
 
 "\n"+
-"الهاتف: "+
+phone+
+": "+
 (order.phone||"-")+
 
 "\n"+
-"موعد التسليم: "+
+delivery+
+": "+
 (order.due||"-")+
 
 "\n"+
-"الحالة: "+
-(
-stages[order.stage]?.[0]||
-"-"
+status+
+": "+
+stageText(order.stage)+
+
+"\n"+
+department+
+": "+
+roleText(
+stages[order.stage]?.role
 )+
 
 "\n"+
-"القسم: "+
-(
-stages[order.stage]?.[1]||
-"-"
-)+
-
-"\n"+
-"الملاحظات: "+
-(
-order.notes||"-"
-)
+notes+
+": "+
+(order.notes||"-")
 
 );
 
@@ -2286,6 +3285,9 @@ ORDER HTML
 ===================================================== */
 
 function orderHtml(order){
+
+const nextStageData =
+stages[order.stage+1];
 
 return `
 
@@ -2334,13 +3336,16 @@ overdue(order)
 ${
 overdue(order)
 ?
+(
+currentLanguage==="he"
+?
+"באיחור"
+:
 "متأخرة"
+)
 :
 esc(
-stages[
-order.stage
-]?.[0]||
-"في العمل"
+stageText(order.stage)
 )
 }
 
@@ -2353,7 +3358,7 @@ order.stage
 
 <div class="info-box">
 
-📞 الهاتف
+${t("phoneLabel")}
 
 <b>
 ${esc(
@@ -2366,7 +3371,7 @@ order.phone||"-"
 
 <div class="info-box">
 
-📅 التسليم
+${t("deliveryLabel")}
 
 <b>
 ${esc(
@@ -2379,14 +3384,15 @@ order.due||"-"
 
 <div class="info-box">
 
-🏭 القسم
+${t("departmentLabel")}
 
 <b>
 ${esc(
+roleText(
 stages[
 order.stage
-]?.[1]||
-"-"
+]?.role
+)
 )}
 </b>
 
@@ -2401,7 +3407,7 @@ order.stage
 class="secondary"
 onclick="details('${order.id}')"
 >
-📋 التفاصيل
+${t("orderDetails")}
 </button>
 
 
@@ -2416,14 +3422,14 @@ role==="المدير"
 class="success"
 onclick="editOrder('${order.id}')"
 >
-✏️ تعديل
+${t("edit")}
 </button>
 
 <button
 class="danger"
 onclick="deleteOrder('${order.id}')"
 >
-🗑️ حذف
+${t("delete")}
 </button>
 
 `
@@ -2435,8 +3441,7 @@ onclick="deleteOrder('${order.id}')"
 
 
 ${
-order.stage <
-stages.length-1
+nextStageData
 
 ?
 
@@ -2446,13 +3451,12 @@ stages.length-1
 class="primary"
 onclick="nextStage('${order.id}')"
 >
-➡️ تم ${
-esc(
-stages[
-order.stage+1
-][1]
+${t("next")}
+${esc(
+roleText(
+nextStageData.role
 )
-}
+)}
 </button>
 
 `
@@ -2462,7 +3466,7 @@ order.stage+1
 `
 
 <span class="badge">
-✅ مكتملة
+${t("completed")}
 </span>
 
 `
@@ -2524,7 +3528,7 @@ list
 .join("")
 ||
 "<div class='empty'>"+
-"لا توجد طلبيات حتى الآن"+
+t("noOrders")+
 "</div>";
 
 }
@@ -2570,7 +3574,7 @@ list
 .join("")
 ||
 "<div class='empty'>"+
-"لا توجد طلبيات مطابقة."+
+t("noMatchingOrders")+
 "</div>";
 
 }
@@ -2607,19 +3611,36 @@ return `
 <div>
 
 <div class="order-number">
-${stage[0]}
+${esc(stage[currentLanguage])}
 </div>
 
 <div class="customer">
-القسم المسؤول:
-${stage[1]}
+
+${
+currentLanguage==="he"
+?
+"אחראי:"
+:
+"القسم المسؤول:"
+}
+
+${esc(
+roleText(stage.role)
+)}
+
 </div>
 
 </div>
 
 <span class="badge">
 ${stageOrders.length}
-طلبية
+${
+currentLanguage==="he"
+?
+"הזמנות"
+:
+"طلبية"
+}
 </span>
 
 </div>
@@ -2639,7 +3660,13 @@ stageOrders
 `
 
 <div class="empty">
-لا توجد طلبيات في هذه المرحلة
+${
+currentLanguage==="he"
+?
+"אין הזמנות בשלב זה"
+:
+"لا توجد طلبيات في هذه المرحلة"
+}
 </div>
 
 `
@@ -2681,29 +3708,26 @@ return;
 
 usersList.innerHTML =
 "<div class='empty'>"+
-"⏳ جاري تحميل المستخدمين..."+
+t("loadingUsers")+
 "</div>";
 
 try{
 
-/*
--------------------------------------------------------
-قراءة profiles مباشرة.
-لا يوجد اعتماد على get_all_profiles.
--------------------------------------------------------
-*/
-
 const users =
 await request(
-"/rest/v1/profiles"+
-"?select=id,username,full_name,role,active,email"+
-"&order=full_name.asc"
+"/rest/v1/rpc/get_all_profiles",
+"POST",
+{}
 );
 
 if(!Array.isArray(users)){
 
 throw new Error(
-"البيانات المستلمة من profiles غير صحيحة"
+currentLanguage==="he"
+?
+"נתוני המשתמשים אינם תקינים"
+:
+"البيانات المستلمة غير صحيحة"
 );
 
 }
@@ -2712,7 +3736,7 @@ if(users.length===0){
 
 usersList.innerHTML =
 "<div class='empty'>"+
-"لا يوجد مستخدمون في النظام"+
+t("noUsers")+
 "</div>";
 
 return;
@@ -2739,7 +3763,13 @@ return `
 ${esc(
 user.full_name||
 user.username||
+(
+currentLanguage==="he"
+?
+"ללא שם"
+:
 "بدون اسم"
+)
 )}
 
 </div>
@@ -2758,8 +3788,9 @@ user.username||
 <span class="badge">
 
 ${esc(
-user.role||
-"-"
+roleText(
+user.role
+)
 )}
 
 </span>
@@ -2771,7 +3802,7 @@ user.role||
 
 <div class="info-box">
 
-👤 اسم المستخدم
+👤 ${t("username")}
 
 <b>
 ${esc(
@@ -2785,12 +3816,13 @@ user.username||
 
 <div class="info-box">
 
-🏢 القسم
+🏢 ${t("department")}
 
 <b>
 ${esc(
-user.role||
-"-"
+roleText(
+user.role
+)
 )}
 </b>
 
@@ -2799,7 +3831,7 @@ user.role||
 
 <div class="info-box">
 
-📧 البريد الإلكتروني
+📧 ${t("email")}
 
 <b>
 ${esc(
@@ -2826,9 +3858,9 @@ isActive
 ${
 isActive
 ?
-"🟢 الحساب فعال"
+t("activeAccount")
 :
-"🔴 الحساب متوقف"
+t("inactiveAccount")
 }
 
 </span>
@@ -2851,7 +3883,15 @@ error
 
 usersList.innerHTML =
 "<div class='empty'>"+
-"❌ تعذر تحميل قائمة المستخدمين<br><br>"+
+"❌ "+
+(
+currentLanguage==="he"
+?
+"לא ניתן לטעון את רשימת המשתמשים"
+:
+"تعذر تحميل قائمة المستخدمين"
+)+
+"<br><br>"+
 "<small>"+
 esc(error.message)+
 "</small>"+
@@ -2870,9 +3910,7 @@ function openUserModal(){
 
 if(role!=="المدير"){
 
-alert(
-"هذه الصفحة للمدير فقط"
-);
+alert(t("adminOnly"));
 
 return;
 
@@ -2906,7 +3944,6 @@ document
 
 /* =====================================================
 CREATE USER
-bright-task
 ===================================================== */
 
 document
@@ -2919,9 +3956,7 @@ e.preventDefault();
 
 if(role!=="المدير"){
 
-alert(
-"هذه العملية للمدير فقط"
-);
+alert(t("adminOnly"));
 
 return;
 
@@ -2965,6 +4000,10 @@ if(
 ){
 
 alert(
+currentLanguage==="he"
+?
+"נא למלא את כל השדות"
+:
 "يرجى تعبئة جميع البيانات"
 );
 
@@ -2975,6 +4014,10 @@ return;
 if(password.length<6){
 
 alert(
+currentLanguage==="he"
+?
+"הסיסמה חייבת להכיל לפחות 6 תווים"
+:
 "كلمة المرور يجب أن تكون 6 أحرف على الأقل"
 );
 
@@ -2992,17 +4035,10 @@ localStorage.getItem(
 if(!token){
 
 throw new Error(
-"انتهت جلسة الدخول، سجل الدخول من جديد"
+t("sessionExpired")
 );
 
 }
-
-
-/*
--------------------------------------------------------
-إنشاء المستخدم عبر Edge Function
--------------------------------------------------------
-*/
 
 const response =
 await fetch(
@@ -3078,7 +4114,13 @@ throw new Error(
 data.message||
 data.error||
 data.error_description||
+(
+currentLanguage==="he"
+?
+"יצירת המשתמש נכשלה"
+:
 "فشل إنشاء المستخدم"
+)
 
 );
 
@@ -3096,9 +4138,7 @@ document.getElementById(
 
 await loadUsers();
 
-msg(
-"✅ تم إنشاء المستخدم بنجاح"
-);
+msg(t("userCreated"));
 
 }catch(error){
 
@@ -3109,7 +4149,13 @@ error
 
 let message =
 error.message||
-"فشل إنشاء المستخدم";
+(
+currentLanguage==="he"
+?
+"יצירת המשתמש נכשלה"
+:
+"فشل إنشاء المستخدم"
+);
 
 if(
 message
@@ -3120,12 +4166,16 @@ message
 ){
 
 message =
+currentLanguage==="he"
+?
+"כתובת הדואר האלקטרוני כבר קיימת ב-Auth"
+:
 "هذا البريد الإلكتروني مستخدم مسبقًا في Auth";
 
 }
 
 alert(
-"❌ لم يتم إنشاء المستخدم\n\n"+
+"❌ "+
 message
 );
 
@@ -3150,8 +4200,12 @@ renderStages();
 
 
 /* =====================================================
-START APPLICATION
+START
 ===================================================== */
+
+setLanguage(
+currentLanguage
+);
 
 checkSession();
 
@@ -3160,9 +4214,7 @@ checkSession();
 SERVICE WORKER
 ===================================================== */
 
-if(
-"serviceWorker" in navigator
-){
+if("serviceWorker" in navigator){
 
 navigator
 .serviceWorker
