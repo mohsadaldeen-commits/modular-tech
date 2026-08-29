@@ -715,6 +715,7 @@ required
 
 </div>
 
+
 <label>ملاحظات</label>
 
 <textarea
@@ -722,6 +723,7 @@ id="notes"
 rows="4"
 placeholder="اكتب الملاحظات"
 ></textarea>
+
 
 <label class="check">
 
@@ -733,6 +735,7 @@ id="urgent"
 ⭐ هذه الطلبية مهمة جدًا
 
 </label>
+
 
 <div class="actions">
 
@@ -775,6 +778,7 @@ onclick="closeUserModal()"
 </button>
 
 </div>
+
 
 <form id="userForm">
 
@@ -829,6 +833,7 @@ placeholder="كلمة المرور"
 
 </select>
 
+
 <label class="check">
 
 <input
@@ -840,6 +845,7 @@ checked
 الحساب فعال
 
 </label>
+
 
 <div class="actions">
 
@@ -877,6 +883,7 @@ const SUPABASE_KEY =
 const CREATE_USER_FUNCTION =
 "https://bvrfrcmblwzuqprjknam.supabase.co/functions/v1/rapid-function";
 
+
 let orders = [];
 let currentProfile = null;
 let role = "";
@@ -889,9 +896,11 @@ SUPABASE REQUEST
 async function request(path,method="GET",body=null){
 
 const token =
-localStorage.getItem("supabase_access_token");
+localStorage.getItem(
+"supabase_access_token"
+);
 
-const options = {
+const options={
 
 method:method,
 
@@ -904,13 +913,16 @@ headers:{
 
 };
 
-if(body !== null){
-options.body=JSON.stringify(body);
+if(body!==null){
+
+options.body=
+JSON.stringify(body);
+
 }
 
 const response =
 await fetch(
-SUPABASE_URL + path,
+SUPABASE_URL+path,
 options
 );
 
@@ -920,9 +932,18 @@ await response.text();
 let data;
 
 try{
-data=text?JSON.parse(text):null;
+
+data=
+text
+?
+JSON.parse(text)
+:
+null;
+
 }catch{
+
 data=text;
+
 }
 
 if(!response.ok){
@@ -951,6 +972,7 @@ data ||
 }
 
 return data;
+
 }
 
 
@@ -962,14 +984,20 @@ async function auth(path,body){
 
 const response =
 await fetch(
-SUPABASE_URL+"/auth/v1/"+path,
+SUPABASE_URL+
+"/auth/v1/"+
+path,
 {
 method:"POST",
+
 headers:{
 "apikey":SUPABASE_KEY,
 "Content-Type":"application/json"
 },
-body:JSON.stringify(body)
+
+body:
+JSON.stringify(body)
+
 }
 );
 
@@ -988,6 +1016,7 @@ data.message ||
 }
 
 return data;
+
 }
 
 
@@ -998,9 +1027,12 @@ MESSAGE
 function msg(text){
 
 const box =
-document.getElementById("message");
+document.getElementById(
+"message"
+);
 
 box.textContent=text;
+
 box.style.display="block";
 
 setTimeout(()=>{
@@ -1042,26 +1074,31 @@ LOGIN
 async function login(){
 
 const username =
-document.getElementById("loginUsername")
-.value.trim();
+document.getElementById(
+"loginUsername"
+).value.trim();
 
 const password =
-document.getElementById("loginPassword")
-.value;
+document.getElementById(
+"loginPassword"
+).value;
 
 const errorBox =
-document.getElementById("loginError");
+document.getElementById(
+"loginError"
+);
 
 errorBox.style.display="none";
 
 if(!username || !password){
 
-errorBox.textContent =
+errorBox.textContent=
 "يرجى إدخال اسم المستخدم وكلمة المرور";
 
 errorBox.style.display="block";
 
 return;
+
 }
 
 try{
@@ -1078,13 +1115,22 @@ p_username:username
 let email=null;
 
 if(typeof result==="string"){
+
 email=result;
-}
-else if(Array.isArray(result)){
-email=result[0]?.email || result[0] || null;
-}
-else if(result){
-email=result.email || result;
+
+}else if(Array.isArray(result)){
+
+email=
+result[0]?.email ||
+result[0] ||
+null;
+
+}else if(result){
+
+email=
+result.email ||
+result;
+
 }
 
 if(!email){
@@ -1095,6 +1141,7 @@ throw new Error(
 
 }
 
+
 const session =
 await auth(
 "token?grant_type=password",
@@ -1103,6 +1150,7 @@ email:email,
 password:password
 }
 );
+
 
 localStorage.setItem(
 "supabase_access_token",
@@ -1118,11 +1166,13 @@ session.refresh_token
 
 }
 
+
 await loadProfile(
 session.user.id,
 session.user.email,
 username
 );
+
 
 showApp();
 
@@ -1132,9 +1182,12 @@ msg("✅ تم تسجيل الدخول");
 
 }catch(error){
 
-console.error("LOGIN ERROR:",error);
+console.error(
+"LOGIN ERROR:",
+error
+);
 
-errorBox.textContent =
+errorBox.textContent=
 "❌ "+error.message;
 
 errorBox.style.display="block";
@@ -1145,7 +1198,8 @@ errorBox.style.display="block";
 
 
 /* =========================
-LOAD PROFILE - FIXED
+LOAD PROFILE
+ROOT FIX
 ========================= */
 
 async function loadProfile(
@@ -1156,127 +1210,49 @@ username=""
 
 currentProfile=null;
 
-
-/* البحث بواسطة UUID */
-
-if(userId){
-
 try{
+
+/*
+الدالة في Supabase تستخدم:
+
+auth.uid()
+
+ولا تعتمد على userId
+المرسل من المتصفح.
+*/
 
 const data =
 await request(
-"/rest/v1/profiles"+
-"?select=id,username,full_name,role,active,email"+
-"&id=eq."+
-encodeURIComponent(userId)+
-"&limit=1"
+"/rest/v1/rpc/get_my_profile",
+"POST",
+{}
 );
 
-if(Array.isArray(data) && data.length){
 
-currentProfile=data[0];
-
-}
-
-}catch(error){
+if(
+!Array.isArray(data) ||
+data.length===0
+){
 
 console.error(
-"PROFILE UUID ERROR:",
-error
-);
-
-}
-
-}
-
-
-/* البحث بالبريد */
-
-if(!currentProfile && email){
-
-try{
-
-const data =
-await request(
-"/rest/v1/profiles"+
-"?select=id,username,full_name,role,active,email"+
-"&email=eq."+
-encodeURIComponent(email)+
-"&limit=1"
-);
-
-if(Array.isArray(data) && data.length){
-
-currentProfile=data[0];
-
-}
-
-}catch(error){
-
-console.error(
-"PROFILE EMAIL ERROR:",
-error
-);
-
-}
-
-}
-
-
-/* البحث باسم المستخدم */
-
-if(!currentProfile && username){
-
-try{
-
-const data =
-await request(
-"/rest/v1/profiles"+
-"?select=id,username,full_name,role,active,email"+
-"&username=eq."+
-encodeURIComponent(username)+
-"&limit=1"
-);
-
-if(Array.isArray(data) && data.length){
-
-currentProfile=data[0];
-
-}
-
-}catch(error){
-
-console.error(
-"PROFILE USERNAME ERROR:",
-error
-);
-
-}
-
-}
-
-
-/* لم يتم العثور */
-
-if(!currentProfile){
-
-console.error(
-"PROFILE NOT FOUND",
+"get_my_profile returned no profile",
 {
 userId:userId,
 email:email,
-username:username
+username:username,
+data:data
 }
 );
 
 throw new Error(
-"لم يتم العثور على ملف المستخدم في profiles"
+"لم يتم العثور على ملف المستخدم المرتبط بحساب Auth"
 );
 
 }
 
 
-/* الحساب غير فعال */
+currentProfile=data[0];
+
 
 if(currentProfile.active===false){
 
@@ -1287,13 +1263,10 @@ throw new Error(
 }
 
 
-/* حفظ الدور */
-
 role =
-currentProfile.role || "";
+currentProfile.role ||
+"";
 
-
-/* عرض المستخدم */
 
 document.getElementById(
 "currentUser"
@@ -1303,8 +1276,28 @@ currentProfile.full_name ||
 currentProfile.username ||
 "المستخدم"
 )
-+" — "+
++
+" — "
++
 role;
+
+
+console.log(
+"PROFILE LOADED SUCCESSFULLY",
+currentProfile
+);
+
+
+}catch(error){
+
+console.error(
+"LOAD PROFILE ERROR:",
+error
+);
+
+throw error;
+
+}
 
 }
 
@@ -1317,11 +1310,13 @@ function showApp(){
 
 document
 .getElementById("loginPage")
-.classList.add("hidden");
+.classList
+.add("hidden");
 
 document
 .getElementById("app")
-.classList.remove("hidden");
+.classList
+.remove("hidden");
 
 applyPermissions();
 
@@ -1340,7 +1335,9 @@ localStorage.getItem(
 );
 
 if(!token){
+
 return;
+
 }
 
 try{
@@ -1350,11 +1347,13 @@ await request(
 "/auth/v1/user"
 );
 
+
 await loadProfile(
 user.id,
 user.email,
 ""
 );
+
 
 showApp();
 
@@ -1411,7 +1410,10 @@ role==="المدير";
 document
 .getElementById("usersNav")
 .classList
-.toggle("hidden",!isAdmin);
+.toggle(
+"hidden",
+!isAdmin
+);
 
 document
 .querySelectorAll(".admin-only")
@@ -1462,7 +1464,11 @@ await request(
 );
 
 orders =
-Array.isArray(data)?data:[];
+Array.isArray(data)
+?
+data
+:
+[];
 
 renderAll();
 
@@ -1472,7 +1478,7 @@ console.error(error);
 
 document.getElementById(
 "latestOrders"
-).innerHTML =
+).innerHTML=
 "<div class='empty'>"+
 "❌ تعذر تحميل الطلبيات<br>"+
 "<small>"+
@@ -1482,8 +1488,10 @@ esc(error.message)+
 
 document.getElementById(
 "ordersList"
-).innerHTML =
-"<div class='empty'>❌ تعذر تحميل الطلبيات</div>";
+).innerHTML=
+"<div class='empty'>"+
+"❌ تعذر تحميل الطلبيات"+
+"</div>";
 
 }
 
@@ -1499,13 +1507,26 @@ function norm(order){
 return{
 
 id:order.id,
+
 num:order.order_number || "",
-customer:order.customer_name || "",
-phone:order.phone || "",
-due:order.due_date || "",
-notes:order.notes || "",
-urgent:!!order.urgent,
-stage:Number(order.stage || 0)
+
+customer:
+order.customer_name || "",
+
+phone:
+order.phone || "",
+
+due:
+order.due_date || "",
+
+notes:
+order.notes || "",
+
+urgent:
+!!order.urgent,
+
+stage:
+Number(order.stage || 0)
 
 };
 
@@ -1520,9 +1541,10 @@ function overdue(order){
 
 return(
 order.due &&
-new Date(order.due+"T23:59:59") <
-new Date() &&
-order.stage < stages.length-1
+new Date(
+order.due+"T23:59:59"
+)<new Date() &&
+order.stage<stages.length-1
 );
 
 }
@@ -1535,25 +1557,42 @@ SECTIONS
 function showSection(id,button){
 
 document
-.querySelectorAll(".container > section")
+.querySelectorAll(
+".container > section"
+)
 .forEach(section=>{
-section.classList.add("hidden");
+
+section.classList.add(
+"hidden"
+);
+
 });
 
 document
 .getElementById(id)
-.classList.remove("hidden");
+.classList
+.remove("hidden");
 
 document
-.querySelectorAll(".nav button")
+.querySelectorAll(
+".nav button"
+)
 .forEach(btn=>{
-btn.classList.remove("active");
+
+btn.classList.remove(
+"active"
+);
+
 });
 
-button.classList.add("active");
+button.classList.add(
+"active"
+);
 
 if(id==="users"){
+
 loadUsers();
+
 }
 
 }
@@ -1567,7 +1606,10 @@ function openAddModal(){
 
 if(role!=="المدير"){
 
-alert("ليس لديك صلاحية إضافة طلبية");
+alert(
+"ليس لديك صلاحية إضافة طلبية"
+);
+
 return;
 
 }
@@ -1578,7 +1620,8 @@ document
 
 document.getElementById(
 "modalTitle"
-).textContent="➕ إضافة طلبية";
+).textContent=
+"➕ إضافة طلبية";
 
 document.getElementById(
 "editId"
@@ -1586,12 +1629,15 @@ document.getElementById(
 
 document.getElementById(
 "due"
-).value =
-new Date().toISOString().slice(0,10);
+).value=
+new Date()
+.toISOString()
+.slice(0,10);
 
 document
 .getElementById("orderModal")
-.classList.remove("hidden");
+.classList
+.remove("hidden");
 
 }
 
@@ -1600,7 +1646,8 @@ function closeModal(){
 
 document
 .getElementById("orderModal")
-.classList.add("hidden");
+.classList
+.add("hidden");
 
 }
 
@@ -1619,33 +1666,50 @@ e.preventDefault();
 
 if(role!=="المدير"){
 
-alert("ليس لديك صلاحية حفظ الطلبية");
+alert(
+"ليس لديك صلاحية حفظ الطلبية"
+);
+
 return;
 
 }
 
 const id =
-document.getElementById("editId").value;
+document.getElementById(
+"editId"
+).value;
 
 const payload={
 
 order_number:
-document.getElementById("orderNum").value.trim(),
+document.getElementById(
+"orderNum"
+).value.trim(),
 
 customer_name:
-document.getElementById("customer").value.trim(),
+document.getElementById(
+"customer"
+).value.trim(),
 
 phone:
-document.getElementById("phone").value.trim(),
+document.getElementById(
+"phone"
+).value.trim(),
 
 due_date:
-document.getElementById("due").value,
+document.getElementById(
+"due"
+).value,
 
 notes:
-document.getElementById("notes").value.trim(),
+document.getElementById(
+"notes"
+).value.trim(),
 
 urgent:
-document.getElementById("urgent").checked,
+document.getElementById(
+"urgent"
+).checked,
 
 updated_at:
 new Date().toISOString()
@@ -1663,11 +1727,14 @@ encodeURIComponent(id),
 payload
 );
 
-msg("✅ تم تعديل الطلبية");
+msg(
+"✅ تم تعديل الطلبية"
+);
 
 }else{
 
 payload.stage=0;
+
 delete payload.updated_at;
 
 await request(
@@ -1676,7 +1743,9 @@ await request(
 payload
 );
 
-msg("✅ تم حفظ الطلبية");
+msg(
+"✅ تم حفظ الطلبية"
+);
 
 }
 
@@ -1706,7 +1775,10 @@ function editOrder(id){
 
 if(role!=="المدير"){
 
-alert("ليس لديك صلاحية التعديل");
+alert(
+"ليس لديك صلاحية التعديل"
+);
+
 return;
 
 }
@@ -1717,25 +1789,49 @@ x=>String(x.id)===String(id)
 );
 
 if(!order){
+
 return;
+
 }
 
 document.getElementById(
 "modalTitle"
-).textContent =
-"✏️ تعديل الطلبية #"+order.num;
+).textContent=
+"✏️ تعديل الطلبية #"+
+order.num;
 
-document.getElementById("editId").value=order.id;
-document.getElementById("orderNum").value=order.num;
-document.getElementById("customer").value=order.customer;
-document.getElementById("phone").value=order.phone;
-document.getElementById("due").value=order.due;
-document.getElementById("notes").value=order.notes;
-document.getElementById("urgent").checked=order.urgent;
+document.getElementById(
+"editId"
+).value=order.id;
+
+document.getElementById(
+"orderNum"
+).value=order.num;
+
+document.getElementById(
+"customer"
+).value=order.customer;
+
+document.getElementById(
+"phone"
+).value=order.phone;
+
+document.getElementById(
+"due"
+).value=order.due;
+
+document.getElementById(
+"notes"
+).value=order.notes;
+
+document.getElementById(
+"urgent"
+).checked=order.urgent;
 
 document
 .getElementById("orderModal")
-.classList.remove("hidden");
+.classList
+.remove("hidden");
 
 }
 
@@ -1748,7 +1844,10 @@ async function deleteOrder(id){
 
 if(role!=="المدير"){
 
-alert("ليس لديك صلاحية الحذف");
+alert(
+"ليس لديك صلاحية الحذف"
+);
+
 return;
 
 }
@@ -1761,7 +1860,9 @@ x=>String(x.id)===String(id)
 if(
 !order ||
 !confirm(
-"هل تريد حذف الطلبية #"+order.num+" ؟"
+"هل تريد حذف الطلبية #"+
+order.num+
+" ؟"
 )
 ){
 
@@ -1779,7 +1880,9 @@ encodeURIComponent(id),
 
 await loadOrders();
 
-msg("🗑️ تم حذف الطلبية");
+msg(
+"🗑️ تم حذف الطلبية"
+);
 
 }catch(error){
 
@@ -1805,13 +1908,18 @@ x=>String(x.id)===String(id)
 );
 
 if(!order){
+
 return;
+
 }
 
-const next=order.stage+1;
+const next=
+order.stage+1;
 
 if(next>=stages.length){
+
 return;
+
 }
 
 if(
@@ -1835,13 +1943,16 @@ encodeURIComponent(id),
 "PATCH",
 {
 stage:next,
-updated_at:new Date().toISOString()
+updated_at:
+new Date().toISOString()
 }
 );
 
 await loadOrders();
 
-msg("✅ تم تحديث المرحلة");
+msg(
+"✅ تم تحديث المرحلة"
+);
 
 }catch(error){
 
@@ -1867,21 +1978,27 @@ x=>String(x.id)===String(id)
 );
 
 if(!order){
+
 return;
+
 }
 
 alert(
 
-"📋 الطلبية #"+order.num+
+"📋 الطلبية #"+
+order.num+
 
 "\n\n"+
-"الزبون: "+order.customer+
+"الزبون: "+
+order.customer+
 
 "\n"+
-"الهاتف: "+(order.phone||"-")+
+"الهاتف: "+
+(order.phone||"-")+
 
 "\n"+
-"موعد التسليم: "+(order.due||"-")+
+"موعد التسليم: "+
+(order.due||"-")+
 
 "\n"+
 "الحالة: "+
@@ -1908,7 +2025,9 @@ function orderHtml(order){
 
 return `
 
-<div class="order ${order.urgent?'urgent':''}">
+<div class="order ${
+order.urgent?'urgent':''
+}">
 
 <div class="order-head">
 
@@ -1916,7 +2035,13 @@ return `
 
 <div class="order-number">
 
-${order.urgent?"⭐ ":""}
+${
+order.urgent
+?
+"⭐ "
+:
+""
+}
 
 #${esc(order.num)}
 
@@ -1930,14 +2055,23 @@ ${esc(order.customer)}
 
 </div>
 
-<span class="badge ${overdue(order)?'overdue':''}">
+<span class="badge ${
+overdue(order)
+?
+'overdue'
+:
+''
+}">
 
 ${
 overdue(order)
 ?
 "متأخرة"
 :
-esc(stages[order.stage]?.[0]||"في العمل")
+esc(
+stages[order.stage]?.[0]||
+"في العمل"
+)
 }
 
 </span>
@@ -1974,7 +2108,10 @@ ${esc(order.due||"-")}
 🏭 القسم
 
 <b>
-${esc(stages[order.stage]?.[1]||"-")}
+${esc(
+stages[order.stage]?.[1]||
+"-"
+)}
 </b>
 
 </div>
@@ -2032,7 +2169,11 @@ order.stage<stages.length-1
 class="primary"
 onclick="nextStage('${order.id}')"
 >
-➡️ تم ${esc(stages[order.stage+1][1])}
+➡️ تم ${
+esc(
+stages[order.stage+1][1]
+)
+}
 </button>
 
 `
@@ -2064,11 +2205,13 @@ DASHBOARD
 
 function renderDashboard(){
 
-const list=orders.map(norm);
+const list=
+orders.map(norm);
 
 document.getElementById(
 "totalCount"
-).textContent=list.length;
+).textContent=
+list.length;
 
 document.getElementById(
 "activeCount"
@@ -2080,21 +2223,27 @@ o=>o.stage<stages.length-1
 document.getElementById(
 "urgentCount"
 ).textContent=
-list.filter(o=>o.urgent).length;
+list.filter(
+o=>o.urgent
+).length;
 
 document.getElementById(
 "overdueCount"
 ).textContent=
-list.filter(overdue).length;
+list.filter(overdue)
+.length;
 
 document.getElementById(
 "latestOrders"
 ).innerHTML=
-list.slice(0,5)
+list
+.slice(0,5)
 .map(orderHtml)
 .join("")
 ||
-"<div class='empty'>لا توجد طلبيات حتى الآن</div>";
+"<div class='empty'>"+
+"لا توجد طلبيات حتى الآن"+
+"</div>";
 
 }
 
@@ -2107,7 +2256,9 @@ function renderOrders(){
 
 const q=
 (
-document.getElementById("search")?.value||""
+document.getElementById(
+"search"
+)?.value||""
 )
 .trim()
 .toLowerCase();
@@ -2131,9 +2282,13 @@ order.phone
 document.getElementById(
 "ordersList"
 ).innerHTML=
-list.map(orderHtml).join("")
+list
+.map(orderHtml)
+.join("")
 ||
-"<div class='empty'>لا توجد طلبيات مطابقة.</div>";
+"<div class='empty'>"+
+"لا توجد طلبيات مطابقة."+
+"</div>";
 
 }
 
@@ -2144,7 +2299,8 @@ RENDER STAGES
 
 function renderStages(){
 
-const list=orders.map(norm);
+const list=
+orders.map(norm);
 
 document.getElementById(
 "stageList"
@@ -2188,7 +2344,9 @@ stageOrders.length
 
 ?
 
-stageOrders.map(orderHtml).join("")
+stageOrders
+.map(orderHtml)
+.join("")
 
 :
 
@@ -2219,7 +2377,9 @@ LOAD USERS
 async function loadUsers(){
 
 if(role!=="المدير"){
+
 return;
+
 }
 
 try{
@@ -2247,13 +2407,18 @@ user=>`
 
 <div class="order-number">
 
-${esc(user.full_name||user.username)}
+${esc(
+user.full_name||
+user.username
+)}
 
 </div>
 
 <div class="customer">
 
-@${esc(user.username)}
+@${esc(
+user.username
+)}
 
 </div>
 
@@ -2273,7 +2438,13 @@ ${esc(user.role)}
 الحساب
 
 <b>
-${user.active?"فعال":"متوقف"}
+${
+user.active
+?
+"فعال"
+:
+"متوقف"
+}
 </b>
 
 </div>
@@ -2305,9 +2476,12 @@ ${esc(user.email||"-")}
 </div>
 
 `
-).join("")
+)
+.join("")
 ||
-"<div class='empty'>لا يوجد مستخدمون</div>";
+"<div class='empty'>"+
+"لا يوجد مستخدمون"+
+"</div>";
 
 }catch(error){
 
@@ -2340,7 +2514,10 @@ function openUserModal(){
 
 if(role!=="المدير"){
 
-alert("هذه الصفحة للمدير فقط");
+alert(
+"هذه الصفحة للمدير فقط"
+);
+
 return;
 
 }
@@ -2355,7 +2532,8 @@ document.getElementById(
 
 document
 .getElementById("userModal")
-.classList.remove("hidden");
+.classList
+.remove("hidden");
 
 }
 
@@ -2364,14 +2542,14 @@ function closeUserModal(){
 
 document
 .getElementById("userModal")
-.classList.add("hidden");
+.classList
+.add("hidden");
 
 }
 
 
 /* =================================================
-CREATE USER THROUGH EDGE FUNCTION
-rapid-function
+CREATE USER THROUGH rapid-function
 ================================================= */
 
 document
@@ -2384,7 +2562,10 @@ e.preventDefault();
 
 if(role!=="المدير"){
 
-alert("هذه العملية للمدير فقط");
+alert(
+"هذه العملية للمدير فقط"
+);
+
 return;
 
 }
@@ -2468,7 +2649,8 @@ method:"POST",
 
 headers:{
 "Content-Type":"application/json",
-"Authorization":"Bearer "+token,
+"Authorization":
+"Bearer "+token,
 "apikey":SUPABASE_KEY
 },
 
@@ -2493,7 +2675,7 @@ let data={};
 
 try{
 
-data =
+data=
 text
 ?
 JSON.parse(text)
@@ -2527,9 +2709,9 @@ document
 .getElementById("userForm")
 .reset();
 
-document
-.getElementById("newActive")
-.checked=true;
+document.getElementById(
+"newActive"
+).checked=true;
 
 await loadUsers();
 
@@ -2568,7 +2750,9 @@ renderOrders();
 renderStages();
 
 if(role==="المدير"){
+
 loadUsers();
+
 }
 
 }
@@ -2583,7 +2767,8 @@ checkSession();
 
 if("serviceWorker" in navigator){
 
-navigator.serviceWorker
+navigator
+.serviceWorker
 .register("./sw.js")
 .catch(console.log);
 
