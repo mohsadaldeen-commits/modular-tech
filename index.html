@@ -86,7 +86,8 @@ padding:12px;
 border-radius:10px;
 margin-bottom:15px;
 display:none;
-font-weight:bold
+font-weight:bold;
+white-space:pre-line
 }
 
 header{
@@ -375,19 +376,6 @@ padding:15px
 margin-bottom:10px
 }
 
-.user-email{
-direction:ltr;
-text-align:right;
-word-break:break-all
-}
-
-.user-id{
-font-size:11px;
-color:#687386;
-word-break:break-all;
-margin-top:8px
-}
-
 @media(max-width:900px){
 .stats{
 grid-template-columns:repeat(2,1fr)
@@ -437,9 +425,7 @@ padding:24px
 
 <body>
 
-<!-- =========================
-LOGIN
-========================= -->
+<!-- ================= LOGIN ================= -->
 
 <div id="loginPage">
 
@@ -483,9 +469,7 @@ onclick="login()"
 </div>
 
 
-<!-- =========================
-APP
-========================= -->
+<!-- ================= APP ================= -->
 
 <div id="app" class="hidden">
 
@@ -547,9 +531,7 @@ onclick="showSection('users',this)"
 </div>
 
 
-<!-- =========================
-DASHBOARD
-========================= -->
+<!-- ================= DASHBOARD ================= -->
 
 <section id="dashboard">
 
@@ -600,9 +582,7 @@ onclick="openAddModal()"
 </section>
 
 
-<!-- =========================
-ORDERS
-========================= -->
+<!-- ================= ORDERS ================= -->
 
 <section id="ordersSection" class="hidden">
 
@@ -635,9 +615,7 @@ oninput="renderOrders()"
 </section>
 
 
-<!-- =========================
-PRODUCTION
-========================= -->
+<!-- ================= PRODUCTION ================= -->
 
 <section id="production" class="hidden">
 
@@ -652,9 +630,7 @@ PRODUCTION
 </section>
 
 
-<!-- =========================
-USERS
-========================= -->
+<!-- ================= USERS ================= -->
 
 <section id="users" class="hidden">
 
@@ -689,14 +665,12 @@ onclick="openUserModal()"
 </div>
 
 
-<!-- MESSAGE -->
+<!-- ================= MESSAGE ================= -->
 
 <div id="message" class="message"></div>
 
 
-<!-- =========================
-ORDER MODAL
-========================= -->
+<!-- ================= ORDER MODAL ================= -->
 
 <div id="orderModal" class="modal hidden">
 
@@ -704,7 +678,9 @@ ORDER MODAL
 
 <div class="modal-head">
 
-<h2 id="modalTitle">➕ إضافة طلبية</h2>
+<h2 id="modalTitle">
+➕ إضافة طلبية
+</h2>
 
 <button
 class="close"
@@ -718,7 +694,10 @@ onclick="closeModal()"
 
 <form id="orderForm">
 
-<input type="hidden" id="editId">
+<input
+type="hidden"
+id="editId"
+>
 
 <label>رقم الطلبية</label>
 
@@ -813,9 +792,7 @@ onclick="closeModal()"
 </div>
 
 
-<!-- =========================
-USER MODAL
-========================= -->
+<!-- ================= USER MODAL ================= -->
 
 <div id="userModal" class="modal hidden">
 
@@ -823,7 +800,9 @@ USER MODAL
 
 <div class="modal-head">
 
-<h2>➕ إضافة مستخدم</h2>
+<h2>
+➕ إضافة مستخدم
+</h2>
 
 <button
 class="close"
@@ -929,9 +908,9 @@ onclick="closeUserModal()"
 
 <script>
 
-/* =================================================
-SUPABASE
-================================================= */
+/* =====================================================
+   CONFIG
+===================================================== */
 
 const SUPABASE_URL =
 "https://bvrfrcmblwzuqprjknam.supabase.co";
@@ -940,9 +919,9 @@ const SUPABASE_KEY =
 "sb_publishable_vVXVJGcWpoPvPEH_bfm23Q_dZ5eXvmE";
 
 /*
- Edge Function الحالية لإنشاء المستخدم
+   Edge Function الحالية التي أرسلت رابطها:
+   bright-task
 */
-
 const CREATE_USER_FUNCTION =
 "https://bvrfrcmblwzuqprjknam.supabase.co/functions/v1/bright-task";
 
@@ -954,9 +933,9 @@ let currentProfile = null;
 let role = "";
 
 
-/* =================================================
-SUPABASE REQUEST
-================================================= */
+/* =====================================================
+   SUPABASE REQUEST
+===================================================== */
 
 async function request(
 path,
@@ -1025,10 +1004,10 @@ typeof data === "object"
 ?
 
 (
-data?.message ||
-data?.error_description ||
-data?.error ||
-data?.hint ||
+data.message ||
+data.error_description ||
+data.error ||
+data.hint ||
 JSON.stringify(data)
 )
 
@@ -1046,9 +1025,9 @@ return data;
 }
 
 
-/* =================================================
-AUTH
-================================================= */
+/* =====================================================
+   AUTH
+===================================================== */
 
 async function auth(
 path,
@@ -1094,9 +1073,9 @@ return data;
 }
 
 
-/* =================================================
-MESSAGE
-================================================= */
+/* =====================================================
+   MESSAGE
+===================================================== */
 
 function msg(text){
 
@@ -1116,9 +1095,9 @@ box.style.display="none";
 }
 
 
-/* =================================================
-ESCAPE
-================================================= */
+/* =====================================================
+   ESCAPE
+===================================================== */
 
 function esc(value){
 
@@ -1141,9 +1120,9 @@ return {
 }
 
 
-/* =================================================
-LOGIN
-================================================= */
+/* =====================================================
+   LOGIN
+===================================================== */
 
 async function login(){
 
@@ -1181,9 +1160,8 @@ return;
 try{
 
 /*
- البحث عن البريد بواسطة username
+   الحصول على البريد من username
 */
-
 const result =
 await request(
 "/rest/v1/rpc/get_login_email",
@@ -1228,9 +1206,8 @@ throw new Error(
 
 
 /*
- تسجيل الدخول في Auth
+   تسجيل الدخول في Supabase Auth
 */
-
 const session =
 await auth(
 "token?grant_type=password",
@@ -1239,11 +1216,6 @@ email:email,
 password:password
 }
 );
-
-
-/*
- حفظ الجلسة
-*/
 
 localStorage.setItem(
 "supabase_access_token",
@@ -1261,9 +1233,9 @@ session.refresh_token
 
 
 /*
- تحميل ملف المستخدم
+   تحميل profile
+   بالطريقة الجديدة
 */
-
 await loadProfile(
 session.user.id,
 session.user.email,
@@ -1284,7 +1256,10 @@ msg("✅ تم تسجيل الدخول");
 
 }catch(error){
 
-console.error(error);
+console.error(
+"LOGIN ERROR:",
+error
+);
 
 errorBox.textContent =
 "❌ "+error.message;
@@ -1296,9 +1271,11 @@ errorBox.style.display="block";
 }
 
 
-/* =================================================
-LOAD PROFILE
-================================================= */
+/* =====================================================
+   LOAD PROFILE
+   الحل النهائي:
+   استخدام auth.uid() داخل PostgreSQL
+===================================================== */
 
 async function loadProfile(
 userId,
@@ -1308,145 +1285,81 @@ username=""
 
 currentProfile=null;
 
-
-/*
- 1 — البحث بواسطة Auth ID
-*/
-
 try{
 
+/*
+   لا نبحث عن ID من المتصفح.
+
+   Supabase نفسه يستخدم auth.uid()
+   داخل get_my_profile()
+*/
 const data =
 await request(
-"/rest/v1/profiles"+
-"?select=id,username,full_name,role,active,email"+
-"&id=eq."+
-encodeURIComponent(userId)+
-"&limit=1"
+"/rest/v1/rpc/get_my_profile",
+"POST",
+{}
 );
 
+
+/*
+   نتيجة RPC تكون عادة Array
+*/
 if(
 Array.isArray(data) &&
-data.length
+data.length > 0
 ){
 
 currentProfile =
 data[0];
 
 }
-
-}catch(error){
-
-console.warn(
-"profiles by id:",
-error
-);
-
-}
-
-
-/*
- 2 — البحث بالبريد
-*/
-
-if(
-!currentProfile &&
-email
-){
-
-try{
-
-const data =
-await request(
-"/rest/v1/profiles"+
-"?select=id,username,full_name,role,active,email"+
-"&email=eq."+
-encodeURIComponent(email)+
-"&limit=1"
-);
-
-if(
-Array.isArray(data) &&
-data.length
+else if(
+data &&
+typeof data === "object"
 ){
 
 currentProfile =
-data[0];
+data;
 
 }
 
 }catch(error){
 
-console.warn(
-"profiles by email:",
+console.error(
+"GET MY PROFILE ERROR:",
 error
 );
 
-}
+throw new Error(
+"تعذر قراءة ملف المستخدم من profiles.\n\n"+
+error.message
+);
 
 }
 
 
 /*
- 3 — البحث باسم المستخدم
+   إذا لم يوجد profile
 */
-
-if(
-!currentProfile &&
-username
-){
-
-try{
-
-const data =
-await request(
-"/rest/v1/profiles"+
-"?select=id,username,full_name,role,active,email"+
-"&username=eq."+
-encodeURIComponent(username)+
-"&limit=1"
-);
-
-if(
-Array.isArray(data) &&
-data.length
-){
-
-currentProfile =
-data[0];
-
-}
-
-}catch(error){
-
-console.warn(
-"profiles by username:",
-error
-);
-
-}
-
-}
-
-
-/*
- لا يوجد ملف
-*/
-
 if(!currentProfile){
 
 throw new Error(
-"لم يتم العثور على ملف المستخدم في profiles"
+"لم يتم العثور على ملف المستخدم في profiles.\n\n"+
+"Auth User ID:\n"+
+userId+
+"\n\n"+
+"البريد:\n"+
+(email || "-")
 );
 
 }
 
 
 /*
- الحساب متوقف
+   الحساب غير فعال
 */
-
 if(
-currentProfile.active===false
+currentProfile.active === false
 ){
 
 throw new Error(
@@ -1457,29 +1370,15 @@ throw new Error(
 
 
 /*
- التأكد من الربط
+   حفظ الصلاحية
 */
-
-if(
-String(currentProfile.id).toLowerCase() !==
-String(userId).toLowerCase()
-){
-
-throw new Error(
-"ملف profiles غير مرتبط بنفس Auth User ID"
-);
-
-}
-
-
 role =
 currentProfile.role || "";
 
 
 /*
- عرض المستخدم الحالي
+   عرض المستخدم
 */
-
 document.getElementById(
 "currentUser"
 ).textContent =
@@ -1494,28 +1393,30 @@ role;
 }
 
 
-/* =================================================
-SHOW APP
-================================================= */
+/* =====================================================
+   SHOW APP
+===================================================== */
 
 function showApp(){
 
 document
 .getElementById("loginPage")
-.classList.add("hidden");
+.classList
+.add("hidden");
 
 document
 .getElementById("app")
-.classList.remove("hidden");
+.classList
+.remove("hidden");
 
 applyPermissions();
 
 }
 
 
-/* =================================================
-SESSION
-================================================= */
+/* =====================================================
+   SESSION
+===================================================== */
 
 async function checkSession(){
 
@@ -1573,9 +1474,9 @@ localStorage.removeItem(
 }
 
 
-/* =================================================
-LOGOUT
-================================================= */
+/* =====================================================
+   LOGOUT
+===================================================== */
 
 function logout(){
 
@@ -1592,9 +1493,9 @@ location.reload();
 }
 
 
-/* =================================================
-PERMISSIONS
-================================================= */
+/* =====================================================
+   PERMISSIONS
+===================================================== */
 
 function applyPermissions(){
 
@@ -1623,9 +1524,9 @@ button.classList.toggle(
 }
 
 
-/* =================================================
-STAGES
-================================================= */
+/* =====================================================
+   STAGES
+===================================================== */
 
 const stages=[
 
@@ -1650,9 +1551,9 @@ const stages=[
 ];
 
 
-/* =================================================
-LOAD ORDERS
-================================================= */
+/* =====================================================
+   LOAD ORDERS
+===================================================== */
 
 async function loadOrders(){
 
@@ -1676,7 +1577,10 @@ renderAll();
 
 }catch(error){
 
-console.error(error);
+console.error(
+"LOAD ORDERS ERROR:",
+error
+);
 
 document.getElementById(
 "latestOrders"
@@ -1700,9 +1604,9 @@ document.getElementById(
 }
 
 
-/* =================================================
-NORMALIZE ORDER
-================================================= */
+/* =====================================================
+   NORMALIZE
+===================================================== */
 
 function norm(order){
 
@@ -1741,9 +1645,9 @@ Number(order.stage || 0)
 }
 
 
-/* =================================================
-OVERDUE
-================================================= */
+/* =====================================================
+   OVERDUE
+===================================================== */
 
 function overdue(order){
 
@@ -1761,9 +1665,9 @@ stages.length-1
 }
 
 
-/* =================================================
-SECTIONS
-================================================= */
+/* =====================================================
+   SECTIONS
+===================================================== */
 
 function showSection(
 id,
@@ -1782,9 +1686,8 @@ section.classList.add(
 
 document
 .getElementById(id)
-.classList.remove(
-"hidden"
-);
+.classList
+.remove("hidden");
 
 document
 .querySelectorAll(
@@ -1813,9 +1716,9 @@ loadUsers();
 }
 
 
-/* =================================================
-ADD ORDER
-================================================= */
+/* =====================================================
+   ADD ORDER
+===================================================== */
 
 function openAddModal(){
 
@@ -1867,9 +1770,9 @@ document
 }
 
 
-/* =================================================
-SAVE ORDER
-================================================= */
+/* =====================================================
+   SAVE ORDER
+===================================================== */
 
 document
 .getElementById("orderForm")
@@ -1982,9 +1885,9 @@ error.message
 });
 
 
-/* =================================================
-EDIT ORDER
-================================================= */
+/* =====================================================
+   EDIT ORDER
+===================================================== */
 
 function editOrder(id){
 
@@ -2061,9 +1964,9 @@ document
 }
 
 
-/* =================================================
-DELETE ORDER
-================================================= */
+/* =====================================================
+   DELETE ORDER
+===================================================== */
 
 async function deleteOrder(id){
 
@@ -2124,9 +2027,9 @@ error.message
 }
 
 
-/* =================================================
-NEXT STAGE
-================================================= */
+/* =====================================================
+   NEXT STAGE
+===================================================== */
 
 async function nextStage(id){
 
@@ -2199,9 +2102,9 @@ error.message
 }
 
 
-/* =================================================
-DETAILS
-================================================= */
+/* =====================================================
+   DETAILS
+===================================================== */
 
 function details(id){
 
@@ -2261,9 +2164,9 @@ order.notes||"-"
 }
 
 
-/* =================================================
-ORDER HTML
-================================================= */
+/* =====================================================
+   ORDER HTML
+===================================================== */
 
 function orderHtml(order){
 
@@ -2458,9 +2361,9 @@ order.stage+1
 }
 
 
-/* =================================================
-DASHBOARD
-================================================= */
+/* =====================================================
+   DASHBOARD
+===================================================== */
 
 function renderDashboard(){
 
@@ -2510,9 +2413,9 @@ list
 }
 
 
-/* =================================================
-SEARCH ORDERS
-================================================= */
+/* =====================================================
+   SEARCH
+===================================================== */
 
 function renderOrders(){
 
@@ -2556,9 +2459,9 @@ list
 }
 
 
-/* =================================================
-RENDER STAGES
-================================================= */
+/* =====================================================
+   RENDER STAGES
+===================================================== */
 
 function renderStages(){
 
@@ -2636,22 +2539,13 @@ stageOrders
 }
 
 
-/* =================================================
-LOAD USERS
-النسخة الجديدة
-================================================= */
+/* =====================================================
+   LOAD USERS
+===================================================== */
 
 async function loadUsers(){
 
-/*
- المستخدمون للمدير فقط
-*/
-
-if(role !== "المدير"){
-
-console.warn(
-"LOAD USERS: ليس مديرًا"
-);
+if(role!=="المدير"){
 
 return;
 
@@ -2668,76 +2562,42 @@ return;
 
 }
 
-usersList.innerHTML = `
-<div class="empty">
-⏳ جاري تحميل المستخدمين...
-</div>
-`;
-
+usersList.innerHTML =
+"<div class='empty'>"+
+"⏳ جاري تحميل المستخدمين..."+
+"</div>";
 
 try{
-
-/*
- قراءة profiles مباشرة
-*/
 
 const users =
 await request(
 "/rest/v1/profiles"+
 "?select=id,username,full_name,role,active,email"+
-"&order=username.asc"
+"&order=created_at.desc"
 );
-
-console.log(
-"PROFILES USERS:",
-users
-);
-
-
-/*
- التأكد من أن الرد مصفوفة
-*/
 
 if(!Array.isArray(users)){
 
 throw new Error(
-"البيانات المستلمة من profiles ليست قائمة"
+"البيانات المستلمة من profiles غير صحيحة"
 );
 
 }
 
-
-/*
- لا يوجد مستخدمون
-*/
-
 if(users.length===0){
 
-usersList.innerHTML = `
-
-<div class="empty">
-
-❌ لا يوجد مستخدمون في جدول profiles
-
-<br><br>
-
-إذا كان جدول profiles يحتوي على مستخدمين، فالمشكلة في صلاحيات RLS.
-
-</div>
-
-`;
+usersList.innerHTML =
+"<div class='empty'>"+
+"لا يوجد مستخدمون في النظام"+
+"</div>";
 
 return;
 
 }
 
-
-/*
- رسم جميع المستخدمين
-*/
-
 usersList.innerHTML =
-users.map(user=>{
+users.map(
+user=>{
 
 const isActive =
 user.active !== false;
@@ -2753,8 +2613,8 @@ return `
 <div class="order-number">
 
 ${esc(
-user.full_name ||
-user.username ||
+user.full_name||
+user.username||
 "بدون اسم"
 )}
 
@@ -2763,7 +2623,7 @@ user.username ||
 <div class="customer">
 
 @${esc(
-user.username ||
+user.username||
 "-"
 )}
 
@@ -2771,11 +2631,10 @@ user.username ||
 
 </div>
 
-
 <span class="badge">
 
 ${esc(
-user.role ||
+user.role||
 "-"
 )}
 
@@ -2786,18 +2645,15 @@ user.role ||
 
 <div class="info">
 
-
 <div class="info-box">
 
 👤 اسم المستخدم
 
 <b>
-
 ${esc(
-user.username ||
+user.username||
 "-"
 )}
-
 </b>
 
 </div>
@@ -2808,44 +2664,27 @@ user.username ||
 🏢 القسم
 
 <b>
-
 ${esc(
-user.role ||
+user.role||
 "-"
 )}
-
 </b>
 
 </div>
 
 
-<div class="info-box user-email">
+<div class="info-box">
 
 📧 البريد الإلكتروني
 
 <b>
-
 ${esc(
-user.email ||
+user.email||
 "-"
 )}
-
 </b>
 
 </div>
-
-
-</div>
-
-
-<div class="user-id">
-
-Auth/Profile ID:
-
-${esc(
-user.id ||
-"-"
-)}
 
 </div>
 
@@ -2876,8 +2715,8 @@ isActive
 
 `;
 
-}).join("");
-
+}
+).join("");
 
 }catch(error){
 
@@ -2886,42 +2725,22 @@ console.error(
 error
 );
 
-usersList.innerHTML = `
-
-<div class="empty">
-
-❌ تعذر تحميل قائمة المستخدمين
-
-<br><br>
-
-<small>
-
-${esc(
-error.message
-)}
-
-</small>
-
-<br><br>
-
-<small>
-
-تحقق من صلاحيات RLS لجدول profiles.
-
-</small>
-
-</div>
-
-`;
+usersList.innerHTML =
+"<div class='empty'>"+
+"❌ تعذر تحميل قائمة المستخدمين<br><br>"+
+"<small>"+
+esc(error.message)+
+"</small>"+
+"</div>";
 
 }
 
 }
 
 
-/* =================================================
-USER MODAL
-================================================= */
+/* =====================================================
+   USER MODAL
+===================================================== */
 
 function openUserModal(){
 
@@ -2961,9 +2780,10 @@ document
 }
 
 
-/* =================================================
-CREATE USER
-================================================= */
+/* =====================================================
+   CREATE USER
+   Edge Function: bright-task
+===================================================== */
 
 document
 .getElementById("userForm")
@@ -2982,7 +2802,6 @@ alert(
 return;
 
 }
-
 
 const username =
 document.getElementById(
@@ -3016,9 +2835,9 @@ document.getElementById(
 
 
 if(
-!username ||
-!fullName ||
-!email ||
+!username||
+!fullName||
+!email||
 !password
 ){
 
@@ -3029,7 +2848,6 @@ alert(
 return;
 
 }
-
 
 if(password.length<6){
 
@@ -3132,19 +2950,15 @@ if(!response.ok){
 
 throw new Error(
 
-data.message ||
-data.error ||
-data.error_description ||
+data.message||
+data.error||
+data.error_description||
 "فشل إنشاء المستخدم"
 
 );
 
 }
 
-
-/*
- إغلاق النافذة
-*/
 
 closeUserModal();
 
@@ -3156,20 +2970,6 @@ document.getElementById(
 "newActive"
 ).checked=true;
 
-
-/*
- إعطاء وقت بسيط للـ Edge Function
-*/
-
-await new Promise(
-resolve =>
-setTimeout(resolve,500)
-);
-
-
-/*
- إعادة تحميل القائمة
-*/
 
 await loadUsers();
 
@@ -3186,7 +2986,7 @@ error
 );
 
 let message =
-error.message ||
+error.message||
 "فشل إنشاء المستخدم";
 
 
@@ -3203,7 +3003,6 @@ message =
 
 }
 
-
 alert(
 "❌ لم يتم إنشاء المستخدم\n\n"+
 message
@@ -3214,9 +3013,9 @@ message
 });
 
 
-/* =================================================
-RENDER ALL
-================================================= */
+/* =====================================================
+   RENDER ALL
+===================================================== */
 
 function renderAll(){
 
@@ -3226,25 +3025,19 @@ renderOrders();
 
 renderStages();
 
-if(role==="المدير"){
-
-loadUsers();
-
-}
-
 }
 
 
-/* =================================================
-START
-================================================= */
+/* =====================================================
+   START
+===================================================== */
 
 checkSession();
 
 
-/* =================================================
-SERVICE WORKER
-================================================= */
+/* =====================================================
+   SERVICE WORKER
+===================================================== */
 
 if(
 "serviceWorker" in navigator
