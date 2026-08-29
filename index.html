@@ -3,7 +3,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
 <title>MODULAR TECH</title>
 
 <style>
@@ -360,7 +359,7 @@ MODULAR TECH
 </div>
 
 <div class="user" id="userLabel">
-جاري الاتصال...
+المدير
 </div>
 
 </header>
@@ -386,6 +385,9 @@ MODULAR TECH
 </button>
 
 </div>
+
+
+<!-- الرئيسية -->
 
 <section id="dashboard">
 
@@ -431,6 +433,9 @@ MODULAR TECH
 
 </section>
 
+
+<!-- الطلبيات -->
+
 <section id="ordersSection" class="hidden">
 
 <div class="panel">
@@ -459,6 +464,9 @@ oninput="renderOrders()"
 
 </section>
 
+
+<!-- مراحل العمل -->
+
 <section id="production" class="hidden">
 
 <div class="panel">
@@ -470,6 +478,9 @@ oninput="renderOrders()"
 </div>
 
 </section>
+
+
+<!-- المستخدمون -->
 
 <section id="users" class="hidden">
 
@@ -493,7 +504,13 @@ oninput="renderOrders()"
 
 </div>
 
+
+<!-- الرسالة -->
+
 <div id="message" class="message"></div>
+
+
+<!-- نافذة إضافة الطلبية -->
 
 <div id="orderModal" class="modal hidden">
 
@@ -515,7 +532,9 @@ oninput="renderOrders()"
 
 <input type="hidden" id="editId">
 
-<label>رقم الطلبية</label>
+<label>
+رقم الطلبية
+</label>
 
 <input
 id="orderNum"
@@ -523,7 +542,9 @@ required
 placeholder="مثال: 10025"
 >
 
-<label>اسم الزبون</label>
+<label>
+اسم الزبون
+</label>
 
 <input
 id="customer"
@@ -535,7 +556,9 @@ placeholder="اسم الزبون"
 
 <div>
 
-<label>رقم الهاتف</label>
+<label>
+رقم الهاتف
+</label>
 
 <input
 id="phone"
@@ -547,7 +570,9 @@ placeholder="05xxxxxxxx"
 
 <div>
 
-<label>موعد التسليم</label>
+<label>
+موعد التسليم
+</label>
 
 <input
 id="due"
@@ -559,7 +584,9 @@ required
 
 </div>
 
-<label>ملاحظات</label>
+<label>
+ملاحظات
+</label>
 
 <textarea
 id="notes"
@@ -603,11 +630,12 @@ onclick="closeModal()"
 
 </div>
 
+
 <script>
 
-/* ==========================
+/* =====================================================
    إعداد Supabase
-========================== */
+===================================================== */
 
 const SUPABASE_URL =
 "https://bvrfrcmblwzuqprjknam.supabase.co";
@@ -616,139 +644,217 @@ const SUPABASE_KEY =
 "sb_publishable_vVXVJGcWpoPvPEH_bfm23Q_dZ5eXvmE";
 
 
-/* ==========================
+/* =====================================================
    مراحل العمل
-========================== */
+===================================================== */
 
-const stages=[
+const stages = [
+
 ["في العمل","المدير"],
+
 ["تم القص","القص"],
+
 ["تم الكنت","الكنت"],
+
 ["تم CNC","CNC"],
+
 ["تم التركيب","التركيب"],
+
 ["تم الدهان","الدهان"],
+
 ["تم التغليف","التغليف"],
+
 ["تم التحميل","التحميل"],
+
 ["تم التسليم","التسليم"]
+
 ];
 
 
-let orders=[];
-let role="المدير";
+let orders = [];
+
+let role = "المدير";
 
 
-/* ==========================
-   Supabase REST
-========================== */
+/* =====================================================
+   طلب Supabase
+===================================================== */
 
 async function supabaseRequest(
 table,
-method="GET",
-body=null,
-query=""
+method = "GET",
+body = null,
+query = ""
 ){
 
-const options={
-method:method,
-headers:{
-"apikey":SUPABASE_KEY,
-"Authorization":"Bearer "+SUPABASE_KEY,
-"Content-Type":"application/json",
-"Prefer":"return=representation"
+const options = {
+
+method: method,
+
+headers: {
+
+"apikey": SUPABASE_KEY,
+
+"Authorization":
+"Bearer " + SUPABASE_KEY,
+
+"Content-Type":
+"application/json",
+
+"Prefer":
+"return=representation"
+
 }
+
 };
 
-if(body!==null){
-options.body=JSON.stringify(body);
+
+if(body !== null){
+
+options.body =
+JSON.stringify(body);
+
 }
 
-const response=
+
+const response =
 await fetch(
-SUPABASE_URL+
-"/rest/v1/"+
-table+
+
+SUPABASE_URL +
+"/rest/v1/" +
+table +
 query,
+
 options
+
 );
 
-const text=await response.text();
 
-let data=null;
+const text =
+await response.text();
+
+
+let data;
 
 try{
-data=text?JSON.parse(text):null;
-}catch(e){
-data=text;
+
+data =
+text ?
+JSON.parse(text) :
+null;
+
 }
+catch(e){
+
+data = text;
+
+}
+
 
 if(!response.ok){
 
 console.error(
-"Supabase error:",
+"SUPABASE ERROR:",
 data
 );
 
 throw new Error(
-typeof data==="object"
+
+typeof data === "object"
+
 ?
-(data.message||data.error||JSON.stringify(data))
+
+(
+data.message ||
+data.error ||
+JSON.stringify(data)
+)
+
 :
+
 data
+
 );
 
 }
 
+
 return data;
+
 }
 
 
-/* ==========================
-   رسالة
-========================== */
+/* =====================================================
+   الرسالة
+===================================================== */
 
 function message(text){
 
-const box=
+const box =
 document.getElementById("message");
 
-box.textContent=text;
+box.textContent = text;
 
-box.style.display="block";
+box.style.display = "block";
+
 
 setTimeout(()=>{
-box.style.display="none";
+
+box.style.display = "none";
+
 },2500);
 
 }
 
 
-/* ==========================
-   تحميل الطلبيات
-========================== */
+/* =====================================================
+   تحميل الطلبيات من Supabase
+===================================================== */
 
 async function loadOrders(){
 
 try{
 
-const data=
+const data =
 await supabaseRequest(
+
 "orders",
+
 "GET",
+
 null,
+
 "?select=*&order=created_at.desc"
+
 );
 
-orders=Array.isArray(data)?data:[];
+
+orders =
+Array.isArray(data)
+?
+data
+:
+[];
+
 
 renderAll();
+
 
 }
 catch(error){
 
 console.error(error);
 
+document.getElementById("latestOrders")
+.innerHTML =
+"<div class='empty'>تعذر تحميل الطلبيات</div>";
+
+document.getElementById("ordersList")
+.innerHTML =
+"<div class='empty'>تعذر تحميل الطلبيات</div>";
+
 message(
-"❌ لم يتم تحميل الطلبيات"
+"❌ تعذر الاتصال بقاعدة البيانات"
 );
 
 }
@@ -756,39 +862,37 @@ message(
 }
 
 
-/* ==========================
-   تحويل بيانات Supabase
-========================== */
+/* =====================================================
+   تحويل بيانات الطلبية
+===================================================== */
 
 function normalizeOrder(order){
 
 return {
 
-id:order.id,
+id:
+order.id,
 
 num:
-order.order_number ??
-order["order number"] ??
-"",
+order.order_number || "",
 
 customer:
-order.custmer_name ??
-order["custmer name"] ??
-"",
+order.customer_name || "",
 
-phone:order.phone||"",
+phone:
+order.phone || "",
 
 due:
-order.due_date ??
-order["due date"] ??
-"",
+order.due_date || "",
 
-notes:order.notes||"",
+notes:
+order.notes || "",
 
-urgent:!!order.urgent,
+urgent:
+!!order.urgent,
 
 stage:
-Number(order.stage||0),
+Number(order.stage || 0),
 
 created_at:
 order.created_at,
@@ -801,90 +905,137 @@ order.updated_at
 }
 
 
-/* ==========================
+/* =====================================================
    التأخير
-========================== */
+===================================================== */
 
 function isOverdue(order){
 
 if(!order.due){
+
 return false;
+
 }
 
-return new Date(
-order.due+"T23:59:59"
-)<new Date()
+return (
+
+new Date(
+order.due + "T23:59:59"
+) < new Date()
+
+)
+
 &&
-order.stage<stages.length-1;
+
+order.stage <
+stages.length - 1;
 
 }
 
 
-/* ==========================
+/* =====================================================
    التنقل
-========================== */
+===================================================== */
 
 function showSection(id,button){
 
 document
-.querySelectorAll(".container > section")
+.querySelectorAll(
+".container > section"
+)
 .forEach(section=>{
-section.classList.add("hidden");
+
+section.classList.add(
+"hidden"
+);
+
 });
+
 
 document
 .getElementById(id)
-.classList.remove("hidden");
+.classList.remove(
+"hidden"
+);
+
 
 document
-.querySelectorAll(".nav button")
+.querySelectorAll(
+".nav button"
+)
 .forEach(btn=>{
-btn.classList.remove("active");
+
+btn.classList.remove(
+"active"
+);
+
 });
 
-button.classList.add("active");
+
+button.classList.add(
+"active"
+);
 
 }
 
 
-/* ==========================
-   إضافة
-========================== */
+/* =====================================================
+   فتح نافذة إضافة
+===================================================== */
 
 function openAddModal(){
 
-document.getElementById("modalTitle").textContent=
+document.getElementById(
+"modalTitle"
+).textContent =
 "➕ إضافة طلبية";
 
-document.getElementById("editId").value="";
 
-document.getElementById("orderForm").reset();
+document.getElementById(
+"editId"
+).value = "";
 
-document.getElementById("due").value=
-new Date().toISOString().split("T")[0];
 
-document.getElementById("orderModal")
-.classList.remove("hidden");
+document.getElementById(
+"orderForm"
+).reset();
+
+
+document.getElementById(
+"due"
+).value =
+new Date()
+.toISOString()
+.split("T")[0];
+
+
+document.getElementById(
+"orderModal"
+).classList.remove(
+"hidden"
+);
 
 }
 
 
-/* ==========================
-   إغلاق
-========================== */
+/* =====================================================
+   إغلاق النافذة
+===================================================== */
 
 function closeModal(){
 
-document
-.getElementById("orderModal")
-.classList.add("hidden");
+document.getElementById(
+"orderModal"
+).classList.add(
+"hidden"
+);
 
 }
 
 
-/* ==========================
-   حفظ
-========================== */
+/* =====================================================
+   حفظ الطلبية
+===================================================== */
 
 document
 .getElementById("orderForm")
@@ -894,37 +1045,58 @@ async function(e){
 
 e.preventDefault();
 
-const editId=
-document.getElementById("editId").value;
 
-const num=
-document.getElementById("orderNum")
-.value.trim();
-
-const customer=
-document.getElementById("customer")
-.value.trim();
-
-const phone=
-document.getElementById("phone")
-.value.trim();
-
-const due=
-document.getElementById("due")
-.value;
-
-const notes=
-document.getElementById("notes")
-.value.trim();
-
-const urgent=
-document.getElementById("urgent")
-.checked;
+const editId =
+document.getElementById(
+"editId"
+).value;
 
 
-if(!num || !customer || !due){
+const orderNumber =
+document.getElementById(
+"orderNum"
+).value.trim();
 
-alert("يرجى تعبئة البيانات المطلوبة");
+
+const customerName =
+document.getElementById(
+"customer"
+).value.trim();
+
+
+const phone =
+document.getElementById(
+"phone"
+).value.trim();
+
+
+const dueDate =
+document.getElementById(
+"due"
+).value;
+
+
+const notes =
+document.getElementById(
+"notes"
+).value.trim();
+
+
+const urgent =
+document.getElementById(
+"urgent"
+).checked;
+
+
+if(
+!orderNumber ||
+!customerName ||
+!dueDate
+){
+
+alert(
+"يرجى تعبئة رقم الطلبية واسم الزبون وموعد التسليم"
+);
 
 return;
 
@@ -933,63 +1105,121 @@ return;
 
 try{
 
-/* تعديل */
+
+/* =========================
+   تعديل طلبية
+========================= */
 
 if(editId){
 
 await supabaseRequest(
+
 "orders",
+
 "PATCH",
+
 {
-order_number:num,
-custmer_name:customer,
-phone:phone,
-due_date:due,
-notes:notes,
-urgent:urgent,
-updated_at:new Date().toISOString()
+
+order_number:
+orderNumber,
+
+customer_name:
+customerName,
+
+phone:
+phone,
+
+due_date:
+dueDate,
+
+notes:
+notes,
+
+urgent:
+urgent,
+
+updated_at:
+new Date().toISOString()
+
 },
-"?id=eq."+encodeURIComponent(editId)
+
+"?id=eq." +
+encodeURIComponent(editId)
+
 );
 
-message("✅ تم تعديل الطلبية وحفظها");
+
+message(
+"✅ تم تعديل الطلبية وحفظها"
+);
 
 }
 
-/* إضافة */
+
+/* =========================
+   إضافة طلبية جديدة
+========================= */
 
 else{
 
 await supabaseRequest(
+
 "orders",
+
 "POST",
+
 {
-order_number:num,
-custmer_name:customer,
-phone:phone,
-due_date:due,
-notes:notes,
-urgent:urgent,
-stage:0
+
+order_number:
+orderNumber,
+
+customer_name:
+customerName,
+
+phone:
+phone,
+
+due_date:
+dueDate,
+
+notes:
+notes,
+
+urgent:
+urgent,
+
+stage:
+0
+
 }
+
 );
 
-message("✅ تم إضافة الطلبية وحفظها");
+
+message(
+"✅ تم إضافة الطلبية وحفظها"
+);
 
 }
+
 
 closeModal();
 
+
 await loadOrders();
+
 
 }
 catch(error){
 
 console.error(error);
 
+
 alert(
-"❌ تعذر الحفظ:\n\n"+
+
+"❌ حدث خطأ أثناء الحفظ:\n\n" +
 error.message
+
 );
 
 }
@@ -997,100 +1227,174 @@ error.message
 });
 
 
-/* ==========================
-   تعديل
-========================== */
+/* =====================================================
+   تعديل طلبية
+===================================================== */
 
-async function editOrder(id){
+function editOrder(id){
 
-const order=
+if(role !== "المدير"){
+
+alert(
+"ليس لديك صلاحية تعديل الطلبية"
+);
+
+return;
+
+}
+
+
+const order =
 orders
 .map(normalizeOrder)
-.find(o=>String(o.id)===String(id));
+.find(
+o =>
+String(o.id) ===
+String(id)
+);
+
 
 if(!order){
+
 return;
+
 }
 
-document.getElementById("modalTitle").textContent=
-"✏️ تعديل الطلبية #"+order.num;
 
-document.getElementById("editId").value=
-order.id;
-
-document.getElementById("orderNum").value=
+document.getElementById(
+"modalTitle"
+).textContent =
+"✏️ تعديل الطلبية #" +
 order.num;
 
-document.getElementById("customer").value=
+
+document.getElementById(
+"editId"
+).value =
+order.id;
+
+
+document.getElementById(
+"orderNum"
+).value =
+order.num;
+
+
+document.getElementById(
+"customer"
+).value =
 order.customer;
 
-document.getElementById("phone").value=
+
+document.getElementById(
+"phone"
+).value =
 order.phone;
 
-document.getElementById("due").value=
+
+document.getElementById(
+"due"
+).value =
 order.due;
 
-document.getElementById("notes").value=
+
+document.getElementById(
+"notes"
+).value =
 order.notes;
 
-document.getElementById("urgent").checked=
+
+document.getElementById(
+"urgent"
+).checked =
 order.urgent;
 
-document.getElementById("orderModal")
-.classList.remove("hidden");
+
+document.getElementById(
+"orderModal"
+).classList.remove(
+"hidden"
+);
 
 }
 
 
-/* ==========================
-   حذف
-========================== */
+/* =====================================================
+   حذف طلبية
+===================================================== */
 
 async function deleteOrder(id){
 
-if(role!=="المدير"){
+if(role !== "المدير"){
 
-alert("ليس لديك صلاحية حذف الطلبية");
+alert(
+"ليس لديك صلاحية حذف الطلبية"
+);
 
 return;
 
 }
 
-const order=
+
+const order =
 orders
 .map(normalizeOrder)
-.find(o=>String(o.id)===String(id));
+.find(
+o =>
+String(o.id) ===
+String(id)
+);
+
 
 if(!order){
+
 return;
+
 }
 
-if(!confirm(
-"هل تريد حذف الطلبية #"+order.num+" ؟"
-)){
+
+if(
+!confirm(
+"هل تريد حذف الطلبية #" +
+order.num +
+" ؟"
+)
+){
+
 return;
+
 }
+
 
 try{
 
 await supabaseRequest(
+
 "orders",
+
 "DELETE",
+
 null,
-"?id=eq."+encodeURIComponent(id)
+
+"?id=eq." +
+encodeURIComponent(id)
+
 );
 
-message("🗑️ تم حذف الطلبية");
+
+message(
+"🗑️ تم حذف الطلبية"
+);
+
 
 await loadOrders();
+
 
 }
 catch(error){
 
-console.error(error);
-
 alert(
-"تعذر حذف الطلبية:\n\n"+
+"❌ تعذر حذف الطلبية:\n\n" +
 error.message
 );
 
@@ -1099,69 +1403,104 @@ error.message
 }
 
 
-/* ==========================
+/* =====================================================
    المرحلة التالية
-========================== */
+===================================================== */
 
 async function nextStage(id){
 
-const order=
+const order =
 orders
 .map(normalizeOrder)
-.find(o=>String(o.id)===String(id));
+.find(
+o =>
+String(o.id) ===
+String(id)
+);
+
 
 if(!order){
-return;
-}
-
-const next=
-order.stage+1;
-
-if(next>=stages.length){
-return;
-}
-
-if(role!=="المدير"){
-
-const expected=
-stages[next]?.[1];
-
-if(expected!==role){
-
-alert("هذه الطلبية ليست في قسمك");
 
 return;
 
 }
 
+
+const nextStageNumber =
+order.stage + 1;
+
+
+if(
+nextStageNumber >=
+stages.length
+){
+
+return;
+
 }
+
+
+if(role !== "المدير"){
+
+const expected =
+stages[
+nextStageNumber
+]?.[1];
+
+
+if(expected !== role){
+
+alert(
+"هذه الطلبية ليست في قسمك"
+);
+
+return;
+
+}
+
+}
+
 
 try{
 
 await supabaseRequest(
+
 "orders",
+
 "PATCH",
+
 {
-stage:next,
-updated_at:new Date().toISOString()
+
+stage:
+nextStageNumber,
+
+updated_at:
+new Date().toISOString()
+
 },
-"?id=eq."+encodeURIComponent(id)
+
+"?id=eq." +
+encodeURIComponent(id)
+
 );
+
 
 message(
-"✅ تم نقل الطلبية إلى "+
-stages[next][0]
+"✅ تم نقل الطلبية إلى " +
+stages[
+nextStageNumber
+][0]
 );
 
+
 await loadOrders();
+
 
 }
 catch(error){
 
-console.error(error);
-
 alert(
-"تعذر تحديث المرحلة:\n\n"+
+"❌ تعذر تحديث المرحلة:\n\n" +
 error.message
 );
 
@@ -1170,102 +1509,179 @@ error.message
 }
 
 
-/* ==========================
+/* =====================================================
    تفاصيل
-========================== */
+===================================================== */
 
 function details(id){
 
-const order=
+const order =
 orders
 .map(normalizeOrder)
-.find(o=>String(o.id)===String(id));
+.find(
+o =>
+String(o.id) ===
+String(id)
+);
+
 
 if(!order){
+
 return;
+
 }
 
+
 alert(
-"📋 الطلبية #"+order.num+
-"\n\n"+
-"الزبون: "+order.customer+
-"\n"+
-"الهاتف: "+(order.phone||"-")+
-"\n"+
-"موعد التسليم: "+(order.due||"-")+
-"\n"+
-"الحالة: "+stages[order.stage][0]+
-"\n"+
-"القسم: "+stages[order.stage][1]+
-"\n"+
-"الملاحظات: "+(order.notes||"-")
+
+"📋 الطلبية #" +
+order.num +
+
+"\n\n" +
+
+"الزبون: " +
+order.customer +
+
+"\n" +
+
+"الهاتف: " +
+(order.phone || "-") +
+
+"\n" +
+
+"موعد التسليم: " +
+(order.due || "-") +
+
+"\n" +
+
+"الحالة: " +
+stages[
+order.stage
+][0] +
+
+"\n" +
+
+"القسم: " +
+stages[
+order.stage
+][1] +
+
+"\n" +
+
+"الملاحظات: " +
+(order.notes || "-")
+
 );
 
 }
 
 
-/* ==========================
-   الرئيسية
-========================== */
+/* =====================================================
+   لوحة التحكم
+===================================================== */
 
 function renderDashboard(){
 
-const normalized=
+const list =
 orders.map(normalizeOrder);
 
-document.getElementById("totalCount")
-.textContent=normalized.length;
 
-document.getElementById("activeCount")
-.textContent=
-normalized.filter(
-o=>o.stage<stages.length-1
+document.getElementById(
+"totalCount"
+).textContent =
+list.length;
+
+
+document.getElementById(
+"activeCount"
+).textContent =
+
+list.filter(
+o =>
+o.stage <
+stages.length - 1
 ).length;
 
-document.getElementById("urgentCount")
-.textContent=
-normalized.filter(o=>o.urgent).length;
 
-document.getElementById("overdueCount")
-.textContent=
-normalized.filter(o=>isOverdue(o)).length;
+document.getElementById(
+"urgentCount"
+).textContent =
 
-const latest=
-normalized.slice(0,5);
+list.filter(
+o => o.urgent
+).length;
+
+
+document.getElementById(
+"overdueCount"
+).textContent =
+
+list.filter(
+o => isOverdue(o)
+).length;
+
+
+const latest =
+list.slice(0,5);
+
 
 if(!latest.length){
 
-document.getElementById("latestOrders")
-.innerHTML=
+document.getElementById(
+"latestOrders"
+).innerHTML =
 "<div class='empty'>لا توجد طلبيات حتى الآن</div>";
 
 return;
 
 }
 
-document.getElementById("latestOrders")
-.innerHTML=
+
+document.getElementById(
+"latestOrders"
+).innerHTML =
 
 latest.map(order=>`
 
-<div class="order ${order.urgent?"urgent":""}">
+<div class="order ${
+order.urgent ? "urgent" : ""
+}">
 
 <div class="order-head">
 
 <div>
 
 <div class="order-number">
-${order.urgent?"⭐ ":""}#${order.num}
+
+${
+order.urgent
+?
+"⭐ "
+:
+""
+}
+
+#${order.num}
+
 </div>
 
 <div class="customer">
+
 ${order.customer}
+
 </div>
 
 </div>
 
 <span class="badge">
-${stages[order.stage]?.[0]||"في العمل"}
+
+${
+stages[
+order.stage
+]?.[0] ||
+"في العمل"
+}
+
 </span>
 
 </div>
@@ -1273,18 +1689,38 @@ ${stages[order.stage]?.[0]||"في العمل"}
 <div class="info">
 
 <div class="info-box">
+
 الهاتف
-<b>${order.phone||"-"}</b>
+
+<b>
+${order.phone || "-"}
+</b>
+
 </div>
 
 <div class="info-box">
+
 موعد التسليم
-<b>${order.due||"-"}</b>
+
+<b>
+${order.due || "-"}
+</b>
+
 </div>
 
 <div class="info-box">
+
 القسم
-<b>${stages[order.stage]?.[1]||"-"}</b>
+
+<b>
+${
+stages[
+order.stage
+]?.[1] ||
+"-"
+}
+</b>
+
 </div>
 
 </div>
@@ -1296,27 +1732,37 @@ ${stages[order.stage]?.[0]||"في العمل"}
 }
 
 
-/* ==========================
-   الطلبيات
-========================== */
+/* =====================================================
+   عرض الطلبيات
+===================================================== */
 
 function renderOrders(){
 
-const search=
-(document.getElementById("search")?.value||"")
+const search =
+(
+document.getElementById(
+"search"
+)?.value || ""
+)
 .trim()
 .toLowerCase();
 
-const normalized=
+
+const list =
 orders.map(normalizeOrder);
 
-const filtered=
-normalized.filter(order=>
+
+const filtered =
+list.filter(order=>
 
 [
+
 order.num,
+
 order.customer,
+
 order.phone
+
 ]
 .join(" ")
 .toLowerCase()
@@ -1324,67 +1770,118 @@ order.phone
 
 );
 
+
 if(!filtered.length){
 
-document.getElementById("ordersList")
-.innerHTML=
+document.getElementById(
+"ordersList"
+).innerHTML =
 "<div class='empty'>لا توجد طلبيات مطابقة.</div>";
 
 return;
 
 }
 
-document.getElementById("ordersList")
-.innerHTML=
+
+document.getElementById(
+"ordersList"
+).innerHTML =
 
 filtered.map(order=>`
 
-<div class="order ${order.urgent?"urgent":""}">
+<div class="order ${
+order.urgent ? "urgent" : ""
+}">
 
 <div class="order-head">
 
 <div>
 
 <div class="order-number">
-${order.urgent?"⭐ ":""}#${order.num}
+
+${
+order.urgent
+?
+"⭐ "
+:
+""
+}
+
+#${order.num}
+
 </div>
 
 <div class="customer">
+
 ${order.customer}
+
 </div>
 
 </div>
 
 <span class="badge ${
-isOverdue(order)?"overdue":""
+isOverdue(order)
+?
+"overdue"
+:
+""
 }">
+
 ${
 isOverdue(order)
-?"متأخرة"
-:stages[order.stage]?.[0]||"في العمل"
+?
+"متأخرة"
+:
+stages[
+order.stage
+]?.[0] ||
+"في العمل"
 }
+
 </span>
 
 </div>
 
+
 <div class="info">
 
 <div class="info-box">
+
 📞 الهاتف
-<b>${order.phone||"-"}</b>
+
+<b>
+${order.phone || "-"}
+</b>
+
 </div>
 
 <div class="info-box">
+
 📅 التسليم
-<b>${order.due||"-"}</b>
+
+<b>
+${order.due || "-"}
+</b>
+
 </div>
 
 <div class="info-box">
+
 🏭 القسم
-<b>${stages[order.stage]?.[1]||"-"}</b>
+
+<b>
+${
+stages[
+order.stage
+]?.[1] ||
+"-"
+}
+</b>
+
 </div>
 
 </div>
+
 
 <div class="actions">
 
@@ -1395,10 +1892,12 @@ onclick="details('${order.id}')"
 📋 التفاصيل
 </button>
 
+
 ${
-role==="المدير"
+role === "المدير"
 ?
 `
+
 <button
 class="success"
 onclick="editOrder('${order.id}')"
@@ -1412,27 +1911,38 @@ onclick="deleteOrder('${order.id}')"
 >
 🗑️ حذف
 </button>
+
 `
 :
 ""
 }
 
+
 ${
-order.stage<stages.length-1
+order.stage <
+stages.length - 1
 ?
 `
+
 <button
 class="primary"
 onclick="nextStage('${order.id}')"
 >
-➡️ تم ${stages[order.stage+1][1]}
+➡️ تم ${
+stages[
+order.stage + 1
+][1]
+}
 </button>
+
 `
 :
 `
+
 <span class="badge">
 ✅ مكتملة
 </span>
+
 `
 }
 
@@ -1445,23 +1955,29 @@ onclick="nextStage('${order.id}')"
 }
 
 
-/* ==========================
+/* =====================================================
    مراحل العمل
-========================== */
+===================================================== */
 
 function renderStages(){
 
-const normalized=
+const list =
 orders.map(normalizeOrder);
 
-document.getElementById("stageList").innerHTML=
 
-stages.map((stage,index)=>{
+document.getElementById(
+"stageList"
+).innerHTML =
 
-const list=
-normalized.filter(
-o=>o.stage===index
+stages.map(
+(stage,index)=>{
+
+const stageOrders =
+list.filter(
+o =>
+o.stage === index
 );
+
 
 return `
 
@@ -1474,15 +1990,17 @@ ${stage[0]}
 </h2>
 
 <span class="badge">
-${list.length} طلبية
+${stageOrders.length} طلبية
 </span>
 
 </div>
 
 ${
-list.length
+stageOrders.length
+
 ?
-list.map(order=>`
+
+stageOrders.map(order=>`
 
 <div class="order">
 
@@ -1491,7 +2009,17 @@ list.map(order=>`
 <div>
 
 <div class="order-number">
-${order.urgent?"⭐ ":""}#${order.num}
+
+${
+order.urgent
+?
+"⭐ "
+:
+""
+}
+
+#${order.num}
+
 </div>
 
 <div class="customer">
@@ -1501,7 +2029,7 @@ ${order.customer}
 </div>
 
 <span class="badge">
-${order.due||"-"}
+${order.due || "-"}
 </span>
 
 </div>
@@ -1516,21 +2044,34 @@ onclick="details('${order.id}')"
 </button>
 
 ${
-order.stage<stages.length-1
+order.stage <
+stages.length - 1
+
 ?
+
 `
+
 <button
 class="primary"
 onclick="nextStage('${order.id}')"
 >
-➡️ تم ${stages[order.stage+1][1]}
+➡️ تم ${
+stages[
+order.stage + 1
+][1]
+}
 </button>
+
 `
+
 :
+
 `
+
 <span class="badge">
 ✅ مكتملة
 </span>
+
 `
 }
 
@@ -1539,22 +2080,32 @@ onclick="nextStage('${order.id}')"
 </div>
 
 `).join("")
+
 :
-"<div class='empty'>لا توجد طلبيات في هذه المرحلة</div>"
+
+`
+
+<div class="empty">
+لا توجد طلبيات في هذه المرحلة
+</div>
+
+`
+
 }
 
 </div>
 
 `;
 
-}).join("");
+}
+).join("");
 
 }
 
 
-/* ==========================
-   تحديث
-========================== */
+/* =====================================================
+   تحديث كامل
+===================================================== */
 
 function renderAll(){
 
@@ -1567,28 +2118,29 @@ renderStages();
 }
 
 
-/* ==========================
-   بدء التطبيق
-========================== */
-
-document.getElementById("userLabel")
-.textContent=
-"المستخدم: المدير";
+/* =====================================================
+   تشغيل التطبيق
+===================================================== */
 
 loadOrders();
 
 
-/* ==========================
+/* =====================================================
    Service Worker
-========================== */
+===================================================== */
 
-if("serviceWorker" in navigator){
+if(
+"serviceWorker"
+in navigator
+){
 
-navigator.serviceWorker
+navigator
+.serviceWorker
 .register("./sw.js")
-.catch(error=>{
-console.log(error);
-});
+.catch(
+error =>
+console.log(error)
+);
 
 }
 
