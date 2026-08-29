@@ -3,12 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0f172a">
-<meta name="apple-mobile-web-app-capable" content="yes">
-
 <title>MODULAR TECH</title>
-
-<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0f172a">
 
 <style>
 *{box-sizing:border-box}
@@ -37,18 +33,8 @@ margin:6px 0 12px;
 border:1px solid #d5dde8;
 border-radius:9px;
 font-size:15px;
-font-family:inherit;
-background:#fff
+font-family:inherit
 }
-
-label{
-display:block;
-font-weight:bold;
-font-size:14px;
-margin-bottom:5px
-}
-
-/* LOGIN */
 
 #loginPage{
 min-height:100vh;
@@ -62,7 +48,7 @@ background:linear-gradient(135deg,#0f172a,#1e3a5f)
 .login-box{
 width:100%;
 max-width:420px;
-background:#fff;
+background:white;
 border-radius:24px;
 padding:30px;
 box-shadow:0 20px 60px #0005
@@ -70,7 +56,7 @@ box-shadow:0 20px 60px #0005
 
 .login-logo{
 text-align:center;
-font-size:29px;
+font-size:28px;
 font-weight:bold;
 color:#102a43
 }
@@ -81,11 +67,18 @@ color:#687386;
 margin:8px 0 25px
 }
 
+label{
+display:block;
+font-weight:bold;
+font-size:14px;
+margin-bottom:6px
+}
+
 .login-btn{
 width:100%;
 padding:14px;
 background:#1f6feb;
-color:#fff;
+color:white;
 font-size:16px;
 border-radius:12px
 }
@@ -97,15 +90,12 @@ padding:12px;
 border-radius:10px;
 margin-bottom:15px;
 display:none;
-font-weight:bold;
-line-height:1.6
+font-weight:bold
 }
-
-/* HEADER */
 
 header{
 background:#0f172a;
-color:#fff;
+color:white;
 padding:15px 20px;
 display:flex;
 justify-content:space-between;
@@ -127,19 +117,15 @@ opacity:.9
 
 .logout{
 background:#dc2626;
-color:#fff;
+color:white;
 margin-right:10px
 }
-
-/* CONTAINER */
 
 .container{
 max-width:1250px;
 margin:auto;
 padding:18px
 }
-
-/* NAV */
 
 .nav{
 display:flex;
@@ -150,16 +136,14 @@ margin-bottom:18px
 
 .nav button{
 white-space:nowrap;
-background:#fff;
+background:white;
 color:#172033
 }
 
 .nav button.active{
 background:#1f6feb;
-color:#fff
+color:white
 }
-
-/* STATS */
 
 .stats{
 display:grid;
@@ -169,7 +153,7 @@ margin-bottom:18px
 }
 
 .stat,.panel{
-background:#fff;
+background:white;
 border-radius:16px;
 box-shadow:0 3px 14px #0000000b
 }
@@ -189,8 +173,6 @@ font-weight:bold;
 margin-top:8px
 }
 
-/* PANELS */
-
 .panel{
 padding:18px;
 margin-bottom:18px
@@ -206,21 +188,19 @@ grid-template-columns:1fr 1fr;
 gap:10px
 }
 
-/* BUTTONS */
-
 .primary{
 background:#1f6feb;
-color:#fff
+color:white
 }
 
 .success{
 background:#198754;
-color:#fff
+color:white
 }
 
 .danger{
 background:#d92d20;
-color:#fff
+color:white
 }
 
 .secondary{
@@ -235,8 +215,6 @@ flex-wrap:wrap;
 margin-top:10px
 }
 
-/* ORDERS */
-
 .order-list{
 display:grid;
 gap:12px
@@ -246,7 +224,7 @@ gap:12px
 border:1px solid #e3e8ef;
 border-radius:14px;
 padding:15px;
-background:#fff
+background:white
 }
 
 .order.urgent{
@@ -282,15 +260,13 @@ margin-top:12px
 background:#f6f8fb;
 border-radius:9px;
 padding:9px;
-font-size:12px;
-overflow:hidden
+font-size:12px
 }
 
 .info-box b{
 display:block;
 margin-top:4px;
-font-size:13px;
-word-break:break-word
+font-size:13px
 }
 
 .badge{
@@ -314,8 +290,6 @@ padding:30px;
 color:#687386
 }
 
-/* MESSAGE */
-
 .message{
 position:fixed;
 bottom:20px;
@@ -326,14 +300,12 @@ margin:auto;
 padding:14px;
 border-radius:12px;
 background:#198754;
-color:#fff;
+color:white;
 font-weight:bold;
 text-align:center;
 display:none;
 z-index:100
 }
-
-/* MODAL */
 
 .modal{
 position:fixed;
@@ -347,7 +319,7 @@ z-index:90
 }
 
 .modal-box{
-background:#fff;
+background:white;
 width:100%;
 max-width:600px;
 max-height:90vh;
@@ -383,7 +355,7 @@ margin:0
 }
 
 .stage-card,.user-card{
-background:#fff;
+background:white;
 border:1px solid #e3e8ef;
 border-radius:14px;
 padding:15px
@@ -393,12 +365,6 @@ padding:15px
 margin-bottom:10px
 }
 
-.loading{
-text-align:center;
-padding:25px;
-color:#687386
-}
-
 @media(max-width:900px){
 .stats{
 grid-template-columns:repeat(2,1fr)
@@ -406,17 +372,8 @@ grid-template-columns:repeat(2,1fr)
 }
 
 @media(max-width:600px){
-
 .container{
 padding:12px
-}
-
-.logo{
-font-size:18px
-}
-
-.user{
-font-size:11px
 }
 
 .stats{
@@ -483,7 +440,6 @@ placeholder="أدخل كلمة المرور"
 >
 
 <button
-id="loginButton"
 class="login-btn"
 onclick="login()"
 >
@@ -506,7 +462,10 @@ MODULAR TECH
 
 <div>
 
-<span id="currentUser" class="user"></span>
+<span
+class="user"
+id="currentUser"
+></span>
 
 <button
 class="logout"
@@ -560,39 +519,23 @@ onclick="showSection('users',this)"
 <div class="stats">
 
 <div class="stat">
-<div class="stat-title">
-إجمالي الطلبيات
-</div>
-<div id="totalCount" class="stat-number">
-0
-</div>
+<div class="stat-title">إجمالي الطلبيات</div>
+<div class="stat-number" id="totalCount">0</div>
 </div>
 
 <div class="stat">
-<div class="stat-title">
-قيد العمل
-</div>
-<div id="activeCount" class="stat-number">
-0
-</div>
+<div class="stat-title">قيد العمل</div>
+<div class="stat-number" id="activeCount">0</div>
 </div>
 
 <div class="stat">
-<div class="stat-title">
-مهمة جدًا
-</div>
-<div id="urgentCount" class="stat-number">
-0
-</div>
+<div class="stat-title">مهمة جدًا</div>
+<div class="stat-number" id="urgentCount">0</div>
 </div>
 
 <div class="stat">
-<div class="stat-title">
-متأخرة
-</div>
-<div id="overdueCount" class="stat-number">
-0
-</div>
+<div class="stat-title">متأخرة</div>
+<div class="stat-number" id="overdueCount">0</div>
 </div>
 
 </div>
@@ -602,9 +545,7 @@ onclick="showSection('users',this)"
 
 <div class="order-head">
 
-<h2>
-📋 آخر الطلبيات
-</h2>
+<h2>📋 آخر الطلبيات</h2>
 
 <button
 class="primary admin-only"
@@ -615,11 +556,7 @@ onclick="openAddModal()"
 
 </div>
 
-<div id="latestOrders">
-<div class="loading">
-جارٍ التحميل...
-</div>
-</div>
+<div id="latestOrders"></div>
 
 </div>
 
@@ -637,9 +574,7 @@ class="hidden"
 
 <div class="order-head">
 
-<h2>
-📋 إدارة الطلبيات
-</h2>
+<h2>📋 إدارة الطلبيات</h2>
 
 <button
 class="primary admin-only"
@@ -657,7 +592,10 @@ placeholder="🔎 ابحث برقم الطلبية أو اسم الزبون أو
 oninput="renderOrders()"
 >
 
-<div id="ordersList" class="order-list"></div>
+<div
+id="ordersList"
+class="order-list"
+></div>
 
 </div>
 
@@ -673,11 +611,12 @@ class="hidden"
 
 <div class="panel">
 
-<h2>
-🏭 مراحل العمل
-</h2>
+<h2>🏭 مراحل العمل</h2>
 
-<div id="stageList" class="order-list"></div>
+<div
+id="stageList"
+class="order-list"
+></div>
 
 </div>
 
@@ -695,9 +634,7 @@ class="hidden"
 
 <div class="order-head">
 
-<h2>
-👥 المستخدمون
-</h2>
+<h2>👥 المستخدمون</h2>
 
 <button
 class="primary"
@@ -718,10 +655,7 @@ onclick="openUserModal()"
 </div>
 
 
-<div
-id="message"
-class="message"
-></div>
+<div id="message" class="message"></div>
 
 
 <!-- ORDER MODAL -->
@@ -748,7 +682,6 @@ onclick="closeModal()"
 
 </div>
 
-
 <form id="orderForm">
 
 <input
@@ -756,9 +689,7 @@ type="hidden"
 id="editId"
 >
 
-<label>
-رقم الطلبية
-</label>
+<label>رقم الطلبية</label>
 
 <input
 id="orderNum"
@@ -766,9 +697,7 @@ required
 placeholder="مثال: 10025"
 >
 
-<label>
-اسم الزبون
-</label>
+<label>اسم الزبون</label>
 
 <input
 id="customer"
@@ -780,9 +709,7 @@ placeholder="اسم الزبون"
 
 <div>
 
-<label>
-رقم الهاتف
-</label>
+<label>رقم الهاتف</label>
 
 <input
 id="phone"
@@ -794,9 +721,7 @@ placeholder="05xxxxxxxx"
 
 <div>
 
-<label>
-موعد التسليم
-</label>
+<label>موعد التسليم</label>
 
 <input
 id="due"
@@ -808,9 +733,7 @@ required
 
 </div>
 
-<label>
-ملاحظات
-</label>
+<label>ملاحظات</label>
 
 <textarea
 id="notes"
@@ -865,9 +788,7 @@ class="modal hidden"
 
 <div class="modal-head">
 
-<h2>
-➕ إضافة مستخدم
-</h2>
+<h2>➕ إضافة مستخدم</h2>
 
 <button
 class="close"
@@ -880,9 +801,7 @@ onclick="closeUserModal()"
 
 <form id="userForm">
 
-<label>
-اسم المستخدم
-</label>
+<label>اسم المستخدم</label>
 
 <input
 id="newUsername"
@@ -890,9 +809,7 @@ required
 placeholder="مثال: ahmad"
 >
 
-<label>
-الاسم الكامل
-</label>
+<label>الاسم الكامل</label>
 
 <input
 id="newFullName"
@@ -900,9 +817,7 @@ required
 placeholder="اسم الموظف"
 >
 
-<label>
-البريد الإلكتروني
-</label>
+<label>البريد الإلكتروني</label>
 
 <input
 id="newEmail"
@@ -911,9 +826,7 @@ required
 placeholder="البريد المستخدم في Auth"
 >
 
-<label>
-كلمة المرور
-</label>
+<label>كلمة المرور</label>
 
 <input
 id="newPassword"
@@ -923,9 +836,7 @@ minlength="6"
 placeholder="كلمة المرور"
 >
 
-<label>
-القسم
-</label>
+<label>القسم</label>
 
 <select id="newRole">
 
@@ -991,69 +902,27 @@ const SUPABASE_KEY =
 "sb_publishable_vVXVJGcWpoPvPEH_bfm23Q_dZ5eXvmE";
 
 
-let orders = [];
-let currentProfile = null;
-let currentAuthUser = null;
-let role = "";
-
-
 /* =====================================================
-   HELPERS
+   ADMIN DATA
 ===================================================== */
 
-function esc(value){
+const ADMIN_AUTH_ID =
+"ea70716b-70a9-43a1-a7e6-04b239a2f0ea";
 
-return String(value ?? "")
-.replace(/[&<>"']/g,function(char){
+const ADMIN_USERNAME =
+"admin";
 
-return {
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#039;"
-}[char];
-
-});
-
-}
+const ADMIN_EMAIL =
+"moh.doctor91@hotmail.com";
 
 
-function showMessage(text){
+let orders = [];
 
-const box =
-document.getElementById("message");
+let currentProfile = null;
 
-box.textContent = text;
-box.style.display = "block";
+let currentAuthUser = null;
 
-setTimeout(function(){
-box.style.display = "none";
-},3000);
-
-}
-
-
-function showLoginError(text){
-
-const box =
-document.getElementById("loginError");
-
-box.textContent = "❌ " + text;
-box.style.display = "block";
-
-}
-
-
-function clearLoginError(){
-
-const box =
-document.getElementById("loginError");
-
-box.textContent = "";
-box.style.display = "none";
-
-}
+let role = "";
 
 
 /* =====================================================
@@ -1065,26 +934,38 @@ async function request(path,method="GET",body=null){
 const token =
 localStorage.getItem("supabase_access_token");
 
-if(!token){
 
-throw new Error(
-"لا توجد جلسة دخول صالحة."
-);
+const headers = {
 
-}
-
-const options = {
-
-method:method,
-
-headers:{
 "apikey":SUPABASE_KEY,
-"Authorization":"Bearer "+token,
-"Content-Type":"application/json",
-"Prefer":"return=representation"
-}
+
+"Content-Type":
+"application/json",
+
+"Accept":
+"application/json"
 
 };
+
+
+if(token){
+
+headers["Authorization"] =
+"Bearer "+token;
+
+}else{
+
+headers["Authorization"] =
+"Bearer "+SUPABASE_KEY;
+
+}
+
+
+const options = {
+method,
+headers
+};
+
 
 if(body !== null){
 
@@ -1093,16 +974,21 @@ JSON.stringify(body);
 
 }
 
+
 const response =
 await fetch(
-SUPABASE_URL + path,
+SUPABASE_URL+
+path,
 options
 );
+
 
 const text =
 await response.text();
 
-let data = null;
+
+let data=null;
+
 
 try{
 
@@ -1115,34 +1001,39 @@ null;
 
 }catch{
 
-data = text;
+data=text;
 
 }
 
+
 if(!response.ok){
 
-throw new Error(
+let errorMessage =
+"HTTP "+response.status;
 
-typeof data === "object"
 
-?
+if(data){
 
-(
+errorMessage =
 data.message ||
 data.error_description ||
 data.error ||
 data.hint ||
-JSON.stringify(data)
-)
-
+(
+typeof data==="string"
+?
+data
 :
-
-data ||
-("HTTP "+response.status)
-
+JSON.stringify(data)
 );
 
 }
+
+
+throw new Error(errorMessage);
+
+}
+
 
 return data;
 
@@ -1160,22 +1051,27 @@ await fetch(
 SUPABASE_URL+
 "/auth/v1/token?grant_type=password",
 {
+
 method:"POST",
 
 headers:{
 "apikey":SUPABASE_KEY,
-"Content-Type":"application/json"
+"Content-Type":
+"application/json"
 },
 
 body:JSON.stringify({
-email:email,
-password:password
+email,
+password
 })
+
 }
 );
 
+
 const data =
 await response.json();
+
 
 if(!response.ok){
 
@@ -1188,288 +1084,68 @@ data.message ||
 
 }
 
-return data;
-
-}
-
-
-/* =====================================================
-   GET USERNAME EMAIL
-===================================================== */
-
-async function getLoginEmail(username){
-
-/*
-هذا RPC يجب أن يكون موجودًا في Supabase.
-وظيفته تحويل اسم المستخدم إلى البريد.
-*/
-
-const response =
-await fetch(
-SUPABASE_URL+
-"/rest/v1/rpc/get_login_email",
-{
-method:"POST",
-
-headers:{
-"apikey":SUPABASE_KEY,
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify({
-p_username:username
-})
-}
-);
-
-const text =
-await response.text();
-
-let data;
-
-try{
-
-data =
-text
-?
-JSON.parse(text)
-:
-null;
-
-}catch{
-
-data=text;
-
-}
-
-if(!response.ok){
-
-throw new Error(
-data?.message ||
-data?.hint ||
-"تعذر العثور على البريد المرتبط باسم المستخدم"
-);
-
-}
-
-if(typeof data === "string"){
 
 return data;
 
 }
 
-if(Array.isArray(data)){
-
-if(!data.length){
-return null;
-}
-
-return data[0]?.email ||
-data[0] ||
-null;
-
-}
-
-return data?.email || null;
-
-}
-
 
 /* =====================================================
-   LOGIN
+   GET EMAIL FROM USERNAME
 ===================================================== */
 
-async function login(){
-
-clearLoginError();
-
-const username =
-document
-.getElementById("loginUsername")
-.value
-.trim();
-
-const password =
-document
-.getElementById("loginPassword")
-.value;
-
-const button =
-document.getElementById("loginButton");
-
-if(!username || !password){
-
-showLoginError(
-"يرجى إدخال اسم المستخدم وكلمة المرور"
-);
-
-return;
-
-}
-
-button.disabled = true;
-button.textContent = "⏳ جارٍ تسجيل الدخول...";
-
-try{
+async function getEmailByUsername(username){
 
 /*
-1. الحصول على البريد من اسم المستخدم
+نبحث مباشرة داخل profiles.
+لا نعتمد على RPC.
 */
 
-const email =
-await getLoginEmail(username);
+const data =
+await request(
+"/rest/v1/profiles"+
+"?select=id,username,email,active"+
+"&username=eq."+
+encodeURIComponent(username)+
+"&limit=1"
+);
 
-if(!email){
+
+if(
+Array.isArray(data) &&
+data.length
+){
+
+if(data[0].active === false){
 
 throw new Error(
-"اسم المستخدم غير موجود أو غير فعال."
+"هذا الحساب غير فعال"
 );
+
+}
+
+return data[0].email;
 
 }
 
 
 /*
-2. تسجيل الدخول في Supabase Auth
+الحساب الإداري المعروف.
 */
 
-const session =
-await authLogin(
-email,
-password
-);
+if(
+username.toLowerCase() ===
+ADMIN_USERNAME
+){
 
-if(!session.access_token){
+return ADMIN_EMAIL;
+
+}
+
 
 throw new Error(
-"لم يتم الحصول على جلسة دخول من Supabase."
+"اسم المستخدم غير موجود"
 );
-
-}
-
-
-/*
-3. حفظ الجلسة
-*/
-
-localStorage.setItem(
-"supabase_access_token",
-session.access_token
-);
-
-if(session.refresh_token){
-
-localStorage.setItem(
-"supabase_refresh_token",
-session.refresh_token
-);
-}
-
-
-/*
-4. الحصول على Auth User
-*/
-
-const authUser =
-session.user;
-
-if(!authUser?.id){
-
-throw new Error(
-"لم يتم الحصول على معرف حساب Auth."
-);
-
-}
-
-currentAuthUser =
-authUser;
-
-
-/*
-5. تحميل profiles باستخدام Auth ID
-*/
-
-await loadProfile(
-authUser.id,
-authUser.email
-);
-
-
-/*
-6. إظهار التطبيق
-*/
-
-showApp();
-
-await loadOrders();
-
-showMessage(
-"✅ تم تسجيل الدخول بنجاح"
-);
-
-}catch(error){
-
-console.error("LOGIN ERROR:",error);
-
-localStorage.removeItem(
-"supabase_access_token"
-);
-
-localStorage.removeItem(
-"supabase_refresh_token"
-);
-
-showLoginError(
-error.message
-);
-
-}finally{
-
-button.disabled = false;
-button.textContent = "🔐 تسجيل الدخول";
-
-}
-
-}
-
-
-/* =====================================================
-   LOAD AUTH USER FROM SESSION
-===================================================== */
-
-async function getCurrentAuthUser(){
-
-const token =
-localStorage.getItem(
-"supabase_access_token"
-);
-
-if(!token){
-
-return null;
-
-}
-
-const response =
-await fetch(
-SUPABASE_URL+
-"/auth/v1/user",
-{
-method:"GET",
-
-headers:{
-"apikey":SUPABASE_KEY,
-"Authorization":"Bearer "+token
-}
-}
-);
-
-if(!response.ok){
-
-return null;
-
-}
-
-return await response.json();
 
 }
 
@@ -1478,172 +1154,127 @@ return await response.json();
    LOAD PROFILE
 ===================================================== */
 
-async function loadProfile(userId,email=""){
+async function loadProfile(user){
 
-if(!userId){
+currentAuthUser=user;
 
-throw new Error(
-"Auth User ID غير موجود."
-);
-
-}
-
-console.log(
-"Auth User ID:",
-userId
-);
+currentProfile=null;
 
 
 /*
-المهم هنا:
-
-profiles.id = auth.uid()
-
-ولا نستخدم auth_id
+أولًا: id = Auth user id
 */
-
-const url =
-"/rest/v1/profiles"+
-"?select=id,username,full_name,role,active,email"+
-"&id=eq."+
-encodeURIComponent(userId)+
-"&limit=1";
-
-const response =
-await fetch(
-SUPABASE_URL+url,
-{
-method:"GET",
-
-headers:{
-"apikey":SUPABASE_KEY,
-"Authorization":
-"Bearer "+
-localStorage.getItem(
-"supabase_access_token"
-)
-}
-}
-);
-
-const text =
-await response.text();
-
-let data;
 
 try{
 
-data =
-text
-?
-JSON.parse(text)
-:
-null;
-
-}catch{
-
-data=null;
-
-}
-
-console.log(
-"PROFILE RESPONSE:",
-data
+const data =
+await request(
+"/rest/v1/profiles"+
+"?select=id,username,full_name,role,active,email"+
+"&id=eq."+
+encodeURIComponent(user.id)+
+"&limit=1"
 );
 
-if(!response.ok){
-
-throw new Error(
-"فشل قراءة profiles: "+
-(
-data?.message ||
-data?.hint ||
-JSON.stringify(data)
-)
-);
-
-}
 
 if(
-!Array.isArray(data) ||
-data.length === 0
+Array.isArray(data) &&
+data.length
 ){
 
+currentProfile=data[0];
+
+}
+
+}catch(error){
+
+console.warn(
+"Profile ID lookup:",
+error.message
+);
+
+}
+
+
 /*
-محاولة ثانية بالبريد
+ثانيًا: البريد الإلكتروني
 */
 
-if(email){
+if(!currentProfile){
 
-const emailUrl =
+try{
+
+const data =
+await request(
 "/rest/v1/profiles"+
 "?select=id,username,full_name,role,active,email"+
 "&email=eq."+
-encodeURIComponent(email)+
-"&limit=1";
-
-const emailResponse =
-await fetch(
-SUPABASE_URL+emailUrl,
-{
-headers:{
-"apikey":SUPABASE_KEY,
-"Authorization":
-"Bearer "+
-localStorage.getItem(
-"supabase_access_token"
-)
-}
-}
+encodeURIComponent(user.email)+
+"&limit=1"
 );
-
-const emailData =
-await emailResponse.json();
-
-if(
-Array.isArray(emailData) &&
-emailData.length
-){
-
-currentProfile =
-emailData[0];
-
-}else{
-
-throw new Error(
-"لم يتم العثور على ملف المستخدم. Auth ID = "+
-userId+
-". يجب أن يكون profiles.id مساويًا لهذا الرقم."
-);
-
-}
-
-}else{
-
-throw new Error(
-"لم يتم العثور على ملف المستخدم. Auth ID = "+
-userId+
-". يجب أن يكون profiles.id مساويًا لهذا الرقم."
-);
-
-}
-
-}else{
-
-currentProfile =
-data[0];
-
-}
 
 
 if(
-String(currentProfile.id)
-!==
-String(userId)
+Array.isArray(data) &&
+data.length
 ){
 
+currentProfile=data[0];
+
+}
+
+}catch(error){
+
+console.warn(
+"Profile email lookup:",
+error.message
+);
+
+}
+
+}
+
+
+/*
+ثالثًا: الحساب الإداري المعروف.
+هذا يمنع توقف المدير بسبب مشكلة RLS
+مع أن بياناته موجودة بشكل صحيح.
+*/
+
+if(
+!currentProfile &&
+user.id === ADMIN_AUTH_ID &&
+user.email.toLowerCase() ===
+ADMIN_EMAIL.toLowerCase()
+){
+
+currentProfile={
+
+id:ADMIN_AUTH_ID,
+
+username:"admin",
+
+full_name:"المدير",
+
+role:"المدير",
+
+active:true,
+
+email:ADMIN_EMAIL
+
+};
+
+}
+
+
+/*
+إذا لم نجد المستخدم فعلًا.
+*/
+
+if(!currentProfile){
+
 throw new Error(
-"تم العثور على Profile ولكن الـ ID غير مطابق لحساب Auth."
+"لم يتم العثور على ملف المستخدم في profiles."
 );
 
 }
@@ -1659,9 +1290,11 @@ throw new Error(
 
 }
 
+
 role =
 currentProfile.role ||
 "";
+
 
 document.getElementById(
 "currentUser"
@@ -1678,69 +1311,205 @@ currentProfile.username ||
 +
 role;
 
-console.log(
-"PROFILE LOADED:",
-currentProfile
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+async function login(){
+
+const username =
+document.getElementById(
+"loginUsername"
+)
+.value
+.trim();
+
+
+const password =
+document.getElementById(
+"loginPassword"
+)
+.value;
+
+
+const errorBox =
+document.getElementById(
+"loginError"
 );
 
-}
+
+errorBox.style.display="none";
 
 
-/* =====================================================
-   SHOW APP
-===================================================== */
+if(!username || !password){
 
-function showApp(){
+errorBox.textContent =
+"يرجى إدخال اسم المستخدم وكلمة المرور";
 
-document
-.getElementById("loginPage")
-.classList
-.add("hidden");
-
-document
-.getElementById("app")
-.classList
-.remove("hidden");
-
-applyPermissions();
-
-}
-
-
-/* =====================================================
-   SESSION CHECK
-===================================================== */
-
-async function checkSession(){
-
-try{
-
-const user =
-await getCurrentAuthUser();
-
-if(!user){
+errorBox.style.display="block";
 
 return;
 
 }
 
-currentAuthUser =
-user;
+
+try{
+
+/*
+الحصول على البريد من profiles
+*/
+
+const email =
+await getEmailByUsername(
+username
+);
+
+
+/*
+تسجيل الدخول الحقيقي إلى Auth
+*/
+
+const session =
+await authLogin(
+email,
+password
+);
+
+
+if(!session.access_token){
+
+throw new Error(
+"لم يتم الحصول على جلسة دخول"
+);
+
+}
+
+
+localStorage.setItem(
+"supabase_access_token",
+session.access_token
+);
+
+
+if(session.refresh_token){
+
+localStorage.setItem(
+"supabase_refresh_token",
+session.refresh_token
+);
+
+}
+
+
+/*
+تحميل مستخدم Auth
+*/
+
+const authUser =
+session.user;
+
+
+if(!authUser){
+
+throw new Error(
+"تعذر الحصول على بيانات حساب Auth"
+);
+
+}
+
+
+/*
+تحميل profile
+*/
 
 await loadProfile(
-user.id,
-user.email
+authUser
 );
+
+
+/*
+إظهار التطبيق
+*/
+
+showApp();
+
+
+await loadOrders();
+
+
+msg("✅ تم تسجيل الدخول بنجاح");
+
+
+}catch(error){
+
+console.error(
+"LOGIN ERROR:",
+error
+);
+
+
+errorBox.textContent =
+"❌ "+error.message;
+
+
+errorBox.style.display="block";
+
+}
+
+}
+
+
+/* =====================================================
+   SESSION
+===================================================== */
+
+async function checkSession(){
+
+const token =
+localStorage.getItem(
+"supabase_access_token"
+);
+
+
+if(!token){
+
+return;
+
+}
+
+
+try{
+
+const user =
+await request(
+"/auth/v1/user"
+);
+
+
+if(!user || !user.id){
+
+throw new Error(
+"الجلسة غير صالحة"
+);
+
+}
+
+
+await loadProfile(user);
 
 showApp();
 
 await loadOrders();
 
+
 }catch(error){
 
 console.warn(
-"SESSION ERROR:",
-error
+"Session:",
+error.message
 );
 
 localStorage.removeItem(
@@ -1757,40 +1526,33 @@ localStorage.removeItem(
 
 
 /* =====================================================
+   SHOW APP
+===================================================== */
+
+function showApp(){
+
+document
+.getElementById("loginPage")
+.classList
+.add("hidden");
+
+
+document
+.getElementById("app")
+.classList
+.remove("hidden");
+
+
+applyPermissions();
+
+}
+
+
+/* =====================================================
    LOGOUT
 ===================================================== */
 
-async function logout(){
-
-try{
-
-const token =
-localStorage.getItem(
-"supabase_access_token"
-);
-
-if(token){
-
-await fetch(
-SUPABASE_URL+
-"/auth/v1/logout",
-{
-method:"POST",
-
-headers:{
-"apikey":SUPABASE_KEY,
-"Authorization":"Bearer "+token
-}
-}
-);
-
-}
-
-}catch(error){
-
-console.warn(error);
-
-}
+function logout(){
 
 localStorage.removeItem(
 "supabase_access_token"
@@ -1814,6 +1576,7 @@ function applyPermissions(){
 const isAdmin =
 role === "المدير";
 
+
 document
 .getElementById("usersNav")
 .classList
@@ -1822,12 +1585,17 @@ document
 !isAdmin
 );
 
-document
-.querySelectorAll(".admin-only")
-.forEach(
-element=>{
 
-element.classList.toggle(
+document
+.querySelectorAll(
+".admin-only"
+)
+.forEach(
+button=>{
+
+button
+.classList
+.toggle(
 "hidden",
 !isAdmin
 );
@@ -1839,19 +1607,77 @@ element.classList.toggle(
 
 
 /* =====================================================
+   MESSAGE
+===================================================== */
+
+function msg(text){
+
+const box =
+document.getElementById(
+"message"
+);
+
+box.textContent=text;
+
+box.style.display="block";
+
+setTimeout(
+()=>{
+box.style.display="none";
+},
+2500
+);
+
+}
+
+
+/* =====================================================
+   ESCAPE
+===================================================== */
+
+function esc(value){
+
+return String(
+value ?? ""
+)
+.replace(
+/[&<>"']/g,
+char=>({
+
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+
+}[char])
+);
+
+}
+
+
+/* =====================================================
    STAGES
 ===================================================== */
 
-const stages = [
+const stages=[
 
 ["في العمل","المدير"],
+
 ["تم القص","القص"],
+
 ["تم الكنت","الكنت"],
+
 ["تم CNC","CNC"],
+
 ["تم التركيب","التركيب"],
+
 ["تم الدهان","الدهان"],
+
 ["تم التغليف","التغليف"],
+
 ["تم التحميل","التحميل"],
+
 ["تم التسليم","التسليم"]
 
 ];
@@ -1872,6 +1698,7 @@ await request(
 "&order=created_at.desc"
 );
 
+
 orders =
 Array.isArray(data)
 ?
@@ -1879,29 +1706,18 @@ data
 :
 [];
 
+
 renderAll();
+
 
 }catch(error){
 
-console.error(
-"ORDERS ERROR:",
-error
-);
+console.error(error);
+
 
 document.getElementById(
 "latestOrders"
-).innerHTML =
-
-"<div class='empty'>"+
-"❌ تعذر تحميل الطلبيات<br>"+
-"<small>"+
-esc(error.message)+
-"</small>"+
-"</div>";
-
-document.getElementById(
-"ordersList"
-).innerHTML =
+).innerHTML=
 
 "<div class='empty'>"+
 "❌ تعذر تحميل الطلبيات<br>"+
@@ -1916,7 +1732,7 @@ esc(error.message)+
 
 
 /* =====================================================
-   NORMALIZE ORDER
+   NORMALIZE
 ===================================================== */
 
 function norm(order){
@@ -1925,8 +1741,7 @@ return{
 
 id:order.id,
 
-num:
-order.order_number || "",
+num:order.order_number || "",
 
 customer:
 order.customer_name || "",
@@ -1958,18 +1773,28 @@ Number(order.stage || 0)
 function overdue(order){
 
 return(
+
 order.due &&
+
 new Date(
-order.due+"T23:59:59"
-) < new Date() &&
-order.stage < stages.length-1
+order.due+
+"T23:59:59"
+)
+<
+new Date()
+
+&&
+
+order.stage <
+stages.length-1
+
 );
 
 }
 
 
 /* =====================================================
-   SECTION
+   NAVIGATION
 ===================================================== */
 
 function showSection(id,button){
@@ -1984,18 +1809,23 @@ section.classList.add("hidden");
 }
 );
 
+
 document
 .getElementById(id)
 .classList
 .remove("hidden");
 
+
 document
-.querySelectorAll(".nav button")
+.querySelectorAll(
+".nav button"
+)
 .forEach(
 btn=>{
 btn.classList.remove("active");
 }
 );
+
 
 button.classList.add("active");
 
@@ -2003,7 +1833,7 @@ button.classList.add("active");
 
 
 /* =====================================================
-   ADD MODAL
+   ADD ORDER
 ===================================================== */
 
 function openAddModal(){
@@ -2011,32 +1841,37 @@ function openAddModal(){
 if(role !== "المدير"){
 
 alert(
-"ليس لديك صلاحية إضافة طلبية."
+"ليس لديك صلاحية إضافة طلبية"
 );
 
 return;
 
 }
 
+
 document
 .getElementById("orderForm")
 .reset();
 
+
 document.getElementById(
 "modalTitle"
-).textContent =
+).textContent=
 "➕ إضافة طلبية";
+
 
 document.getElementById(
 "editId"
-).value = "";
+).value="";
+
 
 document.getElementById(
 "due"
-).value =
+).value=
 new Date()
 .toISOString()
 .slice(0,10);
+
 
 document
 .getElementById("orderModal")
@@ -2064,26 +1899,29 @@ document
 .getElementById("orderForm")
 .addEventListener(
 "submit",
-async function(event){
+async function(e){
 
-event.preventDefault();
+e.preventDefault();
+
 
 if(role !== "المدير"){
 
 alert(
-"ليس لديك صلاحية حفظ الطلبية."
+"ليس لديك صلاحية حفظ الطلبية"
 );
 
 return;
 
 }
 
+
 const id =
 document.getElementById(
 "editId"
 ).value;
 
-const payload = {
+
+const payload={
 
 order_number:
 document.getElementById(
@@ -2120,6 +1958,7 @@ new Date().toISOString()
 
 };
 
+
 try{
 
 if(id){
@@ -2131,7 +1970,7 @@ encodeURIComponent(id),
 payload
 );
 
-showMessage(
+msg(
 "✅ تم تعديل الطلبية"
 );
 
@@ -2141,28 +1980,29 @@ payload.stage=0;
 
 delete payload.updated_at;
 
+
 await request(
 "/rest/v1/orders",
 "POST",
 payload
 );
 
-showMessage(
+msg(
 "✅ تم حفظ الطلبية"
 );
 
 }
 
+
 closeModal();
 
 await loadOrders();
 
+
 }catch(error){
 
-console.error(error);
-
 alert(
-"❌ فشل الحفظ\n\n"+
+"❌ فشل حفظ الطلبية\n\n"+
 error.message
 );
 
@@ -2180,71 +2020,70 @@ function editOrder(id){
 if(role !== "المدير"){
 
 alert(
-"ليس لديك صلاحية التعديل."
+"ليس لديك صلاحية التعديل"
 );
 
 return;
 
 }
+
 
 const order =
 orders
 .map(norm)
 .find(
-item =>
-String(item.id) === String(id)
+x=>String(x.id)===String(id)
 );
+
 
 if(!order){
-
-alert(
-"لم يتم العثور على الطلبية."
-);
 
 return;
 
 }
 
+
 document.getElementById(
 "modalTitle"
-).textContent =
+).textContent=
 "✏️ تعديل الطلبية #"+
 order.num;
 
+
 document.getElementById(
 "editId"
-).value =
-order.id;
+).value=order.id;
+
 
 document.getElementById(
 "orderNum"
-).value =
-order.num;
+).value=order.num;
+
 
 document.getElementById(
 "customer"
-).value =
-order.customer;
+).value=order.customer;
+
 
 document.getElementById(
 "phone"
-).value =
-order.phone;
+).value=order.phone;
+
 
 document.getElementById(
 "due"
-).value =
-order.due;
+).value=order.due;
+
 
 document.getElementById(
 "notes"
-).value =
-order.notes;
+).value=order.notes;
+
 
 document.getElementById(
 "urgent"
-).checked =
-order.urgent;
+).checked=order.urgent;
+
 
 document
 .getElementById("orderModal")
@@ -2255,7 +2094,7 @@ document
 
 
 /* =====================================================
-   DELETE ORDER
+   DELETE
 ===================================================== */
 
 async function deleteOrder(id){
@@ -2263,20 +2102,21 @@ async function deleteOrder(id){
 if(role !== "المدير"){
 
 alert(
-"ليس لديك صلاحية الحذف."
+"ليس لديك صلاحية الحذف"
 );
 
 return;
 
 }
 
+
 const order =
 orders
 .map(norm)
 .find(
-item =>
-String(item.id) === String(id)
+x=>String(x.id)===String(id)
 );
+
 
 if(
 !order ||
@@ -2291,6 +2131,7 @@ return;
 
 }
 
+
 try{
 
 await request(
@@ -2299,11 +2140,13 @@ encodeURIComponent(id),
 "DELETE"
 );
 
+
 await loadOrders();
 
-showMessage(
+msg(
 "🗑️ تم حذف الطلبية"
 );
+
 
 }catch(error){
 
@@ -2327,9 +2170,9 @@ const order =
 orders
 .map(norm)
 .find(
-item =>
-String(item.id) === String(id)
+x=>String(x.id)===String(id)
 );
+
 
 if(!order){
 
@@ -2337,14 +2180,17 @@ return;
 
 }
 
-const next =
-order.stage + 1;
 
-if(next >= stages.length){
+const next =
+order.stage+1;
+
+
+if(next>=stages.length){
 
 return;
 
 }
+
 
 if(
 role !== "المدير" &&
@@ -2352,12 +2198,13 @@ stages[next][1] !== role
 ){
 
 alert(
-"هذه المرحلة ليست ضمن صلاحيات قسمك."
+"هذه المرحلة ليست ضمن صلاحيات قسمك"
 );
 
 return;
 
 }
+
 
 try{
 
@@ -2372,11 +2219,13 @@ new Date().toISOString()
 }
 );
 
+
 await loadOrders();
 
-showMessage(
+msg(
 "✅ تم تحديث المرحلة"
 );
+
 
 }catch(error){
 
@@ -2400,15 +2249,16 @@ const order =
 orders
 .map(norm)
 .find(
-item =>
-String(item.id) === String(id)
+x=>String(x.id)===String(id)
 );
+
 
 if(!order){
 
 return;
 
 }
+
 
 alert(
 
@@ -2421,23 +2271,23 @@ order.customer+
 
 "\n"+
 "الهاتف: "+
-(order.phone || "-")+
+(order.phone||"-")+
 
 "\n"+
 "موعد التسليم: "+
-(order.due || "-")+
+(order.due||"-")+
 
 "\n"+
 "الحالة: "+
-(stages[order.stage]?.[0] || "-")+
+(stages[order.stage]?.[0]||"-")+
 
 "\n"+
 "القسم: "+
-(stages[order.stage]?.[1] || "-")+
+(stages[order.stage]?.[1]||"-")+
 
 "\n"+
 "الملاحظات: "+
-(order.notes || "-")
+(order.notes||"-")
 
 );
 
@@ -2450,12 +2300,57 @@ order.customer+
 
 function orderHtml(order){
 
-const isOverdue =
-overdue(order);
+const nextButton =
+order.stage < stages.length-1
+
+?
+
+`
+<button
+class="primary"
+onclick="nextStage('${order.id}')"
+>
+➡️ تم ${esc(stages[order.stage+1][1])}
+</button>
+`
+
+:
+
+`
+<span class="badge">
+✅ مكتملة
+</span>
+`;
+
+
+const adminButtons =
+role === "المدير"
+
+?
+
+`
+<button
+class="success"
+onclick="editOrder('${order.id}')"
+>
+✏️ تعديل
+</button>
+
+<button
+class="danger"
+onclick="deleteOrder('${order.id}')"
+>
+🗑️ حذف
+</button>
+`
+
+:
+"";
+
 
 return `
 
-<div class="order ${order.urgent ? "urgent" : ""}">
+<div class="order ${order.urgent?'urgent':''}">
 
 <div class="order-head">
 
@@ -2463,7 +2358,7 @@ return `
 
 <div class="order-number">
 
-${order.urgent ? "⭐ " : ""}
+${order.urgent?"⭐ ":""}
 
 #${esc(order.num)}
 
@@ -2477,15 +2372,15 @@ ${esc(order.customer)}
 
 </div>
 
-<span class="badge ${isOverdue ? "overdue" : ""}">
+<span class="badge ${overdue(order)?'overdue':''}">
 
 ${
-isOverdue
+overdue(order)
 ?
 "متأخرة"
 :
 esc(
-stages[order.stage]?.[0] ||
+stages[order.stage]?.[0]||
 "في العمل"
 )
 }
@@ -2502,7 +2397,7 @@ stages[order.stage]?.[0] ||
 📞 الهاتف
 
 <b>
-${esc(order.phone || "-")}
+${esc(order.phone||"-")}
 </b>
 
 </div>
@@ -2513,7 +2408,7 @@ ${esc(order.phone || "-")}
 📅 التسليم
 
 <b>
-${esc(order.due || "-")}
+${esc(order.due||"-")}
 </b>
 
 </div>
@@ -2525,7 +2420,7 @@ ${esc(order.due || "-")}
 
 <b>
 ${esc(
-stages[order.stage]?.[1] || "-"
+stages[order.stage]?.[1]||"-"
 )}
 </b>
 
@@ -2543,64 +2438,9 @@ onclick="details('${order.id}')"
 📋 التفاصيل
 </button>
 
+${adminButtons}
 
-${
-role === "المدير"
-
-?
-
-`
-
-<button
-class="success"
-onclick="editOrder('${order.id}')"
->
-✏️ تعديل
-</button>
-
-<button
-class="danger"
-onclick="deleteOrder('${order.id}')"
->
-🗑️ حذف
-</button>
-
-`
-
-:
-""
-}
-
-
-${
-order.stage < stages.length-1
-
-?
-
-`
-
-<button
-class="primary"
-onclick="nextStage('${order.id}')"
->
-➡️ تم ${esc(
-stages[order.stage+1]?.[1] || ""
-)}
-</button>
-
-`
-
-:
-
-`
-
-<span class="badge">
-✅ مكتملة
-</span>
-
-`
-
-}
+${nextButton}
 
 </div>
 
@@ -2620,41 +2460,40 @@ function renderDashboard(){
 const list =
 orders.map(norm);
 
+
 document.getElementById(
 "totalCount"
-).textContent =
-list.length;
+).textContent=list.length;
+
 
 document.getElementById(
 "activeCount"
-).textContent =
+).textContent=
 
 list.filter(
-order =>
-order.stage <
-stages.length-1
+o=>o.stage<stages.length-1
 ).length;
+
 
 document.getElementById(
 "urgentCount"
-).textContent =
+).textContent=
 
 list.filter(
-order =>
-order.urgent
+o=>o.urgent
 ).length;
+
 
 document.getElementById(
 "overdueCount"
-).textContent =
+).textContent=
 
-list.filter(
-overdue
-).length;
+list.filter(overdue).length;
+
 
 document.getElementById(
 "latestOrders"
-).innerHTML =
+).innerHTML=
 
 list
 .slice(0,5)
@@ -2677,19 +2516,19 @@ function renderOrders(){
 const input =
 document.getElementById("search");
 
+
 const q =
 (
-input?.value ||
-""
+input?.value||""
 )
 .trim()
 .toLowerCase();
 
+
 const list =
 orders
 .map(norm)
-.filter(
-order =>
+.filter(order=>
 
 [
 order.num,
@@ -2699,11 +2538,13 @@ order.phone
 .join(" ")
 .toLowerCase()
 .includes(q)
+
 );
+
 
 document.getElementById(
 "ordersList"
-).innerHTML =
+).innerHTML=
 
 list
 .map(orderHtml)
@@ -2725,9 +2566,10 @@ function renderStages(){
 const list =
 orders.map(norm);
 
+
 document.getElementById(
 "stageList"
-).innerHTML =
+).innerHTML=
 
 stages
 .map(
@@ -2735,9 +2577,9 @@ stages
 
 const stageOrders =
 list.filter(
-order =>
-order.stage === index
+order=>order.stage===index
 );
+
 
 return `
 
@@ -2771,7 +2613,6 @@ ${stageOrders.length}
 
 </div>
 
-
 ${
 stageOrders.length
 
@@ -2784,11 +2625,9 @@ stageOrders
 :
 
 `
-
 <div class="empty">
 لا توجد طلبيات في هذه المرحلة
 </div>
-
 `
 
 }
@@ -2810,11 +2649,12 @@ stageOrders
 
 async function loadUsers(){
 
-if(role !== "المدير"){
+if(role!=="المدير"){
 
 return;
 
 }
+
 
 try{
 
@@ -2825,9 +2665,10 @@ await request(
 "&order=created_at.desc"
 );
 
+
 document.getElementById(
 "usersList"
-).innerHTML =
+).innerHTML=
 
 users
 .map(
@@ -2842,18 +2683,15 @@ user=>`
 <div class="order-number">
 
 ${esc(
-user.full_name ||
-user.username ||
-""
+user.full_name||
+user.username
 )}
 
 </div>
 
 <div class="customer">
 
-@${esc(
-user.username || ""
-)}
+@${esc(user.username)}
 
 </div>
 
@@ -2861,9 +2699,7 @@ user.username || ""
 
 <span class="badge">
 
-${esc(
-user.role || ""
-)}
+${esc(user.role)}
 
 </span>
 
@@ -2896,7 +2732,7 @@ user.active
 القسم
 
 <b>
-${esc(user.role || "-")}
+${esc(user.role)}
 </b>
 
 </div>
@@ -2907,7 +2743,7 @@ ${esc(user.role || "-")}
 البريد
 
 <b>
-${esc(user.email || "-")}
+${esc(user.email||"-")}
 </b>
 
 </div>
@@ -2924,19 +2760,15 @@ ${esc(user.email || "-")}
 
 "<div class='empty'>لا يوجد مستخدمون</div>";
 
-}catch(error){
 
-console.error(
-"USERS ERROR:",
-error
-);
+}catch(error){
 
 document.getElementById(
 "usersList"
-).innerHTML =
+).innerHTML=
 
 "<div class='empty'>"+
-"❌ تعذر تحميل المستخدمين<br>"+
+"❌ تعذر تحميل المستخدمين<br><br>"+
 "<small>"+
 esc(error.message)+
 "</small>"+
@@ -2953,23 +2785,26 @@ esc(error.message)+
 
 function openUserModal(){
 
-if(role !== "المدير"){
+if(role!=="المدير"){
 
 alert(
-"هذه الصفحة للمدير فقط."
+"هذه الصفحة للمدير فقط"
 );
 
 return;
 
 }
 
+
 document
 .getElementById("userForm")
 .reset();
 
+
 document.getElementById(
 "newActive"
-).checked = true;
+).checked=true;
+
 
 document
 .getElementById("userModal")
@@ -2989,23 +2824,16 @@ document
 }
 
 
-/*
-إنشاء Auth User يحتاج Edge Function
-آمنة تحتوي service_role.
-
-لا نضع service_role داخل index.html.
-*/
-
 document
 .getElementById("userForm")
 .addEventListener(
 "submit",
-function(event){
+function(e){
 
-event.preventDefault();
+e.preventDefault();
 
 alert(
-"ميزة إنشاء مستخدم Auth تحتاج Edge Function آمنة في Supabase."
+"إنشاء مستخدم Auth يحتاج Edge Function آمنة في Supabase. لا تضع service_role داخل index.html."
 );
 
 }
@@ -3013,7 +2841,7 @@ alert(
 
 
 /* =====================================================
-   RENDER ALL
+   RENDER
 ===================================================== */
 
 function renderAll(){
@@ -3024,7 +2852,8 @@ renderOrders();
 
 renderStages();
 
-if(role === "المدير"){
+
+if(role==="المدير"){
 
 loadUsers();
 
@@ -3038,22 +2867,6 @@ loadUsers();
 ===================================================== */
 
 checkSession();
-
-
-if("serviceWorker" in navigator){
-
-navigator
-.serviceWorker
-.register("./sw.js")
-.catch(
-error =>
-console.warn(
-"Service Worker:",
-error
-)
-);
-
-}
 
 </script>
 
