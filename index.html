@@ -67,6 +67,14 @@ font-size:15px;
 font-family:inherit
 }
 
+button{
+border:0;
+border-radius:9px;
+padding:10px 14px;
+cursor:pointer;
+font-weight:bold
+}
+
 .login-btn{
 width:100%;
 padding:14px;
@@ -86,8 +94,7 @@ padding:12px;
 border-radius:10px;
 margin-bottom:15px;
 display:none;
-font-weight:bold;
-white-space:pre-line
+font-weight:bold
 }
 
 header{
@@ -134,13 +141,8 @@ margin-bottom:18px
 
 .nav button{
 white-space:nowrap;
-border:0;
-border-radius:10px;
-padding:11px 16px;
 background:#fff;
-color:#172033;
-font-weight:bold;
-cursor:pointer
+color:#172033
 }
 
 .nav button.active{
@@ -189,14 +191,6 @@ margin-top:0
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:10px
-}
-
-button{
-border:0;
-border-radius:9px;
-padding:10px 14px;
-cursor:pointer;
-font-weight:bold
 }
 
 .primary{
@@ -377,48 +371,19 @@ margin-bottom:10px
 }
 
 @media(max-width:900px){
-.stats{
-grid-template-columns:repeat(2,1fr)
-}
+.stats{grid-template-columns:repeat(2,1fr)}
 }
 
 @media(max-width:600px){
-.container{
-padding:12px
-}
-
-.logo{
-font-size:18px
-}
-
-.user{
-font-size:11px
-}
-
-.stats{
-grid-template-columns:1fr 1fr;
-gap:9px
-}
-
-.stat{
-padding:13px
-}
-
-.stat-number{
-font-size:24px
-}
-
-.row{
-grid-template-columns:1fr
-}
-
-.info{
-grid-template-columns:1fr 1fr
-}
-
-.login-box{
-padding:24px
-}
+.container{padding:12px}
+.logo{font-size:18px}
+.user{font-size:11px}
+.stats{grid-template-columns:1fr 1fr;gap:9px}
+.stat{padding:13px}
+.stat-number{font-size:24px}
+.row{grid-template-columns:1fr}
+.info{grid-template-columns:1fr 1fr}
+.login-box{padding:24px}
 }
 </style>
 </head>
@@ -665,8 +630,6 @@ onclick="openUserModal()"
 </div>
 
 
-<!-- ================= MESSAGE ================= -->
-
 <div id="message" class="message"></div>
 
 
@@ -691,7 +654,6 @@ onclick="closeModal()"
 
 </div>
 
-
 <form id="orderForm">
 
 <input
@@ -715,7 +677,6 @@ required
 placeholder="اسم الزبون"
 >
 
-
 <div class="row">
 
 <div>
@@ -729,7 +690,6 @@ placeholder="05xxxxxxxx"
 >
 
 </div>
-
 
 <div>
 
@@ -745,7 +705,6 @@ required
 
 </div>
 
-
 <label>ملاحظات</label>
 
 <textarea
@@ -753,7 +712,6 @@ id="notes"
 rows="4"
 placeholder="اكتب الملاحظات"
 ></textarea>
-
 
 <label class="check">
 
@@ -765,7 +723,6 @@ id="urgent"
 ⭐ هذه الطلبية مهمة جدًا
 
 </label>
-
 
 <div class="actions">
 
@@ -800,9 +757,7 @@ onclick="closeModal()"
 
 <div class="modal-head">
 
-<h2>
-➕ إضافة مستخدم
-</h2>
+<h2>➕ إضافة مستخدم</h2>
 
 <button
 class="close"
@@ -812,7 +767,6 @@ onclick="closeUserModal()"
 </button>
 
 </div>
-
 
 <form id="userForm">
 
@@ -867,7 +821,6 @@ placeholder="كلمة المرور"
 
 </select>
 
-
 <label class="check">
 
 <input
@@ -879,7 +832,6 @@ checked
 الحساب فعال
 
 </label>
-
 
 <div class="actions">
 
@@ -918,10 +870,6 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_vVXVJGcWpoPvPEH_bfm23Q_dZ5eXvmE";
 
-/*
-   Edge Function الحالية التي أرسلت رابطها:
-   bright-task
-*/
 const CREATE_USER_FUNCTION =
 "https://bvrfrcmblwzuqprjknam.supabase.co/functions/v1/bright-task";
 
@@ -937,29 +885,33 @@ let role = "";
    SUPABASE REQUEST
 ===================================================== */
 
-async function request(
-path,
-method="GET",
-body=null
-){
+async function request(path,method="GET",body=null){
 
 const token =
-localStorage.getItem(
-"supabase_access_token"
-) ||
-SUPABASE_KEY;
+localStorage.getItem("supabase_access_token");
 
-const options = {
+const headers = {
 
-method:method,
-
-headers:{
 "apikey":SUPABASE_KEY,
-"Authorization":"Bearer "+token,
 "Content-Type":"application/json",
 "Prefer":"return=representation"
+};
+
+if(token){
+
+headers["Authorization"] =
+"Bearer "+token;
+
+}else{
+
+headers["Authorization"] =
+"Bearer "+SUPABASE_KEY;
+
 }
 
+const options = {
+method:method,
+headers:headers
 };
 
 if(body !== null){
@@ -971,14 +923,14 @@ JSON.stringify(body);
 
 const response =
 await fetch(
-SUPABASE_URL + path,
+SUPABASE_URL+path,
 options
 );
 
 const text =
 await response.text();
 
-let data;
+let data = null;
 
 try{
 
@@ -997,26 +949,29 @@ data=text;
 
 if(!response.ok){
 
-throw new Error(
+let message =
+"HTTP "+response.status;
 
-typeof data === "object"
+if(data){
 
-?
+if(typeof data==="string"){
 
-(
+message=data;
+
+}else{
+
+message =
 data.message ||
 data.error_description ||
 data.error ||
 data.hint ||
-JSON.stringify(data)
-)
+JSON.stringify(data);
 
-:
+}
 
-data ||
-("HTTP "+response.status)
+}
 
-);
+throw new Error(message);
 
 }
 
@@ -1029,10 +984,7 @@ return data;
    AUTH
 ===================================================== */
 
-async function auth(
-path,
-body
-){
+async function auth(path,body){
 
 const response =
 await fetch(
@@ -1050,12 +1002,30 @@ headers:{
 
 body:
 JSON.stringify(body)
-
 }
 );
 
-const data =
-await response.json();
+const text =
+await response.text();
+
+let data;
+
+try{
+
+data =
+text
+?
+JSON.parse(text)
+:
+{};
+
+}catch{
+
+data={
+message:text
+};
+
+}
 
 if(!response.ok){
 
@@ -1063,6 +1033,7 @@ throw new Error(
 data.error_description ||
 data.msg ||
 data.message ||
+data.error ||
 "فشل تسجيل الدخول"
 );
 
@@ -1080,17 +1051,18 @@ return data;
 function msg(text){
 
 const box =
-document.getElementById(
-"message"
-);
+document.getElementById("message");
 
 box.textContent=text;
 
 box.style.display="block";
 
-setTimeout(()=>{
+setTimeout(
+()=>{
 box.style.display="none";
-},2500);
+},
+3000
+);
 
 }
 
@@ -1143,10 +1115,7 @@ document.getElementById(
 
 errorBox.style.display="none";
 
-if(
-!username ||
-!password
-){
+if(!username || !password){
 
 errorBox.textContent =
 "يرجى إدخال اسم المستخدم وكلمة المرور";
@@ -1160,8 +1129,9 @@ return;
 try{
 
 /*
-   الحصول على البريد من username
+ الحصول على البريد من username
 */
+
 const result =
 await request(
 "/rest/v1/rpc/get_login_email",
@@ -1177,18 +1147,14 @@ if(typeof result==="string"){
 
 email=result;
 
-}
-else if(
-Array.isArray(result)
-){
+}else if(Array.isArray(result)){
 
 email =
 result[0]?.email ||
 result[0] ||
 null;
 
-}
-else if(result){
+}else if(result){
 
 email =
 result.email ||
@@ -1206,8 +1172,9 @@ throw new Error(
 
 
 /*
-   تسجيل الدخول في Supabase Auth
+ تسجيل الدخول في Supabase Auth
 */
+
 const session =
 await auth(
 "token?grant_type=password",
@@ -1216,6 +1183,11 @@ email:email,
 password:password
 }
 );
+
+
+/*
+ حفظ الجلسة
+*/
 
 localStorage.setItem(
 "supabase_access_token",
@@ -1233,14 +1205,15 @@ session.refresh_token
 
 
 /*
-   تحميل profile
-   بالطريقة الجديدة
+ تحميل profile بالطريقة الجديدة
 */
-await loadProfile(
-session.user.id,
-session.user.email,
-username
-);
+
+await loadProfile();
+
+
+/*
+ إظهار التطبيق
+*/
 
 showApp();
 
@@ -1273,27 +1246,29 @@ errorBox.style.display="block";
 
 /* =====================================================
    LOAD PROFILE
-   الحل النهائي:
-   استخدام auth.uid() داخل PostgreSQL
+   الحل الجذري
 ===================================================== */
 
-async function loadProfile(
-userId,
-email="",
-username=""
-){
+async function loadProfile(){
 
 currentProfile=null;
+
+role="";
+
 
 try{
 
 /*
-   لا نبحث عن ID من المتصفح.
+ مهم جدًا:
 
-   Supabase نفسه يستخدم auth.uid()
-   داخل get_my_profile()
+لا نبحث عن profiles بواسطة ID
+من JavaScript.
+
+Supabase نفسه يستخدم auth.uid()
+داخل الدالة get_my_profile.
 */
-const data =
+
+const result =
 await request(
 "/rest/v1/rpc/get_my_profile",
 "POST",
@@ -1302,64 +1277,62 @@ await request(
 
 
 /*
-   نتيجة RPC تكون عادة Array
+ RPC قد يرجع JSON object
+أو string
 */
-if(
-Array.isArray(data) &&
-data.length > 0
-){
 
-currentProfile =
-data[0];
-
-}
-else if(
-data &&
-typeof data === "object"
-){
-
-currentProfile =
-data;
-
-}
-
-}catch(error){
-
-console.error(
-"GET MY PROFILE ERROR:",
-error
-);
+if(!result){
 
 throw new Error(
-"تعذر قراءة ملف المستخدم من profiles.\n\n"+
-error.message
+"لم يتم العثور على ملف المستخدم في profiles"
+);
+
+}
+
+if(typeof result==="string"){
+
+try{
+
+currentProfile =
+JSON.parse(result);
+
+}catch{
+
+throw new Error(
+"استجابة ملف المستخدم غير صحيحة"
+);
+
+}
+
+}else{
+
+currentProfile=result;
+
+}
+
+
+/*
+ التأكد النهائي
+*/
+
+if(
+!currentProfile ||
+!currentProfile.id
+){
+
+throw new Error(
+"لم يتم العثور على ملف المستخدم في profiles"
 );
 
 }
 
 
 /*
-   إذا لم يوجد profile
+ الحساب فعال؟
 */
-if(!currentProfile){
 
-throw new Error(
-"لم يتم العثور على ملف المستخدم في profiles.\n\n"+
-"Auth User ID:\n"+
-userId+
-"\n\n"+
-"البريد:\n"+
-(email || "-")
-);
-
-}
-
-
-/*
-   الحساب غير فعال
-*/
 if(
-currentProfile.active === false
+currentProfile.active===false
 ){
 
 throw new Error(
@@ -1370,25 +1343,56 @@ throw new Error(
 
 
 /*
-   حفظ الصلاحية
+ حفظ الصلاحية
 */
+
 role =
-currentProfile.role || "";
+currentProfile.role ||
+"";
 
 
 /*
-   عرض المستخدم
+ عرض اسم المستخدم
 */
+
+const currentUser =
 document.getElementById(
 "currentUser"
-).textContent =
+);
+
+if(currentUser){
+
+currentUser.textContent =
 (
 currentProfile.full_name ||
 currentProfile.username ||
 "المستخدم"
 )+
 " — "+
-role;
+(
+role ||
+"بدون قسم"
+);
+
+}
+
+console.log(
+"PROFILE LOADED:",
+currentProfile
+);
+
+}catch(error){
+
+console.error(
+"LOAD PROFILE ERROR:",
+error
+);
+
+throw new Error(
+"لم يتم العثور على ملف المستخدم في profiles"
+);
+
+}
 
 }
 
@@ -1415,7 +1419,7 @@ applyPermissions();
 
 
 /* =====================================================
-   SESSION
+   CHECK SESSION
 ===================================================== */
 
 async function checkSession(){
@@ -1433,16 +1437,21 @@ return;
 
 try{
 
+/*
+ التأكد من أن Auth session صالحة
+*/
+
 const user =
 await request(
 "/auth/v1/user"
 );
 
-await loadProfile(
-user.id,
-user.email,
-""
-);
+
+/*
+ profile يتم جلبه بواسطة auth.uid()
+*/
+
+await loadProfile();
 
 showApp();
 
@@ -1457,7 +1466,7 @@ await loadUsers();
 }catch(error){
 
 console.warn(
-"Session invalid:",
+"SESSION ERROR:",
 error
 );
 
@@ -1531,21 +1540,13 @@ button.classList.toggle(
 const stages=[
 
 ["في العمل","المدير"],
-
 ["تم القص","القص"],
-
 ["تم الكنت","الكنت"],
-
 ["تم CNC","CNC"],
-
 ["تم التركيب","التركيب"],
-
 ["تم الدهان","الدهان"],
-
 ["تم التغليف","التغليف"],
-
 ["تم التحميل","التحميل"],
-
 ["تم التسليم","التسليم"]
 
 ];
@@ -1654,8 +1655,7 @@ function overdue(order){
 return(
 order.due &&
 new Date(
-order.due+
-"T23:59:59"
+order.due+"T23:59:59"
 ) <
 new Date() &&
 order.stage <
@@ -1669,19 +1669,18 @@ stages.length-1
    SECTIONS
 ===================================================== */
 
-function showSection(
-id,
-button
-){
+function showSection(id,button){
 
 document
 .querySelectorAll(
 ".container > section"
 )
 .forEach(section=>{
+
 section.classList.add(
 "hidden"
 );
+
 });
 
 document
@@ -1694,14 +1693,14 @@ document
 ".nav button"
 )
 .forEach(btn=>{
+
 btn.classList.remove(
 "active"
 );
+
 });
 
-button.classList.add(
-"active"
-);
+button.classList.add("active");
 
 if(id==="users"){
 
@@ -2050,9 +2049,7 @@ return;
 const next =
 order.stage+1;
 
-if(
-next>=stages.length
-){
+if(next>=stages.length){
 
 return;
 
@@ -2569,6 +2566,14 @@ usersList.innerHTML =
 
 try{
 
+/*
+ قراءة profiles مباشرة.
+
+إذا كان RLS يسمح للمدير بالقراءة
+ستظهر القائمة.
+
+*/
+
 const users =
 await request(
 "/rest/v1/profiles"+
@@ -2782,7 +2787,7 @@ document
 
 /* =====================================================
    CREATE USER
-   Edge Function: bright-task
+   BRIGHT-TASK
 ===================================================== */
 
 document
@@ -2833,11 +2838,10 @@ document.getElementById(
 "newActive"
 ).checked;
 
-
 if(
-!username||
-!fullName||
-!email||
+!username ||
+!fullName ||
+!email ||
 !password
 ){
 
@@ -2859,7 +2863,6 @@ return;
 
 }
 
-
 try{
 
 const token =
@@ -2875,7 +2878,6 @@ throw new Error(
 
 }
 
-
 const response =
 await fetch(
 CREATE_USER_FUNCTION,
@@ -2884,7 +2886,6 @@ CREATE_USER_FUNCTION,
 method:"POST",
 
 headers:{
-
 "Content-Type":
 "application/json",
 
@@ -2893,7 +2894,6 @@ headers:{
 
 "apikey":
 SUPABASE_KEY
-
 },
 
 body:
@@ -2922,7 +2922,6 @@ active
 }
 );
 
-
 const text =
 await response.text();
 
@@ -2945,20 +2944,18 @@ message:text
 
 }
 
-
 if(!response.ok){
 
 throw new Error(
 
-data.message||
-data.error||
-data.error_description||
+data.message ||
+data.error ||
+data.error_description ||
 "فشل إنشاء المستخدم"
 
 );
 
 }
-
 
 closeUserModal();
 
@@ -2970,13 +2967,11 @@ document.getElementById(
 "newActive"
 ).checked=true;
 
-
 await loadUsers();
 
 msg(
 "✅ تم إنشاء المستخدم بنجاح"
 );
-
 
 }catch(error){
 
@@ -2986,9 +2981,8 @@ error
 );
 
 let message =
-error.message||
+error.message ||
 "فشل إنشاء المستخدم";
-
 
 if(
 message
@@ -3025,6 +3019,12 @@ renderOrders();
 
 renderStages();
 
+if(role==="المدير"){
+
+loadUsers();
+
+}
+
 }
 
 
@@ -3035,18 +3035,18 @@ renderStages();
 checkSession();
 
 
-/* =====================================================
-   SERVICE WORKER
-===================================================== */
-
-if(
-"serviceWorker" in navigator
-){
+if("serviceWorker" in navigator){
 
 navigator
 .serviceWorker
 .register("./sw.js")
-.catch(console.log);
+.catch(
+error=>
+console.log(
+"Service Worker:",
+error
+)
+);
 
 }
 
