@@ -3,4026 +3,1150 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0b1220">
-<meta name="apple-mobile-web-app-capable" content="yes">
-
+<meta name="theme-color" content="#07111f">
 <title>MODULAR TECH</title>
-
 <link rel="manifest" href="manifest.webmanifest">
 
 <style>
 *{box-sizing:border-box}
-
 :root{
---bg:#f3f6fb;
---surface:#fff;
---surface2:#f8fafc;
---dark:#08111f;
---dark2:#101d32;
---primary:#2446d8;
---primary2:#4f72ff;
---text:#111827;
---muted:#64748b;
---border:#e5eaf2;
---success:#16a34a;
---danger:#dc2626;
---warning:#f59e0b;
---sidebar:280px;
---radius:20px;
---shadow:0 10px 35px rgba(15,23,42,.07);
+ --bg:#eef3f9;--card:#fff;--dark:#07111f;--dark2:#10233d;
+ --primary:#1677ff;--primary2:#00b8ff;--text:#122033;
+ --muted:#718096;--border:#dfe7f1;--danger:#ef4444;
+ --success:#10b981;--warning:#f59e0b;--sidebar:285px;
 }
+html,body{margin:0;min-height:100%;font-family:Arial,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+body{overflow-x:hidden}
+button,input,textarea,select{font-family:inherit}
+button{cursor:pointer;border:0}
+.hidden{display:none!important}
 
-html,body{
-margin:0;
-padding:0;
-min-height:100%;
-font-family:
-Arial,
-"Segoe UI",
-Tahoma,
-sans-serif;
-background:var(--bg);
-color:var(--text);
-}
-
-body{
-overflow-x:hidden;
-}
-
-button,input,textarea,select{
-font-family:inherit;
-}
-
-button{
-border:0;
-cursor:pointer;
-}
-
-.hidden{
-display:none!important;
-}
-
-/* =========================
-LOGIN
-========================= */
-
+/* ---------- LOGIN ---------- */
 #loginPage{
-min-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:25px;
-background:
-radial-gradient(circle at 15% 15%,#3159e633,transparent 30%),
-radial-gradient(circle at 85% 85%,#4f72ff22,transparent 30%),
-linear-gradient(135deg,#050b15,#0c1628 55%,#122044);
+ min-height:100vh;display:flex;align-items:center;justify-content:center;
+ padding:20px;position:relative;overflow:hidden;
+ background:
+ radial-gradient(circle at 15% 15%,#1677ff55,transparent 30%),
+ radial-gradient(circle at 90% 85%,#00b8ff35,transparent 30%),
+ linear-gradient(135deg,#020617,#07182d 55%,#102e52);
 }
+#loginPage:before,#loginPage:after{
+ content:"";position:absolute;border-radius:50%;filter:blur(2px);
+ border:1px solid #ffffff18;transform:rotate(25deg)
+}
+#loginPage:before{width:500px;height:500px;right:-200px;top:-180px}
+#loginPage:after{width:350px;height:350px;left:-160px;bottom:-140px}
 
 .login-box{
-width:100%;
-max-width:470px;
-background:rgba(255,255,255,.98);
-border:1px solid rgba(255,255,255,.5);
-border-radius:30px;
-padding:38px;
-box-shadow:0 35px 100px rgba(0,0,0,.38);
+ width:100%;max-width:470px;padding:38px;border-radius:32px;
+ background:rgba(255,255,255,.97);position:relative;z-index:2;
+ box-shadow:0 35px 100px #0009;
+ border:1px solid #ffffff;
 }
-
-.login-brand{
-text-align:center;
-margin-bottom:30px;
-}
-
+.login-brand{text-align:center;margin-bottom:24px}
 .login-logo{
-display:block;
-width:min(100%,390px);
-height:auto;
-max-height:125px;
-object-fit:contain;
-margin:0 auto 22px;
+ display:block;width:190px;height:190px;object-fit:contain;
+ margin:0 auto 14px;border-radius:30px;
+ filter:drop-shadow(0 18px 25px #07111f35);
 }
-
-.login-title{
-font-size:27px;
-font-weight:1000;
-letter-spacing:.8px;
-color:#0b1630;
+.login-title{font-size:30px;font-weight:1000;letter-spacing:1px}
+.login-sub{color:var(--muted);margin-top:7px;font-size:14px}
+.login-language{
+ position:absolute;top:18px;left:18px;padding:10px 14px;border-radius:14px;
+ background:#eef5ff;color:#1261c9;font-weight:900
 }
+html[dir=ltr] .login-language{left:auto;right:18px}
 
-.login-sub{
-margin-top:7px;
-font-size:14px;
-color:var(--muted);
-font-weight:700;
+label{display:block;font-size:14px;font-weight:900;margin:13px 0 7px}
+input,textarea,select{
+ width:100%;padding:14px;border:1px solid var(--border);border-radius:14px;
+ background:#fff;font-size:15px;outline:none;transition:.2s
 }
-
-.form-group{
-margin-bottom:17px;
+input:focus,textarea:focus,select:focus{
+ border-color:var(--primary);box-shadow:0 0 0 4px #1677ff18
 }
-
-label{
-display:block;
-font-size:13px;
-font-weight:900;
-margin-bottom:7px;
-color:#273449;
-}
-
-input,
-textarea,
-select{
-width:100%;
-padding:14px 15px;
-border:1px solid var(--border);
-border-radius:13px;
-background:#fff;
-color:var(--text);
-font-size:15px;
-outline:none;
-transition:.2s;
-}
-
-input:focus,
-textarea:focus,
-select:focus{
-border-color:var(--primary2);
-box-shadow:0 0 0 4px rgba(79,114,255,.12);
-}
-
 .login-btn{
-width:100%;
-padding:15px;
-border-radius:14px;
-background:linear-gradient(135deg,var(--primary),var(--primary2));
-color:#fff;
-font-size:16px;
-font-weight:900;
-box-shadow:0 12px 25px rgba(36,70,216,.25);
-transition:.2s;
+ width:100%;margin-top:18px;padding:15px;border-radius:15px;
+ background:linear-gradient(135deg,var(--primary),var(--primary2));
+ color:#fff;font-size:17px;font-weight:1000;
+ box-shadow:0 12px 30px #1677ff45
 }
+.login-error{display:none;background:#fee2e2;color:#991b1b;padding:13px;border-radius:13px;font-weight:800}
 
-.login-btn:hover{
-transform:translateY(-2px);
-box-shadow:0 15px 30px rgba(36,70,216,.35);
-}
-
-.login-error{
-display:none;
-background:#fff0f0;
-border:1px solid #fecaca;
-color:#991b1b;
-padding:13px;
-border-radius:13px;
-margin-bottom:17px;
-font-weight:800;
-font-size:13px;
-}
-
-/* =========================
-APP
-========================= */
-
-#app{
-min-height:100vh;
-}
-
-/* SIDEBAR */
-
+/* ---------- APP ---------- */
 .sidebar{
-position:fixed;
-top:0;
-bottom:0;
-width:var(--sidebar);
-padding:18px 15px;
-background:
-linear-gradient(180deg,#08111f 0%,#0d192b 55%,#10203c 100%);
-color:white;
-z-index:50;
-display:flex;
-flex-direction:column;
-transition:.3s ease;
-box-shadow:0 0 40px rgba(0,0,0,.12);
+ position:fixed;top:0;bottom:0;width:var(--sidebar);z-index:50;color:#fff;
+ padding:18px 15px;display:flex;flex-direction:column;
+ background:linear-gradient(160deg,#06101f,#0a1d35 55%,#0d3760);
+ box-shadow:0 0 45px #0003;transition:.3s
 }
-
-html[dir="rtl"] .sidebar{
-right:0;
-left:auto;
-}
-
-html[dir="ltr"] .sidebar{
-left:0;
-right:auto;
-}
-
-/* BRAND */
+html[dir=rtl] .sidebar{right:0}
+html[dir=ltr] .sidebar{left:0}
 
 .brand{
-padding:10px 8px 20px;
-border-bottom:1px solid rgba(255,255,255,.08);
-margin-bottom:17px;
-text-align:center;
+ display:flex;align-items:center;gap:12px;padding:5px 7px 18px;
+ border-bottom:1px solid #ffffff18;margin-bottom:15px
 }
-
 .brand img{
-display:block;
-width:100%;
-max-width:235px;
-height:auto;
-max-height:72px;
-object-fit:contain;
-margin:0 auto 9px;
-background:#fff;
-border-radius:10px;
-padding:5px 9px;
+ width:82px;height:82px;object-fit:contain;background:#fff;border-radius:20px;
+ padding:5px;box-shadow:0 12px 25px #0004
 }
-
-.brand-text span{
-font-size:11px;
-color:#aab8d0;
-font-weight:700;
-}
-
-/* USER */
+.brand-text strong{display:block;font-size:18px}
+.brand-text span{display:block;font-size:11px;opacity:.65;margin-top:4px}
 
 .sidebar-user{
-display:flex;
-align-items:center;
-gap:11px;
-padding:13px;
-border-radius:16px;
-background:rgba(255,255,255,.055);
-border:1px solid rgba(255,255,255,.06);
-margin-bottom:17px;
+ padding:14px;border-radius:17px;background:#ffffff0d;
+ border:1px solid #ffffff0c;margin-bottom:15px
 }
+.sidebar-user-name{font-weight:1000}
+.sidebar-user-role{font-size:11px;opacity:.65;margin-top:4px}
 
-.user-avatar{
-width:39px;
-height:39px;
-border-radius:12px;
-background:linear-gradient(135deg,#3159e6,#6c87ff);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:17px;
-font-weight:900;
-flex:none;
-}
-
-.sidebar-user-name{
-font-weight:900;
-font-size:13px;
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis;
-}
-
-.sidebar-user-role{
-font-size:10px;
-color:#aab8d0;
-margin-top:4px;
-}
-
-/* NAV */
-
-.nav{
-display:flex;
-flex-direction:column;
-gap:6px;
-}
-
-.nav-title{
-font-size:10px;
-color:#7485a4;
-font-weight:900;
-padding:5px 12px 7px;
-letter-spacing:.5px;
-}
-
+.nav{display:flex;flex-direction:column;gap:7px}
 .nav button{
-width:100%;
-display:flex;
-align-items:center;
-gap:12px;
-padding:13px 13px;
-border-radius:14px;
-background:transparent;
-color:#c8d4e8;
-font-weight:800;
-text-align:start;
-transition:.2s;
+ width:100%;display:flex;align-items:center;gap:12px;padding:13px;
+ border-radius:14px;background:transparent;color:#dcecff;
+ font-weight:900;text-align:start;transition:.2s
 }
-
-.nav button:hover{
-background:rgba(255,255,255,.06);
-color:#fff;
-transform:translateX(-2px);
-}
-
-html[dir="ltr"] .nav button:hover{
-transform:translateX(2px);
-}
-
+.nav button:hover{background:#ffffff10;transform:translateX(-2px)}
 .nav button.active{
-background:linear-gradient(135deg,#2446d8,#4f72ff);
-color:#fff;
-box-shadow:0 9px 25px rgba(36,70,216,.28);
+ background:linear-gradient(135deg,#1677ff,#00a9f5);
+ box-shadow:0 10px 25px #1677ff35;color:#fff
+}
+.nav-icon{width:27px;text-align:center;font-size:20px}
+
+.sidebar-bottom{margin-top:auto;border-top:1px solid #ffffff18;padding-top:14px}
+.language-btn,.logout{
+ width:100%;padding:12px;border-radius:13px;font-weight:1000
+}
+.language-btn{background:#ffffff12;color:#fff;margin-bottom:8px}
+.logout{background:#ef4444;color:#fff}
+
+.designer{
+ text-align:center;font-size:10px;opacity:.55;padding:12px 3px 4px;
+ line-height:1.6
 }
 
-.nav-icon{
-width:27px;
-height:27px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:18px;
-flex:none;
-}
-
-.sidebar-bottom{
-margin-top:auto;
-border-top:1px solid rgba(255,255,255,.08);
-padding-top:13px;
-}
-
-.language-btn,
-.logout{
-width:100%;
-display:flex;
-align-items:center;
-justify-content:center;
-gap:8px;
-padding:12px;
-border-radius:13px;
-font-weight:900;
-transition:.2s;
-}
-
-.language-btn{
-background:rgba(255,255,255,.07);
-color:white;
-margin-bottom:8px;
-}
-
-.language-btn:hover{
-background:rgba(255,255,255,.13);
-}
-
-.logout{
-background:#b91c1c;
-color:#fff;
-}
-
-.logout:hover{
-background:#dc2626;
-}
-
-/* MAIN */
-
-.main{
-min-height:100vh;
-padding:27px;
-}
-
-html[dir="rtl"] .main{
-margin-right:var(--sidebar);
-}
-
-html[dir="ltr"] .main{
-margin-left:var(--sidebar);
-}
+.main{min-height:100vh;padding:25px}
+html[dir=rtl] .main{margin-right:var(--sidebar)}
+html[dir=ltr] .main{margin-left:var(--sidebar)}
 
 .topbar{
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:15px;
-margin-bottom:25px;
+ display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:25px
 }
-
-.top-left{
-display:flex;
-align-items:center;
-gap:12px;
-}
-
-.page-title h1{
-margin:0;
-font-size:29px;
-font-weight:1000;
-letter-spacing:-.5px;
-}
-
-.page-title p{
-margin:6px 0 0;
-font-size:13px;
-color:var(--muted);
-font-weight:600;
-}
-
-.topbar-actions{
-display:flex;
-align-items:center;
-gap:9px;
-}
-
-.top-language,
-.top-user{
-display:flex;
-align-items:center;
-gap:7px;
-padding:11px 14px;
-border-radius:13px;
-background:#fff;
-border:1px solid var(--border);
-box-shadow:var(--shadow);
-font-weight:900;
-}
-
-.top-user{
-font-size:12px;
-}
-
+.page-title h1{margin:0;font-size:30px;font-weight:1000}
+.page-title p{margin:6px 0 0;color:var(--muted);font-size:13px}
 .mobile-menu{
-display:none;
-width:44px;
-height:44px;
-border-radius:13px;
-background:#fff;
-border:1px solid var(--border);
-font-size:21px;
+ display:none;padding:11px 14px;border-radius:13px;background:#fff;
+ box-shadow:0 4px 15px #0001;font-size:20px
+}
+.topbar-actions{display:flex;align-items:center;gap:9px}
+.top-language,.top-user{
+ padding:11px 14px;border-radius:13px;background:#fff;font-weight:900;
+ box-shadow:0 4px 18px #0000000b
 }
 
-/* =========================
-STATS
-========================= */
-
-.stats{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:15px;
-margin-bottom:20px;
-}
-
+/* ---------- CARDS ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}
 .stat{
-position:relative;
-overflow:hidden;
-background:#fff;
-border:1px solid var(--border);
-border-radius:20px;
-padding:20px;
-box-shadow:var(--shadow);
+ background:#fff;border:1px solid #e5ebf3;border-radius:22px;padding:21px;
+ box-shadow:0 10px 30px #13233d0b;position:relative;overflow:hidden;
+ transition:.25s
 }
-
+.stat:hover{transform:translateY(-4px);box-shadow:0 18px 35px #13233d18}
 .stat:after{
-content:"";
-position:absolute;
-width:95px;
-height:95px;
-border-radius:50%;
-background:rgba(79,114,255,.07);
-top:-42px;
-left:-25px;
+ content:"";position:absolute;width:100px;height:100px;border-radius:50%;
+ background:#1677ff0b;left:-25px;top:-35px
 }
-
-.stat-icon{
-width:42px;
-height:42px;
-display:flex;
-align-items:center;
-justify-content:center;
-border-radius:13px;
-background:#eef2ff;
-font-size:20px;
-margin-bottom:14px;
-}
-
-.stat-title{
-font-size:12px;
-color:var(--muted);
-font-weight:800;
-}
-
-.stat-number{
-font-size:31px;
-font-weight:1000;
-margin-top:6px;
-}
-
-/* =========================
-PANELS
-========================= */
+.stat-title{font-size:13px;color:var(--muted);font-weight:800}
+.stat-number{font-size:34px;font-weight:1000;margin-top:8px}
 
 .panel{
-background:#fff;
-border:1px solid var(--border);
-border-radius:21px;
-padding:21px;
-margin-bottom:20px;
-box-shadow:var(--shadow);
+ background:#fff;border-radius:23px;padding:21px;margin-bottom:20px;
+ box-shadow:0 10px 30px #13233d0b;border:1px solid #e5ebf3
 }
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:18px}
+.panel h2{margin:0;font-size:20px;font-weight:1000}
 
-.panel-head{
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:10px;
-margin-bottom:18px;
-}
+/* ---------- BUTTONS ---------- */
+.btn{padding:10px 14px;border-radius:12px;font-weight:1000;transition:.2s}
+.btn:hover{transform:translateY(-2px)}
+.primary{background:linear-gradient(135deg,#1677ff,#00a9f5);color:#fff}
+.success{background:#10b981;color:#fff}
+.danger{background:#ef4444;color:#fff}
+.secondary{background:#edf2f7;color:#172033}
+.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}
 
-.panel h2{
-margin:0;
-font-size:19px;
-font-weight:1000;
-}
+/* ---------- SEARCH ---------- */
+.search-box{position:relative;margin-bottom:18px}
+.search-box input{padding-right:45px}
+html[dir=ltr] .search-box input{padding-right:14px;padding-left:45px}
+.search-icon{position:absolute;top:13px;right:15px;font-size:18px}
+html[dir=ltr] .search-icon{right:auto;left:15px}
 
-/* =========================
-BUTTONS
-========================= */
-
-.btn{
-padding:10px 14px;
-border-radius:12px;
-font-weight:900;
-transition:.2s;
-}
-
-.btn:hover{
-transform:translateY(-1px);
-}
-
-.primary{
-background:linear-gradient(135deg,var(--primary),var(--primary2));
-color:white;
-box-shadow:0 7px 18px rgba(36,70,216,.18);
-}
-
-.success{
-background:#16a34a;
-color:#fff;
-}
-
-.danger{
-background:#dc2626;
-color:#fff;
-}
-
-.secondary{
-background:#edf1f6;
-color:#263348;
-}
-
-.actions{
-display:flex;
-align-items:center;
-gap:7px;
-flex-wrap:wrap;
-margin-top:14px;
-}
-
-/* =========================
-SEARCH
-========================= */
-
-.search-box{
-position:relative;
-margin-bottom:17px;
-}
-
-.search-box input{
-padding-right:43px;
-background:#f8fafc;
-}
-
-html[dir="ltr"] .search-box input{
-padding-right:15px;
-padding-left:43px;
-}
-
-.search-icon{
-position:absolute;
-top:12px;
-right:14px;
-font-size:19px;
-z-index:2;
-}
-
-html[dir="ltr"] .search-icon{
-right:auto;
-left:14px;
-}
-
-/* =========================
-ORDERS
-========================= */
-
-.order-list{
-display:grid;
-gap:12px;
-}
-
+/* ---------- ORDERS ---------- */
+.order-list{display:grid;gap:13px}
 .order{
-position:relative;
-border:1px solid var(--border);
-border-radius:17px;
-padding:17px;
-background:#fff;
-transition:.2s;
+ border:1px solid var(--border);border-radius:18px;padding:17px;background:#fff;
+ transition:.2s
 }
-
-.order:hover{
-box-shadow:0 10px 30px rgba(15,23,42,.07);
-transform:translateY(-1px);
-}
-
-.order.urgent{
-border:1px solid #f87171;
-background:linear-gradient(135deg,#fff,#fff7f7);
-}
-
-.order-head{
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:10px;
-}
-
-.order-number{
-font-size:17px;
-font-weight:1000;
-}
-
-.customer{
-margin-top:5px;
-font-weight:800;
-font-size:14px;
-}
-
-.info{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:9px;
-margin-top:14px;
-}
-
-.info-box{
-background:#f7f9fc;
-border:1px solid #edf1f6;
-border-radius:12px;
-padding:10px;
-font-size:11px;
-color:var(--muted);
-}
-
-.info-box b{
-display:block;
-margin-top:5px;
-font-size:12px;
-color:var(--text);
-}
-
+.order:hover{box-shadow:0 12px 30px #0000000d;transform:translateY(-2px)}
+.order.urgent{border:2px solid #ef4444;background:#fff8f8}
+.order-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.order-number{font-size:19px;font-weight:1000}
+.customer{margin-top:6px;font-weight:900}
+.info{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:13px}
+.info-box{background:#f5f8fc;border-radius:12px;padding:10px;font-size:12px;color:var(--muted)}
+.info-box b{display:block;margin-top:5px;font-size:13px;color:var(--text)}
 .badge{
-display:inline-flex;
-align-items:center;
-justify-content:center;
-padding:6px 10px;
-border-radius:999px;
-background:#eaf0ff;
-color:#2545a7;
-font-size:11px;
-font-weight:900;
-white-space:nowrap;
+ display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;
+ background:#eaf3ff;color:#1556a8;font-size:12px;font-weight:1000
 }
+.overdue{background:#ffe5e5;color:#a61b1b}
 
-.overdue{
-background:#ffe5e5;
-color:#a61b1b;
-}
-
-/* =========================
-STAGES / USERS
-========================= */
-
-.stage-card,
-.user-card{
-background:#fff;
-border:1px solid var(--border);
-border-radius:17px;
-padding:16px;
-}
-
-.stage-card+.stage-card,
-.user-card+.user-card{
-margin-top:11px;
-}
-
-/* =========================
-MODAL
-========================= */
-
+/* ---------- MODALS ---------- */
 .modal{
-position:fixed;
-inset:0;
-background:rgba(2,6,23,.67);
-display:flex;
-align-items:center;
-justify-content:center;
-padding:15px;
-z-index:100;
-backdrop-filter:blur(8px);
+ position:fixed;inset:0;background:#02061799;display:flex;align-items:center;
+ justify-content:center;padding:15px;z-index:100;backdrop-filter:blur(7px)
 }
-
 .modal-box{
-background:#fff;
-width:100%;
-max-width:650px;
-max-height:91vh;
-overflow:auto;
-border-radius:23px;
-padding:23px;
-box-shadow:0 30px 100px rgba(0,0,0,.35);
+ background:#fff;width:100%;max-width:620px;max-height:90vh;overflow:auto;
+ border-radius:24px;padding:23px;box-shadow:0 30px 90px #0009
 }
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}
+.modal-head h2{margin:0}
+.close{background:#edf2f7;font-size:22px;padding:5px 12px;border-radius:10px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.check{display:flex;align-items:center;gap:8px;font-weight:900;margin:13px 0}
+.check input{width:auto}
 
-.modal-head{
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:10px;
-margin-bottom:19px;
-}
-
-.modal-head h2{
-margin:0;
-font-size:19px;
-}
-
-.close{
-background:#edf1f6;
-font-size:22px;
-padding:5px 12px;
-border-radius:10px;
-}
-
-.row{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-}
-
-.check{
-display:flex;
-align-items:center;
-gap:8px;
-font-weight:900;
-margin:7px 0 14px;
-}
-
-.check input{
-width:auto;
-margin:0;
-}
-
-/* =========================
-EMPTY / MESSAGE
-========================= */
-
-.empty{
-text-align:center;
-padding:35px 15px;
-color:var(--muted);
-font-weight:700;
-font-size:13px;
-}
-
+.empty{text-align:center;padding:35px 15px;color:var(--muted);font-weight:800}
 .message{
-position:fixed;
-bottom:22px;
-left:20px;
-right:20px;
-max-width:500px;
-margin:auto;
-padding:14px 17px;
-border-radius:14px;
-background:#101d32;
-color:white;
-font-weight:900;
-text-align:center;
-display:none;
-z-index:200;
-box-shadow:0 12px 35px rgba(0,0,0,.25);
+ position:fixed;bottom:20px;left:20px;right:20px;max-width:500px;margin:auto;
+ padding:14px;border-radius:14px;background:#10b981;color:#fff;
+ font-weight:1000;text-align:center;display:none;z-index:200;box-shadow:0 10px 30px #0003
 }
-
-/* =========================
-DESIGNED BY
-========================= */
-
-.designed-by{
-writing-mode:vertical-rl;
-transform:rotate(180deg);
-position:fixed;
-bottom:22px;
-font-size:9px;
-letter-spacing:1px;
-font-weight:800;
-color:rgba(255,255,255,.38);
-z-index:60;
-pointer-events:none;
+.whatsapp{
+ position:fixed;bottom:24px;z-index:80;width:58px;height:58px;border-radius:50%;
+ background:#25d366;color:#fff;display:flex;align-items:center;justify-content:center;
+ font-size:29px;box-shadow:0 10px 30px #0004;transition:.25s
 }
+.whatsapp:hover{transform:scale(1.1) rotate(-5deg)}
+html[dir=rtl] .whatsapp{left:25px}
+html[dir=ltr] .whatsapp{right:25px}
 
-html[dir="rtl"] .designed-by{
-right:calc(var(--sidebar) + 5px);
-}
-
-html[dir="ltr"] .designed-by{
-left:calc(var(--sidebar) + 5px);
-}
-
-/* =========================
-MOBILE
-========================= */
-
+/* ---------- MOBILE ---------- */
 @media(max-width:900px){
-
-:root{
---sidebar:0px;
+ :root{--sidebar:0px}
+ .sidebar{width:285px;transform:translateX(110%)}
+ html[dir=ltr] .sidebar{transform:translateX(-110%)}
+ .sidebar.open{transform:translateX(0)!important}
+ .main,html[dir=rtl] .main,html[dir=ltr] .main{margin:0;padding:14px}
+ .mobile-menu{display:block}
+ .stats{grid-template-columns:repeat(2,1fr)}
+ .top-user{display:none}
 }
-
-.sidebar{
-width:285px;
-box-shadow:0 0 50px rgba(0,0,0,.35);
-}
-
-html[dir="rtl"] .sidebar{
-right:0;
-transform:translateX(110%);
-}
-
-html[dir="ltr"] .sidebar{
-left:0;
-transform:translateX(-110%);
-}
-
-.sidebar.open{
-transform:translateX(0)!important;
-}
-
-.main,
-html[dir="rtl"] .main,
-html[dir="ltr"] .main{
-margin:0;
-padding:15px;
-}
-
-.mobile-menu{
-display:flex;
-align-items:center;
-justify-content:center;
-}
-
-.stats{
-grid-template-columns:repeat(2,1fr);
-}
-
-.top-user{
-display:none;
-}
-
-.designed-by{
-display:none;
-}
-
-}
-
 @media(max-width:600px){
-
-.login-box{
-padding:27px 20px;
-border-radius:24px;
+ .topbar{align-items:flex-start}
+ .page-title h1{font-size:22px}
+ .stats{gap:9px}
+ .stat{padding:14px;border-radius:17px}
+ .stat-number{font-size:26px}
+ .panel{padding:14px;border-radius:18px}
+ .info{grid-template-columns:1fr 1fr}
+ .row{grid-template-columns:1fr}
+ .login-box{padding:30px 20px}
+ .login-logo{width:150px;height:150px}
+ .login-title{font-size:24px}
 }
-
-.login-logo{
-max-height:100px;
-}
-
-.page-title h1{
-font-size:22px;
-}
-
-.page-title p{
-font-size:11px;
-}
-
-.topbar{
-align-items:flex-start;
-}
-
-.top-language{
-padding:10px 11px;
-font-size:12px;
-}
-
-.stats{
-gap:9px;
-}
-
-.stat{
-padding:14px;
-border-radius:16px;
-}
-
-.stat-icon{
-width:36px;
-height:36px;
-font-size:17px;
-}
-
-.stat-number{
-font-size:25px;
-}
-
-.panel{
-padding:14px;
-border-radius:17px;
-}
-
-.panel-head{
-align-items:flex-start;
-}
-
-.info{
-grid-template-columns:1fr 1fr;
-}
-
-.row{
-grid-template-columns:1fr;
-}
-
-.order-head{
-align-items:flex-start;
-}
-
-}
-
 @media(max-width:380px){
-
-.stats{
-grid-template-columns:1fr;
-}
-
-.info{
-grid-template-columns:1fr;
-}
-
+ .stats{grid-template-columns:1fr}
+ .info{grid-template-columns:1fr}
 }
 </style>
 </head>
 
 <body>
 
-<!-- =========================
-LOGIN
-========================= -->
-
+<!-- LOGIN -->
 <div id="loginPage">
-
 <div class="login-box">
 
+<button class="login-language" onclick="toggleLanguage()">
+🌐 <span id="loginLanguageText">עברית</span>
+</button>
+
 <div class="login-brand">
-
-<img
-src="icon-192.png"
-class="login-logo"
-alt="MODULAR TECH"
-onerror="this.style.display='none'"
->
-
-<div class="login-title">
-MODULAR TECH
-</div>
-
-<div
-class="login-sub"
-data-ar="نظام إدارة الطلبيات"
-data-he="מערכת לניהול הזמנות"
->
-نظام إدارة الطلبيات
-</div>
-
+<img src="icon-192.png" class="login-logo"
+ onerror="this.style.display='none'">
+<div class="login-title">MODULAR TECH</div>
+<div class="login-sub"
+ data-ar="نظام إدارة الطلبيات"
+ data-he="מערכת לניהול הזמנות">نظام إدارة الطلبيات</div>
 </div>
 
 <div id="loginError" class="login-error"></div>
 
-<div class="form-group">
+<label data-ar="اسم المستخدم" data-he="שם משתמש">اسم المستخدم</label>
+<input id="loginUsername" autocomplete="username"
+ placeholder="أدخل اسم المستخدم"
+ data-placeholder-ar="أدخل اسم المستخدم"
+ data-placeholder-he="הזן שם משתמש">
 
-<label
-data-ar="اسم المستخدم"
-data-he="שם משתמש"
->
-اسم المستخدم
-</label>
+<label data-ar="كلمة المرور" data-he="סיסמה">كلمة المرور</label>
+<input id="loginPassword" type="password" autocomplete="current-password"
+ placeholder="أدخل كلمة المرور"
+ data-placeholder-ar="أدخل كلمة المرور"
+ data-placeholder-he="הזן סיסמה">
 
-<input
-id="loginUsername"
-autocomplete="username"
-placeholder="أدخل اسم المستخدم"
-data-placeholder-ar="أدخل اسم المستخدم"
-data-placeholder-he="הזן שם משתמש"
->
-
-</div>
-
-<div class="form-group">
-
-<label
-data-ar="كلمة المرور"
-data-he="סיסמה"
->
-كلمة المرور
-</label>
-
-<input
-id="loginPassword"
-type="password"
-autocomplete="current-password"
-placeholder="أدخل كلمة المرور"
-data-placeholder-ar="أدخل كلمة المرور"
-data-placeholder-he="הזן סיסמה"
->
-
-</div>
-
-<button
-class="login-btn"
-onclick="login()"
-data-ar="🔐 تسجيل الدخول"
-data-he="🔐 התחברות"
->
-🔐 تسجيل الدخول
-</button>
+<button class="login-btn" onclick="login()"
+ data-ar="🔐 تسجيل الدخول" data-he="🔐 התחברות">🔐 تسجيل الدخول</button>
 
 </div>
 </div>
 
-
-<!-- =========================
-APP
-========================= -->
-
+<!-- APP -->
 <div id="app" class="hidden">
 
 <aside id="sidebar" class="sidebar">
 
 <div class="brand">
-
-<img
-src="icon-192.png"
-alt="MODULAR TECH"
-onerror="this.style.display='none'"
->
-
-<div
-data-ar="إدارة الطلبيات"
-data-he="ניהול הזמנות"
->
-إدارة الطلبيات
+<img src="icon-192.png" onerror="this.style.display='none'">
+<div class="brand-text">
+<strong>MODULAR TECH</strong>
+<span data-ar="إدارة الطلبيات" data-he="ניהול הזמנות">إدارة الطلبيات</span>
 </div>
-
 </div>
 
 <div class="sidebar-user">
-
-<div class="user-avatar">
-👤
-</div>
-
-<div>
-
 <div id="sideUserName" class="sidebar-user-name"></div>
-
 <div id="sideUserRole" class="sidebar-user-role"></div>
-
-</div>
-
 </div>
 
 <nav class="nav">
 
-<div
-class="nav-title"
-data-ar="القائمة الرئيسية"
-data-he="תפריט ראשי"
->
-القائمة الرئيسية
-</div>
-
-<button
-class="active"
-onclick="showSection('dashboard',this)"
->
-<span class="nav-icon">⌂</span>
-<span data-ar="الرئيسية" data-he="ראשי">
-الرئيسية
-</span>
+<button class="active" onclick="showSection('dashboard',this)">
+<span class="nav-icon">🏠</span>
+<span data-ar="الرئيسية" data-he="ראשי">الرئيسية</span>
 </button>
 
-<button
-onclick="showSection('ordersSection',this)"
->
-<span class="nav-icon">▣</span>
-<span data-ar="الطلبيات" data-he="הזמנות">
-الطلبيات
-</span>
+<button onclick="showSection('ordersSection',this)">
+<span class="nav-icon">📋</span>
+<span data-ar="الطلبيات" data-he="הזמנות">الطلبيات</span>
 </button>
 
-<button
-onclick="showSection('production',this)"
->
-<span class="nav-icon">⚙</span>
-<span data-ar="مراحل العمل" data-he="שלבי עבודה">
-مراحل العمل
-</span>
+<button onclick="showSection('production',this)">
+<span class="nav-icon">🏭</span>
+<span data-ar="مراحل العمل" data-he="שלבי עבודה">مراحل العمل</span>
 </button>
 
-<button
-id="usersNav"
-onclick="showSection('users',this)"
->
-<span class="nav-icon">♙</span>
-<span data-ar="المستخدمون" data-he="משתמשים">
-المستخدمون
-</span>
+<button id="usersNav" onclick="showSection('users',this)">
+<span class="nav-icon">👥</span>
+<span data-ar="المستخدمون" data-he="משתמשים">المستخدمون</span>
 </button>
 
 </nav>
 
 <div class="sidebar-bottom">
 
-<button
-class="language-btn"
-onclick="toggleLanguage()"
->
-🌐
-<span id="languageText">עברית</span>
+<button class="language-btn" onclick="toggleLanguage()">
+🌐 <span id="languageText">עברית</span>
 </button>
 
-<button
-class="logout"
-onclick="logout()"
-data-ar="🚪 تسجيل الخروج"
-data-he="🚪 התנתקות"
->
-🚪 تسجيل الخروج
-</button>
+<button class="logout" onclick="logout()"
+ data-ar="🚪 تسجيل الخروج" data-he="🚪 התנתקות">🚪 تسجيل الخروج</button>
 
+<div class="designer">
+Designed by<br>
+<strong>Mohammad Sad Al Deen</strong>
 </div>
 
+</div>
 </aside>
-
-
-<div
-class="designed-by"
->
-Designed by Mohammad Sad Al Deen
-</div>
-
 
 <main class="main">
 
 <div class="topbar">
-
-<div class="top-left">
-
-<button
-class="mobile-menu"
-onclick="toggleSidebar()"
->
-☰
-</button>
-
+<div style="display:flex;align-items:center;gap:10px">
+<button class="mobile-menu" onclick="toggleSidebar()">☰</button>
 <div class="page-title">
-
-<h1
-id="pageTitle"
-data-ar="الرئيسية"
-data-he="ראשי"
->
-الرئيسية
-</h1>
-
-<p
-id="pageSubtitle"
-data-ar="نظرة عامة على نظام إدارة الطلبيات"
-data-he="סקירה כללית של מערכת ניהול ההזמנות"
->
-نظرة عامة على نظام إدارة الطلبيات
-</p>
-
+<h1 id="pageTitle" data-ar="الرئيسية" data-he="ראשי">الرئيسية</h1>
+<p id="pageSubtitle"
+ data-ar="نظرة عامة على نظام إدارة الطلبيات"
+ data-he="סקירה כללית של מערכת ניהול ההזמנות">
+نظرة عامة على نظام إدارة الطلبيات</p>
 </div>
-
 </div>
 
 <div class="topbar-actions">
-
-<button
-class="top-language"
-onclick="toggleLanguage()"
->
-🌐
-<span id="topLanguageText">עברית</span>
+<button class="top-language" onclick="toggleLanguage()">
+🌐 <span id="topLanguageText">עברית</span>
 </button>
-
 <div id="topUser" class="top-user"></div>
-
 </div>
-
 </div>
-
 
 <!-- DASHBOARD -->
-
 <section id="dashboard" class="section">
 
 <div class="stats">
-
 <div class="stat">
-
-<div class="stat-icon">▣</div>
-
-<div
-class="stat-title"
-data-ar="إجمالي الطلبيات"
-data-he="סה״כ הזמנות"
->
-إجمالي الطلبيات
-</div>
-
+<div class="stat-title" data-ar="إجمالي الطلبيات" data-he="סה״כ הזמנות">إجمالي الطلبيات</div>
 <div id="totalCount" class="stat-number">0</div>
-
 </div>
 
 <div class="stat">
-
-<div class="stat-icon">⚙</div>
-
-<div
-class="stat-title"
-data-ar="قيد العمل"
-data-he="בטיפול"
->
-قيد العمل
-</div>
-
+<div class="stat-title" data-ar="قيد العمل" data-he="בטיפול">قيد العمل</div>
 <div id="activeCount" class="stat-number">0</div>
-
 </div>
 
 <div class="stat">
-
-<div class="stat-icon">★</div>
-
-<div
-class="stat-title"
-data-ar="مهمة جدًا"
-data-he="דחופות"
->
-مهمة جدًا
-</div>
-
+<div class="stat-title" data-ar="مهمة جدًا" data-he="דחופות">مهمة جدًا</div>
 <div id="urgentCount" class="stat-number">0</div>
-
 </div>
 
 <div class="stat">
-
-<div class="stat-icon">!</div>
-
-<div
-class="stat-title"
-data-ar="متأخرة"
-data-he="באיחור"
->
-متأخرة
-</div>
-
+<div class="stat-title" data-ar="متأخرة" data-he="באיחור">متأخرة</div>
 <div id="overdueCount" class="stat-number">0</div>
-
 </div>
-
 </div>
-
 
 <div class="panel">
-
 <div class="panel-head">
-
-<h2
-data-ar="▣ آخر الطلبيات"
-data-he="▣ הזמנות אחרונות"
->
-▣ آخر الطلبيات
-</h2>
-
-<button
-class="btn primary admin-only"
-onclick="openAddModal()"
-data-ar="＋ إضافة طلبية"
-data-he="＋ הוספת הזמנה"
->
-＋ إضافة طلبية
-</button>
-
+<h2 data-ar="📋 آخر الطلبيات" data-he="📋 הזמנות אחרונות">📋 آخر الطلبيات</h2>
+<button class="btn primary admin-only" onclick="openAddModal()"
+ data-ar="➕ إضافة طلبية" data-he="➕ הוספת הזמנה">➕ إضافة طلبية</button>
 </div>
-
 <div id="latestOrders"></div>
-
 </div>
-
 </section>
 
-
 <!-- ORDERS -->
-
-<section
-id="ordersSection"
-class="section hidden"
->
-
+<section id="ordersSection" class="section hidden">
 <div class="panel">
-
 <div class="panel-head">
-
-<h2
-data-ar="▣ إدارة الطلبيات"
-data-he="▣ ניהול הזמנות"
->
-▣ إدارة الطلبيات
-</h2>
-
-<button
-class="btn primary admin-only"
-onclick="openAddModal()"
-data-ar="＋ إضافة طلبية"
-data-he="＋ הוספת הזמנה"
->
-＋ إضافة طلبية
-</button>
-
+<h2 data-ar="📋 إدارة الطلبيات" data-he="📋 ניהול הזמנות">📋 إدارة الطلبيات</h2>
+<button class="btn primary admin-only" onclick="openAddModal()"
+ data-ar="➕ إضافة طلبية" data-he="➕ הוספת הזמנה">➕ إضافة طلبية</button>
 </div>
 
 <div class="search-box">
-
-<span class="search-icon">⌕</span>
-
-<input
-id="search"
-type="search"
-placeholder="ابحث برقم الطلبية أو اسم الزبون أو الهاتف"
-data-placeholder-ar="ابحث برقم الطلبية أو اسم الزبون أو الهاتف"
-data-placeholder-he="חפש לפי מספר הזמנה, שם לקוח או טלפון"
-oninput="renderOrders()"
->
-
+<span class="search-icon">🔎</span>
+<input id="search" type="search"
+ placeholder="ابحث برقم الطلبية أو اسم الزبون أو الهاتف"
+ data-placeholder-ar="ابحث برقم الطلبية أو اسم الزبون أو الهاتف"
+ data-placeholder-he="חפש לפי מספר הזמנה, שם לקוח או טלפון"
+ oninput="renderOrders()">
 </div>
 
 <div id="ordersList" class="order-list"></div>
-
 </div>
-
 </section>
-
 
 <!-- PRODUCTION -->
-
-<section
-id="production"
-class="section hidden"
->
-
+<section id="production" class="section hidden">
 <div class="panel">
-
 <div class="panel-head">
-
-<h2
-data-ar="⚙ مراحل العمل"
-data-he="⚙ שלבי עבודה"
->
-⚙ مراحل العمل
-</h2>
-
+<h2 data-ar="🏭 مراحل العمل" data-he="🏭 שלבי עבודה">🏭 مراحل العمل</h2>
 </div>
-
 <div id="stageList" class="order-list"></div>
-
 </div>
-
 </section>
 
-
 <!-- USERS -->
-
-<section
-id="users"
-class="section hidden"
->
-
+<section id="users" class="section hidden">
 <div class="panel">
-
 <div class="panel-head">
-
-<h2
-data-ar="♙ المستخدمون"
-data-he="♙ משתמשים"
->
-♙ المستخدمون
-</h2>
-
-<button
-class="btn primary"
-onclick="openUserModal()"
-data-ar="＋ إضافة مستخدم"
-data-he="＋ הוספת משתמש"
->
-＋ إضافة مستخدم
-</button>
-
+<h2 data-ar="👥 المستخدمون" data-he="👥 משתמשים">👥 المستخدمون</h2>
+<button class="btn primary" onclick="openUserModal()"
+ data-ar="➕ إضافة مستخدم" data-he="➕ הוספת משתמש">➕ إضافة مستخدم</button>
 </div>
-
-<div id="usersList">
-
-<div
-class="empty"
-data-ar="⏳ جاري تحميل المستخدمين..."
-data-he="⏳ טוען משתמשים..."
->
-⏳ جاري تحميل المستخدمين...
+<div id="usersList"></div>
 </div>
-
-</div>
-
-</div>
-
 </section>
 
 </main>
-
 </div>
 
+<a class="whatsapp"
+ href="https://wa.me/972515206464?text="
+ target="_blank" rel="noopener" title="WhatsApp">◉</a>
 
 <div id="message" class="message"></div>
 
-
-<!-- =========================
-ORDER MODAL
-========================= -->
-
+<!-- ORDER MODAL -->
 <div id="orderModal" class="modal hidden">
-
 <div class="modal-box">
-
 <div class="modal-head">
-
-<h2 id="modalTitle">
-＋ إضافة طلبية
-</h2>
-
+<h2 id="modalTitle">➕ إضافة طلبية</h2>
 <button class="close" onclick="closeModal()">×</button>
-
 </div>
 
 <form id="orderForm">
-
 <input type="hidden" id="editId">
 
-<div class="form-group">
+<label data-ar="رقم الطلبية" data-he="מספר הזמנה">رقم الطلبية</label>
+<input id="orderNum" required>
 
-<label data-ar="رقم الطلبية" data-he="מספר הזמנה">
-رقم الطلبية
-</label>
-
-<input id="orderNum" required placeholder="مثال: 10025">
-
-</div>
-
-<div class="form-group">
-
-<label data-ar="اسم الزبون" data-he="שם הלקוח">
-اسم الزبون
-</label>
-
-<input id="customer" required placeholder="اسم الزبون">
-
-</div>
+<label data-ar="اسم الزبون" data-he="שם הלקוח">اسم الزبون</label>
+<input id="customer" required>
 
 <div class="row">
-
-<div class="form-group">
-
-<label data-ar="رقم الهاتف" data-he="מספר טלפון">
-رقم الهاتف
-</label>
-
-<input id="phone" type="tel" placeholder="05xxxxxxxx">
-
+<div>
+<label data-ar="رقم الهاتف" data-he="מספר טלפון">رقم الهاتف</label>
+<input id="phone" type="tel">
 </div>
-
-<div class="form-group">
-
-<label data-ar="موعد التسليم" data-he="תאריך מסירה">
-موعد التسليم
-</label>
-
+<div>
+<label data-ar="موعد التسليم" data-he="תאריך מסירה">موعد التسليم</label>
 <input id="due" type="date" required>
-
+</div>
 </div>
 
-</div>
-
-<div class="form-group">
-
-<label data-ar="ملاحظات" data-he="הערות">
-ملاحظات
-</label>
-
-<textarea
-id="notes"
-rows="4"
-placeholder="اكتب الملاحظات"
-></textarea>
-
-</div>
+<label data-ar="ملاحظات" data-he="הערות">ملاحظات</label>
+<textarea id="notes" rows="4"></textarea>
 
 <label class="check">
-
 <input type="checkbox" id="urgent">
-
-<span
-data-ar="★ هذه الطلبية مهمة جدًا"
-data-he="★ הזמנה זו דחופה מאוד"
->
-★ هذه الطلبية مهمة جدًا
-</span>
-
+<span data-ar="⭐ هذه الطلبية مهمة جدًا" data-he="⭐ הזמנה זו דחופה מאוד">⭐ هذه الطلبية مهمة جدًا</span>
 </label>
 
 <div class="actions">
-
-<button
-type="submit"
-class="btn primary"
-data-ar="💾 حفظ الطلبية"
-data-he="💾 שמירת הזמנה"
->
-💾 حفظ الطلبية
-</button>
-
-<button
-type="button"
-class="btn secondary"
-onclick="closeModal()"
-data-ar="إلغاء"
-data-he="ביטול"
->
-إلغاء
-</button>
-
+<button type="submit" class="btn primary"
+ data-ar="💾 حفظ الطلبية" data-he="💾 שמירת הזמנה">💾 حفظ الطلبية</button>
+<button type="button" class="btn secondary" onclick="closeModal()"
+ data-ar="إلغاء" data-he="ביטול">إلغاء</button>
 </div>
-
 </form>
-
+</div>
 </div>
 
-</div>
-
-
-<!-- =========================
-USER MODAL
-========================= -->
-
+<!-- USER MODAL -->
 <div id="userModal" class="modal hidden">
-
 <div class="modal-box">
-
 <div class="modal-head">
-
-<h2
-data-ar="＋ إضافة مستخدم"
-data-he="＋ הוספת משתמש"
->
-＋ إضافة مستخدم
-</h2>
-
+<h2 data-ar="➕ إضافة مستخدم" data-he="➕ הוספת משתמש">➕ إضافة مستخدم</h2>
 <button class="close" onclick="closeUserModal()">×</button>
-
 </div>
 
 <form id="userForm">
 
-<div class="form-group">
+<label data-ar="اسم المستخدم" data-he="שם משתמש">اسم المستخدم</label>
+<input id="newUsername" required>
 
-<label data-ar="اسم المستخدم" data-he="שם משתמש">
-اسم المستخدم
-</label>
+<label data-ar="الاسم الكامل" data-he="שם מלא">الاسم الكامل</label>
+<input id="newFullName" required>
 
-<input
-id="newUsername"
-required
-placeholder="مثال: ahmad"
->
+<label data-ar="البريد الإلكتروني" data-he="דואר אלקטרוני">البريد الإلكتروني</label>
+<input id="newEmail" type="email" required>
 
-</div>
+<label data-ar="كلمة المرور" data-he="סיסמה">كلمة المرور</label>
+<input id="newPassword" type="password" minlength="6" required>
 
-<div class="form-group">
-
-<label data-ar="الاسم الكامل" data-he="שם מלא">
-الاسم الكامل
-</label>
-
-<input
-id="newFullName"
-required
-placeholder="اسم الموظف"
->
-
-</div>
-
-<div class="form-group">
-
-<label data-ar="البريد الإلكتروني" data-he="דואר אלקטרוני">
-البريد الإلكتروني
-</label>
-
-<input
-id="newEmail"
-type="email"
-required
-placeholder="البريد المستخدم في Auth"
->
-
-</div>
-
-<div class="form-group">
-
-<label data-ar="كلمة المرور" data-he="סיסמה">
-كلمة المرور
-</label>
-
-<input
-id="newPassword"
-type="password"
-required
-minlength="6"
-placeholder="كلمة المرور"
->
-
-</div>
-
-<div class="form-group">
-
-<label data-ar="القسم" data-he="מחלקה">
-القسم
-</label>
-
+<label data-ar="القسم" data-he="מחלקה">القسم</label>
 <select id="newRole">
-
-<option value="المدير"
-data-ar="👑 المدير"
-data-he="👑 מנהל">
-👑 المدير
-</option>
-
-<option value="القص"
-data-ar="✂️ القص"
-data-he="✂️ חיתוך">
-✂️ القص
-</option>
-
-<option value="الكنت"
-data-ar="🔧 الكنت"
-data-he="🔧 קנטים">
-🔧 الكنت
-</option>
-
-<option value="CNC">
-⚙️ CNC
-</option>
-
-<option value="التركيب"
-data-ar="🛠️ التركيب"
-data-he="🛠️ הרכבה">
-🛠️ التركيب
-</option>
-
-<option value="الدهان"
-data-ar="🎨 الدهان"
-data-he="🎨 צבע">
-🎨 الدهان
-</option>
-
-<option value="التغليف"
-data-ar="📦 التغليف"
-data-he="📦 אריזה">
-📦 التغليف
-</option>
-
-<option value="التحميل"
-data-ar="🚚 التحميل"
-data-he="🚚 העמסה">
-🚚 التحميل
-</option>
-
-<option value="التسليم"
-data-ar="✓ التسليم"
-data-he="✓ מסירה">
-✓ التسليم
-</option>
-
+<option value="المدير" data-ar="👑 المدير" data-he="👑 מנהל">👑 المدير</option>
+<option value="القص" data-ar="✂️ القص" data-he="✂️ חיתוך">✂️ القص</option>
+<option value="الكنت" data-ar="🔧 الكنت" data-he="🔧 קנטים">🔧 الكنت</option>
+<option value="CNC">⚙️ CNC</option>
+<option value="التركيب" data-ar="🛠️ التركيب" data-he="🛠️ הרכבה">🛠️ التركيب</option>
+<option value="الدهان" data-ar="🎨 الدهان" data-he="🎨 צבע">🎨 الدهان</option>
+<option value="التغليف" data-ar="📦 التغليف" data-he="📦 אריזה">📦 التغليف</option>
+<option value="التحميل" data-ar="🚚 التحميل" data-he="🚚 העמסה">🚚 التحميل</option>
+<option value="التسليم" data-ar="✅ التسليم" data-he="✅ מסירה">✅ التسليم</option>
 </select>
 
-</div>
-
 <label class="check">
-
-<input
-type="checkbox"
-id="newActive"
-checked
->
-
-<span
-data-ar="الحساب فعال"
-data-he="החשבון פעיל"
->
-الحساب فعال
-</span>
-
+<input type="checkbox" id="newActive" checked>
+<span data-ar="الحساب فعال" data-he="החשבון פעיל">الحساب فعال</span>
 </label>
 
 <div class="actions">
-
-<button
-type="submit"
-class="btn primary"
-data-ar="💾 إنشاء المستخدم"
-data-he="💾 יצירת משתמש"
->
-💾 إنشاء المستخدم
-</button>
-
-<button
-type="button"
-class="btn secondary"
-onclick="closeUserModal()"
-data-ar="إلغاء"
-data-he="ביטול"
->
-إلغاء
-</button>
-
+<button type="submit" class="btn primary"
+ data-ar="💾 إنشاء المستخدم" data-he="💾 יצירת משתמש">💾 إنشاء المستخدم</button>
+<button type="button" class="btn secondary" onclick="closeUserModal()"
+ data-ar="إلغاء" data-he="ביטול">إلغاء</button>
 </div>
-
 </form>
-
 </div>
-
 </div>
-
 
 <script>
-
-/* =========================
-SUPABASE
-========================= */
-
-const SUPABASE_URL =
-"https://bvrfrcmblwzuqprjknam.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_vVXVJGcWpoPvPEH_bfm23Q_dZ5eXvmE";
-
-const CREATE_USER_FUNCTION =
+/* ================= SUPABASE ================= */
+const SUPABASE_URL="https://bvrfrcmblwzuqprjknam.supabase.co";
+const SUPABASE_KEY="sb_publishable_vVXVJGcWpoPvPEH_bfm23Q_dZ5eXvmE";
+const CREATE_USER_FUNCTION=
 "https://bvrfrcmblwzuqprjknam.supabase.co/functions/v1/bright-task";
-
-
-/* =========================
-STATE
-========================= */
 
 let orders=[];
 let currentProfile=null;
 let role="";
-let currentLanguage=
-localStorage.getItem("app_language") || "ar";
-
-
-/* =========================
-REQUEST
-========================= */
-
-async function request(path,method="GET",body=null){
-
-const token=
-localStorage.getItem("supabase_access_token");
-
-const authToken=
-token || SUPABASE_KEY;
-
-const options={
-method,
-headers:{
-"apikey":SUPABASE_KEY,
-"Authorization":"Bearer "+authToken,
-"Content-Type":"application/json",
-"Prefer":"return=representation"
-}
-};
-
-if(body!==null){
-options.body=JSON.stringify(body);
-}
-
-const response=
-await fetch(
-SUPABASE_URL+path,
-options
-);
-
-const text=
-await response.text();
-
-let data;
-
-try{
-data=text?JSON.parse(text):null;
-}catch{
-data=text;
-}
-
-if(!response.ok){
-
-let message;
-
-if(typeof data==="object" && data){
-
-message=
-data.message ||
-data.error_description ||
-data.error ||
-data.hint ||
-JSON.stringify(data);
-
-}else{
-message=data || ("HTTP "+response.status);
-}
-
-throw new Error(message);
-}
-
-return data;
-}
-
-
-/* =========================
-AUTH
-========================= */
-
-async function auth(path,body){
-
-const response=
-await fetch(
-SUPABASE_URL+"/auth/v1/"+path,
-{
-method:"POST",
-headers:{
-"apikey":SUPABASE_KEY,
-"Content-Type":"application/json"
-},
-body:JSON.stringify(body)
-}
-);
-
-const text=
-await response.text();
-
-let data;
-
-try{
-data=text?JSON.parse(text):{};
-}catch{
-data={message:text};
-}
-
-if(!response.ok){
-
-throw new Error(
-data.error_description ||
-data.msg ||
-data.message ||
-"فشل تسجيل الدخول"
-);
-}
-
-return data;
-}
-
-
-/* =========================
-MESSAGE
-========================= */
-
-function msg(text){
-
-const box=document.getElementById("message");
-
-box.textContent=text;
-box.style.display="block";
-
-setTimeout(()=>{
-box.style.display="none";
-},3000);
-}
-
-
-/* =========================
-ESCAPE
-========================= */
-
-function esc(value){
-
-return String(value??"")
-.replace(/[&<>"']/g,function(char){
-return{
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#039;"
-}[char];
-});
-
-}
-
-
-/* =========================
-LANGUAGE
-========================= */
-
-function applyLanguage(){
-
-const lang=currentLanguage;
-
-document.documentElement.lang=lang;
-
-/* العربية والعبرية كلاهما RTL */
-
-document.documentElement.dir="rtl";
-
-document
-.querySelectorAll("[data-ar]")
-.forEach(el=>{
-
-const text=
-el.getAttribute(
-lang==="he"
-?
-"data-he"
-:
-"data-ar"
-);
-
-if(text!==null){
-el.textContent=text;
-}
-
-});
-
-document
-.querySelectorAll("[data-placeholder-ar]")
-.forEach(el=>{
-
-const attr=
-lang==="he"
-?
-"data-placeholder-he"
-:
-"data-placeholder-ar";
-
-const value=el.getAttribute(attr);
-
-if(value){
-el.placeholder=value;
-}
-
-});
-
-document
-.querySelectorAll("option[data-ar]")
-.forEach(option=>{
-
-const value=
-option.getAttribute(
-lang==="he"
-?
-"data-he"
-:
-"data-ar"
-);
-
-if(value){
-option.textContent=value;
-}
-
-});
-
-const languageText=
-document.getElementById("languageText");
-
-const topLanguageText=
-document.getElementById("topLanguageText");
-
-if(lang==="ar"){
-
-if(languageText)
-languageText.textContent="עברית";
-
-if(topLanguageText)
-topLanguageText.textContent="עברית";
-
-}else{
-
-if(languageText)
-languageText.textContent="العربية";
-
-if(topLanguageText)
-topLanguageText.textContent="العربية";
-
-}
-
-renderAll();
-
-}
-
-
-function toggleLanguage(){
-
-currentLanguage=
-currentLanguage==="ar"
-?
-"he"
-:
-"ar";
-
-localStorage.setItem(
-"app_language",
-currentLanguage
-);
-
-applyLanguage();
-
-}
-
-
-/* =========================
-SIDEBAR
-========================= */
-
-function toggleSidebar(){
-
-document
-.getElementById("sidebar")
-.classList
-.toggle("open");
-
-}
-
-
-/* =========================
-LOGIN
-========================= */
-
-async function login(){
-
-const username=
-document.getElementById("loginUsername")
-.value.trim();
-
-const password=
-document.getElementById("loginPassword")
-.value;
-
-const errorBox=
-document.getElementById("loginError");
-
-errorBox.style.display="none";
-
-if(!username || !password){
-
-errorBox.textContent=
-currentLanguage==="he"
-?
-"יש להזין שם משתמש וסיסמה"
-:
-"يرجى إدخال اسم المستخدم وكلمة المرور";
-
-errorBox.style.display="block";
-
-return;
-}
-
-try{
-
-const result=
-await request(
-"/rest/v1/rpc/get_login_email",
-"POST",
-{
-p_username:username
-}
-);
-
-let email=null;
-
-if(typeof result==="string"){
-
-email=result;
-
-}else if(Array.isArray(result)){
-
-email=
-result[0]?.email ||
-result[0] ||
-null;
-
-}else if(result){
-
-email=
-result.email ||
-result;
-
-}
-
-if(!email){
-
-throw new Error(
-currentLanguage==="he"
-?
-"שם המשתמש אינו קיים או שהחשבון אינו פעיל"
-:
-"اسم المستخدم غير موجود أو الحساب غير فعال"
-);
-
-}
-
-const session=
-await auth(
-"token?grant_type=password",
-{
-email,
-password
-}
-);
-
-if(!session.access_token){
-
-throw new Error(
-"لم يتم الحصول على جلسة دخول من Auth"
-);
-
-}
-
-localStorage.setItem(
-"supabase_access_token",
-session.access_token
-);
-
-if(session.refresh_token){
-
-localStorage.setItem(
-"supabase_refresh_token",
-session.refresh_token
-);
-
-}
-
-await loadProfile(
-session.user.id,
-session.user.email,
-username
-);
-
-showApp();
-
-await loadOrders();
-
-if(role==="المدير"){
-await loadUsers();
-}
-
-msg(
-currentLanguage==="he"
-?
-"✅ ההתחברות הצליחה"
-:
-"✅ تم تسجيل الدخول"
-);
-
-}catch(error){
-
-console.error("LOGIN ERROR:",error);
-
-errorBox.textContent=
-"❌ "+error.message;
-
-errorBox.style.display="block";
-
-}
-
-}
-
-
-/* =========================
-PROFILE
-========================= */
-
-async function loadProfile(
-userId,
-email="",
-username=""
-){
-
-currentProfile=null;
-
-try{
-
-const data=
-await request(
-"/rest/v1/rpc/get_my_profile",
-"POST",
-{}
-);
-
-if(Array.isArray(data) && data.length>0){
-currentProfile=data[0];
-}
-
-}catch(error){
-
-console.error("PROFILE ERROR:",error);
-
-throw new Error(
-currentLanguage==="he"
-?
-"לא ניתן לקרוא את פרופיל המשתמש: "+error.message
-:
-"تعذر قراءة ملف المستخدم: "+error.message
-);
-
-}
-
-if(!currentProfile){
-
-throw new Error(
-currentLanguage==="he"
-?
-"לא נמצא פרופיל משתמש"
-:
-"لم يتم العثور على ملف المستخدم"
-);
-
-}
-
-if(
-String(currentProfile.id).toLowerCase() !==
-String(userId).toLowerCase()
-){
-
-throw new Error(
-currentLanguage==="he"
-?
-"פרופיל המשתמש אינו תואם לחשבון Auth"
-:
-"profiles.id لا يطابق Auth User ID"
-);
-
-}
-
-if(currentProfile.active===false){
-
-throw new Error(
-currentLanguage==="he"
-?
-"החשבון אינו פעיל"
-:
-"هذا الحساب غير فعال"
-);
-
-}
-
-role=currentProfile.role || "";
-
-updateUserDisplay();
-
-}
-
-
-function updateUserDisplay(){
-
-const name=
-currentProfile?.full_name ||
-currentProfile?.username ||
-"المستخدم";
-
-const roleText=
-currentProfile?.role || "";
-
-document.getElementById("topUser").textContent=
-name+" — "+roleText;
-
-document.getElementById("sideUserName").textContent=
-name;
-
-document.getElementById("sideUserRole").textContent=
-roleText;
-
-}
-
-
-/* =========================
-SHOW APP
-========================= */
-
-function showApp(){
-
-document
-.getElementById("loginPage")
-.classList.add("hidden");
-
-document
-.getElementById("app")
-.classList.remove("hidden");
-
-applyPermissions();
-applyLanguage();
-
-}
-
-
-/* =========================
-SESSION
-========================= */
-
-async function checkSession(){
-
-const token=
-localStorage.getItem(
-"supabase_access_token"
-);
-
-if(!token){
-return;
-}
-
-try{
-
-const user=
-await request("/auth/v1/user");
-
-if(!user || !user.id){
-throw new Error("جلسة Auth غير صالحة");
-}
-
-await loadProfile(
-user.id,
-user.email,
-""
-);
-
-showApp();
-
-await loadOrders();
-
-if(role==="المدير"){
-await loadUsers();
-}
-
-}catch(error){
-
-console.warn("SESSION INVALID:",error);
-
-localStorage.removeItem(
-"supabase_access_token"
-);
-
-localStorage.removeItem(
-"supabase_refresh_token"
-);
-
-}
-
-}
-
-
-/* =========================
-LOGOUT
-========================= */
-
-function logout(){
-
-localStorage.removeItem(
-"supabase_access_token"
-);
-
-localStorage.removeItem(
-"supabase_refresh_token"
-);
-
-currentProfile=null;
-role="";
-
-location.reload();
-
-}
-
-
-/* =========================
-PERMISSIONS
-========================= */
-
-function applyPermissions(){
-
-const isAdmin=
-role==="المدير";
-
-document
-.getElementById("usersNav")
-.classList
-.toggle("hidden",!isAdmin);
-
-document
-.querySelectorAll(".admin-only")
-.forEach(button=>{
-button.classList.toggle("hidden",!isAdmin);
-});
-
-}
-
-
-/* =========================
-STAGES
-========================= */
+let currentLanguage=localStorage.getItem("app_language")||"ar";
 
 const stages=[
-
-["في العمل","المدير"],
-["تم القص","القص"],
-["تم الكنت","الكنت"],
-["تم CNC","CNC"],
-["تم التركيب","التركيب"],
-["تم الدهان","الدهان"],
-["تم التغليف","التغليف"],
-["تم التحميل","التحميل"],
-["تم التسليم","التسليم"]
-
+ ["في العمل","المدير"],
+ ["تم القص","القص"],
+ ["تم الكنت","الكنت"],
+ ["تم CNC","CNC"],
+ ["تم التركيب","التركيب"],
+ ["تم الدهان","الدهان"],
+ ["تم التغليف","التغليف"],
+ ["تم التحميل","التحميل"],
+ ["تم التسليم","التسليم"]
 ];
 
+async function request(path,method="GET",body=null){
+ const token=localStorage.getItem("supabase_access_token");
+ const response=await fetch(SUPABASE_URL+path,{
+  method,
+  headers:{
+   "apikey":SUPABASE_KEY,
+   "Authorization":"Bearer "+(token||SUPABASE_KEY),
+   "Content-Type":"application/json",
+   "Prefer":"return=representation"
+  },
+  body:body!==null?JSON.stringify(body):undefined
+ });
+ const text=await response.text();
+ let data;
+ try{data=text?JSON.parse(text):null}catch{data=text}
+ if(!response.ok){
+  throw new Error(typeof data==="object"&&data?
+   (data.message||data.error_description||data.error||data.hint||JSON.stringify(data)):
+   (data||"HTTP "+response.status));
+ }
+ return data;
+}
 
-/* =========================
-LOAD ORDERS
-========================= */
+async function auth(path,body){
+ const response=await fetch(SUPABASE_URL+"/auth/v1/"+path,{
+  method:"POST",
+  headers:{"apikey":SUPABASE_KEY,"Content-Type":"application/json"},
+  body:JSON.stringify(body)
+ });
+ const text=await response.text();
+ let data;
+ try{data=text?JSON.parse(text):{}}catch{data={message:text}}
+ if(!response.ok)throw new Error(data.error_description||data.msg||data.message||"فشل تسجيل الدخول");
+ return data;
+}
 
+function msg(text){
+ const box=document.getElementById("message");
+ box.textContent=text;box.style.display="block";
+ setTimeout(()=>box.style.display="none",3000);
+}
+
+function esc(v){
+ return String(v??"").replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+ }[c]));
+}
+
+/* ================= LANGUAGE ================= */
+function applyLanguage(){
+ const he=currentLanguage==="he";
+ document.documentElement.lang=he?"he":"ar";
+ document.documentElement.dir="rtl";
+
+ document.querySelectorAll("[data-ar]").forEach(el=>{
+  const value=el.getAttribute(he?"data-he":"data-ar");
+  if(value!==null)el.textContent=value;
+ });
+
+ document.querySelectorAll("[data-placeholder-ar]").forEach(el=>{
+  el.placeholder=el.getAttribute(he?"data-placeholder-he":"data-placeholder-ar")||"";
+ });
+
+ document.querySelectorAll("option[data-ar]").forEach(el=>{
+  el.textContent=el.getAttribute(he?"data-he":"data-ar")||el.textContent;
+ });
+
+ const text=he?"العربية":"עברית";
+ document.getElementById("languageText").textContent=text;
+ document.getElementById("topLanguageText").textContent=text;
+ document.getElementById("loginLanguageText").textContent=text;
+
+ renderAll();
+}
+
+function toggleLanguage(){
+ currentLanguage=currentLanguage==="ar"?"he":"ar";
+ localStorage.setItem("app_language",currentLanguage);
+ applyLanguage();
+}
+
+/* ================= SIDEBAR ================= */
+function toggleSidebar(){
+ document.getElementById("sidebar").classList.toggle("open");
+}
+
+/* ================= LOGIN ================= */
+async function login(){
+ const username=document.getElementById("loginUsername").value.trim();
+ const password=document.getElementById("loginPassword").value;
+ const errorBox=document.getElementById("loginError");
+ errorBox.style.display="none";
+
+ if(!username||!password){
+  errorBox.textContent=currentLanguage==="he"?
+   "יש להזין שם משתמש וסיסמה":"يرجى إدخال اسم المستخدم وكلمة المرور";
+  errorBox.style.display="block";return;
+ }
+
+ try{
+  const result=await request("/rest/v1/rpc/get_login_email","POST",
+   {p_username:username});
+
+  let email=null;
+  if(typeof result==="string")email=result;
+  else if(Array.isArray(result))email=result[0]?.email||result[0]||null;
+  else if(result)email=result.email||result;
+
+  if(!email)throw new Error(currentLanguage==="he"?
+   "שם המשתמש אינו קיים או שהחשבון אינו פעיל":
+   "اسم المستخدم غير موجود أو الحساب غير فعال");
+
+  const session=await auth("token?grant_type=password",{email,password});
+
+  if(!session.access_token)throw new Error("لم يتم الحصول على جلسة دخول");
+
+  localStorage.setItem("supabase_access_token",session.access_token);
+  if(session.refresh_token)
+   localStorage.setItem("supabase_refresh_token",session.refresh_token);
+
+  await loadProfile(session.user.id,session.user.email,username);
+  showApp();
+  await loadOrders();
+  if(role==="المدير")await loadUsers();
+
+  msg(currentLanguage==="he"?"✅ ההתחברות הצליחה":"✅ تم تسجيل الدخول");
+ }catch(error){
+  console.error(error);
+  errorBox.textContent="❌ "+error.message;
+  errorBox.style.display="block";
+ }
+}
+
+/* ================= PROFILE ================= */
+async function loadProfile(userId){
+ currentProfile=null;
+ const data=await request("/rest/v1/rpc/get_my_profile","POST",{});
+
+ if(Array.isArray(data)&&data.length)currentProfile=data[0];
+
+ if(!currentProfile)
+  throw new Error(currentLanguage==="he"?
+   "לא נמצא פרופיל משתמש":"لم يتم العثور على ملف المستخدم");
+
+ if(String(currentProfile.id).toLowerCase()!==String(userId).toLowerCase())
+  throw new Error(currentLanguage==="he"?
+   "פרופיל המשתמש אינו תואם לחשבון Auth":
+   "profiles.id لا يطابق Auth User ID");
+
+ if(currentProfile.active===false)
+  throw new Error(currentLanguage==="he"?
+   "החשבון אינו פעיל":"هذا الحساب غير فعال");
+
+ role=currentProfile.role||"";
+ updateUserDisplay();
+}
+
+function updateUserDisplay(){
+ const name=currentProfile?.full_name||currentProfile?.username||"المستخدم";
+ const r=currentProfile?.role||"";
+ document.getElementById("topUser").textContent=name+" — "+r;
+ document.getElementById("sideUserName").textContent=name;
+ document.getElementById("sideUserRole").textContent=r;
+}
+
+function showApp(){
+ document.getElementById("loginPage").classList.add("hidden");
+ document.getElementById("app").classList.remove("hidden");
+ applyPermissions();applyLanguage();
+}
+
+async function checkSession(){
+ const token=localStorage.getItem("supabase_access_token");
+ if(!token)return;
+ try{
+  const user=await request("/auth/v1/user");
+  await loadProfile(user.id,user.email,"");
+  showApp();await loadOrders();
+  if(role==="المدير")await loadUsers();
+ }catch(e){
+  localStorage.removeItem("supabase_access_token");
+  localStorage.removeItem("supabase_refresh_token");
+ }
+}
+
+function logout(){
+ localStorage.removeItem("supabase_access_token");
+ localStorage.removeItem("supabase_refresh_token");
+ location.reload();
+}
+
+function applyPermissions(){
+ const admin=role==="المدير";
+ document.getElementById("usersNav").classList.toggle("hidden",!admin);
+ document.querySelectorAll(".admin-only").forEach(x=>x.classList.toggle("hidden",!admin));
+}
+
+/* ================= ORDERS ================= */
 async function loadOrders(){
-
-try{
-
-const data=
-await request(
-"/rest/v1/orders"+
-"?select=id,order_number,customer_name,phone,due_date,notes,urgent,stage,created_at,updated_at"+
-"&order=created_at.desc"
-);
-
-orders=
-Array.isArray(data)
-?
-data
-:
-[];
-
-renderAll();
-
-}catch(error){
-
-console.error(
-"LOAD ORDERS ERROR:",
-error
-);
-
-const errorText=
-currentLanguage==="he"
-?
-"❌ לא ניתן לטעון הזמנות"
-:
-"❌ تعذر تحميل الطلبيات";
-
-if(document.getElementById("latestOrders"))
-document.getElementById("latestOrders").innerHTML=
-"<div class='empty'>"+errorText+"</div>";
-
-if(document.getElementById("ordersList"))
-document.getElementById("ordersList").innerHTML=
-"<div class='empty'>"+errorText+"</div>";
-
+ try{
+  const data=await request(
+   "/rest/v1/orders?select=id,order_number,customer_name,phone,due_date,notes,urgent,stage,created_at,updated_at&order=created_at.desc");
+  orders=Array.isArray(data)?data:[];
+  renderAll();
+ }catch(e){
+  document.getElementById("ordersList").innerHTML=
+   `<div class="empty">❌ ${currentLanguage==="he"?"לא ניתן לטעון הזמנות":"تعذر تحميل الطلبيات"}</div>`;
+  document.getElementById("latestOrders").innerHTML=
+   `<div class="empty">❌ ${currentLanguage==="he"?"לא ניתן לטעון הזמנות":"تعذر تحميل الطلبيات"}</div>`;
+ }
 }
 
+function norm(o){
+ return{
+  id:o.id,num:o.order_number||"",customer:o.customer_name||"",
+  phone:o.phone||"",due:o.due_date||"",notes:o.notes||"",
+  urgent:!!o.urgent,stage:Number(o.stage||0)
+ };
 }
 
-
-/* =========================
-NORMALIZE
-========================= */
-
-function norm(order){
-
-return{
-
-id:order.id,
-num:order.order_number || "",
-customer:order.customer_name || "",
-phone:order.phone || "",
-due:order.due_date || "",
-notes:order.notes || "",
-urgent:!!order.urgent,
-stage:Number(order.stage || 0)
-
-};
-
+function overdue(o){
+ return o.due&&new Date(o.due+"T23:59:59")<new Date()&&o.stage<stages.length-1;
 }
 
-
-/* =========================
-OVERDUE
-========================= */
-
-function overdue(order){
-
-return(
-order.due &&
-new Date(order.due+"T23:59:59") < new Date() &&
-order.stage < stages.length-1
-);
-
-}
-
-
-/* =========================
-SECTION
-========================= */
-
+/* ================= SECTIONS ================= */
 function showSection(id,button){
+ document.querySelectorAll(".section").forEach(x=>x.classList.add("hidden"));
+ document.getElementById(id).classList.remove("hidden");
+ document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));
+ button.classList.add("active");
+ document.getElementById("sidebar").classList.remove("open");
 
-document
-.querySelectorAll(".section")
-.forEach(section=>{
-section.classList.add("hidden");
-});
-
-const section=document.getElementById(id);
-
-if(!section){
-return;
+ const t={
+  dashboard:{ar:"الرئيسية",he:"ראשי"},
+  ordersSection:{ar:"الطلبيات",he:"הזמנות"},
+  production:{ar:"مراحل العمل",he:"שלבי עבודה"},
+  users:{ar:"المستخدمون",he:"משתמשים"}
+ };
+ const s={
+  dashboard:{ar:"نظرة عامة على نظام إدارة الطلبيات",he:"סקירה כללית של מערכת ניהול ההזמנות"},
+  ordersSection:{ar:"إدارة ومتابعة جميع الطلبيات",he:"ניהול ומעקב אחר כל ההזמנות"},
+  production:{ar:"متابعة مراحل تنفيذ الطلبيات",he:"מעקב אחר שלבי ביצוע ההזמנות"},
+  users:{ar:"إدارة مستخدمي النظام والصلاحيات",he:"ניהול משתמשי המערכת והרשאות"}
+ };
+ document.getElementById("pageTitle").textContent=t[id]?.[currentLanguage]||"MODULAR TECH";
+ document.getElementById("pageSubtitle").textContent=s[id]?.[currentLanguage]||"";
+ if(id==="users"&&role==="المدير")loadUsers();
 }
 
-section.classList.remove("hidden");
-
-document
-.querySelectorAll(".nav button")
-.forEach(btn=>{
-btn.classList.remove("active");
-});
-
-if(button){
-button.classList.add("active");
-}
-
-document
-.getElementById("sidebar")
-.classList.remove("open");
-
-const titles={
-
-dashboard:{
-ar:"الرئيسية",
-he:"ראשי"
-},
-
-ordersSection:{
-ar:"الطلبيات",
-he:"הזמנות"
-},
-
-production:{
-ar:"مراحل العمل",
-he:"שלבי עבודה"
-},
-
-users:{
-ar:"المستخدمون",
-he:"משתמשים"
-}
-
-};
-
-const subtitles={
-
-dashboard:{
-ar:"نظرة عامة على نظام إدارة الطلبيات",
-he:"סקירה כללית של מערכת ניהול ההזמנות"
-},
-
-ordersSection:{
-ar:"إدارة ومتابعة جميع الطلبيات",
-he:"ניהול ומעקב אחר כל ההזמנות"
-},
-
-production:{
-ar:"متابعة مراحل تنفيذ الطلبيات",
-he:"מעקב אחר שלבי ביצוע ההזמנות"
-},
-
-users:{
-ar:"إدارة مستخدمي النظام والصلاحيات",
-he:"ניהול משתמשי המערכת והרשאות"
-}
-
-};
-
-document.getElementById("pageTitle").textContent=
-titles[id]?.[currentLanguage] ||
-"MODULAR TECH";
-
-document.getElementById("pageSubtitle").textContent=
-subtitles[id]?.[currentLanguage] ||
-"";
-
-if(id==="users" && role==="المدير"){
-loadUsers();
-}
-
-}
-
-
-/* =========================
-ADD ORDER
-========================= */
-
+/* ================= ORDER MODAL ================= */
 function openAddModal(){
-
-if(role!=="المدير"){
-
-alert(
-currentLanguage==="he"
-?
-"אין לך הרשאה להוסיף הזמנה"
-:
-"ليس لديك صلاحية إضافة طلبية"
-);
-
-return;
+ if(role!=="المدير"){
+  alert(currentLanguage==="he"?"אין לך הרשאה":"ليس لديك صلاحية");return;
+ }
+ document.getElementById("orderForm").reset();
+ document.getElementById("editId").value="";
+ document.getElementById("modalTitle").textContent=
+  currentLanguage==="he"?"➕ הוספת הזמנה":"➕ إضافة طلبية";
+ document.getElementById("due").value=new Date().toISOString().slice(0,10);
+ document.getElementById("orderModal").classList.remove("hidden");
 }
+function closeModal(){document.getElementById("orderModal").classList.add("hidden")}
 
-document
-.getElementById("orderForm")
-.reset();
+document.getElementById("orderForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ if(role!=="المدير")return;
 
-document.getElementById("modalTitle").textContent=
-currentLanguage==="he"
-?
-"＋ הוספת הזמנה"
-:
-"＋ إضافة طلبية";
+ const id=document.getElementById("editId").value;
+ const payload={
+  order_number:document.getElementById("orderNum").value.trim(),
+  customer_name:document.getElementById("customer").value.trim(),
+  phone:document.getElementById("phone").value.trim(),
+  due_date:document.getElementById("due").value,
+  notes:document.getElementById("notes").value.trim(),
+  urgent:document.getElementById("urgent").checked,
+  updated_at:new Date().toISOString()
+ };
 
-document.getElementById("editId").value="";
-
-document.getElementById("due").value=
-new Date().toISOString().slice(0,10);
-
-document
-.getElementById("orderModal")
-.classList.remove("hidden");
-
-}
-
-
-/* =========================
-CLOSE ORDER
-========================= */
-
-function closeModal(){
-
-document
-.getElementById("orderModal")
-.classList.add("hidden");
-
-}
-
-
-/* =========================
-SAVE ORDER
-========================= */
-
-document
-.getElementById("orderForm")
-.addEventListener(
-"submit",
-async function(e){
-
-e.preventDefault();
-
-if(role!=="المدير"){
-
-alert(
-currentLanguage==="he"
-?
-"אין לך הרשאה לשמור הזמנה"
-:
-"ليس لديك صلاحية حفظ الطلبية"
-);
-
-return;
-}
-
-const id=
-document.getElementById("editId").value;
-
-const payload={
-
-order_number:
-document.getElementById("orderNum").value.trim(),
-
-customer_name:
-document.getElementById("customer").value.trim(),
-
-phone:
-document.getElementById("phone").value.trim(),
-
-due_date:
-document.getElementById("due").value,
-
-notes:
-document.getElementById("notes").value.trim(),
-
-urgent:
-document.getElementById("urgent").checked,
-
-updated_at:
-new Date().toISOString()
-
-};
-
-try{
-
-if(id){
-
-await request(
-"/rest/v1/orders?id=eq."+encodeURIComponent(id),
-"PATCH",
-payload
-);
-
-msg(
-currentLanguage==="he"
-?
-"✅ ההזמנה עודכנה"
-:
-"✅ تم تعديل الطلبية"
-);
-
-}else{
-
-payload.stage=0;
-delete payload.updated_at;
-
-await request(
-"/rest/v1/orders",
-"POST",
-payload
-);
-
-msg(
-currentLanguage==="he"
-?
-"✅ ההזמנה נשמרה"
-:
-"✅ تم حفظ الطلبية"
-);
-
-}
-
-closeModal();
-
-await loadOrders();
-
-}catch(error){
-
-alert(
-"❌ "+
-(
-currentLanguage==="he"
-?
-"נכשל בשמירה"
-:
-"فشل الحفظ"
-)+
-"\n\n"+
-error.message
-);
-
-}
-
+ try{
+  if(id){
+   await request("/rest/v1/orders?id=eq."+encodeURIComponent(id),"PATCH",payload);
+   msg(currentLanguage==="he"?"✅ ההזמנה עודכנה":"✅ تم تعديل الطلبية");
+  }else{
+   payload.stage=0;delete payload.updated_at;
+   await request("/rest/v1/orders","POST",payload);
+   msg(currentLanguage==="he"?"✅ ההזמנה נשמרה":"✅ تم حفظ الطلبية");
+  }
+  closeModal();await loadOrders();
+ }catch(err){
+  alert("❌ "+err.message);
+ }
 });
 
-
-/* =========================
-EDIT
-========================= */
-
+/* ================= ORDER ACTIONS ================= */
 function editOrder(id){
-
-if(role!=="المدير"){
-return;
+ if(role!=="المدير")return;
+ const o=orders.map(norm).find(x=>String(x.id)===String(id));
+ if(!o)return;
+ document.getElementById("modalTitle").textContent=
+  currentLanguage==="he"?"✏️ עריכת הזמנה #"+o.num:"✏️ تعديل الطلبية #"+o.num;
+ document.getElementById("editId").value=o.id;
+ document.getElementById("orderNum").value=o.num;
+ document.getElementById("customer").value=o.customer;
+ document.getElementById("phone").value=o.phone;
+ document.getElementById("due").value=o.due;
+ document.getElementById("notes").value=o.notes;
+ document.getElementById("urgent").checked=o.urgent;
+ document.getElementById("orderModal").classList.remove("hidden");
 }
-
-const order=
-orders.map(norm).find(
-x=>String(x.id)===String(id)
-);
-
-if(!order){
-return;
-}
-
-document.getElementById("modalTitle").textContent=
-currentLanguage==="he"
-?
-"✏️ עריכת הזמנה #"+order.num
-:
-"✏️ تعديل الطلبية #"+order.num;
-
-document.getElementById("editId").value=order.id;
-document.getElementById("orderNum").value=order.num;
-document.getElementById("customer").value=order.customer;
-document.getElementById("phone").value=order.phone;
-document.getElementById("due").value=order.due;
-document.getElementById("notes").value=order.notes;
-document.getElementById("urgent").checked=order.urgent;
-
-document
-.getElementById("orderModal")
-.classList.remove("hidden");
-
-}
-
-
-/* =========================
-DELETE
-========================= */
 
 async function deleteOrder(id){
-
-if(role!=="المدير"){
-return;
+ if(role!=="المدير")return;
+ const o=orders.map(norm).find(x=>String(x.id)===String(id));
+ if(!o)return;
+ if(!confirm(currentLanguage==="he"?"למחוק את ההזמנה?":"هل تريد حذف الطلبية؟"))return;
+ try{
+  await request("/rest/v1/orders?id=eq."+encodeURIComponent(id),"DELETE");
+  await loadOrders();
+  msg(currentLanguage==="he"?"🗑️ נמחקה":"🗑️ تم حذف الطلبية");
+ }catch(e){alert("❌ "+e.message)}
 }
-
-const order=
-orders.map(norm).find(
-x=>String(x.id)===String(id)
-);
-
-if(!order){
-return;
-}
-
-const confirmText=
-currentLanguage==="he"
-?
-"האם למחוק את ההזמנה #"+order.num+"?"
-:
-"هل تريد حذف الطلبية #"+order.num+" ؟";
-
-if(!confirm(confirmText)){
-return;
-}
-
-try{
-
-await request(
-"/rest/v1/orders?id=eq."+encodeURIComponent(id),
-"DELETE"
-);
-
-await loadOrders();
-
-msg(
-currentLanguage==="he"
-?
-"🗑️ ההזמנה נמחקה"
-:
-"🗑️ تم حذف الطلبية"
-);
-
-}catch(error){
-
-alert("❌ "+error.message);
-
-}
-
-}
-
-
-/* =========================
-NEXT STAGE
-========================= */
 
 async function nextStage(id){
+ const o=orders.map(norm).find(x=>String(x.id)===String(id));
+ if(!o)return;
+ const next=o.stage+1;
+ if(next>=stages.length)return;
 
-const order=
-orders.map(norm).find(
-x=>String(x.id)===String(id)
-);
+ if(role!=="المدير"&&stages[next][1]!==role){
+  alert(currentLanguage==="he"?"אין לך הרשאה לשלב זה":"هذه المرحلة ليست ضمن صلاحيات قسمك");
+  return;
+ }
 
-if(!order){
-return;
+ try{
+  await request("/rest/v1/orders?id=eq."+encodeURIComponent(id),"PATCH",
+   {stage:next,updated_at:new Date().toISOString()});
+  await loadOrders();
+  msg(currentLanguage==="he"?"✅ עודכן":"✅ تم تحديث المرحلة");
+ }catch(e){alert("❌ "+e.message)}
 }
-
-const next=order.stage+1;
-
-if(next>=stages.length){
-return;
-}
-
-if(
-role!=="المدير" &&
-stages[next][1]!==role
-){
-
-alert(
-currentLanguage==="he"
-?
-"אין לך הרשאה לשלב זה"
-:
-"هذه المرحلة ليست ضمن صلاحيات قسمك"
-);
-
-return;
-}
-
-try{
-
-await request(
-"/rest/v1/orders?id=eq."+encodeURIComponent(id),
-"PATCH",
-{
-stage:next,
-updated_at:new Date().toISOString()
-}
-);
-
-await loadOrders();
-
-msg(
-currentLanguage==="he"
-?
-"✅ סטטוס ההזמנה עודכן"
-:
-"✅ تم تحديث المرحلة"
-);
-
-}catch(error){
-
-alert("❌ "+error.message);
-
-}
-
-}
-
-
-/* =========================
-DETAILS
-========================= */
 
 function details(id){
-
-const order=
-orders.map(norm).find(
-x=>String(x.id)===String(id)
-);
-
-if(!order){
-return;
+ const o=orders.map(norm).find(x=>String(x.id)===String(id));
+ if(!o)return;
+ const he=currentLanguage==="he";
+ alert(
+  (he?"📋 הזמנה #":"📋 الطلبية #")+o.num+
+  "\n\n"+(he?"לקוח: ":"الزبون: ")+o.customer+
+  "\n"+(he?"טלפון: ":"الهاتف: ")+(o.phone||"-")+
+  "\n"+(he?"מסירה: ":"موعد التسليم: ")+(o.due||"-")+
+  "\n"+(he?"סטטוס: ":"الحالة: ")+(stages[o.stage]?.[0]||"-")+
+  "\n"+(he?"הערות: ":"الملاحظات: ")+(o.notes||"-")
+ );
 }
 
-const he=currentLanguage==="he";
-
-alert(
-
-(he?"▣ הזמנה #":"▣ الطلبية #")+
-order.num+
-
-"\n\n"+
-(he?"לקוח: ":"الزبون: ")+
-order.customer+
-
-"\n"+
-(he?"טלפון: ":"الهاتف: ")+
-(order.phone||"-")+
-
-"\n"+
-(he?"תאריך מסירה: ":"موعد التسليم: ")+
-(order.due||"-")+
-
-"\n"+
-(he?"סטטוס: ":"الحالة: ")+
-(
-he
-?
-translateStage(stages[order.stage]?.[0])
-:
-stages[order.stage]?.[0]||"-"
-)+
-
-"\n"+
-(he?"מחלקה: ":"القسم: ")+
-(
-he
-?
-translateRole(stages[order.stage]?.[1])
-:
-stages[order.stage]?.[1]||"-"
-)+
-
-"\n"+
-(he?"הערות: ":"الملاحظات: ")+
-(order.notes||"-")
-
-);
-
+function translateStage(v){
+ return{
+  "في العمل":"בטיפול","تم القص":"בוצע חיתוך","تم الكنت":"בוצע קנטים",
+  "تم CNC":"בוצע CNC","تم التركيب":"בוצעה הרכבה","تم الدهان":"בוצע צבע",
+  "تم التغليف":"בוצעה אריזה","تم التحميل":"בוצעה העמסה","تم التسليم":"נמסר"
+ }[v]||v;
+}
+function translateRole(v){
+ return{
+  "المدير":"מנהל","القص":"חיתוך","الكنت":"קנטים","CNC":"CNC",
+  "التركيب":"הרכבה","الدهان":"צבע","التغليف":"אריזה",
+  "التحميل":"העמסה","التسليم":"מסירה"
+ }[v]||v;
 }
 
+/* ================= ORDER UI ================= */
+function orderHtml(o){
+ const he=currentLanguage==="he";
+ const st=stages[o.stage];
+ const stageName=st?.[0]||(he?"בטיפול":"في العمل");
+ const department=st?.[1]||"-";
 
-/* =========================
-ORDER HTML
-========================= */
+ let next="";
+ if(o.stage<stages.length-1){
+  const dep=stages[o.stage+1][1];
+  next=`<button class="btn primary" onclick="nextStage('${o.id}')">
+   ➡️ ${he?"בוצע ":"تم "}${esc(he?translateRole(dep):dep)}</button>`;
+ }else{
+  next=`<span class="badge">✅ ${he?"הושלם":"مكتملة"}</span>`;
+ }
 
-function orderHtml(order){
+ return `<div class="order ${o.urgent?"urgent":""}">
+ <div class="order-head">
+  <div>
+   <div class="order-number">${o.urgent?"⭐ ":""}#${esc(o.num)}</div>
+   <div class="customer">${esc(o.customer)}</div>
+  </div>
+  <span class="badge ${overdue(o)?"overdue":""}">
+   ${overdue(o)?(he?"באיחור":"متأخرة"):esc(he?translateStage(stageName):stageName)}
+  </span>
+ </div>
 
-const he=currentLanguage==="he";
+ <div class="info">
+  <div class="info-box">📞 ${he?"טלפון":"الهاتف"}<b>${esc(o.phone||"-")}</b></div>
+  <div class="info-box">📅 ${he?"מסירה":"التسليم"}<b>${esc(o.due||"-")}</b></div>
+  <div class="info-box">🏭 ${he?"מחלקה":"القسم"}<b>${esc(he?translateRole(department):department)}</b></div>
+ </div>
 
-const stage=stages[order.stage];
-
-const stageName=
-stage?.[0] ||
-"في العمل";
-
-const department=
-stage?.[1] ||
-"-";
-
-let nextButton="";
-
-if(order.stage<stages.length-1){
-
-const nextDepartment=
-stages[order.stage+1][1];
-
-nextButton=`
-
-<button
-class="btn primary"
-onclick="nextStage('${order.id}')"
->
-➡️ ${
-he
-?
-"בוצע "+esc(translateRole(nextDepartment))
-:
-"تم "+esc(nextDepartment)
+ <div class="actions">
+  <button class="btn secondary" onclick="details('${o.id}')">
+   📋 ${he?"פרטים":"التفاصيل"}</button>
+  ${role==="المدير"?`
+   <button class="btn success" onclick="editOrder('${o.id}')">✏️ ${he?"עריכה":"تعديل"}</button>
+   <button class="btn danger" onclick="deleteOrder('${o.id}')">🗑️ ${he?"מחיקה":"حذف"}</button>`:""}
+  ${next}
+ </div>
+ </div>`;
 }
-</button>
-`;
-
-}else{
-
-nextButton=`
-
-<span class="badge">
-${he?"✓ הושלם":"✓ مكتملة"}
-</span>
-`;
-
-}
-
-return `
-
-<div class="order ${order.urgent?"urgent":""}">
-
-<div class="order-head">
-
-<div>
-
-<div class="order-number">
-
-${order.urgent?"★ ":""}
-
-#${esc(order.num)}
-
-</div>
-
-<div class="customer">
-${esc(order.customer)}
-</div>
-
-</div>
-
-<span class="badge ${overdue(order)?"overdue":""}">
-
-${
-overdue(order)
-?
-(he?"באיחור":"متأخرة")
-:
-(
-he
-?
-esc(translateStage(stageName))
-:
-esc(stageName)
-)
-}
-
-</span>
-
-</div>
-
-<div class="info">
-
-<div class="info-box">
-
-☎ ${
-he
-?
-"טלפון"
-:
-"الهاتف"
-}
-
-<b>
-${esc(order.phone||"-")}
-</b>
-
-</div>
-
-<div class="info-box">
-
-▣ ${
-he
-?
-"מסירה"
-:
-"التسليم"
-}
-
-<b>
-${esc(order.due||"-")}
-</b>
-
-</div>
-
-<div class="info-box">
-
-⚙ ${
-he
-?
-"מחלקה"
-:
-"القسم"
-}
-
-<b>
-${esc(
-he
-?
-translateRole(department)
-:
-department
-)}
-</b>
-
-</div>
-
-</div>
-
-<div class="actions">
-
-<button
-class="btn secondary"
-onclick="details('${order.id}')"
->
-▣ ${he?"פרטים":"التفاصيل"}
-</button>
-
-${
-role==="المدير"
-?
-`
-
-<button
-class="btn success"
-onclick="editOrder('${order.id}')"
->
-✏️ ${he?"עריכה":"تعديل"}
-</button>
-
-<button
-class="btn danger"
-onclick="deleteOrder('${order.id}')"
->
-🗑️ ${he?"מחיקה":"حذف"}
-</button>
-`
-:
-""
-}
-
-${nextButton}
-
-</div>
-
-</div>
-
-`;
-
-}
-
-
-/* =========================
-DASHBOARD
-========================= */
 
 function renderDashboard(){
-
-const list=orders.map(norm);
-
-document.getElementById("totalCount").textContent=
-list.length;
-
-document.getElementById("activeCount").textContent=
-list.filter(
-o=>o.stage<stages.length-1
-).length;
-
-document.getElementById("urgentCount").textContent=
-list.filter(o=>o.urgent).length;
-
-document.getElementById("overdueCount").textContent=
-list.filter(overdue).length;
-
-document.getElementById("latestOrders").innerHTML=
-list.slice(0,5)
-.map(orderHtml)
-.join("")
-||
-`
-<div class="empty">
-${
-currentLanguage==="he"
-?
-"אין הזמנות עדיין"
-:
-"لا توجد طلبيات حتى الآن"
+ const list=orders.map(norm);
+ document.getElementById("totalCount").textContent=list.length;
+ document.getElementById("activeCount").textContent=list.filter(x=>x.stage<stages.length-1).length;
+ document.getElementById("urgentCount").textContent=list.filter(x=>x.urgent).length;
+ document.getElementById("overdueCount").textContent=list.filter(overdue).length;
+ document.getElementById("latestOrders").innerHTML=
+  list.slice(0,5).map(orderHtml).join("")||
+  `<div class="empty">${currentLanguage==="he"?"אין הזמנות עדיין":"لا توجد طلبيات حتى الآن"}</div>`;
 }
-</div>
-`;
-
-}
-
-
-/* =========================
-SEARCH
-========================= */
 
 function renderOrders(){
-
-const q=
-(
-document.getElementById("search")?.value ||
-""
-)
-.trim()
-.toLowerCase();
-
-const list=
-orders
-.map(norm)
-.filter(order=>
-[
-order.num,
-order.customer,
-order.phone
-]
-.join(" ")
-.toLowerCase()
-.includes(q)
-);
-
-const box=
-document.getElementById("ordersList");
-
-if(!box){
-return;
+ const q=(document.getElementById("search")?.value||"").trim().toLowerCase();
+ const list=orders.map(norm).filter(o=>
+  [o.num,o.customer,o.phone].join(" ").toLowerCase().includes(q));
+ document.getElementById("ordersList").innerHTML=
+  list.map(orderHtml).join("")||
+  `<div class="empty">${currentLanguage==="he"?"לא נמצאו הזמנות":"لا توجد طلبيات مطابقة"}</div>`;
 }
-
-box.innerHTML=
-list.map(orderHtml).join("")
-||
-`
-<div class="empty">
-${
-currentLanguage==="he"
-?
-"לא נמצאו הזמנות תואמות"
-:
-"لا توجد طلبيات مطابقة"
-}
-</div>
-`;
-
-}
-
-
-/* =========================
-STAGES
-========================= */
 
 function renderStages(){
-
-const list=orders.map(norm);
-
-const he=currentLanguage==="he";
-
-document.getElementById("stageList").innerHTML=
-
-stages.map(
-(stage,index)=>{
-
-const stageOrders=
-list.filter(
-order=>order.stage===index
-);
-
-return `
-
-<div class="stage-card">
-
-<div class="order-head">
-
-<div>
-
-<div class="order-number">
-
-${esc(
-he
-?
-translateStage(stage[0])
-:
-stage[0]
-)}
-
-</div>
-
-<div class="customer">
-
-${
-he
-?
-"מחלקה אחראית: "
-:
-"القسم المسؤول: "
+ const list=orders.map(norm),he=currentLanguage==="he";
+ document.getElementById("stageList").innerHTML=stages.map((st,i)=>{
+  const os=list.filter(o=>o.stage===i);
+  return `<div class="panel" style="margin:0">
+   <div class="order-head">
+    <div>
+     <div class="order-number">${esc(he?translateStage(st[0]):st[0])}</div>
+     <div class="customer">${he?"מחלקה אחראית: ":"القسم المسؤول: "}
+     ${esc(he?translateRole(st[1]):st[1])}</div>
+    </div>
+    <span class="badge">${os.length} ${he?"הזמנות":"طلبية"}</span>
+   </div>
+   ${os.length?os.map(orderHtml).join(""):
+   `<div class="empty">${he?"אין הזמנות בשלב זה":"لا توجد طلبيات في هذه المرحلة"}</div>`}
+  </div>`;
+ }).join("");
 }
 
-${esc(
-he
-?
-translateRole(stage[1])
-:
-stage[1]
-)}
-
-</div>
-
-</div>
-
-<span class="badge">
-
-${stageOrders.length}
-${he?" הזמנות":" طلبية"}
-
-</span>
-
-</div>
-
-${
-stageOrders.length
-?
-stageOrders.map(orderHtml).join("")
-:
-`
-<div class="empty">
-
-${
-he
-?
-"אין הזמנות בשלב זה"
-:
-"لا توجد طلبيات في هذه المرحلة"
-}
-
-</div>
-`
-}
-
-</div>
-
-`;
-
-}
-).join("");
-
-}
-
-
-/* =========================
-TRANSLATIONS
-========================= */
-
-function translateStage(value){
-
-const map={
-
-"في العمل":"בטיפול",
-"تم القص":"בוצע חיתוך",
-"تم الكنت":"בוצעו קנטים",
-"تم CNC":"בוצע CNC",
-"تم التركيب":"בוצעה הרכבה",
-"تم الدهان":"בוצע צבע",
-"تم التغليف":"בוצעה אריזה",
-"تم التحميل":"בוצעה העמסה",
-"تم التسليم":"נמסר"
-
-};
-
-return map[value] || value;
-
-}
-
-
-function translateRole(value){
-
-const map={
-
-"المدير":"מנהל",
-"القص":"חיתוך",
-"الكنت":"קנטים",
-"CNC":"CNC",
-"التركيب":"הרכבה",
-"الدهان":"צבע",
-"التغليف":"אריזה",
-"التحميل":"העמסה",
-"التسليم":"מסירה"
-
-};
-
-return map[value] || value;
-
-}
-
-
-/* =========================
-USERS
-========================= */
-
+/* ================= USERS ================= */
 async function loadUsers(){
-
-if(role!=="المدير"){
-return;
+ if(role!=="المدير")return;
+ const box=document.getElementById("usersList");
+ box.innerHTML=`<div class="empty">⏳ ${currentLanguage==="he"?"טוען משתמשים...":"جاري تحميل المستخدمين..."}</div>`;
+ try{
+  const users=await request("/rest/v1/rpc/get_all_profiles","POST",{});
+  if(!Array.isArray(users)||!users.length){
+   box.innerHTML=`<div class="empty">${currentLanguage==="he"?"אין משתמשים":"لا يوجد مستخدمون"}</div>`;
+   return;
+  }
+  const he=currentLanguage==="he";
+  box.innerHTML=users.map(u=>`
+   <div class="order">
+    <div class="order-head">
+     <div>
+      <div class="order-number">${esc(u.full_name||u.username||"-")}</div>
+      <div class="customer">@${esc(u.username||"-")}</div>
+     </div>
+     <span class="badge">${esc(he?translateRole(u.role||"-"):u.role||"-")}</span>
+    </div>
+    <div class="info">
+     <div class="info-box">👤 ${he?"שם משתמש":"اسم المستخدم"}<b>${esc(u.username||"-")}</b></div>
+     <div class="info-box">🏢 ${he?"מחלקה":"القسم"}<b>${esc(he?translateRole(u.role||"-"):u.role||"-")}</b></div>
+     <div class="info-box">📧 ${he?"דוא״ל":"البريد الإلكتروني"}<b>${esc(u.email||"-")}</b></div>
+    </div>
+    <div class="actions">
+     <span class="badge ${u.active!==false?"":"overdue"}">
+      ${u.active!==false?(he?"🟢 פעיל":"🟢 الحساب فعال"):(he?"🔴 מושבת":"🔴 الحساب متوقف")}
+     </span>
+    </div>
+   </div>`).join("");
+ }catch(e){
+  box.innerHTML=`<div class="empty">❌ ${currentLanguage==="he"?"לא ניתן לטעון משתמשים":"تعذر تحميل قائمة المستخدمين"}<br><br><small>${esc(e.message)}</small></div>`;
+ }
 }
-
-const usersList=
-document.getElementById("usersList");
-
-if(!usersList){
-return;
-}
-
-usersList.innerHTML=`
-
-<div class="empty">
-
-⏳ ${
-currentLanguage==="he"
-?
-"טוען משתמשים..."
-:
-"جاري تحميل المستخدمين..."
-}
-
-</div>
-`;
-
-try{
-
-const users=
-await request(
-"/rest/v1/rpc/get_all_profiles",
-"POST",
-{}
-);
-
-if(!Array.isArray(users)){
-throw new Error(
-"البيانات المستلمة من get_all_profiles غير صحيحة"
-);
-}
-
-if(users.length===0){
-
-usersList.innerHTML=`
-
-<div class="empty">
-
-${
-currentLanguage==="he"
-?
-"אין משתמשים במערכת"
-:
-"لا يوجد مستخدمون في النظام"
-}
-
-</div>
-`;
-
-return;
-
-}
-
-const he=currentLanguage==="he";
-
-usersList.innerHTML=
-users.map(user=>{
-
-const isActive=
-user.active!==false;
-
-return `
-
-<div class="user-card">
-
-<div class="order-head">
-
-<div>
-
-<div class="order-number">
-
-${esc(
-user.full_name ||
-user.username ||
-(he?"ללא שם":"بدون اسم")
-)}
-
-</div>
-
-<div class="customer">
-
-@${esc(user.username||"-")}
-
-</div>
-
-</div>
-
-<span class="badge">
-
-${esc(
-he
-?
-translateRole(user.role||"-")
-:
-user.role||"-"
-)}
-
-</span>
-
-</div>
-
-<div class="info">
-
-<div class="info-box">
-
-👤 ${
-he
-?
-"שם משתמש"
-:
-"اسم المستخدم"
-}
-
-<b>
-${esc(user.username||"-")}
-</b>
-
-</div>
-
-<div class="info-box">
-
-🏢 ${
-he
-?
-"מחלקה"
-:
-"القسم"
-}
-
-<b>
-${esc(
-he
-?
-translateRole(user.role||"-")
-:
-user.role||"-"
-)}
-</b>
-
-</div>
-
-<div class="info-box">
-
-✉ ${
-he
-?
-"דואר אלקטרוני"
-:
-"البريد الإلكتروني"
-}
-
-<b>
-${esc(user.email||"-")}
-</b>
-
-</div>
-
-</div>
-
-<div class="actions">
-
-<span class="badge ${
-isActive?"":"overdue"
-}">
-
-${
-isActive
-?
-(
-he
-?
-"🟢 חשבון פעיל"
-:
-"🟢 الحساب فعال"
-)
-:
-(
-he
-?
-"🔴 חשבון מושבת"
-:
-"🔴 الحساب متوقف"
-)
-}
-
-</span>
-
-</div>
-
-</div>
-
-`;
-
-}).join("");
-
-}catch(error){
-
-console.error(
-"LOAD USERS ERROR:",
-error
-);
-
-usersList.innerHTML=`
-
-<div class="empty">
-
-❌ ${
-currentLanguage==="he"
-?
-"לא ניתן לטעון משתמשים"
-:
-"تعذر تحميل قائمة المستخدمين"
-}
-
-<br><br>
-
-<small>
-${esc(error.message)}
-</small>
-
-</div>
-`;
-
-}
-
-}
-
-
-/* =========================
-USER MODAL
-========================= */
 
 function openUserModal(){
-
-if(role!=="المدير"){
-
-alert(
-currentLanguage==="he"
-?
-"עמוד זה מיועד למנהל בלבד"
-:
-"هذه الصفحة للمدير فقط"
-);
-
-return;
+ if(role!=="المدير")return;
+ document.getElementById("userForm").reset();
+ document.getElementById("newActive").checked=true;
+ document.getElementById("userModal").classList.remove("hidden");
 }
+function closeUserModal(){document.getElementById("userModal").classList.add("hidden")}
 
-document
-.getElementById("userForm")
-.reset();
+document.getElementById("userForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ if(role!=="المدير")return;
 
-document.getElementById("newActive").checked=true;
+ const username=document.getElementById("newUsername").value.trim();
+ const fullName=document.getElementById("newFullName").value.trim();
+ const email=document.getElementById("newEmail").value.trim();
+ const password=document.getElementById("newPassword").value;
+ const userRole=document.getElementById("newRole").value;
+ const active=document.getElementById("newActive").checked;
 
-document
-.getElementById("userModal")
-.classList.remove("hidden");
+ try{
+  const token=localStorage.getItem("supabase_access_token");
+  if(!token)throw new Error("انتهت جلسة الدخول");
 
-}
+  const response=await fetch(CREATE_USER_FUNCTION,{
+   method:"POST",
+   headers:{
+    "Content-Type":"application/json",
+    "Authorization":"Bearer "+token,
+    "apikey":SUPABASE_KEY
+   },
+   body:JSON.stringify({
+    username,full_name:fullName,email,password,role:userRole,active
+   })
+  });
 
+  const text=await response.text();
+  let data;
+  try{data=text?JSON.parse(text):{}}catch{data={message:text}}
 
-function closeUserModal(){
+  if(!response.ok)
+   throw new Error(data.message||data.error||data.error_description||"فشل إنشاء المستخدم");
 
-document
-.getElementById("userModal")
-.classList.add("hidden");
-
-}
-
-
-/* =========================
-CREATE USER
-========================= */
-
-document
-.getElementById("userForm")
-.addEventListener(
-"submit",
-async function(e){
-
-e.preventDefault();
-
-if(role!=="المدير"){
-return;
-}
-
-const username=
-document.getElementById("newUsername")
-.value.trim();
-
-const fullName=
-document.getElementById("newFullName")
-.value.trim();
-
-const email=
-document.getElementById("newEmail")
-.value.trim();
-
-const password=
-document.getElementById("newPassword")
-.value;
-
-const userRole=
-document.getElementById("newRole")
-.value;
-
-const active=
-document.getElementById("newActive")
-.checked;
-
-if(
-!username ||
-!fullName ||
-!email ||
-!password
-){
-
-alert(
-currentLanguage==="he"
-?
-"יש למלא את כל השדות"
-:
-"يرجى تعبئة جميع البيانات"
-);
-
-return;
-}
-
-if(password.length<6){
-
-alert(
-currentLanguage==="he"
-?
-"הסיסמה חייבת להכיל לפחות 6 תווים"
-:
-"كلمة المرور يجب أن تكون 6 أحرف على الأقل"
-);
-
-return;
-}
-
-try{
-
-const token=
-localStorage.getItem(
-"supabase_access_token"
-);
-
-if(!token){
-
-throw new Error(
-currentLanguage==="he"
-?
-"החיבור פג, יש להתחבר מחדש"
-:
-"انتهت جلسة الدخول، سجل الدخول من جديد"
-);
-
-}
-
-const response=
-await fetch(
-CREATE_USER_FUNCTION,
-{
-method:"POST",
-headers:{
-"Content-Type":"application/json",
-"Authorization":"Bearer "+token,
-"apikey":SUPABASE_KEY
-},
-body:JSON.stringify({
-username,
-full_name:fullName,
-email,
-password,
-role:userRole,
-active
-})
-}
-);
-
-const text=
-await response.text();
-
-let data;
-
-try{
-data=text?JSON.parse(text):{};
-}catch{
-data={message:text};
-}
-
-if(!response.ok){
-
-throw new Error(
-data.message ||
-data.error ||
-data.error_description ||
-"فشل إنشاء المستخدم"
-);
-
-}
-
-closeUserModal();
-
-document
-.getElementById("userForm")
-.reset();
-
-document.getElementById("newActive").checked=true;
-
-await loadUsers();
-
-msg(
-currentLanguage==="he"
-?
-"✅ המשתמש נוצר בהצלחה"
-:
-"✅ تم إنشاء المستخدم بنجاح"
-);
-
-}catch(error){
-
-console.error(
-"CREATE USER ERROR:",
-error
-);
-
-let message=
-error.message ||
-"فشل إنشاء المستخدم";
-
-if(
-message
-.toLowerCase()
-.includes("already registered")
-){
-
-message=
-currentLanguage==="he"
-?
-"הדואר האלקטרוני כבר בשימוש"
-:
-"هذا البريد الإلكتروني مستخدم مسبقًا في Auth";
-
-}
-
-alert(
-"❌ "+
-(
-currentLanguage==="he"
-?
-"לא ניתן ליצור משתמש"
-:
-"لم يتم إنشاء المستخدم"
-)+
-"\n\n"+
-message
-);
-
-}
-
+  closeUserModal();
+  await loadUsers();
+  msg(currentLanguage==="he"?"✅ המשתמש נוצר בהצלחה":"✅ تم إنشاء المستخدم بنجاح");
+ }catch(err){
+  alert("❌ "+err.message);
+ }
 });
 
-
-/* =========================
-RENDER ALL
-========================= */
-
+/* ================= RENDER ================= */
 function renderAll(){
-
-renderDashboard();
-renderOrders();
-renderStages();
-
+ renderDashboard();
+ renderOrders();
+ renderStages();
 }
 
-
-/* =========================
-START
-========================= */
-
+/* ================= START ================= */
 applyLanguage();
-
 checkSession();
 
-
-/* =========================
-SERVICE WORKER
-========================= */
-
 if("serviceWorker" in navigator){
-
-navigator
-.serviceWorker
-.register("./sw.js")
-.catch(error=>{
-console.warn(
-"Service Worker:",
-error
-);
-});
-
+ navigator.serviceWorker.register("./sw.js").catch(e=>console.warn(e));
 }
-
 </script>
 
 </body>
