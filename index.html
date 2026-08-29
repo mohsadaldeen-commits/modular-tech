@@ -86,8 +86,7 @@ padding:12px;
 border-radius:10px;
 margin-bottom:15px;
 display:none;
-font-weight:bold;
-white-space:pre-line
+font-weight:bold
 }
 
 header{
@@ -271,8 +270,7 @@ margin-top:12px
 background:#f6f8fb;
 border-radius:9px;
 padding:9px;
-font-size:12px;
-overflow-wrap:anywhere
+font-size:12px
 }
 
 .info-box b{
@@ -377,6 +375,19 @@ padding:15px
 margin-bottom:10px
 }
 
+.user-email{
+direction:ltr;
+text-align:right;
+word-break:break-all
+}
+
+.user-id{
+font-size:11px;
+color:#687386;
+word-break:break-all;
+margin-top:8px
+}
+
 @media(max-width:900px){
 .stats{
 grid-template-columns:repeat(2,1fr)
@@ -426,7 +437,9 @@ padding:24px
 
 <body>
 
-<!-- ================= LOGIN ================= -->
+<!-- =========================
+LOGIN
+========================= -->
 
 <div id="loginPage">
 
@@ -470,7 +483,9 @@ onclick="login()"
 </div>
 
 
-<!-- ================= APP ================= -->
+<!-- =========================
+APP
+========================= -->
 
 <div id="app" class="hidden">
 
@@ -532,7 +547,9 @@ onclick="showSection('users',this)"
 </div>
 
 
-<!-- ================= DASHBOARD ================= -->
+<!-- =========================
+DASHBOARD
+========================= -->
 
 <section id="dashboard">
 
@@ -583,7 +600,9 @@ onclick="openAddModal()"
 </section>
 
 
-<!-- ================= ORDERS ================= -->
+<!-- =========================
+ORDERS
+========================= -->
 
 <section id="ordersSection" class="hidden">
 
@@ -616,7 +635,9 @@ oninput="renderOrders()"
 </section>
 
 
-<!-- ================= PRODUCTION ================= -->
+<!-- =========================
+PRODUCTION
+========================= -->
 
 <section id="production" class="hidden">
 
@@ -631,7 +652,9 @@ oninput="renderOrders()"
 </section>
 
 
-<!-- ================= USERS ================= -->
+<!-- =========================
+USERS
+========================= -->
 
 <section id="users" class="hidden">
 
@@ -666,12 +689,14 @@ onclick="openUserModal()"
 </div>
 
 
-<!-- ================= MESSAGE ================= -->
+<!-- MESSAGE -->
 
 <div id="message" class="message"></div>
 
 
-<!-- ================= ORDER MODAL ================= -->
+<!-- =========================
+ORDER MODAL
+========================= -->
 
 <div id="orderModal" class="modal hidden">
 
@@ -788,7 +813,9 @@ onclick="closeModal()"
 </div>
 
 
-<!-- ================= USER MODAL ================= -->
+<!-- =========================
+USER MODAL
+========================= -->
 
 <div id="userModal" class="modal hidden">
 
@@ -902,9 +929,9 @@ onclick="closeUserModal()"
 
 <script>
 
-/* =========================================================
-   SUPABASE
-========================================================= */
+/* =================================================
+SUPABASE
+================================================= */
 
 const SUPABASE_URL =
 "https://bvrfrcmblwzuqprjknam.supabase.co";
@@ -913,11 +940,9 @@ const SUPABASE_KEY =
 "sb_publishable_vVXVJGcWpoPvPEH_bfm23Q_dZ5eXvmE";
 
 /*
- * Edge Function المستخدمة لإنشاء المستخدم.
- *
- * إذا كانت الدالة الصحيحة عندك هي bright-task
- * نستخدمها هنا.
- */
+ Edge Function الحالية لإنشاء المستخدم
+*/
+
 const CREATE_USER_FUNCTION =
 "https://bvrfrcmblwzuqprjknam.supabase.co/functions/v1/bright-task";
 
@@ -929,9 +954,9 @@ let currentProfile = null;
 let role = "";
 
 
-/* =========================================================
-   SUPABASE REQUEST
-========================================================= */
+/* =================================================
+SUPABASE REQUEST
+================================================= */
 
 async function request(
 path,
@@ -1000,10 +1025,10 @@ typeof data === "object"
 ?
 
 (
-data.message ||
-data.error_description ||
-data.error ||
-data.hint ||
+data?.message ||
+data?.error_description ||
+data?.error ||
+data?.hint ||
 JSON.stringify(data)
 )
 
@@ -1021,9 +1046,9 @@ return data;
 }
 
 
-/* =========================================================
-   AUTH
-========================================================= */
+/* =================================================
+AUTH
+================================================= */
 
 async function auth(
 path,
@@ -1069,9 +1094,9 @@ return data;
 }
 
 
-/* =========================================================
-   MESSAGE
-========================================================= */
+/* =================================================
+MESSAGE
+================================================= */
 
 function msg(text){
 
@@ -1091,9 +1116,9 @@ box.style.display="none";
 }
 
 
-/* =========================================================
-   ESCAPE
-========================================================= */
+/* =================================================
+ESCAPE
+================================================= */
 
 function esc(value){
 
@@ -1116,9 +1141,9 @@ return {
 }
 
 
-/* =========================================================
-   LOGIN
-========================================================= */
+/* =================================================
+LOGIN
+================================================= */
 
 async function login(){
 
@@ -1156,8 +1181,8 @@ return;
 try{
 
 /*
- * الحصول على البريد من username
- */
+ البحث عن البريد بواسطة username
+*/
 
 const result =
 await request(
@@ -1203,8 +1228,8 @@ throw new Error(
 
 
 /*
- * تسجيل الدخول في Supabase Auth
- */
+ تسجيل الدخول في Auth
+*/
 
 const session =
 await auth(
@@ -1215,13 +1240,10 @@ password:password
 }
 );
 
-if(!session?.access_token){
 
-throw new Error(
-"لم يتم الحصول على جلسة دخول من Auth"
-);
-
-}
+/*
+ حفظ الجلسة
+*/
 
 localStorage.setItem(
 "supabase_access_token",
@@ -1239,8 +1261,8 @@ session.refresh_token
 
 
 /*
- * تحميل profiles باستخدام Auth UID
- */
+ تحميل ملف المستخدم
+*/
 
 await loadProfile(
 session.user.id,
@@ -1262,10 +1284,7 @@ msg("✅ تم تسجيل الدخول");
 
 }catch(error){
 
-console.error(
-"LOGIN ERROR:",
-error
-);
+console.error(error);
 
 errorBox.textContent =
 "❌ "+error.message;
@@ -1277,10 +1296,9 @@ errorBox.style.display="block";
 }
 
 
-/* =========================================================
-   LOAD PROFILE
-   الإصلاح النهائي لمشكلة profiles
-========================================================= */
+/* =================================================
+LOAD PROFILE
+================================================= */
 
 async function loadProfile(
 userId,
@@ -1292,95 +1310,143 @@ currentProfile=null;
 
 
 /*
- * مهم جدًا:
- *
- * لا نبحث عن profile بواسطة email
- * ولا بواسطة username.
- *
- * نستخدم auth.uid() داخل Supabase.
- *
- * هذا يضمن أن:
- *
- * profiles.id = auth.users.id
- */
+ 1 — البحث بواسطة Auth ID
+*/
 
 try{
 
 const data =
 await request(
-"/rest/v1/rpc/get_my_profile",
-"POST",
-{}
+"/rest/v1/profiles"+
+"?select=id,username,full_name,role,active,email"+
+"&id=eq."+
+encodeURIComponent(userId)+
+"&limit=1"
 );
-
-console.log(
-"GET MY PROFILE:",
-data
-);
-
-let profile=null;
 
 if(
 Array.isArray(data) &&
-data.length>0
+data.length
 ){
 
-profile=data[0];
+currentProfile =
+data[0];
 
 }
 
+}catch(error){
 
-/*
- * إذا لم يرجع RPC أي سجل
- */
-
-if(!profile){
-
-throw new Error(
-
-"لم يتم العثور على ملف المستخدم في profiles.\n\n"+
-"Auth User ID:\n"+
-userId+
-"\n\n"+
-"البريد:\n"+
-(email || "-")+
-"\n\n"+
-"يجب أن يكون profiles.id مطابقًا تمامًا لـ auth.users.id."
-
+console.warn(
+"profiles by id:",
+error
 );
 
 }
 
 
 /*
- * فحص أمني إضافي
- */
+ 2 — البحث بالبريد
+*/
 
 if(
-String(profile.id).toLowerCase() !==
-String(userId).toLowerCase()
+!currentProfile &&
+email
 ){
 
+try{
+
+const data =
+await request(
+"/rest/v1/profiles"+
+"?select=id,username,full_name,role,active,email"+
+"&email=eq."+
+encodeURIComponent(email)+
+"&limit=1"
+);
+
+if(
+Array.isArray(data) &&
+data.length
+){
+
+currentProfile =
+data[0];
+
+}
+
+}catch(error){
+
+console.warn(
+"profiles by email:",
+error
+);
+
+}
+
+}
+
+
+/*
+ 3 — البحث باسم المستخدم
+*/
+
+if(
+!currentProfile &&
+username
+){
+
+try{
+
+const data =
+await request(
+"/rest/v1/profiles"+
+"?select=id,username,full_name,role,active,email"+
+"&username=eq."+
+encodeURIComponent(username)+
+"&limit=1"
+);
+
+if(
+Array.isArray(data) &&
+data.length
+){
+
+currentProfile =
+data[0];
+
+}
+
+}catch(error){
+
+console.warn(
+"profiles by username:",
+error
+);
+
+}
+
+}
+
+
+/*
+ لا يوجد ملف
+*/
+
+if(!currentProfile){
+
 throw new Error(
-
-"خطأ في ربط المستخدم.\n\n"+
-"Auth User ID:\n"+
-userId+
-"\n\n"+
-"profiles.id:\n"+
-profile.id
-
+"لم يتم العثور على ملف المستخدم في profiles"
 );
 
 }
 
 
 /*
- * فحص حالة الحساب
- */
+ الحساب متوقف
+*/
 
 if(
-profile.active === false
+currentProfile.active===false
 ){
 
 throw new Error(
@@ -1391,86 +1457,65 @@ throw new Error(
 
 
 /*
- * حفظ الملف
- */
+ التأكد من الربط
+*/
 
-currentProfile=profile;
+if(
+String(currentProfile.id).toLowerCase() !==
+String(userId).toLowerCase()
+){
 
-role=
-profile.role ||
-"";
+throw new Error(
+"ملف profiles غير مرتبط بنفس Auth User ID"
+);
+
+}
+
+
+role =
+currentProfile.role || "";
 
 
 /*
- * عرض المستخدم الحالي
- */
+ عرض المستخدم الحالي
+*/
 
 document.getElementById(
 "currentUser"
 ).textContent =
-
 (
-profile.full_name ||
-profile.username ||
+currentProfile.full_name ||
+currentProfile.username ||
 "المستخدم"
 )+
 " — "+
 role;
 
-
-/*
- * تسجيل معلومات للتشخيص
- */
-
-console.log(
-"✅ PROFILE LOADED",
-{
-authUserId:userId,
-profileId:profile.id,
-username:profile.username,
-role:profile.role,
-email:profile.email
-}
-);
-
-}catch(error){
-
-console.error(
-"LOAD PROFILE ERROR:",
-error
-);
-
-throw error;
-
-}
-
 }
 
 
-/* =========================================================
-   SHOW APP
-========================================================= */
+/* =================================================
+SHOW APP
+================================================= */
 
 function showApp(){
 
 document
 .getElementById("loginPage")
-.classList
-.add("hidden");
+.classList.add("hidden");
 
 document
 .getElementById("app")
-.classList
-.remove("hidden");
+.classList.remove("hidden");
 
 applyPermissions();
 
 }
 
 
-/* =========================================================
-   SESSION
-========================================================= */
+/* =================================================
+SESSION
+================================================= */
 
 async function checkSession(){
 
@@ -1491,14 +1536,6 @@ const user =
 await request(
 "/auth/v1/user"
 );
-
-if(!user?.id){
-
-throw new Error(
-"جلسة المستخدم غير صالحة"
-);
-
-}
 
 await loadProfile(
 user.id,
@@ -1536,9 +1573,9 @@ localStorage.removeItem(
 }
 
 
-/* =========================================================
-   LOGOUT
-========================================================= */
+/* =================================================
+LOGOUT
+================================================= */
 
 function logout(){
 
@@ -1555,9 +1592,9 @@ location.reload();
 }
 
 
-/* =========================================================
-   PERMISSIONS
-========================================================= */
+/* =================================================
+PERMISSIONS
+================================================= */
 
 function applyPermissions(){
 
@@ -1586,9 +1623,9 @@ button.classList.toggle(
 }
 
 
-/* =========================================================
-   STAGES
-========================================================= */
+/* =================================================
+STAGES
+================================================= */
 
 const stages=[
 
@@ -1613,9 +1650,9 @@ const stages=[
 ];
 
 
-/* =========================================================
-   LOAD ORDERS
-========================================================= */
+/* =================================================
+LOAD ORDERS
+================================================= */
 
 async function loadOrders(){
 
@@ -1639,10 +1676,7 @@ renderAll();
 
 }catch(error){
 
-console.error(
-"LOAD ORDERS ERROR:",
-error
-);
+console.error(error);
 
 document.getElementById(
 "latestOrders"
@@ -1666,9 +1700,9 @@ document.getElementById(
 }
 
 
-/* =========================================================
-   NORMALIZE
-========================================================= */
+/* =================================================
+NORMALIZE ORDER
+================================================= */
 
 function norm(order){
 
@@ -1707,9 +1741,9 @@ Number(order.stage || 0)
 }
 
 
-/* =========================================================
-   OVERDUE
-========================================================= */
+/* =================================================
+OVERDUE
+================================================= */
 
 function overdue(order){
 
@@ -1727,9 +1761,9 @@ stages.length-1
 }
 
 
-/* =========================================================
-   SECTIONS
-========================================================= */
+/* =================================================
+SECTIONS
+================================================= */
 
 function showSection(
 id,
@@ -1779,9 +1813,9 @@ loadUsers();
 }
 
 
-/* =========================================================
-   ADD ORDER
-========================================================= */
+/* =================================================
+ADD ORDER
+================================================= */
 
 function openAddModal(){
 
@@ -1833,9 +1867,9 @@ document
 }
 
 
-/* =========================================================
-   SAVE ORDER
-========================================================= */
+/* =================================================
+SAVE ORDER
+================================================= */
 
 document
 .getElementById("orderForm")
@@ -1948,9 +1982,9 @@ error.message
 });
 
 
-/* =========================================================
-   EDIT ORDER
-========================================================= */
+/* =================================================
+EDIT ORDER
+================================================= */
 
 function editOrder(id){
 
@@ -2027,9 +2061,9 @@ document
 }
 
 
-/* =========================================================
-   DELETE ORDER
-========================================================= */
+/* =================================================
+DELETE ORDER
+================================================= */
 
 async function deleteOrder(id){
 
@@ -2090,9 +2124,9 @@ error.message
 }
 
 
-/* =========================================================
-   NEXT STAGE
-========================================================= */
+/* =================================================
+NEXT STAGE
+================================================= */
 
 async function nextStage(id){
 
@@ -2165,9 +2199,9 @@ error.message
 }
 
 
-/* =========================================================
-   DETAILS
-========================================================= */
+/* =================================================
+DETAILS
+================================================= */
 
 function details(id){
 
@@ -2227,9 +2261,9 @@ order.notes||"-"
 }
 
 
-/* =========================================================
-   ORDER HTML
-========================================================= */
+/* =================================================
+ORDER HTML
+================================================= */
 
 function orderHtml(order){
 
@@ -2424,9 +2458,9 @@ order.stage+1
 }
 
 
-/* =========================================================
-   DASHBOARD
-========================================================= */
+/* =================================================
+DASHBOARD
+================================================= */
 
 function renderDashboard(){
 
@@ -2476,9 +2510,9 @@ list
 }
 
 
-/* =========================================================
-   SEARCH
-========================================================= */
+/* =================================================
+SEARCH ORDERS
+================================================= */
 
 function renderOrders(){
 
@@ -2522,9 +2556,9 @@ list
 }
 
 
-/* =========================================================
-   RENDER STAGES
-========================================================= */
+/* =================================================
+RENDER STAGES
+================================================= */
 
 function renderStages(){
 
@@ -2602,13 +2636,22 @@ stageOrders
 }
 
 
-/* =========================================================
-   LOAD USERS
-========================================================= */
+/* =================================================
+LOAD USERS
+النسخة الجديدة
+================================================= */
 
 async function loadUsers(){
 
-if(role!=="المدير"){
+/*
+ المستخدمون للمدير فقط
+*/
+
+if(role !== "المدير"){
+
+console.warn(
+"LOAD USERS: ليس مديرًا"
+);
 
 return;
 
@@ -2625,42 +2668,76 @@ return;
 
 }
 
-usersList.innerHTML =
-"<div class='empty'>"+
-"⏳ جاري تحميل المستخدمين..."+
-"</div>";
+usersList.innerHTML = `
+<div class="empty">
+⏳ جاري تحميل المستخدمين...
+</div>
+`;
+
 
 try{
+
+/*
+ قراءة profiles مباشرة
+*/
 
 const users =
 await request(
 "/rest/v1/profiles"+
 "?select=id,username,full_name,role,active,email"+
-"&order=created_at.desc"
+"&order=username.asc"
 );
+
+console.log(
+"PROFILES USERS:",
+users
+);
+
+
+/*
+ التأكد من أن الرد مصفوفة
+*/
 
 if(!Array.isArray(users)){
 
 throw new Error(
-"البيانات المستلمة من profiles غير صحيحة"
+"البيانات المستلمة من profiles ليست قائمة"
 );
 
 }
 
+
+/*
+ لا يوجد مستخدمون
+*/
+
 if(users.length===0){
 
-usersList.innerHTML =
-"<div class='empty'>"+
-"لا يوجد مستخدمون في النظام"+
-"</div>";
+usersList.innerHTML = `
+
+<div class="empty">
+
+❌ لا يوجد مستخدمون في جدول profiles
+
+<br><br>
+
+إذا كان جدول profiles يحتوي على مستخدمين، فالمشكلة في صلاحيات RLS.
+
+</div>
+
+`;
 
 return;
 
 }
 
+
+/*
+ رسم جميع المستخدمين
+*/
+
 usersList.innerHTML =
-users.map(
-user=>{
+users.map(user=>{
 
 const isActive =
 user.active !== false;
@@ -2676,8 +2753,8 @@ return `
 <div class="order-number">
 
 ${esc(
-user.full_name||
-user.username||
+user.full_name ||
+user.username ||
 "بدون اسم"
 )}
 
@@ -2686,7 +2763,7 @@ user.username||
 <div class="customer">
 
 @${esc(
-user.username||
+user.username ||
 "-"
 )}
 
@@ -2694,10 +2771,11 @@ user.username||
 
 </div>
 
+
 <span class="badge">
 
 ${esc(
-user.role||
+user.role ||
 "-"
 )}
 
@@ -2708,15 +2786,18 @@ user.role||
 
 <div class="info">
 
+
 <div class="info-box">
 
 👤 اسم المستخدم
 
 <b>
+
 ${esc(
-user.username||
+user.username ||
 "-"
 )}
+
 </b>
 
 </div>
@@ -2727,27 +2808,44 @@ user.username||
 🏢 القسم
 
 <b>
+
 ${esc(
-user.role||
+user.role ||
 "-"
 )}
+
 </b>
 
 </div>
 
 
-<div class="info-box">
+<div class="info-box user-email">
 
 📧 البريد الإلكتروني
 
 <b>
+
 ${esc(
-user.email||
+user.email ||
 "-"
 )}
+
 </b>
 
 </div>
+
+
+</div>
+
+
+<div class="user-id">
+
+Auth/Profile ID:
+
+${esc(
+user.id ||
+"-"
+)}
 
 </div>
 
@@ -2778,8 +2876,8 @@ isActive
 
 `;
 
-}
-).join("");
+}).join("");
+
 
 }catch(error){
 
@@ -2788,22 +2886,42 @@ console.error(
 error
 );
 
-usersList.innerHTML =
-"<div class='empty'>"+
-"❌ تعذر تحميل قائمة المستخدمين<br><br>"+
-"<small>"+
-esc(error.message)+
-"</small>"+
-"</div>";
+usersList.innerHTML = `
+
+<div class="empty">
+
+❌ تعذر تحميل قائمة المستخدمين
+
+<br><br>
+
+<small>
+
+${esc(
+error.message
+)}
+
+</small>
+
+<br><br>
+
+<small>
+
+تحقق من صلاحيات RLS لجدول profiles.
+
+</small>
+
+</div>
+
+`;
 
 }
 
 }
 
 
-/* =========================================================
-   USER MODAL
-========================================================= */
+/* =================================================
+USER MODAL
+================================================= */
 
 function openUserModal(){
 
@@ -2843,10 +2961,9 @@ document
 }
 
 
-/* =========================================================
-   CREATE USER
-   EDGE FUNCTION
-========================================================= */
+/* =================================================
+CREATE USER
+================================================= */
 
 document
 .getElementById("userForm")
@@ -2865,6 +2982,7 @@ alert(
 return;
 
 }
+
 
 const username =
 document.getElementById(
@@ -2896,10 +3014,11 @@ document.getElementById(
 "newActive"
 ).checked;
 
+
 if(
-!username||
-!fullName||
-!email||
+!username ||
+!fullName ||
+!email ||
 !password
 ){
 
@@ -2911,6 +3030,7 @@ return;
 
 }
 
+
 if(password.length<6){
 
 alert(
@@ -2920,6 +3040,7 @@ alert(
 return;
 
 }
+
 
 try{
 
@@ -2936,6 +3057,7 @@ throw new Error(
 
 }
 
+
 const response =
 await fetch(
 CREATE_USER_FUNCTION,
@@ -2944,6 +3066,7 @@ CREATE_USER_FUNCTION,
 method:"POST",
 
 headers:{
+
 "Content-Type":
 "application/json",
 
@@ -2952,6 +3075,7 @@ headers:{
 
 "apikey":
 SUPABASE_KEY
+
 },
 
 body:
@@ -2980,6 +3104,7 @@ active
 }
 );
 
+
 const text =
 await response.text();
 
@@ -3002,13 +3127,14 @@ message:text
 
 }
 
+
 if(!response.ok){
 
 throw new Error(
 
-data.message||
-data.error||
-data.error_description||
+data.message ||
+data.error ||
+data.error_description ||
 "فشل إنشاء المستخدم"
 
 );
@@ -3017,9 +3143,8 @@ data.error_description||
 
 
 /*
- * بعد نجاح Edge Function
- * نغلق النافذة ونعيد تحميل القائمة.
- */
+ إغلاق النافذة
+*/
 
 closeUserModal();
 
@@ -3031,11 +3156,27 @@ document.getElementById(
 "newActive"
 ).checked=true;
 
+
+/*
+ إعطاء وقت بسيط للـ Edge Function
+*/
+
+await new Promise(
+resolve =>
+setTimeout(resolve,500)
+);
+
+
+/*
+ إعادة تحميل القائمة
+*/
+
 await loadUsers();
 
 msg(
 "✅ تم إنشاء المستخدم بنجاح"
 );
+
 
 }catch(error){
 
@@ -3045,8 +3186,9 @@ error
 );
 
 let message =
-error.message||
+error.message ||
 "فشل إنشاء المستخدم";
+
 
 if(
 message
@@ -3061,6 +3203,7 @@ message =
 
 }
 
+
 alert(
 "❌ لم يتم إنشاء المستخدم\n\n"+
 message
@@ -3071,9 +3214,9 @@ message
 });
 
 
-/* =========================================================
-   RENDER ALL
-========================================================= */
+/* =================================================
+RENDER ALL
+================================================= */
 
 function renderAll(){
 
@@ -3083,21 +3226,29 @@ renderOrders();
 
 renderStages();
 
+if(role==="المدير"){
+
+loadUsers();
+
+}
+
 }
 
 
-/* =========================================================
-   START
-========================================================= */
+/* =================================================
+START
+================================================= */
 
 checkSession();
 
 
-/* =========================================================
-   SERVICE WORKER
-========================================================= */
+/* =================================================
+SERVICE WORKER
+================================================= */
 
-if("serviceWorker" in navigator){
+if(
+"serviceWorker" in navigator
+){
 
 navigator
 .serviceWorker
