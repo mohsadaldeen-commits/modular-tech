@@ -67,14 +67,6 @@ font-size:15px;
 font-family:inherit
 }
 
-button{
-border:0;
-border-radius:9px;
-padding:10px 14px;
-cursor:pointer;
-font-weight:bold
-}
-
 .login-btn{
 width:100%;
 padding:14px;
@@ -141,8 +133,13 @@ margin-bottom:18px
 
 .nav button{
 white-space:nowrap;
+border:0;
+border-radius:10px;
+padding:11px 16px;
 background:#fff;
-color:#172033
+color:#172033;
+font-weight:bold;
+cursor:pointer
 }
 
 .nav button.active{
@@ -191,6 +188,14 @@ margin-top:0
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:10px
+}
+
+button{
+border:0;
+border-radius:9px;
+padding:10px 14px;
+cursor:pointer;
+font-weight:bold
 }
 
 .primary{
@@ -371,26 +376,56 @@ margin-bottom:10px
 }
 
 @media(max-width:900px){
-.stats{grid-template-columns:repeat(2,1fr)}
+.stats{
+grid-template-columns:repeat(2,1fr)
+}
 }
 
 @media(max-width:600px){
-.container{padding:12px}
-.logo{font-size:18px}
-.user{font-size:11px}
-.stats{grid-template-columns:1fr 1fr;gap:9px}
-.stat{padding:13px}
-.stat-number{font-size:24px}
-.row{grid-template-columns:1fr}
-.info{grid-template-columns:1fr 1fr}
-.login-box{padding:24px}
+.container{
+padding:12px
+}
+
+.logo{
+font-size:18px
+}
+
+.user{
+font-size:11px
+}
+
+.stats{
+grid-template-columns:1fr 1fr;
+gap:9px
+}
+
+.stat{
+padding:13px
+}
+
+.stat-number{
+font-size:24px
+}
+
+.row{
+grid-template-columns:1fr
+}
+
+.info{
+grid-template-columns:1fr 1fr
+}
+
+.login-box{
+padding:24px
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================= LOGIN ================= -->
+<!-- =====================================================
+LOGIN
+===================================================== -->
 
 <div id="loginPage">
 
@@ -434,7 +469,9 @@ onclick="login()"
 </div>
 
 
-<!-- ================= APP ================= -->
+<!-- =====================================================
+APP
+===================================================== -->
 
 <div id="app" class="hidden">
 
@@ -496,7 +533,9 @@ onclick="showSection('users',this)"
 </div>
 
 
-<!-- ================= DASHBOARD ================= -->
+<!-- =====================================================
+DASHBOARD
+===================================================== -->
 
 <section id="dashboard">
 
@@ -547,7 +586,9 @@ onclick="openAddModal()"
 </section>
 
 
-<!-- ================= ORDERS ================= -->
+<!-- =====================================================
+ORDERS
+===================================================== -->
 
 <section id="ordersSection" class="hidden">
 
@@ -580,7 +621,9 @@ oninput="renderOrders()"
 </section>
 
 
-<!-- ================= PRODUCTION ================= -->
+<!-- =====================================================
+PRODUCTION
+===================================================== -->
 
 <section id="production" class="hidden">
 
@@ -595,7 +638,9 @@ oninput="renderOrders()"
 </section>
 
 
-<!-- ================= USERS ================= -->
+<!-- =====================================================
+USERS
+===================================================== -->
 
 <section id="users" class="hidden">
 
@@ -633,7 +678,9 @@ onclick="openUserModal()"
 <div id="message" class="message"></div>
 
 
-<!-- ================= ORDER MODAL ================= -->
+<!-- =====================================================
+ORDER MODAL
+===================================================== -->
 
 <div id="orderModal" class="modal hidden">
 
@@ -641,9 +688,7 @@ onclick="openUserModal()"
 
 <div class="modal-head">
 
-<h2 id="modalTitle">
-➕ إضافة طلبية
-</h2>
+<h2 id="modalTitle">➕ إضافة طلبية</h2>
 
 <button
 class="close"
@@ -654,12 +699,10 @@ onclick="closeModal()"
 
 </div>
 
+
 <form id="orderForm">
 
-<input
-type="hidden"
-id="editId"
->
+<input type="hidden" id="editId">
 
 <label>رقم الطلبية</label>
 
@@ -749,7 +792,9 @@ onclick="closeModal()"
 </div>
 
 
-<!-- ================= USER MODAL ================= -->
+<!-- =====================================================
+USER MODAL
+===================================================== -->
 
 <div id="userModal" class="modal hidden">
 
@@ -767,6 +812,7 @@ onclick="closeUserModal()"
 </button>
 
 </div>
+
 
 <form id="userForm">
 
@@ -861,7 +907,7 @@ onclick="closeUserModal()"
 <script>
 
 /* =====================================================
-   CONFIG
+SUPABASE CONFIG
 ===================================================== */
 
 const SUPABASE_URL =
@@ -870,6 +916,10 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_vVXVJGcWpoPvPEH_bfm23Q_dZ5eXvmE";
 
+/*
+ Edge Function الحالية التي أرسلتها:
+ bright-task
+*/
 const CREATE_USER_FUNCTION =
 "https://bvrfrcmblwzuqprjknam.supabase.co/functions/v1/bright-task";
 
@@ -882,36 +932,30 @@ let role = "";
 
 
 /* =====================================================
-   SUPABASE REQUEST
+SUPABASE REQUEST
 ===================================================== */
 
 async function request(path,method="GET",body=null){
 
 const token =
-localStorage.getItem("supabase_access_token");
+localStorage.getItem(
+"supabase_access_token"
+);
 
-const headers = {
-
-"apikey":SUPABASE_KEY,
-"Content-Type":"application/json",
-"Prefer":"return=representation"
-};
-
-if(token){
-
-headers["Authorization"] =
-"Bearer "+token;
-
-}else{
-
-headers["Authorization"] =
-"Bearer "+SUPABASE_KEY;
-
-}
+const authToken =
+token || SUPABASE_KEY;
 
 const options = {
+
 method:method,
-headers:headers
+
+headers:{
+"apikey":SUPABASE_KEY,
+"Authorization":"Bearer "+authToken,
+"Content-Type":"application/json",
+"Prefer":"return=representation"
+}
+
 };
 
 if(body !== null){
@@ -923,14 +967,14 @@ JSON.stringify(body);
 
 const response =
 await fetch(
-SUPABASE_URL+path,
+SUPABASE_URL + path,
 options
 );
 
 const text =
 await response.text();
 
-let data = null;
+let data;
 
 try{
 
@@ -949,16 +993,9 @@ data=text;
 
 if(!response.ok){
 
-let message =
-"HTTP "+response.status;
+let message;
 
-if(data){
-
-if(typeof data==="string"){
-
-message=data;
-
-}else{
+if(typeof data==="object" && data){
 
 message =
 data.message ||
@@ -967,7 +1004,11 @@ data.error ||
 data.hint ||
 JSON.stringify(data);
 
-}
+}else{
+
+message =
+data ||
+("HTTP "+response.status);
 
 }
 
@@ -981,7 +1022,7 @@ return data;
 
 
 /* =====================================================
-   AUTH
+AUTH
 ===================================================== */
 
 async function auth(path,body){
@@ -996,12 +1037,12 @@ method:"POST",
 
 headers:{
 "apikey":SUPABASE_KEY,
-"Content-Type":
-"application/json"
+"Content-Type":"application/json"
 },
 
 body:
 JSON.stringify(body)
+
 }
 );
 
@@ -1033,7 +1074,6 @@ throw new Error(
 data.error_description ||
 data.msg ||
 data.message ||
-data.error ||
 "فشل تسجيل الدخول"
 );
 
@@ -1045,30 +1085,31 @@ return data;
 
 
 /* =====================================================
-   MESSAGE
+MESSAGE
 ===================================================== */
 
 function msg(text){
 
 const box =
-document.getElementById("message");
+document.getElementById(
+"message"
+);
 
 box.textContent=text;
 
 box.style.display="block";
 
-setTimeout(
-()=>{
+setTimeout(()=>{
+
 box.style.display="none";
-},
-3000
-);
+
+},3000);
 
 }
 
 
 /* =====================================================
-   ESCAPE
+ESCAPE
 ===================================================== */
 
 function esc(value){
@@ -1079,11 +1120,13 @@ return String(value ?? "")
 function(char){
 
 return {
+
 "&":"&amp;",
 "<":"&lt;",
 ">":"&gt;",
 '"':"&quot;",
 "'":"&#039;"
+
 }[char];
 
 }
@@ -1093,7 +1136,7 @@ return {
 
 
 /* =====================================================
-   LOGIN
+LOGIN
 ===================================================== */
 
 async function login(){
@@ -1129,7 +1172,10 @@ return;
 try{
 
 /*
- الحصول على البريد من username
+=======================================================
+الخطوة 1:
+الحصول على البريد المرتبط باسم المستخدم
+=======================================================
 */
 
 const result =
@@ -1172,7 +1218,10 @@ throw new Error(
 
 
 /*
- تسجيل الدخول في Supabase Auth
+=======================================================
+الخطوة 2:
+تسجيل الدخول في Supabase Auth
+=======================================================
 */
 
 const session =
@@ -1184,10 +1233,13 @@ password:password
 }
 );
 
+if(!session.access_token){
 
-/*
- حفظ الجلسة
-*/
+throw new Error(
+"لم يتم الحصول على جلسة دخول من Auth"
+);
+
+}
 
 localStorage.setItem(
 "supabase_access_token",
@@ -1205,14 +1257,25 @@ session.refresh_token
 
 
 /*
- تحميل profile بالطريقة الجديدة
+=======================================================
+الخطوة 3:
+تحميل profile عن طريق auth.uid()
+وليس عن طريق ID من المتصفح
+=======================================================
 */
 
-await loadProfile();
+await loadProfile(
+session.user.id,
+session.user.email,
+username
+);
 
 
 /*
- إظهار التطبيق
+=======================================================
+الخطوة 4:
+إظهار التطبيق
+=======================================================
 */
 
 showApp();
@@ -1245,95 +1308,109 @@ errorBox.style.display="block";
 
 
 /* =====================================================
-   LOAD PROFILE
-   الحل الجذري
+الحل الجذري لمشكلة profiles
 ===================================================== */
 
-async function loadProfile(){
+async function loadProfile(
+userId,
+email="",
+username=""
+){
 
 currentProfile=null;
-
-role="";
-
 
 try{
 
 /*
- مهم جدًا:
+لا نستخدم:
+profiles?id=eq...
 
-لا نبحث عن profiles بواسطة ID
-من JavaScript.
+ولا:
+profiles?email=...
 
-Supabase نفسه يستخدم auth.uid()
-داخل الدالة get_my_profile.
+ولا:
+profiles?username=...
+
+بل نستخدم RPC:
+get_my_profile()
+
+والـ SQL داخل Supabase يستخدم:
+auth.uid()
 */
 
-const result =
+const data =
 await request(
 "/rest/v1/rpc/get_my_profile",
 "POST",
 {}
 );
 
+if(
+Array.isArray(data) &&
+data.length>0
+){
+
+currentProfile=data[0];
+
+}
+
+}catch(error){
+
+console.error(
+"get_my_profile ERROR:",
+error
+);
+
+throw new Error(
+"تعذر الوصول إلى ملف المستخدم في Supabase: "+
+error.message
+);
+
+}
+
 
 /*
- RPC قد يرجع JSON object
-أو string
+=======================================================
+التأكد من أن الملف موجود
+=======================================================
 */
 
-if(!result){
+if(!currentProfile){
 
 throw new Error(
-"لم يتم العثور على ملف المستخدم في profiles"
+"لم يتم العثور على ملف المستخدم في profiles. "+
+"تأكد من وجود سجل مرتبط بـ Auth User ID."
 );
-
-}
-
-if(typeof result==="string"){
-
-try{
-
-currentProfile =
-JSON.parse(result);
-
-}catch{
-
-throw new Error(
-"استجابة ملف المستخدم غير صحيحة"
-);
-
-}
-
-}else{
-
-currentProfile=result;
 
 }
 
 
 /*
- التأكد النهائي
+=======================================================
+حماية إضافية:
+يجب أن يكون ID الملف هو نفس Auth UID
+=======================================================
 */
 
 if(
-!currentProfile ||
-!currentProfile.id
+String(currentProfile.id).toLowerCase() !==
+String(userId).toLowerCase()
 ){
 
 throw new Error(
-"لم يتم العثور على ملف المستخدم في profiles"
+"خطأ في ربط المستخدم: profiles.id لا يطابق Auth User ID."
 );
 
 }
 
 
 /*
- الحساب فعال؟
+=======================================================
+الحساب فعال؟
+=======================================================
 */
 
-if(
-currentProfile.active===false
-){
+if(currentProfile.active===false){
 
 throw new Error(
 "هذا الحساب غير فعال"
@@ -1343,62 +1420,37 @@ throw new Error(
 
 
 /*
- حفظ الصلاحية
+=======================================================
+الدور
+=======================================================
 */
 
 role =
-currentProfile.role ||
-"";
+currentProfile.role || "";
 
 
 /*
- عرض اسم المستخدم
+=======================================================
+عرض المستخدم
+=======================================================
 */
 
-const currentUser =
 document.getElementById(
 "currentUser"
-);
-
-if(currentUser){
-
-currentUser.textContent =
+).textContent =
 (
 currentProfile.full_name ||
 currentProfile.username ||
 "المستخدم"
 )+
 " — "+
-(
-role ||
-"بدون قسم"
-);
-
-}
-
-console.log(
-"PROFILE LOADED:",
-currentProfile
-);
-
-}catch(error){
-
-console.error(
-"LOAD PROFILE ERROR:",
-error
-);
-
-throw new Error(
-"لم يتم العثور على ملف المستخدم في profiles"
-);
-
-}
+role;
 
 }
 
 
 /* =====================================================
-   SHOW APP
+SHOW APP
 ===================================================== */
 
 function showApp(){
@@ -1419,7 +1471,7 @@ applyPermissions();
 
 
 /* =====================================================
-   CHECK SESSION
+SESSION
 ===================================================== */
 
 async function checkSession(){
@@ -1437,21 +1489,24 @@ return;
 
 try{
 
-/*
- التأكد من أن Auth session صالحة
-*/
-
 const user =
 await request(
 "/auth/v1/user"
 );
 
+if(!user || !user.id){
 
-/*
- profile يتم جلبه بواسطة auth.uid()
-*/
+throw new Error(
+"جلسة Auth غير صالحة"
+);
 
-await loadProfile();
+}
+
+await loadProfile(
+user.id,
+user.email,
+""
+);
 
 showApp();
 
@@ -1466,7 +1521,7 @@ await loadUsers();
 }catch(error){
 
 console.warn(
-"SESSION ERROR:",
+"SESSION INVALID:",
 error
 );
 
@@ -1478,13 +1533,23 @@ localStorage.removeItem(
 "supabase_refresh_token"
 );
 
+document
+.getElementById("loginPage")
+.classList
+.remove("hidden");
+
+document
+.getElementById("app")
+.classList
+.add("hidden");
+
 }
 
 }
 
 
 /* =====================================================
-   LOGOUT
+LOGOUT
 ===================================================== */
 
 function logout(){
@@ -1497,13 +1562,17 @@ localStorage.removeItem(
 "supabase_refresh_token"
 );
 
+currentProfile=null;
+
+role="";
+
 location.reload();
 
 }
 
 
 /* =====================================================
-   PERMISSIONS
+PERMISSIONS
 ===================================================== */
 
 function applyPermissions(){
@@ -1534,26 +1603,34 @@ button.classList.toggle(
 
 
 /* =====================================================
-   STAGES
+STAGES
 ===================================================== */
 
 const stages=[
 
 ["في العمل","المدير"],
+
 ["تم القص","القص"],
+
 ["تم الكنت","الكنت"],
+
 ["تم CNC","CNC"],
+
 ["تم التركيب","التركيب"],
+
 ["تم الدهان","الدهان"],
+
 ["تم التغليف","التغليف"],
+
 ["تم التحميل","التحميل"],
+
 ["تم التسليم","التسليم"]
 
 ];
 
 
 /* =====================================================
-   LOAD ORDERS
+LOAD ORDERS
 ===================================================== */
 
 async function loadOrders(){
@@ -1606,7 +1683,7 @@ document.getElementById(
 
 
 /* =====================================================
-   NORMALIZE
+NORMALIZE
 ===================================================== */
 
 function norm(order){
@@ -1647,7 +1724,7 @@ Number(order.stage || 0)
 
 
 /* =====================================================
-   OVERDUE
+OVERDUE
 ===================================================== */
 
 function overdue(order){
@@ -1655,7 +1732,8 @@ function overdue(order){
 return(
 order.due &&
 new Date(
-order.due+"T23:59:59"
+order.due+
+"T23:59:59"
 ) <
 new Date() &&
 order.stage <
@@ -1666,7 +1744,7 @@ stages.length-1
 
 
 /* =====================================================
-   SECTIONS
+SECTIONS
 ===================================================== */
 
 function showSection(id,button){
@@ -1700,7 +1778,9 @@ btn.classList.remove(
 
 });
 
-button.classList.add("active");
+button.classList.add(
+"active"
+);
 
 if(id==="users"){
 
@@ -1716,7 +1796,7 @@ loadUsers();
 
 
 /* =====================================================
-   ADD ORDER
+ADD ORDER
 ===================================================== */
 
 function openAddModal(){
@@ -1770,7 +1850,7 @@ document
 
 
 /* =====================================================
-   SAVE ORDER
+SAVE ORDER
 ===================================================== */
 
 document
@@ -1885,7 +1965,7 @@ error.message
 
 
 /* =====================================================
-   EDIT ORDER
+EDIT ORDER
 ===================================================== */
 
 function editOrder(id){
@@ -1964,7 +2044,7 @@ document
 
 
 /* =====================================================
-   DELETE ORDER
+DELETE ORDER
 ===================================================== */
 
 async function deleteOrder(id){
@@ -2027,7 +2107,7 @@ error.message
 
 
 /* =====================================================
-   NEXT STAGE
+NEXT STAGE
 ===================================================== */
 
 async function nextStage(id){
@@ -2049,7 +2129,9 @@ return;
 const next =
 order.stage+1;
 
-if(next>=stages.length){
+if(
+next>=stages.length
+){
 
 return;
 
@@ -2100,7 +2182,7 @@ error.message
 
 
 /* =====================================================
-   DETAILS
+DETAILS
 ===================================================== */
 
 function details(id){
@@ -2162,7 +2244,7 @@ order.notes||"-"
 
 
 /* =====================================================
-   ORDER HTML
+ORDER HTML
 ===================================================== */
 
 function orderHtml(order){
@@ -2359,7 +2441,7 @@ order.stage+1
 
 
 /* =====================================================
-   DASHBOARD
+DASHBOARD
 ===================================================== */
 
 function renderDashboard(){
@@ -2411,7 +2493,7 @@ list
 
 
 /* =====================================================
-   SEARCH
+SEARCH
 ===================================================== */
 
 function renderOrders(){
@@ -2457,7 +2539,7 @@ list
 
 
 /* =====================================================
-   RENDER STAGES
+STAGES
 ===================================================== */
 
 function renderStages(){
@@ -2537,7 +2619,8 @@ stageOrders
 
 
 /* =====================================================
-   LOAD USERS
+LOAD USERS
+الحل الجديد يستخدم RPC
 ===================================================== */
 
 async function loadUsers(){
@@ -2567,24 +2650,29 @@ usersList.innerHTML =
 try{
 
 /*
- قراءة profiles مباشرة.
+=======================================================
+مهم:
+لا نقرأ profiles مباشرة.
 
-إذا كان RLS يسمح للمدير بالقراءة
-ستظهر القائمة.
+نستخدم الدالة:
+get_all_profiles()
 
+التي تعمل SECURITY DEFINER
+داخل Supabase.
+=======================================================
 */
 
 const users =
 await request(
-"/rest/v1/profiles"+
-"?select=id,username,full_name,role,active,email"+
-"&order=created_at.desc"
+"/rest/v1/rpc/get_all_profiles",
+"POST",
+{}
 );
 
 if(!Array.isArray(users)){
 
 throw new Error(
-"البيانات المستلمة من profiles غير صحيحة"
+"البيانات المستلمة من get_all_profiles غير صحيحة"
 );
 
 }
@@ -2744,7 +2832,7 @@ esc(error.message)+
 
 
 /* =====================================================
-   USER MODAL
+USER MODAL
 ===================================================== */
 
 function openUserModal(){
@@ -2786,8 +2874,8 @@ document
 
 
 /* =====================================================
-   CREATE USER
-   BRIGHT-TASK
+CREATE USER
+Edge Function: bright-task
 ===================================================== */
 
 document
@@ -2839,9 +2927,9 @@ document.getElementById(
 ).checked;
 
 if(
-!username ||
-!fullName ||
-!email ||
+!username||
+!fullName||
+!email||
 !password
 ){
 
@@ -2878,6 +2966,13 @@ throw new Error(
 
 }
 
+
+/*
+=======================================================
+إنشاء المستخدم عن طريق Edge Function
+=======================================================
+*/
+
 const response =
 await fetch(
 CREATE_USER_FUNCTION,
@@ -2894,6 +2989,7 @@ headers:{
 
 "apikey":
 SUPABASE_KEY
+
 },
 
 body:
@@ -2948,14 +3044,21 @@ if(!response.ok){
 
 throw new Error(
 
-data.message ||
-data.error ||
-data.error_description ||
+data.message||
+data.error||
+data.error_description||
 "فشل إنشاء المستخدم"
 
 );
 
 }
+
+
+/*
+=======================================================
+تم إنشاء المستخدم
+=======================================================
+*/
 
 closeUserModal();
 
@@ -2966,6 +3069,13 @@ document
 document.getElementById(
 "newActive"
 ).checked=true;
+
+
+/*
+=======================================================
+إعادة تحميل قائمة المستخدمين
+=======================================================
+*/
 
 await loadUsers();
 
@@ -2981,7 +3091,7 @@ error
 );
 
 let message =
-error.message ||
+error.message||
 "فشل إنشاء المستخدم";
 
 if(
@@ -3008,7 +3118,7 @@ message
 
 
 /* =====================================================
-   RENDER ALL
+RENDER ALL
 ===================================================== */
 
 function renderAll(){
@@ -3019,34 +3129,33 @@ renderOrders();
 
 renderStages();
 
-if(role==="المدير"){
-
-loadUsers();
-
-}
-
 }
 
 
 /* =====================================================
-   START
+START
 ===================================================== */
 
 checkSession();
 
+
+/* =====================================================
+SERVICE WORKER
+===================================================== */
 
 if("serviceWorker" in navigator){
 
 navigator
 .serviceWorker
 .register("./sw.js")
-.catch(
-error=>
-console.log(
+.catch(error=>{
+
+console.warn(
 "Service Worker:",
 error
-)
 );
+
+});
 
 }
 
