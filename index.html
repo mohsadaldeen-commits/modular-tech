@@ -84,12 +84,6 @@ font-weight:bold;
 margin-top:8px
 }
 
-.main-grid{
-display:grid;
-grid-template-columns:380px 1fr;
-gap:18px
-}
-
 .panel{
 background:white;
 border-radius:16px;
@@ -111,15 +105,14 @@ font-size:13px;
 font-weight:bold
 }
 
-input,textarea,select{
+input,textarea{
 width:100%;
 padding:11px;
 margin:6px 0 12px;
 border:1px solid #d5dde8;
 border-radius:9px;
 font-size:15px;
-font-family:inherit;
-background:white
+font-family:inherit
 }
 
 textarea{resize:vertical}
@@ -221,7 +214,9 @@ padding:30px;
 color:#687386
 }
 
-.hidden{display:none!important}
+.hidden{
+display:none!important
+}
 
 .message{
 position:fixed;
@@ -287,35 +282,91 @@ width:auto;
 margin:0
 }
 
+.stage-card{
+background:#fff;
+border:1px solid #e3e8ef;
+border-radius:14px;
+padding:15px
+}
+
+.stage-title{
+font-size:17px;
+font-weight:bold
+}
+
+.stage-orders{
+display:grid;
+gap:9px;
+margin-top:12px
+}
+
+.stage-order{
+background:#f6f8fb;
+border-radius:12px;
+padding:12px
+}
+
+.history{
+margin-top:15px;
+border-top:1px solid #e3e8ef;
+padding-top:12px
+}
+
+.history-item{
+padding:9px;
+background:#f6f8fb;
+border-radius:8px;
+margin-bottom:7px;
+font-size:13px
+}
+
 @media(max-width:900px){
-
 .stats{grid-template-columns:repeat(2,1fr)}
-.main-grid{grid-template-columns:1fr}
-
 }
 
 @media(max-width:600px){
 
 .container{padding:12px}
-.stats{grid-template-columns:1fr 1fr;gap:9px}
+
+.stats{
+grid-template-columns:1fr 1fr;
+gap:9px
+}
+
 .stat{padding:13px}
+
 .stat-number{font-size:24px}
-.row{grid-template-columns:1fr}
-.info{grid-template-columns:1fr 1fr}
-.order-head{align-items:flex-start}
+
+.row{
+grid-template-columns:1fr
+}
+
+.info{
+grid-template-columns:1fr 1fr
+}
+
+.order-head{
+align-items:flex-start
+}
 
 }
 </style>
 
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#102a43">
+
 </head>
 
 <body>
 
 <header>
-<div class="logo">MODULAR TECH</div>
+
+<div class="logo">
+MODULAR TECH
+</div>
+
 <div class="user" id="userLabel"></div>
+
 </header>
 
 <div class="container">
@@ -339,6 +390,9 @@ margin:0
 </button>
 
 </div>
+
+
+<!-- الرئيسية -->
 
 <section id="dashboard">
 
@@ -369,11 +423,13 @@ margin:0
 <div class="panel">
 
 <div class="order-head">
+
 <h2>📋 آخر الطلبيات</h2>
 
 <button class="primary" onclick="openAddModal()">
 ➕ إضافة طلبية
 </button>
+
 </div>
 
 <div id="latestOrders"></div>
@@ -382,16 +438,21 @@ margin:0
 
 </section>
 
+
+<!-- الطلبيات -->
+
 <section id="ordersSection" class="hidden">
 
 <div class="panel">
 
 <div class="order-head">
+
 <h2>📋 إدارة الطلبيات</h2>
 
 <button class="primary" onclick="openAddModal()">
 ➕ إضافة طلبية
 </button>
+
 </div>
 
 <input
@@ -408,19 +469,27 @@ oninput="renderOrders()"
 
 </section>
 
+
+<!-- مراحل العمل -->
+
 <section id="production" class="hidden">
 
 <div class="panel">
 
 <h2>🏭 مراحل العمل</h2>
 
-<p>يمكن متابعة الطلبية حسب مراحل الإنتاج:</p>
+<p>
+هنا تظهر الطلبيات حسب المرحلة الحالية.
+</p>
 
-<div class="order-list" id="stageList"></div>
+<div id="stageList" class="order-list"></div>
 
 </div>
 
 </section>
+
+
+<!-- المستخدمون -->
 
 <section id="users" class="hidden">
 
@@ -444,9 +513,13 @@ oninput="renderOrders()"
 
 </div>
 
+
+<!-- رسالة -->
+
 <div id="message" class="message"></div>
 
-<!-- نافذة إضافة / تعديل -->
+
+<!-- نافذة الطلبية -->
 
 <div id="orderModal" class="modal hidden">
 
@@ -454,9 +527,13 @@ oninput="renderOrders()"
 
 <div class="modal-head">
 
-<h2 id="modalTitle">➕ إضافة طلبية</h2>
+<h2 id="modalTitle">
+➕ إضافة طلبية
+</h2>
 
-<button class="close" onclick="closeModal()">×</button>
+<button class="close" onclick="closeModal()">
+×
+</button>
 
 </div>
 
@@ -465,40 +542,82 @@ oninput="renderOrders()"
 <input type="hidden" id="editIndex">
 
 <label>رقم الطلبية</label>
-<input id="orderNum" required placeholder="مثال: 10025">
+
+<input
+id="orderNum"
+required
+placeholder="مثال: 10025"
+>
 
 <label>اسم الزبون</label>
-<input id="customer" required placeholder="اسم الزبون">
+
+<input
+id="customer"
+required
+placeholder="اسم الزبون"
+>
 
 <div class="row">
 
 <div>
+
 <label>رقم الهاتف</label>
-<input id="phone" type="tel" placeholder="05xxxxxxxx">
+
+<input
+id="phone"
+type="tel"
+placeholder="05xxxxxxxx"
+>
+
 </div>
 
 <div>
+
 <label>موعد التسليم</label>
-<input id="due" type="date" required>
+
+<input
+id="due"
+type="date"
+required
+>
+
 </div>
 
 </div>
 
 <label>ملاحظات</label>
-<textarea id="notes" rows="4" placeholder="اكتب أي ملاحظات خاصة بالطلبية"></textarea>
+
+<textarea
+id="notes"
+rows="4"
+placeholder="اكتب الملاحظات"
+></textarea>
 
 <label class="check">
-<input type="checkbox" id="urgent">
+
+<input
+type="checkbox"
+id="urgent"
+>
+
 ⭐ هذه الطلبية مهمة جدًا
+
 </label>
 
 <div class="actions">
 
-<button type="submit" class="primary">
+<button
+type="submit"
+class="primary"
+>
 💾 حفظ الطلبية
 </button>
 
-<button type="button" class="secondary" onclick="closeModal()">
+<button
+type="button"
+class="secondary"
+onclick="closeModal()"
+>
 إلغاء
 </button>
 
@@ -510,7 +629,12 @@ oninput="renderOrders()"
 
 </div>
 
+
 <script>
+
+/* ==========================
+   مراحل العمل
+========================== */
 
 const stages=[
 ["في العمل","المدير"],
@@ -524,6 +648,11 @@ const stages=[
 ["تم التسليم","التسليم"]
 ];
 
+
+/* ==========================
+   تحميل البيانات
+========================== */
+
 let orders=[];
 
 try{
@@ -532,7 +661,9 @@ orders=JSON.parse(
 localStorage.getItem("mt_orders") || "[]"
 );
 
-if(!Array.isArray(orders)) orders=[];
+if(!Array.isArray(orders)){
+orders=[];
+}
 
 }catch(e){
 
@@ -540,31 +671,41 @@ orders=[];
 
 }
 
+
 let role=
 localStorage.getItem("mt_role") ||
 "المدير";
+
 
 document.getElementById("userLabel").textContent=
 "المستخدم: "+role;
 
 
-/* الرسائل */
+/* ==========================
+   الرسائل
+========================== */
 
 function message(text){
 
-const box=document.getElementById("message");
+const box=
+document.getElementById("message");
 
 box.textContent=text;
+
 box.style.display="block";
 
 setTimeout(()=>{
+
 box.style.display="none";
+
 },2500);
 
 }
 
 
-/* الحفظ */
+/* ==========================
+   الحفظ
+========================== */
 
 function save(){
 
@@ -580,6 +721,7 @@ return true;
 }catch(e){
 
 alert("تعذر حفظ البيانات في الجهاز");
+
 return false;
 
 }
@@ -587,23 +729,30 @@ return false;
 }
 
 
-/* التنقل */
+/* ==========================
+   التنقل
+========================== */
 
 function showSection(id,button){
 
 document
 .querySelectorAll(".container > section")
 .forEach(section=>{
+
 section.classList.add("hidden");
+
 });
 
-document.getElementById(id)
+document
+.getElementById(id)
 .classList.remove("hidden");
 
 document
 .querySelectorAll(".nav button")
 .forEach(btn=>{
+
 btn.classList.remove("active");
+
 });
 
 button.classList.add("active");
@@ -611,19 +760,28 @@ button.classList.add("active");
 }
 
 
-/* تاريخ */
+/* ==========================
+   التأخير
+========================== */
 
 function isOverdue(order){
 
-if(!order.due)return false;
+if(!order.due){
+return false;
+}
 
-return new Date(order.due+"T23:59:59") < new Date()
-&& order.stage<stages.length-1;
+return new Date(
+order.due+"T23:59:59"
+)<new Date()
+&&
+order.stage<stages.length-1;
 
 }
 
 
-/* فتح الإضافة */
+/* ==========================
+   إضافة طلبية
+========================== */
 
 function openAddModal(){
 
@@ -643,19 +801,24 @@ document.getElementById("orderModal")
 }
 
 
-/* فتح التعديل */
+/* ==========================
+   تعديل طلبية
+========================== */
 
 function editOrder(index){
-
-const order=orders[index];
-
-if(!order)return;
 
 if(role!=="المدير"){
 
 alert("ليس لديك صلاحية تعديل الطلبية");
+
 return;
 
+}
+
+const order=orders[index];
+
+if(!order){
+return;
 }
 
 document.getElementById("modalTitle").textContent=
@@ -687,7 +850,9 @@ document.getElementById("orderModal")
 }
 
 
-/* إغلاق */
+/* ==========================
+   إغلاق النافذة
+========================== */
 
 function closeModal(){
 
@@ -697,46 +862,73 @@ document.getElementById("orderModal")
 }
 
 
-/* حفظ النموذج */
+/* ==========================
+   حفظ الطلبية
+========================== */
 
-document.getElementById("orderForm")
+document
+.getElementById("orderForm")
 .addEventListener("submit",function(e){
 
 e.preventDefault();
 
+
 const editIndex=
 document.getElementById("editIndex").value;
 
+
 const num=
-document.getElementById("orderNum").value.trim();
+document.getElementById("orderNum")
+.value
+.trim();
+
 
 const customer=
-document.getElementById("customer").value.trim();
+document.getElementById("customer")
+.value
+.trim();
+
 
 const phone=
-document.getElementById("phone").value.trim();
+document.getElementById("phone")
+.value
+.trim();
+
 
 const due=
-document.getElementById("due").value;
+document.getElementById("due")
+.value;
+
 
 const notes=
-document.getElementById("notes").value.trim();
+document.getElementById("notes")
+.value
+.trim();
+
 
 const urgent=
-document.getElementById("urgent").checked;
+document.getElementById("urgent")
+.checked;
 
 
-/* منع رقم طلبية مكرر */
+/* منع التكرار */
 
-const duplicate=orders.some((o,i)=>
+const duplicate=
+orders.some((o,i)=>
+
 String(o.num).toLowerCase()===
 String(num).toLowerCase()
-&& String(i)!==String(editIndex)
+&&
+String(i)!==
+String(editIndex)
+
 );
+
 
 if(duplicate){
 
 alert("رقم الطلبية موجود مسبقًا");
+
 return;
 
 }
@@ -746,9 +938,15 @@ return;
 
 if(editIndex!==""){
 
-const index=Number(editIndex);
+const index=
+Number(editIndex);
 
-const order=orders[index];
+const order=
+orders[index];
+
+if(!order){
+return;
+}
 
 order.num=num;
 order.customer=customer;
@@ -757,11 +955,14 @@ order.due=due;
 order.notes=notes;
 order.urgent=urgent;
 
+
 if(save()){
 
 closeModal();
 
-message("✅ تم تعديل الطلبية وحفظها");
+message(
+"✅ تم تعديل الطلبية وحفظها"
+);
 
 renderAll();
 
@@ -792,7 +993,8 @@ urgent:urgent,
 
 stage:0,
 
-createdAt:new Date().toISOString(),
+createdAt:
+new Date().toISOString(),
 
 history:[
 
@@ -810,13 +1012,17 @@ by:role
 
 };
 
+
 orders.unshift(newOrder);
+
 
 if(save()){
 
 closeModal();
 
-message("✅ تم إضافة الطلبية وحفظها");
+message(
+"✅ تم إضافة الطلبية وحفظها"
+);
 
 renderAll();
 
@@ -825,35 +1031,51 @@ renderAll();
 });
 
 
-/* لوحة التحكم */
+/* ==========================
+   لوحة التحكم
+========================== */
 
 function renderDashboard(){
 
-document.getElementById("totalCount").textContent=
-orders.length;
+document.getElementById("totalCount")
+.textContent=orders.length;
 
-document.getElementById("activeCount").textContent=
-orders.filter(o=>o.stage<stages.length-1).length;
 
-document.getElementById("urgentCount").textContent=
+document.getElementById("activeCount")
+.textContent=
+orders.filter(o=>
+o.stage<stages.length-1
+).length;
+
+
+document.getElementById("urgentCount")
+.textContent=
 orders.filter(o=>o.urgent).length;
 
-document.getElementById("overdueCount").textContent=
+
+document.getElementById("overdueCount")
+.textContent=
 orders.filter(o=>isOverdue(o)).length;
 
 
-const latest=orders.slice(0,5);
+const latest=
+orders.slice(0,5);
+
 
 if(!latest.length){
 
-document.getElementById("latestOrders").innerHTML=
+document.getElementById("latestOrders")
+.innerHTML=
 "<div class='empty'>لا توجد طلبيات حتى الآن</div>";
 
 return;
 
 }
 
-document.getElementById("latestOrders").innerHTML=
+
+document.getElementById("latestOrders")
+.innerHTML=
+
 latest.map(order=>`
 
 <div class="order ${order.urgent?'urgent':''}">
@@ -863,7 +1085,9 @@ latest.map(order=>`
 <div>
 
 <div class="order-number">
+
 ${order.urgent?'⭐ ':''}#${order.num}
+
 </div>
 
 <div class="customer">
@@ -873,7 +1097,7 @@ ${order.customer}
 </div>
 
 <span class="badge">
-${stages[order.stage]?.[0] || "في العمل"}
+${stages[order.stage]?.[0]||"في العمل"}
 </span>
 
 </div>
@@ -892,7 +1116,7 @@ ${stages[order.stage]?.[0] || "في العمل"}
 
 <div class="info-box">
 القسم
-<b>${stages[order.stage]?.[1] || "-"}</b>
+<b>${stages[order.stage]?.[1]||"-"}</b>
 </div>
 
 </div>
@@ -904,7 +1128,9 @@ ${stages[order.stage]?.[0] || "في العمل"}
 }
 
 
-/* عرض الطلبيات */
+/* ==========================
+   عرض الطلبيات
+========================== */
 
 function renderOrders(){
 
@@ -913,7 +1139,9 @@ const search=
 .trim()
 .toLowerCase();
 
-const filtered=orders.filter(order=>
+
+const filtered=
+orders.filter(order=>
 
 [
 order.num,
@@ -926,19 +1154,26 @@ order.phone
 
 );
 
+
 if(!filtered.length){
 
-document.getElementById("ordersList").innerHTML=
+document.getElementById("ordersList")
+.innerHTML=
 "<div class='empty'>لا توجد طلبيات مطابقة.</div>";
 
 return;
 
 }
 
-document.getElementById("ordersList").innerHTML=
+
+document.getElementById("ordersList")
+.innerHTML=
+
 filtered.map(order=>{
 
-const index=orders.indexOf(order);
+const index=
+orders.indexOf(order);
+
 
 return `
 
@@ -949,7 +1184,9 @@ return `
 <div>
 
 <div class="order-number">
+
 ${order.urgent?'⭐ ':''}#${order.num}
+
 </div>
 
 <div class="customer">
@@ -959,12 +1196,19 @@ ${order.customer}
 </div>
 
 <span class="badge ${isOverdue(order)?'overdue':''}">
-${isOverdue(order)
-?'متأخرة'
-:stages[order.stage]?.[0]||"في العمل"}
+
+${
+isOverdue(order)
+?
+"متأخرة"
+:
+stages[order.stage]?.[0]||"في العمل"
+}
+
 </span>
 
 </div>
+
 
 <div class="info">
 
@@ -985,40 +1229,61 @@ ${isOverdue(order)
 
 </div>
 
+
 <div class="actions">
 
-<button class="secondary"
-onclick="details(${index})">
-التفاصيل
+<button
+class="secondary"
+onclick="details(${index})"
+>
+📋 التفاصيل
 </button>
+
 
 ${
 role==="المدير"
 ?
 `
-<button class="success"
-onclick="editOrder(${index})">
+
+<button
+class="success"
+onclick="editOrder(${index})"
+>
 ✏️ تعديل
 </button>
 
-<button class="danger"
-onclick="deleteOrder(${index})">
+<button
+class="danger"
+onclick="deleteOrder(${index})"
+>
 🗑️ حذف
 </button>
+
 `
-:""
+:
+""
 }
+
 
 ${
 order.stage<stages.length-1
 ?
 `
-<button class="primary"
-onclick="nextStage(${index})">
-تم ${stages[order.stage+1][1]}
+
+<button
+class="primary"
+onclick="nextStage(${index})"
+>
+➡️ تم ${stages[order.stage+1][1]}
 </button>
+
 `
-:""
+:
+`
+<span class="badge">
+✅ مكتملة
+</span>
+`
 }
 
 </div>
@@ -1032,70 +1297,114 @@ onclick="nextStage(${index})">
 }
 
 
-/* التفاصيل */
+/* ==========================
+   تفاصيل الطلبية
+========================== */
 
 function details(index){
 
 const order=orders[index];
 
-if(!order)return;
+if(!order){
+return;
+}
+
 
 let text=
-"#"+order.num+
-"\nالزبون: "+order.customer+
-"\nالهاتف: "+(order.phone||"")+
-"\nموعد التسليم: "+(order.due||"")+
-"\nالقسم الحالي: "+stages[order.stage][1]+
-"\nالحالة: "+stages[order.stage][0]+
-"\nالملاحظات: "+(order.notes||"")+
-"\n\nسجل الحركة:\n";
+
+"📋 الطلبية #"+order.num+
+"\n\n"+
+"الزبون: "+order.customer+
+"\n"+
+"الهاتف: "+(order.phone||"-")+
+"\n"+
+"موعد التسليم: "+(order.due||"-")+
+"\n"+
+"الحالة: "+stages[order.stage][0]+
+"\n"+
+"القسم الحالي: "+stages[order.stage][1]+
+"\n"+
+"الملاحظات: "+(order.notes||"-")+
+"\n\n"+
+"🕘 سجل الحركة:\n";
+
 
 text+=
+
 (order.history||[])
 .map(h=>
-stages[h.stage]?.[0]+
+
+(stages[h.stage]?.[0]||"مرحلة")+
 " — "+
-h.at+
+(h.at||"")+
 (h.by?" — "+h.by:"")
+
 )
 .join("\n");
+
 
 alert(text);
 
 }
 
 
-/* المرحلة التالية */
+/* ==========================
+   المرحلة التالية
+========================== */
 
 function nextStage(index){
 
 const order=orders[index];
 
-if(!order)return;
+if(!order){
+return;
+}
+
+
+/* المدير يستطيع نقل أي طلب */
 
 if(role==="المدير"){
 
 order.stage=
-Math.min(order.stage+1,stages.length-1);
+Math.min(
+order.stage+1,
+stages.length-1
+);
 
-}else{
+}
+
+/* باقي الأقسام */
+
+else{
 
 const expected=
 stages[order.stage+1]?.[1];
 
+
 if(expected!==role){
 
-alert("هذه الطلبية ليست في قسمك");
+alert(
+"هذه الطلبية ليست في قسمك"
+);
+
 return;
 
 }
+
 
 order.stage++;
 
 }
 
-if(!Array.isArray(order.history))
+
+/* سجل الحركة */
+
+if(!Array.isArray(order.history)){
+
 order.history=[];
+
+}
+
 
 order.history.push({
 
@@ -1107,10 +1416,11 @@ by:role
 
 });
 
+
 if(save()){
 
 message(
-"تم نقل الطلبية إلى "+
+"✅ تم نقل الطلبية إلى "+
 stages[order.stage][0]
 );
 
@@ -1121,30 +1431,49 @@ renderAll();
 }
 
 
-/* الحذف */
+/* ==========================
+   حذف
+========================== */
 
 function deleteOrder(index){
 
 if(role!=="المدير"){
 
-alert("ليس لديك صلاحية حذف الطلبية");
+alert(
+"ليس لديك صلاحية حذف الطلبية"
+);
+
 return;
 
 }
 
+
 const order=orders[index];
 
-if(!order)return;
+if(!order){
+return;
+}
+
 
 if(!confirm(
-"هل تريد حذف الطلبية #"+order.num+" ؟"
-))return;
+"هل تريد حذف الطلبية #"+
+order.num+
+" ؟"
+)){
+
+return;
+
+}
+
 
 orders.splice(index,1);
 
+
 if(save()){
 
-message("🗑️ تم حذف الطلبية");
+message(
+"🗑️ تم حذف الطلبية"
+);
 
 renderAll();
 
@@ -1153,26 +1482,34 @@ renderAll();
 }
 
 
-/* مراحل العمل */
+/* ==========================
+   مراحل العمل
+========================== */
 
 function renderStages(){
 
-document.getElementById("stageList").innerHTML=
+const stageList=
+document.getElementById("stageList");
+
+
+stageList.innerHTML=
+
 stages.map((stage,index)=>{
 
-const count=
-orders.filter(o=>o.stage===index).length;
+const stageOrders=
+orders.filter(o=>o.stage===index);
+
 
 return `
 
-<div class="order">
+<div class="stage-card">
 
 <div class="order-head">
 
 <div>
 
-<div class="order-number">
-${index+1}. ${stage[0]}
+<div class="stage-title">
+${index===0?"🏭":"➡️"} ${stage[0]}
 </div>
 
 <div class="customer">
@@ -1182,10 +1519,140 @@ ${index+1}. ${stage[0]}
 </div>
 
 <span class="badge">
-${count} طلبية
+${stageOrders.length} طلبية
 </span>
 
 </div>
+
+
+${
+stageOrders.length
+?
+
+`
+
+<div class="stage-orders">
+
+${stageOrders.map(order=>{
+
+const realIndex=
+orders.indexOf(order);
+
+
+return `
+
+<div class="stage-order">
+
+<div class="order-head">
+
+<div>
+
+<div class="order-number">
+${order.urgent?"⭐ ":""}#${order.num}
+</div>
+
+<div class="customer">
+${order.customer}
+</div>
+
+</div>
+
+<span class="badge ${
+isOverdue(order)?"overdue":""
+}">
+
+${
+isOverdue(order)
+?
+"متأخرة"
+:
+"التسليم: "+(order.due||"-")
+}
+
+</span>
+
+</div>
+
+
+<div class="info">
+
+<div class="info-box">
+📞 الهاتف
+<b>${order.phone||"-"}</b>
+</div>
+
+<div class="info-box">
+🏭 المرحلة
+<b>${stage[0]}</b>
+</div>
+
+<div class="info-box">
+👤 المسؤول
+<b>${stage[1]}</b>
+</div>
+
+</div>
+
+
+<div class="actions">
+
+<button
+class="secondary"
+onclick="details(${realIndex})"
+>
+📋 التفاصيل
+</button>
+
+
+${
+order.stage<stages.length-1
+?
+
+`
+
+<button
+class="primary"
+onclick="nextStage(${realIndex})"
+>
+➡️ تم ${stages[order.stage+1][1]}
+</button>
+
+`
+
+:
+
+`
+
+<span class="badge">
+✅ مكتملة
+</span>
+
+`
+}
+
+</div>
+
+</div>
+
+`;
+
+}).join("")}
+
+</div>
+
+`
+
+:
+
+`
+
+<div class="empty">
+لا توجد طلبيات في هذه المرحلة
+</div>
+
+`
+
+}
 
 </div>
 
@@ -1196,29 +1663,47 @@ ${count} طلبية
 }
 
 
-/* تحديث */
+/* ==========================
+   تحديث التطبيق
+========================== */
 
 function renderAll(){
 
 renderDashboard();
+
 renderOrders();
+
 renderStages();
 
 }
 
+
+/* ==========================
+   تشغيل
+========================== */
+
 renderAll();
 
 
-/* Service Worker */
+/* ==========================
+   Service Worker
+========================== */
 
 if("serviceWorker" in navigator){
 
-navigator.serviceWorker.register("./sw.js")
+navigator.serviceWorker
+.register("./sw.js")
 .then(()=>{
-console.log("MODULAR TECH Service Worker ready");
+
+console.log(
+"MODULAR TECH Service Worker ready"
+);
+
 })
 .catch(error=>{
+
 console.log(error);
+
 });
 
 }
