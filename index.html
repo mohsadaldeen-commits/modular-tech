@@ -1,83 +1,178 @@
 <!doctype html>
-
 <html lang="ar" dir="rtl">
-
 <head>
-
 <meta charset="utf-8">
-
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>MODULAR TECH TEST 123</title>
+<title>MODULAR TECH</title>
 
 <style>
-
 *{box-sizing:border-box}
 
-body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f4f7fb;
+color:#172033
+}
 
-header{background:#102a43;color:white;padding:18px 24px;display:flex;justify-content:space-between;align-items:center}
+header{
+background:#102a43;
+color:white;
+padding:18px 24px;
+display:flex;
+justify-content:space-between;
+align-items:center
+}
 
 header b{font-size:22px}
 
-.wrap{max-width:1200px;margin:24px auto;padding:0 16px}
+.wrap{
+max-width:1200px;
+margin:24px auto;
+padding:0 16px
+}
 
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px}
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+gap:14px
+}
 
-.card,.panel{background:white;border-radius:16px;padding:18px;box-shadow:0 4px 18px #0000000d}
+.card,.panel{
+background:white;
+border-radius:16px;
+padding:18px;
+box-shadow:0 4px 18px #0000000d
+}
 
-.card strong{font-size:28px;display:block;margin-top:8px}
+.card strong{
+font-size:28px;
+display:block;
+margin-top:8px
+}
 
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+margin-top:18px
+}
 
-@media(max-width:760px){.grid{grid-template-columns:1fr}}
+@media(max-width:760px){
+.grid{grid-template-columns:1fr}
+}
 
-button{border:0;border-radius:10px;padding:10px 14px;cursor:pointer;font-weight:bold;background:#1f6feb;color:white}
+button{
+border:0;
+border-radius:10px;
+padding:10px 14px;
+cursor:pointer;
+font-weight:bold;
+background:#1f6feb;
+color:white
+}
 
-button.gray{background:#e8eef5;color:#172033}
+button.gray{
+background:#e8eef5;
+color:#172033
+}
 
-button.danger{background:#d92d20;color:white}
+button.danger{
+background:#d92d20;
+color:white
+}
 
-button.green{background:#198754;color:white}
+button.green{
+background:#198754;
+color:white
+}
 
-button.star{background:#fff4cc;color:#795900}
+input,select,textarea{
+width:100%;
+padding:11px;
+border:1px solid #d5dde8;
+border-radius:9px;
+margin:6px 0 12px;
+font-size:15px
+}
 
-input,select,textarea{width:100%;padding:11px;border:1px solid #d5dde8;border-radius:9px;margin:6px 0 12px;font-size:15px}
+label{
+font-weight:bold;
+font-size:13px
+}
 
-label{font-weight:bold;font-size:13px}
+.row{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px
+}
 
-.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+table{
+width:100%;
+border-collapse:collapse
+}
 
-table{width:100%;border-collapse:collapse}
+th,td{
+padding:11px;
+border-bottom:1px solid #edf0f4;
+text-align:right
+}
 
-th,td{padding:11px;border-bottom:1px solid #edf0f4;text-align:right}
+.badge{
+display:inline-block;
+padding:5px 9px;
+border-radius:999px;
+background:#eaf2ff;
+color:#1556a8;
+font-size:12px
+}
 
-.badge{display:inline-block;padding:5px 9px;border-radius:999px;background:#eaf2ff;color:#1556a8;font-size:12px}
+.urgent{
+border:2px solid #e04b4b;
+background:#fff7f7
+}
 
-.urgent{border:2px solid #e04b4b;background:#fff7f7}
+.muted{
+color:#687386
+}
 
-.muted{color:#687386}
+.hidden{
+display:none
+}
 
-.hidden{display:none}
+.actions{
+display:flex;
+gap:8px;
+flex-wrap:wrap
+}
 
-.actions{display:flex;gap:8px;flex-wrap:wrap}
+.message{
+padding:12px;
+border-radius:10px;
+margin-top:10px;
+display:none
+}
 
+.success{
+background:#e9f8ef;
+color:#146c36
+}
+
+.error{
+background:#fff0f0;
+color:#a61b1b
+}
 </style>
 
 <link rel="manifest" href="manifest.webmanifest">
-
 <meta name="theme-color" content="#102a43">
-
 </head>
 
 <body>
 
 <header>
-
 <b>MODULAR TECH</b>
-
 <span id="roleLabel"></span>
-
 </header>
 
 <div class="wrap">
@@ -93,19 +188,13 @@ th,td{padding:11px;border-bottom:1px solid #edf0f4;text-align:right}
 <div class="row">
 
 <div>
-
 <label>رقم الطلبية</label>
-
-<input id="num">
-
+<input id="num" type="text">
 </div>
 
 <div>
-
 <label>اسم الزبون</label>
-
-<input id="customer">
-
+<input id="customer" type="text">
 </div>
 
 </div>
@@ -113,42 +202,40 @@ th,td{padding:11px;border-bottom:1px solid #edf0f4;text-align:right}
 <div class="row">
 
 <div>
-
 <label>رقم الهاتف</label>
-
-<input id="phone">
-
+<input id="phone" type="tel">
 </div>
 
 <div>
-
 <label>موعد التسليم</label>
-
 <input id="due" type="date">
-
 </div>
 
 </div>
 
 <label>ملاحظات</label>
-
-<textarea id="notes"></textarea>
+<textarea id="notes" rows="4"></textarea>
 
 <label>
-
 <input id="urgent" type="checkbox" style="width:auto">
-
 ⭐ طلبية مهمة جدًا
-
 </label>
 
 <div class="actions">
 
-<button id="saveButton" onclick="saveOrder()">حفظ الطلبية</button>
+<button id="saveButton" onclick="saveOrder()">
+حفظ الطلبية
+</button>
 
-<button id="cancelButton" class="gray hidden" onclick="cancelEdit()">إلغاء التعديل</button>
+<button id="cancelButton"
+class="gray hidden"
+onclick="cancelEdit()">
+إلغاء التعديل
+</button>
 
 </div>
+
+<div id="message" class="message"></div>
 
 </section>
 
@@ -157,19 +244,14 @@ th,td{padding:11px;border-bottom:1px solid #edf0f4;text-align:right}
 <h2>🔎 البحث</h2>
 
 <input
-
 id="search"
-
+type="search"
 oninput="render()"
-
 placeholder="رقم الطلبية / اسم الزبون / الهاتف">
 
 <p class="muted">
-
 المسار:
-
 في العمل → القص → الكنت → CNC → التركيب → الدهان → التغليف → التحميل → التسليم
-
 </p>
 
 </section>
@@ -188,117 +270,196 @@ placeholder="رقم الطلبية / اسم الزبون / الهاتف">
 
 <script>
 
-const stages=[
+/* =========================
+   مراحل الطلبية
+========================= */
 
+const stages = [
 ["في العمل","المدير"],
-
 ["تم القص","القص"],
-
 ["تم الكنت","الكنت"],
-
 ["تم CNC","CNC"],
-
 ["تم التركيب","التركيب"],
-
 ["تم الدهان","الدهان"],
-
 ["تم التغليف","التغليف"],
-
 ["تم التحميل","التحميل"],
-
 ["تم التسليم","التسليم"]
-
 ];
 
-/* تحميل البيانات المحفوظة */
 
-let orders=[];
+/* =========================
+   تحميل البيانات
+========================= */
+
+let orders = [];
 
 try{
 
-orders=JSON.parse(localStorage.getItem("mt_orders")||"[]");
+const saved = localStorage.getItem("mt_orders");
 
-if(!Array.isArray(orders)) orders=[];
+if(saved){
+orders = JSON.parse(saved);
+}
 
-}catch(e){
+if(!Array.isArray(orders)){
+orders = [];
+}
 
-orders=[];
+}catch(error){
+
+console.error("Load error:",error);
+orders = [];
 
 }
 
-let role=localStorage.getItem("mt_role")||"المدير";
 
-let editingId=null;
+let role = localStorage.getItem("mt_role") || "المدير";
 
-document.getElementById("roleLabel").textContent="المستخدم: "+role;
+let editingId = null;
 
-/* حفظ البيانات */
+
+/* =========================
+   المستخدم
+========================= */
+
+document.getElementById("roleLabel").textContent =
+"المستخدم: " + role;
+
+
+/* =========================
+   رسالة للمستخدم
+========================= */
+
+function showMessage(text,type="success"){
+
+const box = document.getElementById("message");
+
+box.textContent = text;
+
+box.className = "message " + type;
+
+box.style.display = "block";
+
+setTimeout(()=>{
+
+box.style.display = "none";
+
+},3000);
+
+}
+
+
+/* =========================
+   حفظ البيانات
+========================= */
 
 function save(){
 
 try{
 
-localStorage.setItem("mt_orders",JSON.stringify(orders));
+localStorage.setItem(
+"mt_orders",
+JSON.stringify(orders)
+);
 
 return true;
 
-}catch(e){
+}catch(error){
 
-alert("تعذر حفظ البيانات على هذا الجهاز");
+console.error("Save error:",error);
+
+alert("تعذر حفظ البيانات على الجهاز");
 
 return false;
 
 }
 
-/* تنظيف الحقول */
+}
+
+
+/* =========================
+   تنظيف النموذج
+========================= */
 
 function clearForm(){
 
-document.getElementById("num").value="";
+document.getElementById("num").value = "";
 
-document.getElementById("customer").value="";
+document.getElementById("customer").value = "";
 
-document.getElementById("phone").value="";
+document.getElementById("phone").value = "";
 
-document.getElementById("due").value="";
+document.getElementById("due").value = "";
 
-document.getElementById("notes").value="";
+document.getElementById("notes").value = "";
 
-document.getElementById("urgent").checked=false;
+document.getElementById("urgent").checked = false;
 
 }
 
-/* إضافة أو تعديل الطلبية */
+
+/* =========================
+   إضافة أو تعديل الطلبية
+========================= */
 
 function saveOrder(){
 
-const num=document.getElementById("num").value.trim();
+const num =
+document.getElementById("num").value.trim();
 
-const customer=document.getElementById("customer").value.trim();
+const customer =
+document.getElementById("customer").value.trim();
 
-const phone=document.getElementById("phone").value.trim();
+const phone =
+document.getElementById("phone").value.trim();
 
-const due=document.getElementById("due").value;
+const due =
+document.getElementById("due").value;
 
-const notes=document.getElementById("notes").value.trim();
+const notes =
+document.getElementById("notes").value.trim();
 
-const urgent=document.getElementById("urgent").checked;
+const urgent =
+document.getElementById("urgent").checked;
 
-if(!num||!customer||!due){
 
-alert("أكمل رقم الطلبية واسم الزبون وموعد التسليم");
+/* التحقق من البيانات */
+
+if(!num){
+
+alert("أدخل رقم الطلبية");
 
 return;
 
 }
 
-/* تعديل طلبية موجودة */
+if(!customer){
 
-if(editingId!==null){
+alert("أدخل اسم الزبون");
 
-const index=orders.findIndex(o=>o.id===editingId);
+return;
 
-if(index===-1){
+}
+
+if(!due){
+
+alert("اختر موعد التسليم");
+
+return;
+
+}
+
+
+/* =========================
+   تعديل طلبية
+========================= */
+
+if(editingId !== null){
+
+const index =
+orders.findIndex(o => o.id === editingId);
+
+if(index === -1){
 
 alert("لم يتم العثور على الطلبية");
 
@@ -308,21 +469,24 @@ return;
 
 }
 
-orders[index].num=num;
+orders[index].num = num;
 
-orders[index].customer=customer;
+orders[index].customer = customer;
 
-orders[index].phone=phone;
+orders[index].phone = phone;
 
-orders[index].due=due;
+orders[index].due = due;
 
-orders[index].notes=notes;
+orders[index].notes = notes;
 
-orders[index].urgent=urgent;
+orders[index].urgent = urgent;
+
 
 if(save()){
 
-alert("تم تعديل الطلبية وحفظ التغييرات");
+showMessage(
+"تم تعديل الطلبية وحفظ التغييرات"
+);
 
 cancelEdit();
 
@@ -334,13 +498,23 @@ return;
 
 }
 
-/* منع تكرار رقم الطلبية */
 
-const duplicate=orders.some(o=>String(o.num).toLowerCase()===num.toLowerCase());
+/* =========================
+   التحقق من الرقم المكرر
+========================= */
+
+const duplicate = orders.some(o =>
+String(o.num).toLowerCase() ===
+num.toLowerCase()
+);
 
 if(duplicate){
 
-if(!confirm("رقم الطلبية موجود مسبقًا. هل تريد إضافتها رغم ذلك؟")){
+const answer = confirm(
+"رقم الطلبية موجود مسبقًا.\nهل تريد إضافة طلبية أخرى بنفس الرقم؟"
+);
+
+if(!answer){
 
 return;
 
@@ -348,35 +522,38 @@ return;
 
 }
 
-/* إنشاء طلبية جديدة */
 
-const order={
+/* =========================
+   إنشاء الطلبية
+========================= */
 
-id:Date.now(),
+const newOrder = {
 
-num:num,
+id: Date.now(),
 
-customer:customer,
+num: num,
 
-phone:phone,
+customer: customer,
 
-due:due,
+phone: phone,
 
-notes:notes,
+due: due,
 
-urgent:urgent,
+notes: notes,
 
-stage:0,
+urgent: urgent,
 
-history:[
+stage: 0,
+
+history: [
 
 {
 
-stage:0,
+stage: 0,
 
-at:new Date().toLocaleString("ar"),
+at: new Date().toLocaleString("ar"),
 
-by:role
+by: role
 
 }
 
@@ -384,13 +561,21 @@ by:role
 
 };
 
-orders.unshift(order);
+
+/* إضافة الطلبية */
+
+orders.unshift(newOrder);
+
+
+/* الحفظ */
 
 if(save()){
 
 clearForm();
 
-alert("تم حفظ الطلبية بنجاح");
+showMessage(
+"✅ تم حفظ الطلبية بنجاح"
+);
 
 render();
 
@@ -398,11 +583,14 @@ render();
 
 }
 
-/* بدء تعديل طلبية */
 
-function editOrder(i){
+/* =========================
+   تعديل الطلبية
+========================= */
 
-if(role!=="المدير"){
+function editOrder(index){
+
+if(role !== "المدير"){
 
 alert("التعديل متاح للمدير فقط");
 
@@ -410,61 +598,85 @@ return;
 
 }
 
-const o=orders[i];
+const order = orders[index];
 
-if(!o)return;
+if(!order){
 
-editingId=o.id;
+return;
 
-document.getElementById("num").value=o.num||"";
+}
 
-document.getElementById("customer").value=o.customer||"";
+editingId = order.id;
 
-document.getElementById("phone").value=o.phone||"";
 
-document.getElementById("due").value=o.due||"";
+document.getElementById("num").value =
+order.num || "";
 
-document.getElementById("notes").value=o.notes||"";
+document.getElementById("customer").value =
+order.customer || "";
 
-document.getElementById("urgent").checked=!!o.urgent;
+document.getElementById("phone").value =
+order.phone || "";
 
-document.getElementById("formTitle").textContent="✏️ تعديل الطلبية";
+document.getElementById("due").value =
+order.due || "";
 
-document.getElementById("saveButton").textContent="💾 حفظ التعديل";
+document.getElementById("notes").value =
+order.notes || "";
 
-document.getElementById("cancelButton").classList.remove("hidden");
+document.getElementById("urgent").checked =
+!!order.urgent;
+
+
+document.getElementById("formTitle").textContent =
+"✏️ تعديل الطلبية";
+
+
+document.getElementById("saveButton").textContent =
+"💾 حفظ التعديل";
+
+
+document.getElementById("cancelButton")
+.classList.remove("hidden");
+
 
 window.scrollTo({
-
 top:0,
-
 behavior:"smooth"
-
 });
 
 }
 
-/* إلغاء التعديل */
+
+/* =========================
+   إلغاء التعديل
+========================= */
 
 function cancelEdit(){
 
-editingId=null;
+editingId = null;
 
 clearForm();
 
-document.getElementById("formTitle").textContent="➕ إضافة طلبية";
+document.getElementById("formTitle").textContent =
+"➕ إضافة طلبية";
 
-document.getElementById("saveButton").textContent="حفظ الطلبية";
+document.getElementById("saveButton").textContent =
+"حفظ الطلبية";
 
-document.getElementById("cancelButton").classList.add("hidden");
+document.getElementById("cancelButton")
+.classList.add("hidden");
 
 }
 
-/* حذف الطلبية */
 
-function deleteOrder(i){
+/* =========================
+   حذف الطلبية
+========================= */
 
-if(role!=="المدير"){
+function deleteOrder(index){
+
+if(role !== "المدير"){
 
 alert("حذف الطلبيات متاح للمدير فقط");
 
@@ -472,69 +684,109 @@ return;
 
 }
 
-const o=orders[i];
+const order = orders[index];
 
-if(!o)return;
-
-if(!confirm("هل أنت متأكد من حذف الطلبية #"+o.num+" ؟"))return;
-
-orders.splice(i,1);
-
-if(save()){
-
-alert("تم حذف الطلبية");
-
-render();
-
-}
-
-}
-
-/* الانتقال للمرحلة التالية */
-
-function next(i){
-
-const o=orders[i];
-
-if(!o)return;
-
-if(role==="المدير"){
-
-o.stage=Math.min(
-
-o.stage+1,
-
-stages.length-1
-
-);
-
-}else{
-
-const expected=stages[o.stage+1]?.[1];
-
-if(expected!==role){
-
-alert("هذه الطلبية ليست في قسمك");
+if(!order){
 
 return;
 
 }
 
-o.stage++;
+const answer = confirm(
+"هل أنت متأكد من حذف الطلبية #" +
+order.num +
+" ؟"
+);
+
+if(!answer){
+
+return;
 
 }
 
-if(!Array.isArray(o.history))o.history=[];
+orders.splice(index,1);
 
-o.history.push({
+if(save()){
 
-stage:o.stage,
+showMessage(
+"تم حذف الطلبية"
+);
 
-at:new Date().toLocaleString("ar"),
+render();
 
-by:role
+}
+
+}
+
+
+/* =========================
+   الانتقال للمرحلة التالية
+========================= */
+
+function next(index){
+
+const order = orders[index];
+
+if(!order){
+
+return;
+
+}
+
+
+/* المدير يستطيع نقل أي طلبية */
+
+if(role === "المدير"){
+
+order.stage =
+Math.min(
+order.stage + 1,
+stages.length - 1
+);
+
+}
+
+
+/* القسم */
+
+else{
+
+const expected =
+stages[order.stage + 1]?.[1];
+
+if(expected !== role){
+
+alert(
+"هذه الطلبية ليست في قسمك"
+);
+
+return;
+
+}
+
+order.stage++;
+
+}
+
+
+/* تسجيل الحركة */
+
+if(!Array.isArray(order.history)){
+
+order.history = [];
+
+}
+
+order.history.push({
+
+stage: order.stage,
+
+at: new Date().toLocaleString("ar"),
+
+by: role
 
 });
+
 
 if(save()){
 
@@ -544,131 +796,171 @@ render();
 
 }
 
-/* التفاصيل */
 
-function details(i){
+/* =========================
+   تفاصيل الطلبية
+========================= */
 
-const o=orders[i];
+function details(index){
 
-if(!o)return;
+const order = orders[index];
 
-let text=
+if(!order){
 
-"#"+o.num+
+return;
 
-"\nالزبون: "+o.customer+
+}
 
-"\nالهاتف: "+(o.phone||"")+
+let text =
 
-"\nالموقع الحالي: "+stages[o.stage][1]+
+"#" + order.num +
 
-"\nالحالة: "+stages[o.stage][0]+
+"\nالزبون: " +
+order.customer +
 
-"\nموعد التسليم: "+o.due+
+"\nالهاتف: " +
+(order.phone || "") +
 
-"\nالملاحظات: "+(o.notes||"")+
+"\nالموقع الحالي: " +
+stages[order.stage][1] +
+
+"\nالحالة: " +
+stages[order.stage][0] +
+
+"\nموعد التسليم: " +
+order.due +
+
+"\nالملاحظات: " +
+(order.notes || "") +
 
 "\n\nسجل الحركة:\n";
 
-text+=
 
-(o.history||[])
+text +=
 
-.map(h=>
+(order.history || [])
 
-`${stages[h.stage][0]} — ${h.at}${h.by?" — "+h.by:""}`
+.map(h =>
+
+stages[h.stage][0] +
+" — " +
+h.at +
+(h.by ? " — " + h.by : "")
 
 )
 
 .join("\n");
 
+
 alert(text);
 
 }
 
-/* عرض البيانات */
+
+/* =========================
+   عرض الإحصائيات والطلبيات
+========================= */
 
 function render(){
 
-const q=document.getElementById("search").value.trim().toLowerCase();
+const search =
+document.getElementById("search")
+.value
+.trim()
+.toLowerCase();
 
-const filtered=orders.filter(o=>
+
+const filtered =
+orders.filter(order =>
 
 [
-
-o.num,
-
-o.customer,
-
-o.phone
-
+order.num,
+order.customer,
+order.phone
 ]
-
 .join(" ")
-
 .toLowerCase()
-
-.includes(q)
+.includes(search)
 
 );
 
-/* الإحصائيات */
 
-document.getElementById("stats").innerHTML=[
+/* =========================
+   الإحصائيات
+========================= */
 
-["إجمالي الطلبيات",orders.length],
+const total =
+orders.length;
 
-[
+const active =
+orders.filter(order =>
+order.stage < stages.length - 1
+).length;
 
-"في العمل",
+const urgent =
+orders.filter(order =>
+order.urgent
+).length;
 
-orders.filter(o=>o.stage<stages.length-1).length
+const overdue =
+orders.filter(order => {
 
-],
+const dueDate =
+new Date(order.due + "T23:59:59");
 
-[
+return (
+dueDate < new Date() &&
+order.stage < stages.length - 1
+);
 
-"مهمة جدًا",
+}).length;
 
-orders.filter(o=>o.urgent).length
 
-],
+document.getElementById("stats").innerHTML = [
 
-[
+["إجمالي الطلبيات",total],
 
-"متأخرة",
+["في العمل",active],
 
-orders.filter(o=>
+["مهمة جدًا",urgent],
 
-new Date(o.due)<new Date() &&
-
-o.stage<stages.length-1
-
-).length
+["متأخرة",overdue]
 
 ]
 
-].map(x=>
+.map(item =>
 
-`<div class="card">${x[0]}<strong>${x[1]}</strong></div>`
+`<div class="card">
+${item[0]}
+<strong>${item[1]}</strong>
+</div>`
 
-).join("");
+)
 
-/* جدول الطلبيات */
+.join("");
+
+
+/* =========================
+   لا توجد نتائج
+========================= */
 
 if(!filtered.length){
 
-document.getElementById("orders").innerHTML=
-
+document.getElementById("orders").innerHTML =
 "<p class='muted'>لا توجد طلبيات.</p>";
 
 return;
 
 }
 
-document.getElementById("orders").innerHTML=
 
-`<table>
+/* =========================
+   جدول الطلبيات
+========================= */
+
+let html = `
+
+<table>
 
 <tr>
 
@@ -682,91 +974,141 @@ document.getElementById("orders").innerHTML=
 
 <th>إجراء</th>
 
-</tr>`+
+</tr>
 
-filtered.map(o=>{
+`;
 
-const real=orders.indexOf(o);
 
-return `
+filtered.forEach(order => {
 
-<tr class="${o.urgent?"urgent":""}">
+const realIndex =
+orders.indexOf(order);
+
+
+html += `
+
+<tr class="${order.urgent ? "urgent" : ""}">
 
 <td>
 
-${o.urgent?"⭐ ":""}
+${order.urgent ? "⭐ " : ""}
 
-<b>#${o.num}</b>
+<b>#${order.num}</b>
 
 </td>
 
+
 <td>
 
-${o.customer}
+${order.customer}
 
 <br>
 
-<span class="muted">${o.phone||""}</span>
+<span class="muted">
+
+${order.phone || ""}
+
+</span>
 
 </td>
 
-<td>${o.due}</td>
+
+<td>
+
+${order.due}
+
+</td>
+
 
 <td>
 
 <span class="badge">
 
-${stages[o.stage][0]}
+${stages[order.stage][0]}
 
 </span>
 
 <br>
 
-<small>${o.stage===0?"المدير":stages[o.stage][1]}</small>
+<small>
+
+${order.stage === 0
+? "المدير"
+: stages[order.stage][1]}
+
+</small>
 
 </td>
+
 
 <td>
 
 <div class="actions">
 
-${o.stage<stages.length-1?
+`;
 
-`<button onclick="next(${real})">
 
-تم ${stages[o.stage+1][1]}
+/* زر المرحلة التالية */
 
-</button>`
+if(order.stage < stages.length - 1){
 
-:""}
+html += `
 
-<button class="gray" onclick="details(${real})">
+<button onclick="next(${realIndex})">
+
+تم ${stages[order.stage + 1][1]}
+
+</button>
+
+`;
+
+}
+
+
+/* التفاصيل */
+
+html += `
+
+<button
+class="gray"
+onclick="details(${realIndex})">
 
 التفاصيل
 
 </button>
 
-${
+`;
 
-role==="المدير"
 
-?
+/* أزرار المدير */
 
-`<button class="green" onclick="editOrder(${real})">
+if(role === "المدير"){
+
+html += `
+
+<button
+class="green"
+onclick="editOrder(${realIndex})">
 
 ✏️ تعديل
 
 </button>
 
-<button class="danger" onclick="deleteOrder(${real})">
+
+<button
+class="danger"
+onclick="deleteOrder(${realIndex})">
 
 🗑️ حذف
 
-</button>`
+</button>
 
-:""
+`;
 
 }
+
+
+html += `
 
 </div>
 
@@ -776,45 +1118,59 @@ role==="المدير"
 
 `;
 
-}).join("")
+});
 
-+"</table>";
+
+html += "</table>";
+
+
+document.getElementById("orders").innerHTML =
+html;
 
 }
 
-/* إظهار/إخفاء نموذج الإضافة */
+
+/* =========================
+   تشغيل النموذج حسب الصلاحية
+========================= */
 
 document
-
 .getElementById("formPanel")
-
-.classList.toggle(
-
+.classList
+.toggle(
 "hidden",
-
-role!=="المدير"
-
+role !== "المدير"
 );
 
-/* تشغيل التطبيق */
+
+/* =========================
+   تشغيل التطبيق
+========================= */
 
 render();
 
-/* تسجيل Service Worker */
+
+/* =========================
+   Service Worker
+========================= */
 
 if("serviceWorker" in navigator){
 
-navigator.serviceWorker.register("./sw.js")
+navigator.serviceWorker
+.register("./sw.js")
+.then(() => {
 
-.then(()=>{
-
-console.log("Service Worker registered");
+console.log(
+"MODULAR TECH Service Worker registered"
+);
 
 })
+.catch(error => {
 
-.catch(error=>{
-
-console.log("Service Worker error:",error);
+console.error(
+"Service Worker error:",
+error
+);
 
 });
 
@@ -823,5 +1179,4 @@ console.log("Service Worker error:",error);
 </script>
 
 </body>
-
 </html>
