@@ -3,22 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
 <title>MODULAR TECH</title>
-
 <meta name="theme-color" content="#0f172a">
 <link rel="manifest" href="manifest.webmanifest">
 
 <style>
 *{box-sizing:border-box}
-
 body{
 margin:0;
 font-family:Arial,sans-serif;
 background:#f1f5f9;
 color:#172033
 }
-
 .hidden{display:none!important}
 
 #loginPage{
@@ -395,7 +391,6 @@ grid-template-columns:repeat(2,1fr)
 }
 
 @media(max-width:600px){
-
 .container{
 padding:12px
 }
@@ -436,17 +431,13 @@ grid-template-columns:1fr 1fr
 .login-box{
 padding:24px
 }
-
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================= LOGIN ================= -->
-
 <div id="loginPage">
-
 <div class="login-box">
 
 <div class="login-logo">
@@ -484,11 +475,7 @@ onclick="login()"
 </button>
 
 </div>
-
 </div>
-
-
-<!-- ================= APP ================= -->
 
 <div id="app" class="hidden">
 
@@ -513,9 +500,7 @@ onclick="logout()"
 </button>
 
 </div>
-
 </header>
-
 
 <div class="container">
 
@@ -549,15 +534,11 @@ onclick="showSection('users',this)"
 
 </div>
 
-
-<!-- DASHBOARD -->
-
 <section id="dashboard">
 
 <div class="stats">
 
 <div class="stat">
-
 <div class="stat-title">
 إجمالي الطلبيات
 </div>
@@ -568,12 +549,9 @@ id="totalCount"
 >
 0
 </div>
-
 </div>
 
-
 <div class="stat">
-
 <div class="stat-title">
 قيد العمل
 </div>
@@ -584,12 +562,9 @@ id="activeCount"
 >
 0
 </div>
-
 </div>
 
-
 <div class="stat">
-
 <div class="stat-title">
 مهمة جدًا
 </div>
@@ -600,12 +575,9 @@ id="urgentCount"
 >
 0
 </div>
-
 </div>
 
-
 <div class="stat">
-
 <div class="stat-title">
 متأخرة
 </div>
@@ -616,11 +588,9 @@ id="overdueCount"
 >
 0
 </div>
-
 </div>
 
 </div>
-
 
 <div class="panel">
 
@@ -644,9 +614,6 @@ onclick="openAddModal()"
 </div>
 
 </section>
-
-
-<!-- ORDERS -->
 
 <section
 id="ordersSection"
@@ -687,9 +654,6 @@ class="order-list"
 
 </section>
 
-
-<!-- PRODUCTION -->
-
 <section
 id="production"
 class="hidden"
@@ -709,9 +673,6 @@ class="order-list"
 </div>
 
 </section>
-
-
-<!-- USERS -->
 
 <section
 id="users"
@@ -742,19 +703,12 @@ onclick="openUserModal()"
 </section>
 
 </div>
-
 </div>
-
-
-<!-- MESSAGE -->
 
 <div
 id="message"
 class="message"
 ></div>
-
-
-<!-- ORDER MODAL -->
 
 <div
 id="orderModal"
@@ -880,11 +834,7 @@ onclick="closeModal()"
 </form>
 
 </div>
-
 </div>
-
-
-<!-- USER MODAL -->
 
 <div
 id="userModal"
@@ -1031,33 +981,20 @@ onclick="closeUserModal()"
 </form>
 
 </div>
-
 </div>
 
-
 <script>
-
-/* =====================================================
-SUPABASE
-===================================================== */
 
 const SUPABASE_URL =
 "https://bvrfrcmblwzuqprjknam.supabase.co";
 
+/* المفتاح الصحيح الذي أرسلته */
 const SUPABASE_KEY =
-"sb_publishable_vVXVJGcWpoPvPEH_bfm23Q_dZ5eXvmK";
-
+"sb_publishable_vVXVJGcWpoPvPEH_bfm23Q_dZ5eXvmE";
 
 let orders = [];
-
 let currentProfile = null;
-
 let role = "";
-
-
-/* =====================================================
-SUPABASE REQUEST
-===================================================== */
 
 async function supabaseRequest(
 table,
@@ -1085,10 +1022,8 @@ headers:{
 };
 
 if(body !== null){
-
 options.body =
 JSON.stringify(body);
-
 }
 
 const response =
@@ -1106,18 +1041,14 @@ await response.text();
 let data;
 
 try{
-
 data =
 text
 ?
 JSON.parse(text)
 :
 null;
-
 }catch(e){
-
 data=text;
-
 }
 
 if(!response.ok){
@@ -1125,18 +1056,14 @@ if(!response.ok){
 throw new Error(
 
 typeof data==="object"
-
 ?
-
 (
 data.message ||
 data.error ||
 data.hint ||
 JSON.stringify(data)
 )
-
 :
-
 data
 
 );
@@ -1144,13 +1071,7 @@ data
 }
 
 return data;
-
 }
-
-
-/* =====================================================
-AUTH
-===================================================== */
 
 async function authRequest(
 endpoint,
@@ -1170,10 +1091,8 @@ headers:{
 };
 
 if(body !== null){
-
 options.body =
 JSON.stringify(body);
-
 }
 
 const response =
@@ -1199,13 +1118,7 @@ data.message ||
 }
 
 return data;
-
 }
-
-
-/* =====================================================
-MESSAGE
-===================================================== */
 
 function message(text){
 
@@ -1227,16 +1140,12 @@ box.style.display="none";
 
 }
 
-
-/* =====================================================
-ESCAPE
-===================================================== */
-
 function escapeHtml(value){
 
 return String(
 value ?? ""
 )
+
 .replace(
 /[&<>"']/g,
 function(char){
@@ -1255,11 +1164,6 @@ return {
 );
 
 }
-
-
-/* =====================================================
-LOGIN
-===================================================== */
 
 async function login(){
 
@@ -1297,10 +1201,6 @@ return;
 }
 
 try{
-
-/*
-نحصل على البريد المرتبط باسم المستخدم
-*/
 
 const result =
 await supabaseRequest(
@@ -1340,11 +1240,6 @@ throw new Error(
 
 }
 
-
-/*
-تسجيل الدخول
-*/
-
 const session =
 await authRequest(
 "token?grant_type=password",
@@ -1354,11 +1249,6 @@ email:email,
 password:password
 }
 );
-
-
-/*
-حفظ الجلسة
-*/
 
 localStorage.setItem(
 "supabase_access_token",
@@ -1373,11 +1263,6 @@ session.refresh_token
 );
 
 }
-
-
-/*
-تحميل الملف الشخصي
-*/
 
 await loadProfile(
 session.user.id,
@@ -1406,11 +1291,6 @@ errorBox.style.display="block";
 
 }
 
-
-/* =====================================================
-LOAD PROFILE
-===================================================== */
-
 async function loadProfile(
 userId,
 email="",
@@ -1418,12 +1298,6 @@ username=""
 ){
 
 currentProfile=null;
-
-
-/*
-المحاولة الأولى:
-عن طريق ID
-*/
 
 try{
 
@@ -1455,12 +1329,6 @@ error
 );
 
 }
-
-
-/*
-المحاولة الثانية:
-عن طريق البريد
-*/
 
 if(!currentProfile && email){
 
@@ -1497,12 +1365,6 @@ error
 
 }
 
-
-/*
-المحاولة الثالثة:
-عن طريق اسم المستخدم
-*/
-
 if(!currentProfile && username){
 
 try{
@@ -1538,11 +1400,6 @@ error
 
 }
 
-
-/*
-إذا لم يوجد الملف
-*/
-
 if(!currentProfile){
 
 throw new Error(
@@ -1550,11 +1407,6 @@ throw new Error(
 );
 
 }
-
-
-/*
-الحساب متوقف
-*/
 
 if(
 currentProfile.active === false
@@ -1566,19 +1418,9 @@ throw new Error(
 
 }
 
-
-/*
-حفظ الدور
-*/
-
 role =
 currentProfile.role ||
 "";
-
-
-/*
-عرض المستخدم
-*/
 
 document.getElementById(
 "currentUser"
@@ -1596,11 +1438,6 @@ currentProfile.username ||
 role;
 
 }
-
-
-/* =====================================================
-SHOW APP
-===================================================== */
 
 function showApp(){
 
@@ -1622,11 +1459,6 @@ applyPermissions();
 
 }
 
-
-/* =====================================================
-CHECK SESSION
-===================================================== */
-
 async function checkSession(){
 
 const token =
@@ -1635,9 +1467,7 @@ localStorage.getItem(
 );
 
 if(!token){
-
 return;
-
 }
 
 try{
@@ -1656,14 +1486,11 @@ headers:{
 );
 
 if(!response.ok){
-
 throw new Error();
-
 }
 
 const user =
 await response.json();
-
 
 await loadProfile(
 user.id,
@@ -1671,11 +1498,9 @@ user.email,
 ""
 );
 
-
 showApp();
 
 await loadOrders();
-
 
 }catch(error){
 
@@ -1696,11 +1521,6 @@ localStorage.removeItem(
 
 }
 
-
-/* =====================================================
-LOGOUT
-===================================================== */
-
 function logout(){
 
 localStorage.removeItem(
@@ -1715,16 +1535,10 @@ location.reload();
 
 }
 
-
-/* =====================================================
-PERMISSIONS
-===================================================== */
-
 function applyPermissions(){
 
 const isAdmin =
 role === "المدير";
-
 
 document
 .getElementById(
@@ -1735,7 +1549,6 @@ document
 "hidden",
 !isAdmin
 );
-
 
 document
 .querySelectorAll(
@@ -1756,37 +1569,19 @@ button
 
 }
 
-
-/* =====================================================
-STAGES
-===================================================== */
-
 const stages = [
 
 ["في العمل","المدير"],
-
 ["تم القص","القص"],
-
 ["تم الكنت","الكنت"],
-
 ["تم CNC","CNC"],
-
 ["تم التركيب","التركيب"],
-
 ["تم الدهان","الدهان"],
-
 ["تم التغليف","التغليف"],
-
 ["تم التحميل","التحميل"],
-
 ["تم التسليم","التسليم"]
 
 ];
-
-
-/* =====================================================
-LOAD ORDERS
-===================================================== */
 
 async function loadOrders(){
 
@@ -1794,14 +1589,11 @@ try{
 
 const data =
 await supabaseRequest(
-
 "orders",
 "GET",
 null,
-
 "?select=id,order_number,customer_name,phone,due_date,notes,urgent,stage,created_at,updated_at"+
 "&order=created_at.desc"
-
 );
 
 orders =
@@ -1813,7 +1605,6 @@ data
 
 renderAll();
 
-
 }catch(error){
 
 console.error(error);
@@ -1821,6 +1612,7 @@ console.error(error);
 document.getElementById(
 "latestOrders"
 ).innerHTML =
+
 "<div class='empty'>❌ تعذر تحميل الطلبيات<br><small>"+
 escapeHtml(error.message)+
 "</small></div>";
@@ -1833,11 +1625,6 @@ document.getElementById(
 }
 
 }
-
-
-/* =====================================================
-NORMALIZE
-===================================================== */
 
 function normalizeOrder(order){
 
@@ -1867,17 +1654,10 @@ updated_at:order.updated_at
 
 }
 
-
-/* =====================================================
-OVERDUE
-===================================================== */
-
 function isOverdue(order){
 
 if(!order.due){
-
 return false;
-
 }
 
 return(
@@ -1896,11 +1676,6 @@ stages.length-1;
 
 }
 
-
-/* =====================================================
-NAVIGATION
-===================================================== */
-
 function showSection(
 id,
 button
@@ -1912,9 +1687,11 @@ document
 )
 .forEach(
 section=>{
+
 section
 .classList
 .add("hidden");
+
 }
 );
 
@@ -1929,9 +1706,11 @@ document
 )
 .forEach(
 btn=>{
+
 btn
 .classList
 .remove("active");
+
 }
 );
 
@@ -1940,11 +1719,6 @@ button
 .add("active");
 
 }
-
-
-/* =====================================================
-ADD ORDER
-===================================================== */
 
 function openAddModal(){
 
@@ -1976,6 +1750,7 @@ document.getElementById(
 document.getElementById(
 "due"
 ).value =
+
 new Date()
 .toISOString()
 .split("T")[0];
@@ -1988,7 +1763,6 @@ document.getElementById(
 
 }
 
-
 function closeModal(){
 
 document
@@ -2000,11 +1774,6 @@ document
 
 }
 
-
-/* =====================================================
-SAVE ORDER
-===================================================== */
-
 document
 .getElementById(
 "orderForm"
@@ -2014,7 +1783,6 @@ document
 async function(e){
 
 e.preventDefault();
-
 
 if(role !== "المدير"){
 
@@ -2026,12 +1794,10 @@ return;
 
 }
 
-
 const editId =
 document.getElementById(
 "editId"
 ).value;
-
 
 const payload = {
 
@@ -2087,46 +1853,32 @@ new Date()
 
 };
 
-
 try{
-
 
 if(editId){
 
 await supabaseRequest(
-
 "orders",
-
 "PATCH",
-
 payload,
-
 "?id=eq."+
 encodeURIComponent(editId)
-
 );
 
 message(
 "✅ تم تعديل الطلبية"
 );
 
-
 }else{
-
 
 payload.stage=0;
 
 delete payload.updated_at;
 
-
 await supabaseRequest(
-
 "orders",
-
 "POST",
-
 payload
-
 );
 
 message(
@@ -2135,11 +1887,9 @@ message(
 
 }
 
-
 closeModal();
 
 await loadOrders();
-
 
 }catch(error){
 
@@ -2153,11 +1903,6 @@ error.message
 }
 
 });
-
-
-/* =====================================================
-EDIT ORDER
-===================================================== */
 
 function editOrder(id){
 
@@ -2179,11 +1924,8 @@ o=>String(o.id) === String(id)
 );
 
 if(!order){
-
 return;
-
 }
-
 
 document.getElementById(
 "modalTitle"
@@ -2191,48 +1933,40 @@ document.getElementById(
 "✏️ تعديل الطلبية #"+
 order.num;
 
-
 document.getElementById(
 "editId"
 ).value =
 order.id;
-
 
 document.getElementById(
 "orderNum"
 ).value =
 order.num;
 
-
 document.getElementById(
 "customer"
 ).value =
 order.customer;
-
 
 document.getElementById(
 "phone"
 ).value =
 order.phone;
 
-
 document.getElementById(
 "due"
 ).value =
 order.due;
-
 
 document.getElementById(
 "notes"
 ).value =
 order.notes;
 
-
 document.getElementById(
 "urgent"
 ).checked =
 order.urgent;
-
 
 document
 .getElementById(
@@ -2242,11 +1976,6 @@ document
 .remove("hidden");
 
 }
-
-
-/* =====================================================
-DELETE
-===================================================== */
 
 async function deleteOrder(id){
 
@@ -2268,9 +1997,7 @@ o=>String(o.id) === String(id)
 );
 
 if(!order){
-
 return;
-
 }
 
 if(
@@ -2280,24 +2007,17 @@ order.num+
 " ؟"
 )
 ){
-
 return;
-
 }
 
 try{
 
 await supabaseRequest(
-
 "orders",
-
 "DELETE",
-
 null,
-
 "?id=eq."+
 encodeURIComponent(id)
-
 );
 
 message(
@@ -2305,7 +2025,6 @@ message(
 );
 
 await loadOrders();
-
 
 }catch(error){
 
@@ -2318,11 +2037,6 @@ error.message
 
 }
 
-
-/* =====================================================
-NEXT STAGE
-===================================================== */
-
 async function nextStage(id){
 
 const order =
@@ -2333,20 +2047,15 @@ o=>String(o.id) === String(id)
 );
 
 if(!order){
-
 return;
-
 }
 
 const next =
 order.stage + 1;
 
 if(next >= stages.length){
-
 return;
-
 }
-
 
 if(role !== "المدير"){
 
@@ -2365,25 +2074,19 @@ return;
 
 }
 
-
 try{
 
 await supabaseRequest(
-
 "orders",
-
 "PATCH",
-
 {
 stage:next,
 updated_at:
 new Date()
 .toISOString()
 },
-
 "?id=eq."+
 encodeURIComponent(id)
-
 );
 
 message(
@@ -2391,7 +2094,6 @@ message(
 );
 
 await loadOrders();
-
 
 }catch(error){
 
@@ -2404,11 +2106,6 @@ error.message
 
 }
 
-
-/* =====================================================
-DETAILS
-===================================================== */
-
 function details(id){
 
 const order =
@@ -2419,9 +2116,7 @@ o=>String(o.id) === String(id)
 );
 
 if(!order){
-
 return;
-
 }
 
 alert(
@@ -2457,11 +2152,6 @@ order.customer+
 
 }
 
-
-/* =====================================================
-ORDER HTML
-===================================================== */
-
 function orderHtml(order){
 
 return `
@@ -2488,15 +2178,7 @@ ${escapeHtml(order.customer)}
 
 </div>
 
-<span
-class="badge ${
-isOverdue(order)
-?
-"overdue"
-:
-""
-}"
->
+<span class="badge ${isOverdue(order) ? "overdue" : ""}">
 
 ${
 isOverdue(order)
@@ -2513,7 +2195,6 @@ stages[order.stage]?.[0] ||
 
 </div>
 
-
 <div class="info">
 
 <div class="info-box">
@@ -2526,7 +2207,6 @@ ${escapeHtml(order.phone || "-")}
 
 </div>
 
-
 <div class="info-box">
 
 📅 التسليم
@@ -2536,7 +2216,6 @@ ${escapeHtml(order.due || "-")}
 </b>
 
 </div>
-
 
 <div class="info-box">
 
@@ -2553,7 +2232,6 @@ stages[order.stage]?.[1] ||
 
 </div>
 
-
 <div class="actions">
 
 <button
@@ -2563,12 +2241,9 @@ onclick="details('${order.id}')"
 📋 التفاصيل
 </button>
 
-
 ${
 role === "المدير"
-
 ?
-
 `
 
 <button
@@ -2586,17 +2261,12 @@ onclick="deleteOrder('${order.id}')"
 </button>
 
 `
-
 :
-
 ""
-
 }
-
 
 ${
 order.stage < stages.length-1
-
 ?
 
 `
@@ -2621,7 +2291,6 @@ stages[order.stage+1][1]
 </span>
 
 `
-
 }
 
 </div>
@@ -2632,11 +2301,6 @@ stages[order.stage+1][1]
 
 }
 
-
-/* =====================================================
-DASHBOARD
-===================================================== */
-
 function renderDashboard(){
 
 const list =
@@ -2644,85 +2308,74 @@ orders.map(
 normalizeOrder
 );
 
-
 document.getElementById(
 "totalCount"
 ).textContent =
 list.length;
 
-
 document.getElementById(
 "activeCount"
 ).textContent =
+
 list.filter(
 o=>o.stage <
 stages.length-1
 ).length;
 
-
 document.getElementById(
 "urgentCount"
 ).textContent =
+
 list.filter(
 o=>o.urgent
 ).length;
 
-
 document.getElementById(
 "overdueCount"
 ).textContent =
+
 list.filter(
 isOverdue
 ).length;
 
-
 const latest =
 list.slice(0,5);
-
 
 document.getElementById(
 "latestOrders"
 ).innerHTML =
 
 latest.length
-
 ?
-
 latest
 .map(orderHtml)
 .join("")
-
 :
-
 "<div class='empty'>لا توجد طلبيات حتى الآن</div>";
 
 }
 
-
-/* =====================================================
-ORDERS
-===================================================== */
-
 function renderOrders(){
 
 const search =
+
 (
 document.getElementById(
 "search"
 )?.value ||
 ""
 )
+
 .trim()
 .toLowerCase();
-
 
 const list =
 orders.map(
 normalizeOrder
 );
 
-
 const filtered =
+
 list.filter(
 order=>
 
@@ -2731,35 +2384,26 @@ order.num,
 order.customer,
 order.phone
 ]
+
 .join(" ")
 .toLowerCase()
 .includes(search)
 
 );
 
-
 document.getElementById(
 "ordersList"
 ).innerHTML =
 
 filtered.length
-
 ?
-
 filtered
 .map(orderHtml)
 .join("")
-
 :
-
 "<div class='empty'>لا توجد طلبيات مطابقة.</div>";
 
 }
-
-
-/* =====================================================
-STAGES
-===================================================== */
 
 function renderStages(){
 
@@ -2768,20 +2412,20 @@ orders.map(
 normalizeOrder
 );
 
-
 document.getElementById(
 "stageList"
 ).innerHTML =
 
 stages
+
 .map(
 (stage,index)=>{
 
 const stageOrders =
+
 list.filter(
 o=>o.stage === index
 );
-
 
 return `
 
@@ -2792,39 +2436,29 @@ return `
 <div>
 
 <div class="order-number">
-
 ${stage[0]}
-
 </div>
 
 <div class="customer">
-
 القسم المسؤول:
 ${stage[1]}
-
 </div>
 
 </div>
 
 <span class="badge">
-
 ${stageOrders.length}
 طلبية
-
 </span>
 
 </div>
 
-
 ${
 stageOrders.length
-
 ?
-
 stageOrders
 .map(orderHtml)
 .join("")
-
 :
 
 `
@@ -2843,39 +2477,27 @@ stageOrders
 
 }
 )
+
 .join("");
 
 }
 
-
-/* =====================================================
-USERS
-===================================================== */
-
 async function loadUsers(){
 
 if(role !== "المدير"){
-
 return;
-
 }
 
 try{
 
 const users =
 await supabaseRequest(
-
 "profiles",
-
 "GET",
-
 null,
-
 "?select=id,username,full_name,role,active,email"+
 "&order=created_at.desc"
-
 );
-
 
 document.getElementById(
 "usersList"
@@ -2924,7 +2546,6 @@ user.role
 
 </div>
 
-
 <div class="info">
 
 <div class="info-box">
@@ -2941,7 +2562,6 @@ ${user.active
 
 </div>
 
-
 <div class="info-box">
 
 القسم
@@ -2953,7 +2573,6 @@ user.role
 </b>
 
 </div>
-
 
 <div class="info-box">
 
@@ -2973,12 +2592,12 @@ user.username
 
 `
 )
+
 .join("")
 
 :
 
 "<div class='empty'>لا يوجد مستخدمون</div>";
-
 
 }catch(error){
 
@@ -2987,11 +2606,6 @@ console.error(error);
 }
 
 }
-
-
-/* =====================================================
-USER MODAL
-===================================================== */
 
 function openUserModal(){
 
@@ -3005,19 +2619,16 @@ return;
 
 }
 
-
 document
 .getElementById(
 "userForm"
 )
 .reset();
 
-
 document.getElementById(
 "newActive"
 )
 .checked=true;
-
 
 document
 .getElementById(
@@ -3027,7 +2638,6 @@ document
 .remove("hidden");
 
 }
-
 
 function closeUserModal(){
 
@@ -3040,11 +2650,6 @@ document
 
 }
 
-
-/* =====================================================
-CREATE USER
-===================================================== */
-
 document
 .getElementById(
 "userForm"
@@ -3054,7 +2659,6 @@ document
 async function(e){
 
 e.preventDefault();
-
 
 if(role !== "المدير"){
 
@@ -3066,29 +2670,12 @@ return;
 
 }
 
-
-/*
-مهم:
-لا نضع Service Role Key
-داخل index.html.
-
-إنشاء مستخدم Auth يجب أن يتم
-من خلال Edge Function آمنة.
-*/
-
 alert(
-
-"شاشة إنشاء المستخدم جاهزة، لكن إنشاء حساب Auth يحتاج Edge Function آمنة في Supabase حتى لا يتم كشف المفتاح السري."
-
+"شاشة إنشاء المستخدم جاهزة، لكن إنشاء حساب Auth يحتاج Edge Function آمنة في Supabase."
 );
 
 }
 );
-
-
-/* =====================================================
-RENDER ALL
-===================================================== */
 
 function renderAll(){
 
@@ -3099,24 +2686,12 @@ renderOrders();
 renderStages();
 
 if(role === "المدير"){
-
 loadUsers();
-
 }
 
 }
-
-
-/* =====================================================
-START
-===================================================== */
 
 checkSession();
-
-
-/* =====================================================
-SERVICE WORKER
-===================================================== */
 
 if(
 "serviceWorker"
