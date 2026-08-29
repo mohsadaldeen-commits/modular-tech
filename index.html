@@ -86,7 +86,8 @@ padding:12px;
 border-radius:10px;
 margin-bottom:15px;
 display:none;
-font-weight:bold
+font-weight:bold;
+white-space:pre-line
 }
 
 header{
@@ -916,10 +917,6 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_vVXVJGcWpoPvPEH_bfm23Q_dZ5eXvmE";
 
-/*
- Edge Function الحالية التي أرسلتها:
- bright-task
-*/
 const CREATE_USER_FUNCTION =
 "https://bvrfrcmblwzuqprjknam.supabase.co/functions/v1/bright-task";
 
@@ -932,7 +929,7 @@ let role = "";
 
 
 /* =====================================================
-SUPABASE REQUEST
+GENERAL SUPABASE REQUEST
 ===================================================== */
 
 async function request(path,method="GET",body=null){
@@ -945,7 +942,7 @@ localStorage.getItem(
 const authToken =
 token || SUPABASE_KEY;
 
-const options = {
+const options={
 
 method:method,
 
@@ -958,7 +955,7 @@ headers:{
 
 };
 
-if(body !== null){
+if(body!==null){
 
 options.body =
 JSON.stringify(body);
@@ -967,7 +964,7 @@ JSON.stringify(body);
 
 const response =
 await fetch(
-SUPABASE_URL + path,
+SUPABASE_URL+path,
 options
 );
 
@@ -995,7 +992,10 @@ if(!response.ok){
 
 let message;
 
-if(typeof data==="object" && data){
+if(
+typeof data==="object" &&
+data
+){
 
 message =
 data.message ||
@@ -1022,7 +1022,7 @@ return data;
 
 
 /* =====================================================
-AUTH
+AUTH LOGIN
 ===================================================== */
 
 async function auth(path,body){
@@ -1172,10 +1172,9 @@ return;
 try{
 
 /*
-=======================================================
-الخطوة 1:
-الحصول على البريد المرتبط باسم المستخدم
-=======================================================
+-------------------------------------------------------
+الحصول على البريد من اسم المستخدم
+-------------------------------------------------------
 */
 
 const result =
@@ -1218,10 +1217,9 @@ throw new Error(
 
 
 /*
-=======================================================
-الخطوة 2:
+-------------------------------------------------------
 تسجيل الدخول في Supabase Auth
-=======================================================
+-------------------------------------------------------
 */
 
 const session =
@@ -1233,10 +1231,15 @@ password:password
 }
 );
 
-if(!session.access_token){
+if(
+!session ||
+!session.access_token ||
+!session.user ||
+!session.user.id
+){
 
 throw new Error(
-"لم يتم الحصول على جلسة دخول من Auth"
+"لم يتم الحصول على جلسة Auth صحيحة"
 );
 
 }
@@ -1257,25 +1260,21 @@ session.refresh_token
 
 
 /*
-=======================================================
-الخطوة 3:
-تحميل profile عن طريق auth.uid()
-وليس عن طريق ID من المتصفح
-=======================================================
+-------------------------------------------------------
+تحميل profile باستخدام Auth UID الحقيقي
+-------------------------------------------------------
 */
 
 await loadProfile(
 session.user.id,
-session.user.email,
-username
+session.user.email
 );
 
 
 /*
-=======================================================
-الخطوة 4:
+-------------------------------------------------------
 إظهار التطبيق
-=======================================================
+-------------------------------------------------------
 */
 
 showApp();
@@ -1288,7 +1287,7 @@ await loadUsers();
 
 }
 
-msg("✅ تم تسجيل الدخول");
+msg("✅ تم تسجيل الدخول بنجاح");
 
 }catch(error){
 
@@ -1308,61 +1307,63 @@ errorBox.style.display="block";
 
 
 /* =====================================================
-الحل الجذري لمشكلة profiles
+الحل النهائي لربط AUTH مع PROFILES
 ===================================================== */
 
-async function loadProfile(
-userId,
-email="",
-username=""
-){
+async function loadProfile(userId,userEmail=""){
 
 currentProfile=null;
 
-try{
+if(!userId){
 
-/*
-لا نستخدم:
-profiles?id=eq...
-
-ولا:
-profiles?email=...
-
-ولا:
-profiles?username=...
-
-بل نستخدم RPC:
-get_my_profile()
-
-والـ SQL داخل Supabase يستخدم:
-auth.uid()
-*/
-
-const data =
-await request(
-"/rest/v1/rpc/get_my_profile",
-"POST",
-{}
+throw new Error(
+"لم يتم الحصول على Auth User ID"
 );
 
-if(
-Array.isArray(data) &&
-data.length>0
-){
-
-currentProfile=data[0];
-
 }
+
+
+/*
+-------------------------------------------------------
+مهم جدًا:
+
+نبحث في profiles باستخدام ID الخاص بـ Auth مباشرة.
+
+profiles.id = auth.users.id
+
+ولا نعتمد على username
+ولا email
+ولا RPC get_my_profile
+-------------------------------------------------------
+*/
+
+const query =
+"/rest/v1/profiles"+
+"?select=id,username,full_name,role,active,email"+
+"&id=eq."+
+encodeURIComponent(userId)+
+"&limit=1";
+
+
+let data;
+
+try{
+
+data =
+await request(
+query,
+"GET"
+);
 
 }catch(error){
 
 console.error(
-"get_my_profile ERROR:",
+"PROFILES QUERY ERROR:",
 error
 );
 
 throw new Error(
-"تعذر الوصول إلى ملف المستخدم في Supabase: "+
+"تعذر قراءة جدول profiles: "+
 error.message
 );
 
@@ -1370,26 +1371,34 @@ error.message
 
 
 /*
-=======================================================
-التأكد من أن الملف موجود
-=======================================================
+-------------------------------------------------------
+يجب أن تكون النتيجة صفًا واحدًا
+-------------------------------------------------------
 */
 
-if(!currentProfile){
+if(
+!Array.isArray(data) ||
+data.length===0
+){
 
 throw new Error(
-"لم يتم العثور على ملف المستخدم في profiles. "+
-"تأكد من وجود سجل مرتبط بـ Auth User ID."
+"لم يتم العثور على ملف المستخدم في profiles.\n\n"+
+"Auth User ID:\n"+
+userId+
+"\n\n"+
+"يجب أن يكون profiles.id مطابقًا تمامًا لـ auth.users.id."
 );
 
 }
 
 
+currentProfile=data[0];
+
+
 /*
-=======================================================
-حماية إضافية:
-يجب أن يكون ID الملف هو نفس Auth UID
-=======================================================
+-------------------------------------------------------
+تحقق إضافي من ID
+-------------------------------------------------------
 */
 
 if(
@@ -1398,41 +1407,60 @@ String(userId).toLowerCase()
 ){
 
 throw new Error(
-"خطأ في ربط المستخدم: profiles.id لا يطابق Auth User ID."
+"خطأ في ربط المستخدم.\n\n"+
+"profiles.id:\n"+
+currentProfile.id+
+"\n\n"+
+"Auth User ID:\n"+
+userId+
+"\n\n"+
+"القيمتان يجب أن تكونا متطابقتين تمامًا."
 );
 
 }
 
 
 /*
-=======================================================
-الحساب فعال؟
-=======================================================
+-------------------------------------------------------
+الحساب فعال
+-------------------------------------------------------
 */
 
-if(currentProfile.active===false){
+if(
+currentProfile.active === false
+){
 
 throw new Error(
-"هذا الحساب غير فعال"
+"اسم المستخدم موجود ولكن الحساب غير فعال."
 );
 
 }
 
 
 /*
-=======================================================
+-------------------------------------------------------
 الدور
-=======================================================
+-------------------------------------------------------
 */
 
 role =
-currentProfile.role || "";
+currentProfile.role ||
+"";
+
+
+if(!role){
+
+throw new Error(
+"تم العثور على المستخدم ولكن لم يتم تحديد القسم أو الدور في profiles."
+);
+
+}
 
 
 /*
-=======================================================
-عرض المستخدم
-=======================================================
+-------------------------------------------------------
+عرض بيانات المستخدم
+-------------------------------------------------------
 */
 
 document.getElementById(
@@ -1446,26 +1474,10 @@ currentProfile.username ||
 " — "+
 role;
 
-}
-
-
-/* =====================================================
-SHOW APP
-===================================================== */
-
-function showApp(){
-
-document
-.getElementById("loginPage")
-.classList
-.add("hidden");
-
-document
-.getElementById("app")
-.classList
-.remove("hidden");
-
-applyPermissions();
+console.log(
+"PROFILE LOADED:",
+currentProfile
+);
 
 }
 
@@ -1494,7 +1506,10 @@ await request(
 "/auth/v1/user"
 );
 
-if(!user || !user.id){
+if(
+!user ||
+!user.id
+){
 
 throw new Error(
 "جلسة Auth غير صالحة"
@@ -1504,8 +1519,7 @@ throw new Error(
 
 await loadProfile(
 user.id,
-user.email,
-""
+user.email
 );
 
 showApp();
@@ -1567,6 +1581,27 @@ currentProfile=null;
 role="";
 
 location.reload();
+
+}
+
+
+/* =====================================================
+SHOW APP
+===================================================== */
+
+function showApp(){
+
+document
+.getElementById("loginPage")
+.classList
+.add("hidden");
+
+document
+.getElementById("app")
+.classList
+.remove("hidden");
+
+applyPermissions();
 
 }
 
@@ -1683,7 +1718,7 @@ document.getElementById(
 
 
 /* =====================================================
-NORMALIZE
+NORMALIZE ORDER
 ===================================================== */
 
 function norm(order){
@@ -1952,7 +1987,10 @@ await loadOrders();
 
 }catch(error){
 
-console.error(error);
+console.error(
+"SAVE ORDER ERROR:",
+error
+);
 
 alert(
 "❌ فشل الحفظ\n\n"+
@@ -2620,7 +2658,6 @@ stageOrders
 
 /* =====================================================
 LOAD USERS
-الحل الجديد يستخدم RPC
 ===================================================== */
 
 async function loadUsers(){
@@ -2650,29 +2687,23 @@ usersList.innerHTML =
 try{
 
 /*
-=======================================================
-مهم:
-لا نقرأ profiles مباشرة.
-
-نستخدم الدالة:
-get_all_profiles()
-
-التي تعمل SECURITY DEFINER
-داخل Supabase.
-=======================================================
+-------------------------------------------------------
+قراءة profiles مباشرة.
+لا يوجد اعتماد على get_all_profiles.
+-------------------------------------------------------
 */
 
 const users =
 await request(
-"/rest/v1/rpc/get_all_profiles",
-"POST",
-{}
+"/rest/v1/profiles"+
+"?select=id,username,full_name,role,active,email"+
+"&order=full_name.asc"
 );
 
 if(!Array.isArray(users)){
 
 throw new Error(
-"البيانات المستلمة من get_all_profiles غير صحيحة"
+"البيانات المستلمة من profiles غير صحيحة"
 );
 
 }
@@ -2875,7 +2906,7 @@ document
 
 /* =====================================================
 CREATE USER
-Edge Function: bright-task
+bright-task
 ===================================================== */
 
 document
@@ -2968,9 +2999,9 @@ throw new Error(
 
 
 /*
-=======================================================
-إنشاء المستخدم عن طريق Edge Function
-=======================================================
+-------------------------------------------------------
+إنشاء المستخدم عبر Edge Function
+-------------------------------------------------------
 */
 
 const response =
@@ -3053,13 +3084,6 @@ data.error_description||
 
 }
 
-
-/*
-=======================================================
-تم إنشاء المستخدم
-=======================================================
-*/
-
 closeUserModal();
 
 document
@@ -3069,13 +3093,6 @@ document
 document.getElementById(
 "newActive"
 ).checked=true;
-
-
-/*
-=======================================================
-إعادة تحميل قائمة المستخدمين
-=======================================================
-*/
 
 await loadUsers();
 
@@ -3133,7 +3150,7 @@ renderStages();
 
 
 /* =====================================================
-START
+START APPLICATION
 ===================================================== */
 
 checkSession();
@@ -3143,7 +3160,9 @@ checkSession();
 SERVICE WORKER
 ===================================================== */
 
-if("serviceWorker" in navigator){
+if(
+"serviceWorker" in navigator
+){
 
 navigator
 .serviceWorker
