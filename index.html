@@ -6,7 +6,6 @@
 <title>MODULAR TECH</title>
 
 <meta name="theme-color" content="#102a43">
-<link rel="manifest" href="manifest.webmanifest">
 
 <style>
 *{box-sizing:border-box}
@@ -116,7 +115,8 @@ font-size:13px;
 font-weight:bold
 }
 
-input,textarea{
+input,
+textarea{
 width:100%;
 padding:11px;
 margin:6px 0 12px;
@@ -319,24 +319,20 @@ border-radius:14px;
 padding:15px
 }
 
-.history{
-margin-top:15px;
-border-top:1px solid #e3e8ef;
-padding-top:12px
-}
-
 .history-item{
-padding:10px;
 background:#f6f8fb;
+padding:10px;
 border-radius:9px;
-margin-bottom:7px;
+margin-top:7px;
 font-size:13px
 }
 
 @media(max-width:900px){
+
 .stats{
 grid-template-columns:repeat(2,1fr)
 }
+
 }
 
 @media(max-width:600px){
@@ -365,8 +361,10 @@ grid-template-columns:1fr
 .info{
 grid-template-columns:1fr 1fr
 }
+
 }
 </style>
+
 </head>
 
 <body>
@@ -383,27 +381,33 @@ MODULAR TECH
 
 </header>
 
+
 <div class="container">
 
 <div class="nav">
 
-<button class="active"
-onclick="showSection('dashboard',this)">
+<button
+class="active"
+onclick="showSection('dashboard',this)"
+>
 🏠 الرئيسية
 </button>
 
 <button
-onclick="showSection('ordersSection',this)">
+onclick="showSection('ordersSection',this)"
+>
 📋 الطلبيات
 </button>
 
 <button
-onclick="showSection('production',this)">
+onclick="showSection('production',this)"
+>
 🏭 مراحل العمل
 </button>
 
 <button
-onclick="showSection('users',this)">
+onclick="showSection('users',this)"
+>
 👥 المستخدمون
 </button>
 
@@ -415,42 +419,70 @@ onclick="showSection('users',this)">
 <div class="stats">
 
 <div class="stat">
+
 <div class="stat-title">
 إجمالي الطلبيات
 </div>
-<div class="stat-number" id="totalCount">
+
+<div
+class="stat-number"
+id="totalCount"
+>
 0
 </div>
+
 </div>
 
+
 <div class="stat">
+
 <div class="stat-title">
 قيد العمل
 </div>
-<div class="stat-number" id="activeCount">
+
+<div
+class="stat-number"
+id="activeCount"
+>
 0
 </div>
+
 </div>
 
+
 <div class="stat">
+
 <div class="stat-title">
 مهمة جدًا
 </div>
-<div class="stat-number" id="urgentCount">
+
+<div
+class="stat-number"
+id="urgentCount"
+>
 0
 </div>
+
 </div>
 
+
 <div class="stat">
+
 <div class="stat-title">
 متأخرة
 </div>
-<div class="stat-number" id="overdueCount">
+
+<div
+class="stat-number"
+id="overdueCount"
+>
 0
-</div>
 </div>
 
 </div>
+
+</div>
+
 
 <div class="panel">
 
@@ -462,17 +494,14 @@ onclick="showSection('users',this)">
 
 <button
 class="primary"
-onclick="openAddModal()">
+onclick="openAddModal()"
+>
 ➕ إضافة طلبية
 </button>
 
 </div>
 
-<div id="latestOrders">
-<div class="empty">
-جاري تحميل الطلبيات...
-</div>
-</div>
+<div id="latestOrders"></div>
 
 </div>
 
@@ -481,7 +510,8 @@ onclick="openAddModal()">
 
 <section
 id="ordersSection"
-class="hidden">
+class="hidden"
+>
 
 <div class="panel">
 
@@ -493,23 +523,27 @@ class="hidden">
 
 <button
 class="primary"
-onclick="openAddModal()">
+onclick="openAddModal()"
+>
 ➕ إضافة طلبية
 </button>
 
 </div>
+
 
 <input
 class="search"
 id="search"
 type="search"
 placeholder="🔎 ابحث برقم الطلبية أو اسم الزبون أو الهاتف"
-oninput="renderOrders()">
+oninput="renderOrders()"
+>
+
 
 <div
 id="ordersList"
-class="order-list">
-</div>
+class="order-list"
+></div>
 
 </div>
 
@@ -518,7 +552,8 @@ class="order-list">
 
 <section
 id="production"
-class="hidden">
+class="hidden"
+>
 
 <div class="panel">
 
@@ -528,8 +563,8 @@ class="hidden">
 
 <div
 id="stageList"
-class="order-list">
-</div>
+class="order-list"
+></div>
 
 </div>
 
@@ -538,7 +573,8 @@ class="order-list">
 
 <section
 id="users"
-class="hidden">
+class="hidden"
+>
 
 <div class="panel">
 
@@ -547,13 +583,21 @@ class="hidden">
 </h2>
 
 <p>👑 المدير: إدارة كاملة للطلبيات.</p>
+
 <p>✂️ القص: تحديث مرحلة القص.</p>
+
 <p>🔧 الكنت: تحديث مرحلة الكنت.</p>
+
 <p>⚙️ CNC: تحديث مرحلة CNC.</p>
+
 <p>🛠️ التركيب: تحديث مرحلة التركيب.</p>
+
 <p>🎨 الدهان: تحديث مرحلة الدهان.</p>
+
 <p>📦 التغليف: تحديث مرحلة التغليف.</p>
+
 <p>🚚 التحميل: تحديث مرحلة التحميل.</p>
+
 <p>✅ التسليم: إتمام الطلبية.</p>
 
 </div>
@@ -565,13 +609,14 @@ class="hidden">
 
 <div
 id="message"
-class="message">
-</div>
+class="message"
+></div>
 
 
 <div
 id="orderModal"
-class="modal hidden">
+class="modal hidden"
+>
 
 <div class="modal-box">
 
@@ -583,7 +628,8 @@ class="modal hidden">
 
 <button
 class="close"
-onclick="closeModal()">
+onclick="closeModal()"
+>
 ×
 </button>
 
@@ -594,7 +640,8 @@ onclick="closeModal()">
 
 <input
 type="hidden"
-id="editId">
+id="editId"
+>
 
 
 <label>
@@ -604,7 +651,8 @@ id="editId">
 <input
 id="orderNum"
 required
-placeholder="مثال: 10025">
+placeholder="مثال: 10025"
+>
 
 
 <label>
@@ -614,7 +662,8 @@ placeholder="مثال: 10025">
 <input
 id="customer"
 required
-placeholder="اسم الزبون">
+placeholder="اسم الزبون"
+>
 
 
 <div class="row">
@@ -628,7 +677,8 @@ placeholder="اسم الزبون">
 <input
 id="phone"
 type="tel"
-placeholder="05xxxxxxxx">
+placeholder="05xxxxxxxx"
+>
 
 </div>
 
@@ -642,7 +692,8 @@ placeholder="05xxxxxxxx">
 <input
 id="due"
 type="date"
-required>
+required
+>
 
 </div>
 
@@ -656,15 +707,16 @@ required>
 <textarea
 id="notes"
 rows="4"
-placeholder="اكتب الملاحظات">
-</textarea>
+placeholder="اكتب الملاحظات"
+></textarea>
 
 
 <label class="check">
 
 <input
 type="checkbox"
-id="urgent">
+id="urgent"
+>
 
 ⭐ هذه الطلبية مهمة جدًا
 
@@ -675,14 +727,16 @@ id="urgent">
 
 <button
 type="submit"
-class="primary">
+class="primary"
+>
 💾 حفظ الطلبية
 </button>
 
 <button
 type="button"
 class="secondary"
-onclick="closeModal()">
+onclick="closeModal()"
+>
 إلغاء
 </button>
 
@@ -706,27 +760,36 @@ const SUPABASE_KEY =
 const CURRENT_USER_ID =
 "042b87f5-32db-47e3-b3e2-8463e19584e5";
 
-const ROLE =
-"المدير";
-
 
 const stages = [
 
 ["في العمل","المدير"],
+
 ["تم القص","القص"],
+
 ["تم الكنت","الكنت"],
+
 ["تم CNC","CNC"],
+
 ["تم التركيب","التركيب"],
+
 ["تم الدهان","الدهان"],
+
 ["تم التغليف","التغليف"],
+
 ["تم التحميل","التحميل"],
+
 ["تم التسليم","التسليم"]
 
 ];
 
 
-let orders=[];
+let orders = [];
 
+
+/* =========================
+   الاتصال
+========================= */
 
 async function supabaseRequest(
 table,
@@ -735,55 +798,66 @@ body=null,
 query=""
 ){
 
-const options={
+const options = {
 
-method,
+method:method,
 
 headers:{
+
 "apikey":SUPABASE_KEY,
-"Authorization":"Bearer "+SUPABASE_KEY,
-"Content-Type":"application/json",
-"Prefer":"return=representation"
+
+"Authorization":
+"Bearer "+SUPABASE_KEY,
+
+"Content-Type":
+"application/json",
+
+"Prefer":
+"return=representation"
+
 }
 
 };
 
 
-if(body!==null){
+if(body !== null){
 
-options.body=
+options.body =
 JSON.stringify(body);
 
 }
 
 
-const response=
+const response =
 await fetch(
+
 SUPABASE_URL+
 "/rest/v1/"+
 table+
 query,
+
 options
+
 );
 
 
-const text=
+const text =
 await response.text();
 
 
-let data=null;
-
+let data;
 
 try{
 
-data=
+data =
 text
 ?
 JSON.parse(text)
 :
 null;
 
-}catch(e){
+}
+catch(e){
 
 data=text;
 
@@ -799,10 +873,10 @@ typeof data==="object"
 ?
 
 (
-data.message||
-data.details||
-data.hint||
-data.error||
+data.message ||
+data.details ||
+data.hint ||
+data.error ||
 JSON.stringify(data)
 )
 
@@ -820,68 +894,70 @@ return data;
 }
 
 
-function message(text){
+/* =========================
+   الرسائل
+========================= */
 
-const box=
-document.getElementById("message");
+function showMessage(
+text,
+success=true
+){
+
+const box =
+document.getElementById(
+"message"
+);
 
 box.textContent=text;
+
+box.style.background =
+success
+?
+"#198754"
+:
+"#d92d20";
 
 box.style.display="block";
 
 
+clearTimeout(
+window.messageTimer
+);
+
+
+window.messageTimer =
 setTimeout(()=>{
 
 box.style.display="none";
 
-},2500);
+},3500);
 
 }
 
 
-function normalizeOrder(o){
-
-return {
-
-id:o.id,
-
-num:o.order_number||"",
-
-customer:o.customer_name||"",
-
-phone:o.phone||"",
-
-due:o.due_date||"",
-
-notes:o.notes||"",
-
-urgent:Boolean(o.urgent),
-
-stage:Number(o.stage??0),
-
-created_at:o.created_at,
-
-updated_at:o.updated_at
-
-};
-
-}
-
+/* =========================
+   تحميل الطلبات
+========================= */
 
 async function loadOrders(){
 
 try{
 
-const data=
+const data =
 await supabaseRequest(
+
 "orders",
+
 "GET",
+
 null,
+
 "?select=id,order_number,customer_name,phone,due_date,notes,urgent,stage,created_at,updated_at&order=created_at.desc"
+
 );
 
 
-orders=
+orders =
 Array.isArray(data)
 ?
 data
@@ -891,77 +967,168 @@ data
 
 renderAll();
 
-}catch(error){
+}
+catch(error){
 
 console.error(error);
+
 
 document.getElementById(
 "latestOrders"
 ).innerHTML=
+
 "<div class='empty'>❌ تعذر تحميل الطلبيات</div>";
+
 
 document.getElementById(
 "ordersList"
 ).innerHTML=
+
 "<div class='empty'>❌ تعذر تحميل الطلبيات</div>";
 
-}
+
+showMessage(
+"❌ خطأ في الاتصال بقاعدة البيانات",
+false
+);
 
 }
 
+}
+
+
+/* =========================
+   تحويل البيانات
+========================= */
+
+function normalizeOrder(order){
+
+return {
+
+id:order.id,
+
+num:order.order_number || "",
+
+customer:
+order.customer_name || "",
+
+phone:
+order.phone || "",
+
+due:
+order.due_date || "",
+
+notes:
+order.notes || "",
+
+urgent:
+Boolean(order.urgent),
+
+stage:
+Number(order.stage ?? 0),
+
+created_at:
+order.created_at,
+
+updated_at:
+order.updated_at
+
+};
+
+}
+
+
+/* =========================
+   التأخير
+========================= */
 
 function isOverdue(order){
 
 if(!order.due){
+
 return false;
+
 }
 
 
-return(
-new Date(order.due+"T23:59:59")
-<
-new Date()
+return (
+
+new Date(
+order.due+"T23:59:59"
 )
+
+<
+
+new Date()
+
+)
+
 &&
-order.stage<
+
+order.stage <
 stages.length-1;
 
 }
 
 
-function showSection(id,button){
+/* =========================
+   التنقل
+========================= */
+
+function showSection(
+id,
+button
+){
 
 document
 .querySelectorAll(
 ".container > section"
 )
 .forEach(section=>{
-section.classList.add("hidden");
+
+section.classList.add(
+"hidden"
+);
+
 });
 
 
 document
 .getElementById(id)
-.classList.remove("hidden");
+.classList.remove(
+"hidden"
+);
 
 
 document
-.querySelectorAll(".nav button")
+.querySelectorAll(
+".nav button"
+)
 .forEach(btn=>{
-btn.classList.remove("active");
+
+btn.classList.remove(
+"active"
+);
+
 });
 
 
-button.classList.add("active");
+button.classList.add(
+"active"
+);
 
 }
 
+
+/* =========================
+   فتح إضافة
+========================= */
 
 function openAddModal(){
 
 document.getElementById(
 "modalTitle"
-).textContent=
+).textContent =
 "➕ إضافة طلبية";
 
 
@@ -977,7 +1144,7 @@ document.getElementById(
 
 document.getElementById(
 "due"
-).value=
+).value =
 new Date()
 .toISOString()
 .split("T")[0];
@@ -985,19 +1152,31 @@ new Date()
 
 document.getElementById(
 "orderModal"
-).classList.remove("hidden");
+).classList.remove(
+"hidden"
+);
 
 }
 
+
+/* =========================
+   إغلاق
+========================= */
 
 function closeModal(){
 
 document.getElementById(
 "orderModal"
-).classList.add("hidden");
+).classList.add(
+"hidden"
+);
 
 }
 
+
+/* =========================
+   حفظ الطلبية
+========================= */
 
 document
 .getElementById("orderForm")
@@ -1008,36 +1187,57 @@ async function(e){
 e.preventDefault();
 
 
-const editId=
-document.getElementById("editId").value;
+const editId =
+document.getElementById(
+"editId"
+).value;
 
-const orderNumber=
-document.getElementById("orderNum").value.trim();
 
-const customerName=
-document.getElementById("customer").value.trim();
+const orderNumber =
+document.getElementById(
+"orderNum"
+).value.trim();
 
-const phone=
-document.getElementById("phone").value.trim();
 
-const dueDate=
-document.getElementById("due").value;
+const customerName =
+document.getElementById(
+"customer"
+).value.trim();
 
-const notes=
-document.getElementById("notes").value.trim();
 
-const urgent=
-document.getElementById("urgent").checked;
+const phone =
+document.getElementById(
+"phone"
+).value.trim();
+
+
+const dueDate =
+document.getElementById(
+"due"
+).value;
+
+
+const notes =
+document.getElementById(
+"notes"
+).value.trim();
+
+
+const urgent =
+document.getElementById(
+"urgent"
+).checked;
 
 
 if(
-!orderNumber||
-!customerName||
+!orderNumber ||
+!customerName ||
 !dueDate
 ){
 
-alert(
-"يرجى تعبئة البيانات المطلوبة"
+showMessage(
+"❌ يرجى تعبئة البيانات المطلوبة",
+false
 );
 
 return;
@@ -1047,49 +1247,102 @@ return;
 
 try{
 
+
+/* =========================
+   تعديل
+========================= */
+
 if(editId){
 
 await supabaseRequest(
+
 "orders",
+
 "PATCH",
+
 {
-order_number:orderNumber,
-customer_name:customerName,
-phone:phone,
-due_date:dueDate,
-notes:notes,
-urgent:urgent,
-updated_at:new Date().toISOString()
+
+order_number:
+orderNumber,
+
+customer_name:
+customerName,
+
+phone:
+phone,
+
+due_date:
+dueDate,
+
+notes:
+notes,
+
+urgent:
+urgent,
+
+updated_at:
+new Date()
+.toISOString()
+
 },
-"?id=eq."+encodeURIComponent(editId)
+
+"?id=eq."+
+encodeURIComponent(editId)
+
 );
 
 
-message(
+showMessage(
 "✅ تم تعديل الطلبية"
 );
 
-}else{
-
-const inserted=
-await supabaseRequest(
-"orders",
-"POST",
-{
-order_number:orderNumber,
-customer_name:customerName,
-phone:phone,
-due_date:dueDate,
-notes:notes,
-urgent:urgent,
-stage:0
 }
+
+
+/* =========================
+   إضافة
+========================= */
+
+else{
+
+const inserted =
+await supabaseRequest(
+
+"orders",
+
+"POST",
+
+{
+
+order_number:
+orderNumber,
+
+customer_name:
+customerName,
+
+phone:
+phone,
+
+due_date:
+dueDate,
+
+notes:
+notes,
+
+urgent:
+urgent,
+
+stage:0
+
+}
+
 );
 
 
 if(
-!Array.isArray(inserted)||
-!inserted[0]
+!Array.isArray(inserted) ||
+!inserted[0] ||
+inserted[0].id == null
 ){
 
 throw new Error(
@@ -1099,20 +1352,46 @@ throw new Error(
 }
 
 
+/* تسجيل البداية في التاريخ */
+
+try{
+
 await supabaseRequest(
+
 "order_history",
+
 "POST",
+
 {
-order_id:inserted[0].id,
+
+order_id:
+inserted[0].id,
+
 stage:0,
-changed_by:CURRENT_USER_ID,
-changed_at:new Date().toISOString()
+
+changed_by:
+CURRENT_USER_ID,
+
+changed_at:
+new Date().toISOString()
+
 }
+
 );
 
+}
+catch(historyError){
 
-message(
-"✅ تم حفظ الطلبية وتسجيلها"
+console.warn(
+"تعذر تسجيل التاريخ:",
+historyError
+);
+
+}
+
+
+showMessage(
+"✅ تم حفظ الطلبية بنجاح"
 );
 
 }
@@ -1120,16 +1399,23 @@ message(
 
 closeModal();
 
+
 await loadOrders();
 
 
-}catch(error){
+}
+catch(error){
 
 console.error(error);
 
-alert(
-"❌ فشل الحفظ\n\n"+
-error.message
+
+showMessage(
+
+"❌ فشل حفظ الطلبية: "+
+error.message,
+
+false
+
 );
 
 }
@@ -1137,81 +1423,107 @@ error.message
 });
 
 
+/* =========================
+   تعديل
+========================= */
+
 function editOrder(id){
 
-const order=
+const order =
 orders
 .map(normalizeOrder)
 .find(
-o=>String(o.id)===String(id)
+o =>
+String(o.id) ===
+String(id)
 );
 
 
 if(!order){
+
 return;
+
 }
 
 
 document.getElementById(
 "modalTitle"
-).textContent=
-"✏️ تعديل الطلبية #"+order.num;
+).textContent =
+"✏️ تعديل الطلبية #"+
+order.num;
 
 
 document.getElementById(
 "editId"
-).value=order.id;
+).value =
+order.id;
 
 
 document.getElementById(
 "orderNum"
-).value=order.num;
+).value =
+order.num;
 
 
 document.getElementById(
 "customer"
-).value=order.customer;
+).value =
+order.customer;
 
 
 document.getElementById(
 "phone"
-).value=order.phone;
+).value =
+order.phone;
 
 
 document.getElementById(
 "due"
-).value=order.due;
+).value =
+order.due;
 
 
 document.getElementById(
 "notes"
-).value=order.notes;
+).value =
+order.notes;
 
 
 document.getElementById(
 "urgent"
-).checked=order.urgent;
+).checked =
+order.urgent;
 
 
 document.getElementById(
 "orderModal"
-).classList.remove("hidden");
+).classList.remove(
+"hidden"
+);
 
 }
 
 
+/* =========================
+   حذف
+========================= */
+
 async function deleteOrder(id){
 
-const order=
+const order =
 orders
 .map(normalizeOrder)
 .find(
-o=>String(o.id)===String(id)
+o =>
+String(o.id) ===
+String(id)
 );
 
 
 if(!order){
+
 return;
+
 }
 
 
@@ -1219,24 +1531,32 @@ if(
 !confirm(
 "هل تريد حذف الطلبية #"+
 order.num+
-"؟"
+" ؟"
 )
 ){
+
 return;
+
 }
 
 
 try{
 
 await supabaseRequest(
+
 "orders",
+
 "DELETE",
+
 null,
-"?id=eq."+encodeURIComponent(id)
+
+"?id=eq."+
+encodeURIComponent(id)
+
 );
 
 
-message(
+showMessage(
 "🗑️ تم حذف الطلبية"
 );
 
@@ -1244,11 +1564,16 @@ message(
 await loadOrders();
 
 
-}catch(error){
+}
+catch(error){
 
-alert(
-"❌ فشل الحذف\n\n"+
-error.message
+showMessage(
+
+"❌ فشل الحذف: "+
+error.message,
+
+false
+
 );
 
 }
@@ -1256,69 +1581,121 @@ error.message
 }
 
 
+/* =========================
+   المرحلة التالية
+========================= */
+
 async function nextStage(id){
 
-const order=
+const order =
 orders
 .map(normalizeOrder)
 .find(
-o=>String(o.id)===String(id)
+o =>
+String(o.id) ===
+String(id)
 );
 
 
 if(!order){
+
 return;
+
 }
 
 
-const next=
-order.stage+1;
+const next =
+order.stage + 1;
 
 
-if(next>=stages.length){
+if(
+next >= stages.length
+){
+
 return;
+
 }
 
 
 try{
 
 await supabaseRequest(
+
 "orders",
+
 "PATCH",
+
 {
+
 stage:next,
-updated_at:new Date().toISOString()
+
+updated_at:
+new Date().toISOString()
+
 },
-"?id=eq."+encodeURIComponent(id)
+
+"?id=eq."+
+encodeURIComponent(id)
+
 );
 
+
+/* سجل المرحلة */
+
+try{
 
 await supabaseRequest(
+
 "order_history",
+
 "POST",
+
 {
-order_id:order.id,
+
+order_id:
+order.id,
+
 stage:next,
-changed_by:CURRENT_USER_ID,
-changed_at:new Date().toISOString()
+
+changed_by:
+CURRENT_USER_ID,
+
+changed_at:
+new Date().toISOString()
+
 }
+
 );
 
+}
+catch(historyError){
 
-message(
-"✅ تم تحديث المرحلة إلى "+
-stages[next][0]
+console.warn(
+"تعذر تسجيل المرحلة:",
+historyError
+);
+
+}
+
+
+showMessage(
+"✅ تم تحديث المرحلة"
 );
 
 
 await loadOrders();
 
 
-}catch(error){
+}
+catch(error){
 
-alert(
-"❌ فشل تحديث المرحلة\n\n"+
-error.message
+showMessage(
+
+"❌ فشل تحديث المرحلة: "+
+error.message,
+
+false
+
 );
 
 }
@@ -1326,18 +1703,26 @@ error.message
 }
 
 
+/* =========================
+   التفاصيل
+========================= */
+
 async function details(id){
 
-const order=
+const order =
 orders
 .map(normalizeOrder)
 .find(
-o=>String(o.id)===String(id)
+o =>
+String(o.id) ===
+String(id)
 );
 
 
 if(!order){
+
 return;
+
 }
 
 
@@ -1346,69 +1731,110 @@ let history=[];
 
 try{
 
-history=
+const data =
 await supabaseRequest(
+
 "order_history",
+
 "GET",
+
 null,
+
 "?select=id,order_id,stage,changed_by,changed_at&order_id=eq."+
 encodeURIComponent(order.id)+
 "&order=changed_at.asc"
+
 );
 
-}catch(error){
 
-console.error(error);
+history =
+Array.isArray(data)
+?
+data
+:
+[];
+
+}
+catch(error){
+
+console.warn(error);
 
 }
 
 
-let text=
+let text =
 
 "📋 الطلبية #"+
 order.num+
+
 "\n\n"+
+
 "الزبون: "+
 order.customer+
+
 "\n"+
+
 "الهاتف: "+
 (order.phone||"-")+
+
 "\n"+
+
 "موعد التسليم: "+
 (order.due||"-")+
+
 "\n"+
+
 "الحالة: "+
-(stages[order.stage]?.[0]||"-")+
+(
+stages[order.stage]?.[0]
+||
+"-"
+)+
+
 "\n"+
+
 "القسم: "+
-(stages[order.stage]?.[1]||"-")+
+(
+stages[order.stage]?.[1]
+||
+"-"
+)+
+
 "\n"+
+
 "الملاحظات: "+
 (order.notes||"-")+
-"\n\n"+
-"🕘 سجل الحركة:\n";
+
+"\n\n🕘 سجل الحركة:";
 
 
 if(!history.length){
 
-text+="لا يوجد سجل حركة.";
+text +=
+"\nلا يوجد سجل حركة.";
 
-}else{
+}
+else{
 
 history.forEach(item=>{
 
-const stage=
-stages[Number(item.stage)];
+text +=
 
-
-text+=
 "\n"+
-(stage?.[0]||"مرحلة")+
+(
+stages[
+Number(item.stage)
+]?.[0]
+||
+"مرحلة"
+)+
 " — "+
 (
 item.changed_at
 ?
-new Date(item.changed_at).toLocaleString("ar")
+new Date(
+item.changed_at
+).toLocaleString("ar")
 :
 "-"
 );
@@ -1423,42 +1849,53 @@ alert(text);
 }
 
 
+/* =========================
+   لوحة التحكم
+========================= */
+
 function renderDashboard(){
 
-const list=
+const list =
 orders.map(normalizeOrder);
 
 
 document.getElementById(
 "totalCount"
-).textContent=list.length;
+).textContent =
+list.length;
 
 
 document.getElementById(
 "activeCount"
-).textContent=
+).textContent =
+
 list.filter(
-o=>o.stage<stages.length-1
+o =>
+o.stage <
+stages.length-1
 ).length;
 
 
 document.getElementById(
 "urgentCount"
-).textContent=
+).textContent =
+
 list.filter(
-o=>o.urgent
+o =>
+o.urgent
 ).length;
 
 
 document.getElementById(
 "overdueCount"
-).textContent=
+).textContent =
+
 list.filter(
-o=>isOverdue(o)
+isOverdue
 ).length;
 
 
-const latest=
+const latest =
 list.slice(0,5);
 
 
@@ -1466,7 +1903,8 @@ if(!latest.length){
 
 document.getElementById(
 "latestOrders"
-).innerHTML=
+).innerHTML =
+
 "<div class='empty'>لا توجد طلبيات حتى الآن</div>";
 
 return;
@@ -1476,11 +1914,17 @@ return;
 
 document.getElementById(
 "latestOrders"
-).innerHTML=
+).innerHTML =
 
 latest.map(order=>`
 
-<div class="order ${order.urgent?"urgent":""}">
+<div class="order ${
+order.urgent
+?
+"urgent"
+:
+""
+}">
 
 <div class="order-head">
 
@@ -1488,18 +1932,24 @@ latest.map(order=>`
 
 <div class="order-number">
 
-${order.urgent?"⭐ ":""}#${order.num}
+${order.urgent?"⭐ ":""}#${escapeHtml(order.num)}
 
 </div>
 
 <div class="customer">
+
 ${escapeHtml(order.customer)}
+
 </div>
 
 </div>
 
 <span class="badge">
-${stages[order.stage]?.[0]||"في العمل"}
+
+${stages[
+order.stage
+]?.[0]||"في العمل"}
+
 </span>
 
 </div>
@@ -1508,18 +1958,37 @@ ${stages[order.stage]?.[0]||"في العمل"}
 <div class="info">
 
 <div class="info-box">
-الهاتف
-<b>${escapeHtml(order.phone||"-")}</b>
+
+📞 الهاتف
+
+<b>
+${escapeHtml(order.phone||"-")}
+</b>
+
 </div>
 
-<div class="info-box">
-موعد التسليم
-<b>${order.due||"-"}</b>
-</div>
 
 <div class="info-box">
-القسم
-<b>${stages[order.stage]?.[1]||"-"}</b>
+
+📅 التسليم
+
+<b>
+${escapeHtml(order.due||"-")}
+</b>
+
+</div>
+
+
+<div class="info-box">
+
+🏭 القسم
+
+<b>
+${stages[
+order.stage
+]?.[1]||"-"}
+</b>
+
 </div>
 
 </div>
@@ -1531,21 +2000,31 @@ ${stages[order.stage]?.[0]||"في العمل"}
 }
 
 
+/* =========================
+   الطلبيات
+========================= */
+
 function renderOrders(){
 
-const search=
+const search =
+
 (
-document.getElementById("search")?.value||""
+document.getElementById(
+"search"
+)?.value
+||
+""
 )
 .trim()
 .toLowerCase();
 
 
-const list=
+const list =
 orders.map(normalizeOrder);
 
 
-const filtered=
+const filtered =
+
 list.filter(order=>
 
 [
@@ -1564,7 +2043,8 @@ if(!filtered.length){
 
 document.getElementById(
 "ordersList"
-).innerHTML=
+).innerHTML =
+
 "<div class='empty'>لا توجد طلبيات مطابقة.</div>";
 
 return;
@@ -1574,11 +2054,17 @@ return;
 
 document.getElementById(
 "ordersList"
-).innerHTML=
+).innerHTML =
 
 filtered.map(order=>`
 
-<div class="order ${order.urgent?"urgent":""}">
+<div class="order ${
+order.urgent
+?
+"urgent"
+:
+""
+}">
 
 <div class="order-head">
 
@@ -1586,25 +2072,35 @@ filtered.map(order=>`
 
 <div class="order-number">
 
-${order.urgent?"⭐ ":""}#${order.num}
+${order.urgent?"⭐ ":""}#${escapeHtml(order.num)}
 
 </div>
 
 <div class="customer">
+
 ${escapeHtml(order.customer)}
-</div>
 
 </div>
 
+</div>
 
-<span class="badge ${isOverdue(order)?"overdue":""}">
+
+<span class="badge ${
+isOverdue(order)
+?
+"overdue"
+:
+""
+}">
 
 ${
 isOverdue(order)
 ?
 "متأخرة"
 :
-stages[order.stage]?.[0]||"في العمل"
+stages[
+order.stage
+]?.[0]||"في العمل"
 }
 
 </span>
@@ -1615,18 +2111,37 @@ stages[order.stage]?.[0]||"في العمل"
 <div class="info">
 
 <div class="info-box">
+
 📞 الهاتف
-<b>${escapeHtml(order.phone||"-")}</b>
+
+<b>
+${escapeHtml(order.phone||"-")}
+</b>
+
 </div>
 
+
 <div class="info-box">
+
 📅 التسليم
-<b>${order.due||"-"}</b>
+
+<b>
+${escapeHtml(order.due||"-")}
+</b>
+
 </div>
 
+
 <div class="info-box">
+
 🏭 القسم
-<b>${stages[order.stage]?.[1]||"-"}</b>
+
+<b>
+${stages[
+order.stage
+]?.[1]||"-"}
+</b>
+
 </div>
 
 </div>
@@ -1636,25 +2151,31 @@ stages[order.stage]?.[0]||"في العمل"
 
 <button
 class="secondary"
-onclick="details('${order.id}')">
+onclick="details('${order.id}')"
+>
 📋 التفاصيل
 </button>
 
+
 <button
 class="success"
-onclick="editOrder('${order.id}')">
+onclick="editOrder('${order.id}')"
+>
 ✏️ تعديل
 </button>
 
+
 <button
 class="danger"
-onclick="deleteOrder('${order.id}')">
+onclick="deleteOrder('${order.id}')"
+>
 🗑️ حذف
 </button>
 
 
 ${
-order.stage<stages.length-1
+order.stage <
+stages.length-1
 
 ?
 
@@ -1662,8 +2183,13 @@ order.stage<stages.length-1
 
 <button
 class="primary"
-onclick="nextStage('${order.id}')">
-➡️ تم ${stages[order.stage+1][1]}
+onclick="nextStage('${order.id}')"
+>
+➡️ تم ${
+stages[
+order.stage+1
+][1]
+}
 </button>
 
 `
@@ -1688,22 +2214,27 @@ onclick="nextStage('${order.id}')">
 }
 
 
+/* =========================
+   مراحل العمل
+========================= */
+
 function renderStages(){
 
-const list=
+const list =
 orders.map(normalizeOrder);
 
 
 document.getElementById(
 "stageList"
-).innerHTML=
+).innerHTML =
 
 stages.map(
 (stage,index)=>{
 
-const stageOrders=
+const stageOrders =
 list.filter(
-o=>o.stage===index
+o =>
+o.stage===index
 );
 
 
@@ -1746,7 +2277,7 @@ stageOrders.map(order=>`
 <div>
 
 <div class="order-number">
-#${order.num}
+#${escapeHtml(order.num)}
 </div>
 
 <div class="customer">
@@ -1756,7 +2287,7 @@ ${escapeHtml(order.customer)}
 </div>
 
 <span class="badge">
-${order.due||"-"}
+${escapeHtml(order.due||"-")}
 </span>
 
 </div>
@@ -1766,12 +2297,15 @@ ${order.due||"-"}
 
 <button
 class="secondary"
-onclick="details('${order.id}')">
+onclick="details('${order.id}')"
+>
 📋 التفاصيل
 </button>
 
+
 ${
-order.stage<stages.length-1
+order.stage <
+stages.length-1
 
 ?
 
@@ -1779,8 +2313,13 @@ order.stage<stages.length-1
 
 <button
 class="primary"
-onclick="nextStage('${order.id}')">
-➡️ تم ${stages[order.stage+1][1]}
+onclick="nextStage('${order.id}')"
+>
+➡️ تم ${
+stages[
+order.stage+1
+][1]
+}
 </button>
 
 `
@@ -1819,10 +2358,36 @@ onclick="nextStage('${order.id}')">
 `;
 
 }
+
 ).join("");
 
 }
 
+
+/* =========================
+   حماية النصوص
+========================= */
+
+function escapeHtml(value){
+
+return String(value)
+
+.replace(/&/g,"&amp;")
+
+.replace(/</g,"&lt;")
+
+.replace(/>/g,"&gt;")
+
+.replace(/"/g,"&quot;")
+
+.replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+   تحديث
+========================= */
 
 function renderAll(){
 
@@ -1835,27 +2400,36 @@ renderStages();
 }
 
 
-function escapeHtml(value){
-
-return String(value)
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
-
-}
-
+/* =========================
+   بدء التطبيق
+========================= */
 
 loadOrders();
 
 
-if("serviceWorker" in navigator){
+/* =========================
+   تحديث Service Worker
+========================= */
+
+if(
+"serviceWorker"
+in navigator
+){
 
 navigator.serviceWorker
-.register("./sw.js")
+.register(
+"./sw.js?v=4"
+)
+.then(
+registration =>
+registration.update()
+)
 .catch(
-error=>console.log(error)
+error =>
+console.log(
+"Service Worker:",
+error
+)
 );
 
 }
