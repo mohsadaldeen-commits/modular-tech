@@ -3,39 +3,44 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0f172a">
+<meta name="theme-color" content="#0b1220">
+<meta name="apple-mobile-web-app-capable" content="yes">
 
 <title>MODULAR TECH</title>
 
 <link rel="manifest" href="manifest.webmanifest">
 
 <style>
-*{
-box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 :root{
---bg:#f4f7fb;
---card:#ffffff;
---dark:#0f172a;
---dark2:#172554;
---primary:#2563eb;
---primary2:#3b82f6;
---text:#172033;
+--bg:#f3f6fb;
+--surface:#fff;
+--surface2:#f8fafc;
+--dark:#08111f;
+--dark2:#101d32;
+--primary:#2446d8;
+--primary2:#4f72ff;
+--text:#111827;
 --muted:#64748b;
---border:#e2e8f0;
---danger:#dc2626;
+--border:#e5eaf2;
 --success:#16a34a;
+--danger:#dc2626;
 --warning:#f59e0b;
---sidebar:260px;
+--sidebar:280px;
+--radius:20px;
+--shadow:0 10px 35px rgba(15,23,42,.07);
 }
 
-html,
-body{
+html,body{
 margin:0;
 padding:0;
 min-height:100%;
-font-family:Arial,"Segoe UI",sans-serif;
+font-family:
+Arial,
+"Segoe UI",
+Tahoma,
+sans-serif;
 background:var(--bg);
 color:var(--text);
 }
@@ -44,101 +49,94 @@ body{
 overflow-x:hidden;
 }
 
-button,
-input,
-textarea,
-select{
+button,input,textarea,select{
 font-family:inherit;
 }
 
 button{
-cursor:pointer;
 border:0;
+cursor:pointer;
 }
 
 .hidden{
 display:none!important;
 }
 
-
-/* =====================================================
+/* =========================
 LOGIN
-===================================================== */
+========================= */
 
 #loginPage{
 min-height:100vh;
 display:flex;
 align-items:center;
 justify-content:center;
-padding:20px;
+padding:25px;
 background:
-radial-gradient(circle at top right,#2563eb55,transparent 35%),
-linear-gradient(135deg,#020617,#0f172a 55%,#172554);
+radial-gradient(circle at 15% 15%,#3159e633,transparent 30%),
+radial-gradient(circle at 85% 85%,#4f72ff22,transparent 30%),
+linear-gradient(135deg,#050b15,#0c1628 55%,#122044);
 }
 
 .login-box{
 width:100%;
-max-width:430px;
-background:rgba(255,255,255,.97);
-border-radius:28px;
-padding:34px;
-box-shadow:0 30px 80px #0008;
+max-width:470px;
+background:rgba(255,255,255,.98);
+border:1px solid rgba(255,255,255,.5);
+border-radius:30px;
+padding:38px;
+box-shadow:0 35px 100px rgba(0,0,0,.38);
 }
 
 .login-brand{
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:12px;
-margin-bottom:28px;
+text-align:center;
+margin-bottom:30px;
 }
 
 .login-logo{
-width:78px;
-height:78px;
+display:block;
+width:min(100%,390px);
+height:auto;
+max-height:125px;
 object-fit:contain;
-border-radius:20px;
-}
-
-.login-logo-fallback{
-width:78px;
-height:78px;
-display:flex;
-align-items:center;
-justify-content:center;
-border-radius:20px;
-background:linear-gradient(135deg,#2563eb,#172554);
-color:white;
-font-size:22px;
-font-weight:900;
+margin:0 auto 22px;
 }
 
 .login-title{
 font-size:27px;
-font-weight:900;
-letter-spacing:.5px;
+font-weight:1000;
+letter-spacing:.8px;
+color:#0b1630;
 }
 
 .login-sub{
+margin-top:7px;
+font-size:14px;
 color:var(--muted);
-margin-top:-6px;
+font-weight:700;
+}
+
+.form-group{
+margin-bottom:17px;
 }
 
 label{
 display:block;
-font-size:14px;
-font-weight:800;
-margin-bottom:6px;
+font-size:13px;
+font-weight:900;
+margin-bottom:7px;
+color:#273449;
 }
 
 input,
 textarea,
 select{
 width:100%;
-padding:13px 14px;
+padding:14px 15px;
 border:1px solid var(--border);
-border-radius:12px;
+border-radius:13px;
 background:#fff;
+color:var(--text);
 font-size:15px;
 outline:none;
 transition:.2s;
@@ -147,57 +145,63 @@ transition:.2s;
 input:focus,
 textarea:focus,
 select:focus{
-border-color:var(--primary);
-box-shadow:0 0 0 4px #2563eb18;
+border-color:var(--primary2);
+box-shadow:0 0 0 4px rgba(79,114,255,.12);
 }
 
 .login-btn{
 width:100%;
-padding:14px;
-border-radius:13px;
+padding:15px;
+border-radius:14px;
 background:linear-gradient(135deg,var(--primary),var(--primary2));
 color:#fff;
 font-size:16px;
 font-weight:900;
-box-shadow:0 8px 20px #2563eb44;
+box-shadow:0 12px 25px rgba(36,70,216,.25);
+transition:.2s;
 }
 
 .login-btn:hover{
-transform:translateY(-1px);
+transform:translateY(-2px);
+box-shadow:0 15px 30px rgba(36,70,216,.35);
 }
 
 .login-error{
 display:none;
-background:#fee2e2;
+background:#fff0f0;
+border:1px solid #fecaca;
 color:#991b1b;
 padding:13px;
-border-radius:12px;
-margin-bottom:16px;
+border-radius:13px;
+margin-bottom:17px;
 font-weight:800;
+font-size:13px;
 }
 
-
-/* =====================================================
-APP LAYOUT
-===================================================== */
+/* =========================
+APP
+========================= */
 
 #app{
 min-height:100vh;
 }
+
+/* SIDEBAR */
 
 .sidebar{
 position:fixed;
 top:0;
 bottom:0;
 width:var(--sidebar);
+padding:18px 15px;
 background:
-linear-gradient(180deg,#0f172a,#111c35 60%,#172554);
-color:#fff;
-padding:20px 14px;
+linear-gradient(180deg,#08111f 0%,#0d192b 55%,#10203c 100%);
+color:white;
 z-index:50;
 display:flex;
 flex-direction:column;
-transition:.25s;
+transition:.3s ease;
+box-shadow:0 0 40px rgba(0,0,0,.12);
 }
 
 html[dir="rtl"] .sidebar{
@@ -210,63 +214,75 @@ left:0;
 right:auto;
 }
 
+/* BRAND */
+
 .brand{
-display:flex;
-align-items:center;
-gap:12px;
-padding:8px 10px 22px;
-border-bottom:1px solid #ffffff18;
-margin-bottom:16px;
+padding:10px 8px 20px;
+border-bottom:1px solid rgba(255,255,255,.08);
+margin-bottom:17px;
+text-align:center;
 }
 
 .brand img{
-width:46px;
-height:46px;
-object-fit:contain;
-border-radius:13px;
-background:#fff;
-padding:4px;
-}
-
-.brand-fallback{
-width:46px;
-height:46px;
-border-radius:13px;
-display:flex;
-align-items:center;
-justify-content:center;
-background:linear-gradient(135deg,#2563eb,#60a5fa);
-font-size:14px;
-font-weight:900;
-}
-
-.brand-text strong{
 display:block;
-font-size:17px;
+width:100%;
+max-width:235px;
+height:auto;
+max-height:72px;
+object-fit:contain;
+margin:0 auto 9px;
+background:#fff;
+border-radius:10px;
+padding:5px 9px;
 }
 
 .brand-text span{
 font-size:11px;
-opacity:.65;
+color:#aab8d0;
+font-weight:700;
 }
 
+/* USER */
+
 .sidebar-user{
+display:flex;
+align-items:center;
+gap:11px;
 padding:13px;
-border-radius:15px;
-background:#ffffff0d;
-margin-bottom:16px;
+border-radius:16px;
+background:rgba(255,255,255,.055);
+border:1px solid rgba(255,255,255,.06);
+margin-bottom:17px;
+}
+
+.user-avatar{
+width:39px;
+height:39px;
+border-radius:12px;
+background:linear-gradient(135deg,#3159e6,#6c87ff);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:17px;
+font-weight:900;
+flex:none;
 }
 
 .sidebar-user-name{
 font-weight:900;
-font-size:14px;
+font-size:13px;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
 }
 
 .sidebar-user-role{
-font-size:11px;
-opacity:.65;
+font-size:10px;
+color:#aab8d0;
 margin-top:4px;
 }
+
+/* NAV */
 
 .nav{
 display:flex;
@@ -274,72 +290,97 @@ flex-direction:column;
 gap:6px;
 }
 
+.nav-title{
+font-size:10px;
+color:#7485a4;
+font-weight:900;
+padding:5px 12px 7px;
+letter-spacing:.5px;
+}
+
 .nav button{
 width:100%;
 display:flex;
 align-items:center;
-gap:11px;
-padding:12px 13px;
-border-radius:12px;
+gap:12px;
+padding:13px 13px;
+border-radius:14px;
 background:transparent;
-color:#dbeafe;
+color:#c8d4e8;
 font-weight:800;
 text-align:start;
 transition:.2s;
 }
 
 .nav button:hover{
-background:#ffffff10;
+background:rgba(255,255,255,.06);
+color:#fff;
+transform:translateX(-2px);
+}
+
+html[dir="ltr"] .nav button:hover{
+transform:translateX(2px);
 }
 
 .nav button.active{
-background:linear-gradient(135deg,#2563eb,#3b82f6);
+background:linear-gradient(135deg,#2446d8,#4f72ff);
 color:#fff;
-box-shadow:0 7px 18px #2563eb30;
+box-shadow:0 9px 25px rgba(36,70,216,.28);
 }
 
 .nav-icon{
-width:25px;
-text-align:center;
+width:27px;
+height:27px;
+display:flex;
+align-items:center;
+justify-content:center;
 font-size:18px;
+flex:none;
 }
 
 .sidebar-bottom{
 margin-top:auto;
-border-top:1px solid #ffffff18;
-padding-top:14px;
+border-top:1px solid rgba(255,255,255,.08);
+padding-top:13px;
+}
+
+.language-btn,
+.logout{
+width:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:8px;
+padding:12px;
+border-radius:13px;
+font-weight:900;
+transition:.2s;
 }
 
 .language-btn{
-width:100%;
-display:flex;
-justify-content:center;
-align-items:center;
-gap:8px;
-padding:11px;
-border-radius:12px;
-background:#ffffff12;
-color:#fff;
-font-weight:900;
+background:rgba(255,255,255,.07);
+color:white;
 margin-bottom:8px;
 }
 
 .language-btn:hover{
-background:#ffffff20;
+background:rgba(255,255,255,.13);
 }
 
 .logout{
-width:100%;
-padding:11px;
-border-radius:12px;
-background:#dc2626;
+background:#b91c1c;
 color:#fff;
-font-weight:900;
 }
+
+.logout:hover{
+background:#dc2626;
+}
+
+/* MAIN */
 
 .main{
 min-height:100vh;
-padding:24px;
+padding:27px;
 }
 
 html[dir="rtl"] .main{
@@ -355,28 +396,27 @@ display:flex;
 align-items:center;
 justify-content:space-between;
 gap:15px;
-margin-bottom:24px;
+margin-bottom:25px;
+}
+
+.top-left{
+display:flex;
+align-items:center;
+gap:12px;
 }
 
 .page-title h1{
 margin:0;
-font-size:28px;
-font-weight:900;
+font-size:29px;
+font-weight:1000;
+letter-spacing:-.5px;
 }
 
 .page-title p{
 margin:6px 0 0;
-color:var(--muted);
 font-size:13px;
-}
-
-.mobile-menu{
-display:none;
-padding:11px 13px;
-border-radius:12px;
-background:#fff;
-box-shadow:0 2px 12px #0000000d;
-font-size:20px;
+color:var(--muted);
+font-weight:600;
 }
 
 .topbar-actions{
@@ -385,96 +425,100 @@ align-items:center;
 gap:9px;
 }
 
-.top-language{
+.top-language,
+.top-user{
 display:flex;
 align-items:center;
 gap:7px;
-padding:10px 13px;
-border-radius:12px;
+padding:11px 14px;
+border-radius:13px;
 background:#fff;
+border:1px solid var(--border);
+box-shadow:var(--shadow);
 font-weight:900;
-box-shadow:0 2px 12px #0000000d;
 }
 
 .top-user{
-padding:10px 13px;
-border-radius:12px;
-background:#fff;
-font-size:13px;
-font-weight:800;
-box-shadow:0 2px 12px #0000000d;
+font-size:12px;
 }
 
-
-/* =====================================================
-SECTIONS
-===================================================== */
-
-.section{
-display:block;
-}
-
-.section.hidden{
+.mobile-menu{
 display:none;
+width:44px;
+height:44px;
+border-radius:13px;
+background:#fff;
+border:1px solid var(--border);
+font-size:21px;
 }
 
-
-/* =====================================================
+/* =========================
 STATS
-===================================================== */
+========================= */
 
 .stats{
 display:grid;
 grid-template-columns:repeat(4,1fr);
-gap:16px;
+gap:15px;
 margin-bottom:20px;
 }
 
 .stat{
-background:#fff;
-border:1px solid #edf1f6;
-border-radius:18px;
-padding:20px;
-box-shadow:0 5px 20px #00000008;
 position:relative;
 overflow:hidden;
+background:#fff;
+border:1px solid var(--border);
+border-radius:20px;
+padding:20px;
+box-shadow:var(--shadow);
 }
 
 .stat:after{
 content:"";
 position:absolute;
-width:70px;
-height:70px;
+width:95px;
+height:95px;
 border-radius:50%;
-background:#2563eb0c;
-top:-25px;
-left:-20px;
+background:rgba(79,114,255,.07);
+top:-42px;
+left:-25px;
+}
+
+.stat-icon{
+width:42px;
+height:42px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:13px;
+background:#eef2ff;
+font-size:20px;
+margin-bottom:14px;
 }
 
 .stat-title{
-font-size:13px;
+font-size:12px;
 color:var(--muted);
-font-weight:700;
+font-weight:800;
 }
 
 .stat-number{
-font-size:32px;
-font-weight:900;
-margin-top:8px;
+font-size:31px;
+font-weight:1000;
+margin-top:6px;
 }
 
-
-/* =====================================================
+/* =========================
 PANELS
-===================================================== */
+========================= */
 
 .panel{
 background:#fff;
-border-radius:20px;
-padding:20px;
+border:1px solid var(--border);
+border-radius:21px;
+padding:21px;
 margin-bottom:20px;
-box-shadow:0 5px 20px #00000008;
-border:1px solid #edf1f6;
+box-shadow:var(--shadow);
 }
 
 .panel-head{
@@ -487,18 +531,29 @@ margin-bottom:18px;
 
 .panel h2{
 margin:0;
-font-size:20px;
-font-weight:900;
+font-size:19px;
+font-weight:1000;
 }
 
-
-/* =====================================================
+/* =========================
 BUTTONS
-===================================================== */
+========================= */
+
+.btn{
+padding:10px 14px;
+border-radius:12px;
+font-weight:900;
+transition:.2s;
+}
+
+.btn:hover{
+transform:translateY(-1px);
+}
 
 .primary{
-background:linear-gradient(135deg,#2563eb,#3b82f6);
-color:#fff;
+background:linear-gradient(135deg,var(--primary),var(--primary2));
+color:white;
+box-shadow:0 7px 18px rgba(36,70,216,.18);
 }
 
 .success{
@@ -512,47 +567,43 @@ color:#fff;
 }
 
 .secondary{
-background:#e8eef6;
-color:#172033;
-}
-
-.btn{
-padding:10px 14px;
-border-radius:11px;
-font-weight:900;
+background:#edf1f6;
+color:#263348;
 }
 
 .actions{
 display:flex;
+align-items:center;
 gap:7px;
 flex-wrap:wrap;
-margin-top:13px;
+margin-top:14px;
 }
 
-
-/* =====================================================
+/* =========================
 SEARCH
-===================================================== */
+========================= */
 
 .search-box{
 position:relative;
-margin-bottom:18px;
+margin-bottom:17px;
 }
 
 .search-box input{
-padding-right:42px;
+padding-right:43px;
+background:#f8fafc;
 }
 
 html[dir="ltr"] .search-box input{
-padding-right:14px;
-padding-left:42px;
+padding-right:15px;
+padding-left:43px;
 }
 
 .search-icon{
 position:absolute;
-top:13px;
+top:12px;
 right:14px;
-font-size:18px;
+font-size:19px;
+z-index:2;
 }
 
 html[dir="ltr"] .search-icon{
@@ -560,32 +611,32 @@ right:auto;
 left:14px;
 }
 
-
-/* =====================================================
+/* =========================
 ORDERS
-===================================================== */
+========================= */
 
 .order-list{
 display:grid;
-gap:13px;
+gap:12px;
 }
 
 .order{
+position:relative;
 border:1px solid var(--border);
-border-radius:16px;
-padding:16px;
+border-radius:17px;
+padding:17px;
 background:#fff;
 transition:.2s;
 }
 
 .order:hover{
-box-shadow:0 8px 25px #0000000a;
+box-shadow:0 10px 30px rgba(15,23,42,.07);
 transform:translateY(-1px);
 }
 
 .order.urgent{
-border:2px solid #ef4444;
-background:#fff8f8;
+border:1px solid #f87171;
+background:linear-gradient(135deg,#fff,#fff7f7);
 }
 
 .order-head{
@@ -596,46 +647,50 @@ gap:10px;
 }
 
 .order-number{
-font-size:18px;
-font-weight:900;
+font-size:17px;
+font-weight:1000;
 }
 
 .customer{
-margin-top:6px;
+margin-top:5px;
 font-weight:800;
+font-size:14px;
 }
 
 .info{
 display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:9px;
-margin-top:13px;
+margin-top:14px;
 }
 
 .info-box{
-background:#f6f8fb;
-border-radius:11px;
+background:#f7f9fc;
+border:1px solid #edf1f6;
+border-radius:12px;
 padding:10px;
-font-size:12px;
+font-size:11px;
 color:var(--muted);
 }
 
 .info-box b{
 display:block;
 margin-top:5px;
-font-size:13px;
+font-size:12px;
 color:var(--text);
 }
 
 .badge{
 display:inline-flex;
 align-items:center;
+justify-content:center;
 padding:6px 10px;
 border-radius:999px;
-background:#eaf2ff;
-color:#1556a8;
-font-size:12px;
+background:#eaf0ff;
+color:#2545a7;
+font-size:11px;
 font-weight:900;
+white-space:nowrap;
 }
 
 .overdue{
@@ -643,64 +698,48 @@ background:#ffe5e5;
 color:#a61b1b;
 }
 
+/* =========================
+STAGES / USERS
+========================= */
 
-/* =====================================================
-STAGES
-===================================================== */
-
-.stage-card{
+.stage-card,
+.user-card{
 background:#fff;
 border:1px solid var(--border);
 border-radius:17px;
 padding:16px;
 }
 
-.stage-card+.stage-card{
-margin-top:12px;
-}
-
-
-/* =====================================================
-USERS
-===================================================== */
-
-.user-card{
-background:#fff;
-border:1px solid var(--border);
-border-radius:16px;
-padding:16px;
-}
-
+.stage-card+.stage-card,
 .user-card+.user-card{
-margin-top:10px;
+margin-top:11px;
 }
 
-
-/* =====================================================
-MODALS
-===================================================== */
+/* =========================
+MODAL
+========================= */
 
 .modal{
 position:fixed;
 inset:0;
-background:#02061799;
+background:rgba(2,6,23,.67);
 display:flex;
 align-items:center;
 justify-content:center;
 padding:15px;
 z-index:100;
-backdrop-filter:blur(5px);
+backdrop-filter:blur(8px);
 }
 
 .modal-box{
 background:#fff;
 width:100%;
-max-width:620px;
-max-height:90vh;
+max-width:650px;
+max-height:91vh;
 overflow:auto;
-border-radius:22px;
-padding:22px;
-box-shadow:0 25px 80px #0008;
+border-radius:23px;
+padding:23px;
+box-shadow:0 30px 100px rgba(0,0,0,.35);
 }
 
 .modal-head{
@@ -708,15 +747,16 @@ display:flex;
 align-items:center;
 justify-content:space-between;
 gap:10px;
-margin-bottom:16px;
+margin-bottom:19px;
 }
 
 .modal-head h2{
 margin:0;
+font-size:19px;
 }
 
 .close{
-background:#edf2f7;
+background:#edf1f6;
 font-size:22px;
 padding:5px 12px;
 border-radius:10px;
@@ -733,7 +773,7 @@ display:flex;
 align-items:center;
 gap:8px;
 font-weight:900;
-margin:5px 0 12px;
+margin:7px 0 14px;
 }
 
 .check input{
@@ -741,40 +781,64 @@ width:auto;
 margin:0;
 }
 
-
-/* =====================================================
+/* =========================
 EMPTY / MESSAGE
-===================================================== */
+========================= */
 
 .empty{
 text-align:center;
 padding:35px 15px;
 color:var(--muted);
 font-weight:700;
+font-size:13px;
 }
 
 .message{
 position:fixed;
-bottom:20px;
+bottom:22px;
 left:20px;
 right:20px;
 max-width:500px;
 margin:auto;
-padding:14px;
+padding:14px 17px;
 border-radius:14px;
-background:#16a34a;
-color:#fff;
+background:#101d32;
+color:white;
 font-weight:900;
 text-align:center;
 display:none;
 z-index:200;
-box-shadow:0 10px 30px #0003;
+box-shadow:0 12px 35px rgba(0,0,0,.25);
 }
 
+/* =========================
+DESIGNED BY
+========================= */
 
-/* =====================================================
+.designed-by{
+writing-mode:vertical-rl;
+transform:rotate(180deg);
+position:fixed;
+bottom:22px;
+font-size:9px;
+letter-spacing:1px;
+font-weight:800;
+color:rgba(255,255,255,.38);
+z-index:60;
+pointer-events:none;
+}
+
+html[dir="rtl"] .designed-by{
+right:calc(var(--sidebar) + 5px);
+}
+
+html[dir="ltr"] .designed-by{
+left:calc(var(--sidebar) + 5px);
+}
+
+/* =========================
 MOBILE
-===================================================== */
+========================= */
 
 @media(max-width:900px){
 
@@ -783,11 +847,17 @@ MOBILE
 }
 
 .sidebar{
-width:270px;
+width:285px;
+box-shadow:0 0 50px rgba(0,0,0,.35);
+}
+
+html[dir="rtl"] .sidebar{
+right:0;
 transform:translateX(110%);
 }
 
 html[dir="ltr"] .sidebar{
+left:0;
 transform:translateX(-110%);
 }
 
@@ -799,11 +869,13 @@ transform:translateX(0)!important;
 html[dir="rtl"] .main,
 html[dir="ltr"] .main{
 margin:0;
-padding:14px;
+padding:15px;
 }
 
 .mobile-menu{
-display:block;
+display:flex;
+align-items:center;
+justify-content:center;
 }
 
 .stats{
@@ -814,12 +886,21 @@ grid-template-columns:repeat(2,1fr);
 display:none;
 }
 
+.designed-by{
+display:none;
+}
+
 }
 
 @media(max-width:600px){
 
-.topbar{
-align-items:flex-start;
+.login-box{
+padding:27px 20px;
+border-radius:24px;
+}
+
+.login-logo{
+max-height:100px;
 }
 
 .page-title h1{
@@ -830,13 +911,28 @@ font-size:22px;
 font-size:11px;
 }
 
+.topbar{
+align-items:flex-start;
+}
+
+.top-language{
+padding:10px 11px;
+font-size:12px;
+}
+
 .stats{
 gap:9px;
 }
 
 .stat{
 padding:14px;
-border-radius:15px;
+border-radius:16px;
+}
+
+.stat-icon{
+width:36px;
+height:36px;
+font-size:17px;
 }
 
 .stat-number{
@@ -848,20 +944,16 @@ padding:14px;
 border-radius:17px;
 }
 
+.panel-head{
+align-items:flex-start;
+}
+
 .info{
 grid-template-columns:1fr 1fr;
 }
 
 .row{
 grid-template-columns:1fr;
-}
-
-.login-box{
-padding:25px 20px;
-}
-
-.top-language{
-padding:9px 10px;
 }
 
 .order-head{
@@ -886,10 +978,9 @@ grid-template-columns:1fr;
 
 <body>
 
-
-<!-- =====================================================
+<!-- =========================
 LOGIN
-===================================================== -->
+========================= -->
 
 <div id="loginPage">
 
@@ -898,18 +989,11 @@ LOGIN
 <div class="login-brand">
 
 <img
-src="icon.png"
+src="icon-192.png"
 class="login-logo"
-onerror="this.style.display='none';document.getElementById('loginFallback').style.display='flex';"
+alt="MODULAR TECH"
+onerror="this.style.display='none'"
 >
-
-<div
-id="loginFallback"
-class="login-logo-fallback"
-style="display:none"
->
-MT
-</div>
 
 <div class="login-title">
 MODULAR TECH
@@ -925,12 +1009,9 @@ data-he="מערכת לניהול הזמנות"
 
 </div>
 
+<div id="loginError" class="login-error"></div>
 
-<div
-id="loginError"
-class="login-error"
-></div>
-
+<div class="form-group">
 
 <label
 data-ar="اسم المستخدم"
@@ -947,6 +1028,9 @@ data-placeholder-ar="أدخل اسم المستخدم"
 data-placeholder-he="הזן שם משתמש"
 >
 
+</div>
+
+<div class="form-group">
 
 <label
 data-ar="كلمة المرور"
@@ -964,6 +1048,7 @@ data-placeholder-ar="أدخل كلمة المرور"
 data-placeholder-he="הזן סיסמה"
 >
 
+</div>
 
 <button
 class="login-btn"
@@ -978,127 +1063,96 @@ data-he="🔐 התחברות"
 </div>
 
 
-<!-- =====================================================
+<!-- =========================
 APP
-===================================================== -->
+========================= -->
 
 <div id="app" class="hidden">
 
-
-<!-- SIDEBAR -->
-
-<aside
-id="sidebar"
-class="sidebar"
->
+<aside id="sidebar" class="sidebar">
 
 <div class="brand">
 
 <img
-src="icon.png"
-onerror="this.style.display='none';document.getElementById('brandFallback').style.display='flex';"
+src="icon-192.png"
+alt="MODULAR TECH"
+onerror="this.style.display='none'"
 >
 
 <div
-id="brandFallback"
-class="brand-fallback"
-style="display:none"
->
-MT
-</div>
-
-<div class="brand-text">
-
-<strong>
-MODULAR TECH
-</strong>
-
-<span
 data-ar="إدارة الطلبيات"
 data-he="ניהול הזמנות"
 >
 إدارة الطلبيات
-</span>
-
 </div>
 
 </div>
-
 
 <div class="sidebar-user">
 
-<div
-id="sideUserName"
-class="sidebar-user-name"
->
+<div class="user-avatar">
+👤
 </div>
 
-<div
-id="sideUserRole"
-class="sidebar-user-role"
->
-</div>
+<div>
+
+<div id="sideUserName" class="sidebar-user-name"></div>
+
+<div id="sideUserRole" class="sidebar-user-role"></div>
 
 </div>
 
+</div>
 
 <nav class="nav">
+
+<div
+class="nav-title"
+data-ar="القائمة الرئيسية"
+data-he="תפריט ראשי"
+>
+القائمة الرئيسية
+</div>
 
 <button
 class="active"
 onclick="showSection('dashboard',this)"
 >
-<span class="nav-icon">🏠</span>
-<span
-data-ar="الرئيسية"
-data-he="ראשי"
->
+<span class="nav-icon">⌂</span>
+<span data-ar="الرئيسية" data-he="ראשי">
 الرئيسية
 </span>
 </button>
 
-
 <button
 onclick="showSection('ordersSection',this)"
 >
-<span class="nav-icon">📋</span>
-<span
-data-ar="الطلبيات"
-data-he="הזמנות"
->
+<span class="nav-icon">▣</span>
+<span data-ar="الطلبيات" data-he="הזמנות">
 الطلبيات
 </span>
 </button>
 
-
 <button
 onclick="showSection('production',this)"
 >
-<span class="nav-icon">🏭</span>
-<span
-data-ar="مراحل العمل"
-data-he="שלבי עבודה"
->
+<span class="nav-icon">⚙</span>
+<span data-ar="مراحل العمل" data-he="שלבי עבודה">
 مراحل العمل
 </span>
 </button>
-
 
 <button
 id="usersNav"
 onclick="showSection('users',this)"
 >
-<span class="nav-icon">👥</span>
-<span
-data-ar="المستخدمون"
-data-he="משתמשים"
->
+<span class="nav-icon">♙</span>
+<span data-ar="المستخدمون" data-he="משתמשים">
 المستخدمون
 </span>
 </button>
 
 </nav>
-
 
 <div class="sidebar-bottom">
 
@@ -1107,11 +1161,8 @@ class="language-btn"
 onclick="toggleLanguage()"
 >
 🌐
-<span id="languageText">
-עברית
-</span>
+<span id="languageText">עברית</span>
 </button>
-
 
 <button
 class="logout"
@@ -1127,14 +1178,18 @@ data-he="🚪 התנתקות"
 </aside>
 
 
-<!-- MAIN -->
+<div
+class="designed-by"
+>
+Designed by Mohammad Sad Al Deen
+</div>
+
 
 <main class="main">
 
-
 <div class="topbar">
 
-<div style="display:flex;align-items:center;gap:10px">
+<div class="top-left">
 
 <button
 class="mobile-menu"
@@ -1165,7 +1220,6 @@ data-he="סקירה כללית של מערכת ניהול ההזמנות"
 
 </div>
 
-
 <div class="topbar-actions">
 
 <button
@@ -1173,35 +1227,25 @@ class="top-language"
 onclick="toggleLanguage()"
 >
 🌐
-<span id="topLanguageText">
-עברית
-</span>
+<span id="topLanguageText">עברית</span>
 </button>
 
-
-<div
-id="topUser"
-class="top-user"
->
-</div>
+<div id="topUser" class="top-user"></div>
 
 </div>
 
 </div>
 
 
-<!-- =====================================================
-DASHBOARD
-===================================================== -->
+<!-- DASHBOARD -->
 
-<section
-id="dashboard"
-class="section"
->
+<section id="dashboard" class="section">
 
 <div class="stats">
 
 <div class="stat">
+
+<div class="stat-icon">▣</div>
 
 <div
 class="stat-title"
@@ -1211,17 +1255,13 @@ data-he="סה״כ הזמנות"
 إجمالي الطلبيات
 </div>
 
-<div
-id="totalCount"
-class="stat-number"
->
-0
-</div>
+<div id="totalCount" class="stat-number">0</div>
 
 </div>
-
 
 <div class="stat">
+
+<div class="stat-icon">⚙</div>
 
 <div
 class="stat-title"
@@ -1231,17 +1271,13 @@ data-he="בטיפול"
 قيد العمل
 </div>
 
-<div
-id="activeCount"
-class="stat-number"
->
-0
-</div>
+<div id="activeCount" class="stat-number">0</div>
 
 </div>
-
 
 <div class="stat">
+
+<div class="stat-icon">★</div>
 
 <div
 class="stat-title"
@@ -1251,17 +1287,13 @@ data-he="דחופות"
 مهمة جدًا
 </div>
 
-<div
-id="urgentCount"
-class="stat-number"
->
-0
-</div>
+<div id="urgentCount" class="stat-number">0</div>
 
 </div>
-
 
 <div class="stat">
+
+<div class="stat-icon">!</div>
 
 <div
 class="stat-title"
@@ -1271,12 +1303,7 @@ data-he="באיחור"
 متأخرة
 </div>
 
-<div
-id="overdueCount"
-class="stat-number"
->
-0
-</div>
+<div id="overdueCount" class="stat-number">0</div>
 
 </div>
 
@@ -1288,24 +1315,22 @@ class="stat-number"
 <div class="panel-head">
 
 <h2
-data-ar="📋 آخر الطلبيات"
-data-he="📋 הזמנות אחרונות"
+data-ar="▣ آخر الطلبيات"
+data-he="▣ הזמנות אחרונות"
 >
-📋 آخر الطلبيات
+▣ آخر الطلبيات
 </h2>
-
 
 <button
 class="btn primary admin-only"
 onclick="openAddModal()"
-data-ar="➕ إضافة طلبية"
-data-he="➕ הוספת הזמנה"
+data-ar="＋ إضافة طلبية"
+data-he="＋ הוספת הזמנה"
 >
-➕ إضافة طلبية
+＋ إضافة طلبية
 </button>
 
 </div>
-
 
 <div id="latestOrders"></div>
 
@@ -1314,9 +1339,7 @@ data-he="➕ הוספת הזמנה"
 </section>
 
 
-<!-- =====================================================
-ORDERS
-===================================================== -->
+<!-- ORDERS -->
 
 <section
 id="ordersSection"
@@ -1328,30 +1351,26 @@ class="section hidden"
 <div class="panel-head">
 
 <h2
-data-ar="📋 إدارة الطلبيات"
-data-he="📋 ניהול הזמנות"
+data-ar="▣ إدارة الطلبيات"
+data-he="▣ ניהול הזמנות"
 >
-📋 إدارة الطلبيات
+▣ إدارة الطلبيات
 </h2>
-
 
 <button
 class="btn primary admin-only"
 onclick="openAddModal()"
-data-ar="➕ إضافة طلبية"
-data-he="➕ הוספת הזמנה"
+data-ar="＋ إضافة طلبية"
+data-he="＋ הוספת הזמנה"
 >
-➕ إضافة طلبية
+＋ إضافة طلبية
 </button>
 
 </div>
 
-
 <div class="search-box">
 
-<span class="search-icon">
-🔎
-</span>
+<span class="search-icon">⌕</span>
 
 <input
 id="search"
@@ -1364,20 +1383,14 @@ oninput="renderOrders()"
 
 </div>
 
-
-<div
-id="ordersList"
-class="order-list"
-></div>
+<div id="ordersList" class="order-list"></div>
 
 </div>
 
 </section>
 
 
-<!-- =====================================================
-PRODUCTION
-===================================================== -->
+<!-- PRODUCTION -->
 
 <section
 id="production"
@@ -1389,27 +1402,22 @@ class="section hidden"
 <div class="panel-head">
 
 <h2
-data-ar="🏭 مراحل العمل"
-data-he="🏭 שלבי עבודה"
+data-ar="⚙ مراحل العمل"
+data-he="⚙ שלבי עבודה"
 >
-🏭 مراحل العمل
+⚙ مراحل العمل
 </h2>
 
 </div>
 
-<div
-id="stageList"
-class="order-list"
-></div>
+<div id="stageList" class="order-list"></div>
 
 </div>
 
 </section>
 
 
-<!-- =====================================================
-USERS
-===================================================== -->
+<!-- USERS -->
 
 <section
 id="users"
@@ -1421,24 +1429,22 @@ class="section hidden"
 <div class="panel-head">
 
 <h2
-data-ar="👥 المستخدمون"
-data-he="👥 משתמשים"
+data-ar="♙ المستخدمون"
+data-he="♙ משתמשים"
 >
-👥 المستخدمون
+♙ المستخدمون
 </h2>
-
 
 <button
 class="btn primary"
 onclick="openUserModal()"
-data-ar="➕ إضافة مستخدم"
-data-he="➕ הוספת משתמש"
+data-ar="＋ إضافة مستخدم"
+data-he="＋ הוספת משתמש"
 >
-➕ إضافة مستخدم
+＋ إضافة مستخدم
 </button>
 
 </div>
-
 
 <div id="usersList">
 
@@ -1456,129 +1462,83 @@ data-he="⏳ טוען משתמשים..."
 
 </section>
 
-
 </main>
 
 </div>
 
 
-<!-- =====================================================
-MESSAGE
-===================================================== -->
-
-<div
-id="message"
-class="message"
-></div>
+<div id="message" class="message"></div>
 
 
-<!-- =====================================================
+<!-- =========================
 ORDER MODAL
-===================================================== -->
+========================= -->
 
-<div
-id="orderModal"
-class="modal hidden"
->
+<div id="orderModal" class="modal hidden">
 
 <div class="modal-box">
 
 <div class="modal-head">
 
 <h2 id="modalTitle">
-➕ إضافة طلبية
+＋ إضافة طلبية
 </h2>
 
-<button
-class="close"
-onclick="closeModal()"
->
-×
-</button>
+<button class="close" onclick="closeModal()">×</button>
 
 </div>
-
 
 <form id="orderForm">
 
-<input
-type="hidden"
-id="editId"
->
+<input type="hidden" id="editId">
 
+<div class="form-group">
 
-<label
-data-ar="رقم الطلبية"
-data-he="מספר הזמנה"
->
+<label data-ar="رقم الطلبية" data-he="מספר הזמנה">
 رقم الطلبية
 </label>
 
-<input
-id="orderNum"
-required
-placeholder="مثال: 10025"
->
+<input id="orderNum" required placeholder="مثال: 10025">
 
+</div>
 
-<label
-data-ar="اسم الزبون"
-data-he="שם הלקוח"
->
+<div class="form-group">
+
+<label data-ar="اسم الزبون" data-he="שם הלקוח">
 اسم الزبون
 </label>
 
-<input
-id="customer"
-required
-placeholder="اسم الزبون"
->
+<input id="customer" required placeholder="اسم الزبون">
 
+</div>
 
 <div class="row">
 
-<div>
+<div class="form-group">
 
-<label
-data-ar="رقم الهاتف"
-data-he="מספר טלפון"
->
+<label data-ar="رقم الهاتف" data-he="מספר טלפון">
 رقم الهاتف
 </label>
 
-<input
-id="phone"
-type="tel"
-placeholder="05xxxxxxxx"
->
+<input id="phone" type="tel" placeholder="05xxxxxxxx">
 
 </div>
 
+<div class="form-group">
 
-<div>
-
-<label
-data-ar="موعد التسليم"
-data-he="תאריך מסירה"
->
+<label data-ar="موعد التسليم" data-he="תאריך מסירה">
 موعد التسليم
 </label>
 
-<input
-id="due"
-type="date"
-required
->
+<input id="due" type="date" required>
 
 </div>
 
 </div>
 
+<div class="form-group">
 
-<label
-data-ar="ملاحظات"
-data-he="הערות"
->
+<label data-ar="ملاحظات" data-he="הערות">
 ملاحظات
 </label>
 
@@ -1588,23 +1548,20 @@ rows="4"
 placeholder="اكتب الملاحظات"
 ></textarea>
 
+</div>
 
 <label class="check">
 
-<input
-type="checkbox"
-id="urgent"
->
+<input type="checkbox" id="urgent">
 
 <span
-data-ar="⭐ هذه الطلبية مهمة جدًا"
-data-he="⭐ הזמנה זו דחופה מאוד"
+data-ar="★ هذه الطلبية مهمة جدًا"
+data-he="★ הזמנה זו דחופה מאוד"
 >
-⭐ هذه الطلبية مهمة جدًا
+★ هذه الطلبية مهمة جدًا
 </span>
 
 </label>
-
 
 <div class="actions">
 
@@ -1616,7 +1573,6 @@ data-he="💾 שמירת הזמנה"
 >
 💾 حفظ الطلبية
 </button>
-
 
 <button
 type="button"
@@ -1637,43 +1593,32 @@ data-he="ביטול"
 </div>
 
 
-<!-- =====================================================
+<!-- =========================
 USER MODAL
-===================================================== -->
+========================= -->
 
-<div
-id="userModal"
-class="modal hidden"
->
+<div id="userModal" class="modal hidden">
 
 <div class="modal-box">
 
 <div class="modal-head">
 
 <h2
-data-ar="➕ إضافة مستخدم"
-data-he="➕ הוספת משתמש"
+data-ar="＋ إضافة مستخدم"
+data-he="＋ הוספת משתמש"
 >
-➕ إضافة مستخدم
+＋ إضافة مستخدم
 </h2>
 
-<button
-class="close"
-onclick="closeUserModal()"
->
-×
-</button>
+<button class="close" onclick="closeUserModal()">×</button>
 
 </div>
 
-
 <form id="userForm">
 
+<div class="form-group">
 
-<label
-data-ar="اسم المستخدم"
-data-he="שם משתמש"
->
+<label data-ar="اسم المستخدم" data-he="שם משתמש">
 اسم المستخدم
 </label>
 
@@ -1683,11 +1628,11 @@ required
 placeholder="مثال: ahmad"
 >
 
+</div>
 
-<label
-data-ar="الاسم الكامل"
-data-he="שם מלא"
->
+<div class="form-group">
+
+<label data-ar="الاسم الكامل" data-he="שם מלא">
 الاسم الكامل
 </label>
 
@@ -1697,11 +1642,11 @@ required
 placeholder="اسم الموظف"
 >
 
+</div>
 
-<label
-data-ar="البريد الإلكتروني"
-data-he="דואר אלקטרוני"
->
+<div class="form-group">
+
+<label data-ar="البريد الإلكتروني" data-he="דואר אלקטרוני">
 البريد الإلكتروني
 </label>
 
@@ -1712,11 +1657,11 @@ required
 placeholder="البريد المستخدم في Auth"
 >
 
+</div>
 
-<label
-data-ar="كلمة المرور"
-data-he="סיסמה"
->
+<div class="form-group">
+
+<label data-ar="كلمة المرور" data-he="סיסמה">
 كلمة المرور
 </label>
 
@@ -1728,88 +1673,71 @@ minlength="6"
 placeholder="كلمة المرور"
 >
 
+</div>
 
-<label
-data-ar="القسم"
-data-he="מחלקה"
->
+<div class="form-group">
+
+<label data-ar="القسم" data-he="מחלקה">
 القسم
 </label>
 
 <select id="newRole">
 
-<option
-value="المدير"
+<option value="المدير"
 data-ar="👑 المدير"
-data-he="👑 מנהל"
->
+data-he="👑 מנהל">
 👑 المدير
 </option>
 
-<option
-value="القص"
+<option value="القص"
 data-ar="✂️ القص"
-data-he="✂️ חיתוך"
->
+data-he="✂️ חיתוך">
 ✂️ القص
 </option>
 
-<option
-value="الكنت"
+<option value="الكنت"
 data-ar="🔧 الكنت"
-data-he="🔧 קנטים"
->
+data-he="🔧 קנטים">
 🔧 الكنت
 </option>
 
-<option
-value="CNC"
->
+<option value="CNC">
 ⚙️ CNC
 </option>
 
-<option
-value="التركيب"
+<option value="التركيب"
 data-ar="🛠️ التركيب"
-data-he="🛠️ הרכבה"
->
+data-he="🛠️ הרכבה">
 🛠️ التركيب
 </option>
 
-<option
-value="الدهان"
+<option value="الدهان"
 data-ar="🎨 الدهان"
-data-he="🎨 צבע"
->
+data-he="🎨 צבע">
 🎨 الدهان
 </option>
 
-<option
-value="التغليف"
+<option value="التغليف"
 data-ar="📦 التغليف"
-data-he="📦 אריזה"
->
+data-he="📦 אריזה">
 📦 التغليف
 </option>
 
-<option
-value="التحميل"
+<option value="التحميل"
 data-ar="🚚 التحميل"
-data-he="🚚 העמסה"
->
+data-he="🚚 העמסה">
 🚚 التحميل
 </option>
 
-<option
-value="التسليم"
-data-ar="✅ التسليم"
-data-he="✅ מסירה"
->
-✅ التسليم
+<option value="التسليم"
+data-ar="✓ التسليم"
+data-he="✓ מסירה">
+✓ التسليم
 </option>
 
 </select>
 
+</div>
 
 <label class="check">
 
@@ -1828,7 +1756,6 @@ data-he="החשבון פעיל"
 
 </label>
 
-
 <div class="actions">
 
 <button
@@ -1839,7 +1766,6 @@ data-he="💾 יצירת משתמש"
 >
 💾 إنشاء المستخدم
 </button>
-
 
 <button
 type="button"
@@ -1862,9 +1788,9 @@ data-he="ביטול"
 
 <script>
 
-/* =====================================================
+/* =========================
 SUPABASE
-===================================================== */
+========================= */
 
 const SUPABASE_URL =
 "https://bvrfrcmblwzuqprjknam.supabase.co";
@@ -1876,9 +1802,9 @@ const CREATE_USER_FUNCTION =
 "https://bvrfrcmblwzuqprjknam.supabase.co/functions/v1/bright-task";
 
 
-/* =====================================================
+/* =========================
 STATE
-===================================================== */
+========================= */
 
 let orders=[];
 let currentProfile=null;
@@ -1887,16 +1813,14 @@ let currentLanguage=
 localStorage.getItem("app_language") || "ar";
 
 
-/* =====================================================
-SUPABASE REQUEST
-===================================================== */
+/* =========================
+REQUEST
+========================= */
 
 async function request(path,method="GET",body=null){
 
 const token=
-localStorage.getItem(
-"supabase_access_token"
-);
+localStorage.getItem("supabase_access_token");
 
 const authToken=
 token || SUPABASE_KEY;
@@ -1946,11 +1870,7 @@ data.hint ||
 JSON.stringify(data);
 
 }else{
-
-message=
-data ||
-("HTTP "+response.status);
-
+message=data || ("HTTP "+response.status);
 }
 
 throw new Error(message);
@@ -1960,17 +1880,15 @@ return data;
 }
 
 
-/* =====================================================
+/* =========================
 AUTH
-===================================================== */
+========================= */
 
 async function auth(path,body){
 
 const response=
 await fetch(
-SUPABASE_URL+
-"/auth/v1/"+
-path,
+SUPABASE_URL+"/auth/v1/"+path,
 {
 method:"POST",
 headers:{
@@ -2006,14 +1924,13 @@ return data;
 }
 
 
-/* =====================================================
+/* =========================
 MESSAGE
-===================================================== */
+========================= */
 
 function msg(text){
 
-const box=
-document.getElementById("message");
+const box=document.getElementById("message");
 
 box.textContent=text;
 box.style.display="block";
@@ -2024,16 +1941,14 @@ box.style.display="none";
 }
 
 
-/* =====================================================
+/* =========================
 ESCAPE
-===================================================== */
+========================= */
 
 function esc(value){
 
 return String(value??"")
-.replace(
-/[&<>"']/g,
-function(char){
+.replace(/[&<>"']/g,function(char){
 return{
 "&":"&amp;",
 "<":"&lt;",
@@ -2041,29 +1956,24 @@ return{
 '"':"&quot;",
 "'":"&#039;"
 }[char];
-}
-);
+});
+
 }
 
 
-/* =====================================================
+/* =========================
 LANGUAGE
-===================================================== */
+========================= */
 
 function applyLanguage(){
 
 const lang=currentLanguage;
 
-document.documentElement.lang=
-lang;
+document.documentElement.lang=lang;
 
-document.documentElement.dir=
-lang==="he"
-?
-"rtl"
-:
-"rtl";
+/* العربية والعبرية كلاهما RTL */
 
+document.documentElement.dir="rtl";
 
 document
 .querySelectorAll("[data-ar]")
@@ -2084,7 +1994,6 @@ el.textContent=text;
 
 });
 
-
 document
 .querySelectorAll("[data-placeholder-ar]")
 .forEach(el=>{
@@ -2096,19 +2005,13 @@ lang==="he"
 :
 "data-placeholder-ar";
 
-const value=
-el.getAttribute(attr);
+const value=el.getAttribute(attr);
 
 if(value){
 el.placeholder=value;
 }
 
 });
-
-
-/*
-القوائم المنسدلة
-*/
 
 document
 .querySelectorAll("option[data-ar]")
@@ -2129,16 +2032,11 @@ option.textContent=value;
 
 });
 
-
 const languageText=
-document.getElementById(
-"languageText"
-);
+document.getElementById("languageText");
 
 const topLanguageText=
-document.getElementById(
-"topLanguageText"
-);
+document.getElementById("topLanguageText");
 
 if(lang==="ar"){
 
@@ -2157,7 +2055,6 @@ if(topLanguageText)
 topLanguageText.textContent="العربية";
 
 }
-
 
 renderAll();
 
@@ -2183,9 +2080,9 @@ applyLanguage();
 }
 
 
-/* =====================================================
+/* =========================
 SIDEBAR
-===================================================== */
+========================= */
 
 function toggleSidebar(){
 
@@ -2197,26 +2094,22 @@ document
 }
 
 
-/* =====================================================
+/* =========================
 LOGIN
-===================================================== */
+========================= */
 
 async function login(){
 
 const username=
-document.getElementById(
-"loginUsername"
-).value.trim();
+document.getElementById("loginUsername")
+.value.trim();
 
 const password=
-document.getElementById(
-"loginPassword"
-).value;
+document.getElementById("loginPassword")
+.value;
 
 const errorBox=
-document.getElementById(
-"loginError"
-);
+document.getElementById("loginError");
 
 errorBox.style.display="none";
 
@@ -2278,7 +2171,6 @@ currentLanguage==="he"
 
 }
 
-
 const session=
 await auth(
 "token?grant_type=password",
@@ -2310,13 +2202,11 @@ session.refresh_token
 
 }
 
-
 await loadProfile(
 session.user.id,
 session.user.email,
 username
 );
-
 
 showApp();
 
@@ -2336,10 +2226,7 @@ currentLanguage==="he"
 
 }catch(error){
 
-console.error(
-"LOGIN ERROR:",
-error
-);
+console.error("LOGIN ERROR:",error);
 
 errorBox.textContent=
 "❌ "+error.message;
@@ -2351,9 +2238,9 @@ errorBox.style.display="block";
 }
 
 
-/* =====================================================
+/* =========================
 PROFILE
-===================================================== */
+========================= */
 
 async function loadProfile(
 userId,
@@ -2372,21 +2259,13 @@ await request(
 {}
 );
 
-if(
-Array.isArray(data) &&
-data.length>0
-){
-
+if(Array.isArray(data) && data.length>0){
 currentProfile=data[0];
-
 }
 
 }catch(error){
 
-console.error(
-"PROFILE ERROR:",
-error
-);
+console.error("PROFILE ERROR:",error);
 
 throw new Error(
 currentLanguage==="he"
@@ -2405,7 +2284,7 @@ currentLanguage==="he"
 ?
 "לא נמצא פרופיל משתמש"
 :
-"لم يتم العثور على ملف المستخدم في profiles"
+"لم يتم العثور على ملف المستخدم"
 );
 
 }
@@ -2437,8 +2316,7 @@ currentLanguage==="he"
 
 }
 
-role=
-currentProfile.role || "";
+role=currentProfile.role || "";
 
 updateUserDisplay();
 
@@ -2455,39 +2333,31 @@ currentProfile?.username ||
 const roleText=
 currentProfile?.role || "";
 
-document.getElementById(
-"topUser"
-).textContent=
+document.getElementById("topUser").textContent=
 name+" — "+roleText;
 
-document.getElementById(
-"sideUserName"
-).textContent=
+document.getElementById("sideUserName").textContent=
 name;
 
-document.getElementById(
-"sideUserRole"
-).textContent=
+document.getElementById("sideUserRole").textContent=
 roleText;
 
 }
 
 
-/* =====================================================
+/* =========================
 SHOW APP
-===================================================== */
+========================= */
 
 function showApp(){
 
 document
 .getElementById("loginPage")
-.classList
-.add("hidden");
+.classList.add("hidden");
 
 document
 .getElementById("app")
-.classList
-.remove("hidden");
+.classList.remove("hidden");
 
 applyPermissions();
 applyLanguage();
@@ -2495,9 +2365,9 @@ applyLanguage();
 }
 
 
-/* =====================================================
+/* =========================
 SESSION
-===================================================== */
+========================= */
 
 async function checkSession(){
 
@@ -2513,14 +2383,10 @@ return;
 try{
 
 const user=
-await request(
-"/auth/v1/user"
-);
+await request("/auth/v1/user");
 
 if(!user || !user.id){
-throw new Error(
-"جلسة Auth غير صالحة"
-);
+throw new Error("جلسة Auth غير صالحة");
 }
 
 await loadProfile(
@@ -2539,10 +2405,7 @@ await loadUsers();
 
 }catch(error){
 
-console.warn(
-"SESSION INVALID:",
-error
-);
+console.warn("SESSION INVALID:",error);
 
 localStorage.removeItem(
 "supabase_access_token"
@@ -2557,9 +2420,9 @@ localStorage.removeItem(
 }
 
 
-/* =====================================================
+/* =========================
 LOGOUT
-===================================================== */
+========================= */
 
 function logout(){
 
@@ -2579,9 +2442,9 @@ location.reload();
 }
 
 
-/* =====================================================
+/* =========================
 PERMISSIONS
-===================================================== */
+========================= */
 
 function applyPermissions(){
 
@@ -2591,26 +2454,20 @@ role==="المدير";
 document
 .getElementById("usersNav")
 .classList
-.toggle(
-"hidden",
-!isAdmin
-);
+.toggle("hidden",!isAdmin);
 
 document
 .querySelectorAll(".admin-only")
 .forEach(button=>{
-button.classList.toggle(
-"hidden",
-!isAdmin
-);
+button.classList.toggle("hidden",!isAdmin);
 });
 
 }
 
 
-/* =====================================================
+/* =========================
 STAGES
-===================================================== */
+========================= */
 
 const stages=[
 
@@ -2627,9 +2484,9 @@ const stages=[
 ];
 
 
-/* =====================================================
+/* =========================
 LOAD ORDERS
-===================================================== */
+========================= */
 
 async function loadOrders(){
 
@@ -2658,163 +2515,115 @@ console.error(
 error
 );
 
-const latest=
-document.getElementById(
-"latestOrders"
-);
-
-const list=
-document.getElementById(
-"ordersList"
-);
-
-if(latest){
-
-latest.innerHTML=
-"<div class='empty'>"+
-"❌ "+
-(
+const errorText=
 currentLanguage==="he"
 ?
-"לא ניתן לטעון הזמנות"
+"❌ לא ניתן לטעון הזמנות"
 :
-"تعذر تحميل الطلبيات"
-)+
-"</div>";
+"❌ تعذر تحميل الطلبيات";
 
-}
+if(document.getElementById("latestOrders"))
+document.getElementById("latestOrders").innerHTML=
+"<div class='empty'>"+errorText+"</div>";
 
-if(list){
-
-list.innerHTML=
-"<div class='empty'>"+
-"❌ "+
-(
-currentLanguage==="he"
-?
-"לא ניתן לטעון הזמנות"
-:
-"تعذر تحميل الطلبيات"
-)+
-"</div>";
-
-}
+if(document.getElementById("ordersList"))
+document.getElementById("ordersList").innerHTML=
+"<div class='empty'>"+errorText+"</div>";
 
 }
 
 }
 
 
-/* =====================================================
+/* =========================
 NORMALIZE
-===================================================== */
+========================= */
 
 function norm(order){
 
 return{
 
 id:order.id,
-
-num:
-order.order_number || "",
-
-customer:
-order.customer_name || "",
-
-phone:
-order.phone || "",
-
-due:
-order.due_date || "",
-
-notes:
-order.notes || "",
-
-urgent:
-!!order.urgent,
-
-stage:
-Number(order.stage || 0)
+num:order.order_number || "",
+customer:order.customer_name || "",
+phone:order.phone || "",
+due:order.due_date || "",
+notes:order.notes || "",
+urgent:!!order.urgent,
+stage:Number(order.stage || 0)
 
 };
 
 }
 
 
-/* =====================================================
+/* =========================
 OVERDUE
-===================================================== */
+========================= */
 
 function overdue(order){
 
 return(
 order.due &&
-new Date(
-order.due+"T23:59:59"
-) < new Date() &&
+new Date(order.due+"T23:59:59") < new Date() &&
 order.stage < stages.length-1
 );
 
 }
 
 
-/* =====================================================
+/* =========================
 SECTION
-===================================================== */
+========================= */
 
 function showSection(id,button){
 
 document
-.querySelectorAll(
-".section"
-)
+.querySelectorAll(".section")
 .forEach(section=>{
 section.classList.add("hidden");
 });
 
-document
-.getElementById(id)
-.classList
-.remove("hidden");
+const section=document.getElementById(id);
+
+if(!section){
+return;
+}
+
+section.classList.remove("hidden");
 
 document
-.querySelectorAll(
-".nav button"
-)
+.querySelectorAll(".nav button")
 .forEach(btn=>{
 btn.classList.remove("active");
 });
 
+if(button){
 button.classList.add("active");
+}
 
 document
 .getElementById("sidebar")
-.classList
-.remove("open");
-
+.classList.remove("open");
 
 const titles={
 
-dashboard:
-{
+dashboard:{
 ar:"الرئيسية",
 he:"ראשי"
 },
 
-ordersSection:
-{
+ordersSection:{
 ar:"الطلبيات",
 he:"הזמנות"
 },
 
-production:
-{
+production:{
 ar:"مراحل العمل",
 he:"שלבי עבודה"
 },
 
-users:
-{
+users:{
 ar:"المستخدمون",
 he:"משתמשים"
 }
@@ -2823,47 +2632,35 @@ he:"משתמשים"
 
 const subtitles={
 
-dashboard:
-{
+dashboard:{
 ar:"نظرة عامة على نظام إدارة الطلبيات",
 he:"סקירה כללית של מערכת ניהול ההזמנות"
 },
 
-ordersSection:
-{
+ordersSection:{
 ar:"إدارة ومتابعة جميع الطلبيات",
 he:"ניהול ומעקב אחר כל ההזמנות"
 },
 
-production:
-{
+production:{
 ar:"متابعة مراحل تنفيذ الطلبيات",
 he:"מעקב אחר שלבי ביצוע ההזמנות"
 },
 
-users:
-{
+users:{
 ar:"إدارة مستخدمي النظام والصلاحيات",
 he:"ניהול משתמשי המערכת והרשאות"
 }
 
 };
 
-const title=
+document.getElementById("pageTitle").textContent=
 titles[id]?.[currentLanguage] ||
 "MODULAR TECH";
 
-const subtitle=
+document.getElementById("pageSubtitle").textContent=
 subtitles[id]?.[currentLanguage] ||
 "";
-
-document.getElementById(
-"pageTitle"
-).textContent=title;
-
-document.getElementById(
-"pageSubtitle"
-).textContent=subtitle;
 
 if(id==="users" && role==="المدير"){
 loadUsers();
@@ -2872,9 +2669,9 @@ loadUsers();
 }
 
 
-/* =====================================================
+/* =========================
 ADD ORDER
-===================================================== */
+========================= */
 
 function openAddModal(){
 
@@ -2895,51 +2692,41 @@ document
 .getElementById("orderForm")
 .reset();
 
-document.getElementById(
-"modalTitle"
-).textContent=
+document.getElementById("modalTitle").textContent=
 currentLanguage==="he"
 ?
-"➕ הוספת הזמנה"
+"＋ הוספת הזמנה"
 :
-"➕ إضافة طلبية";
+"＋ إضافة طلبية";
 
-document.getElementById(
-"editId"
-).value="";
+document.getElementById("editId").value="";
 
-document.getElementById(
-"due"
-).value=
-new Date()
-.toISOString()
-.slice(0,10);
+document.getElementById("due").value=
+new Date().toISOString().slice(0,10);
 
 document
 .getElementById("orderModal")
-.classList
-.remove("hidden");
+.classList.remove("hidden");
 
 }
 
 
-/* =====================================================
+/* =========================
 CLOSE ORDER
-===================================================== */
+========================= */
 
 function closeModal(){
 
 document
 .getElementById("orderModal")
-.classList
-.add("hidden");
+.classList.add("hidden");
 
 }
 
 
-/* =====================================================
+/* =========================
 SAVE ORDER
-===================================================== */
+========================= */
 
 document
 .getElementById("orderForm")
@@ -2963,41 +2750,27 @@ return;
 }
 
 const id=
-document.getElementById(
-"editId"
-).value;
+document.getElementById("editId").value;
 
 const payload={
 
 order_number:
-document.getElementById(
-"orderNum"
-).value.trim(),
+document.getElementById("orderNum").value.trim(),
 
 customer_name:
-document.getElementById(
-"customer"
-).value.trim(),
+document.getElementById("customer").value.trim(),
 
 phone:
-document.getElementById(
-"phone"
-).value.trim(),
+document.getElementById("phone").value.trim(),
 
 due_date:
-document.getElementById(
-"due"
-).value,
+document.getElementById("due").value,
 
 notes:
-document.getElementById(
-"notes"
-).value.trim(),
+document.getElementById("notes").value.trim(),
 
 urgent:
-document.getElementById(
-"urgent"
-).checked,
+document.getElementById("urgent").checked,
 
 updated_at:
 new Date().toISOString()
@@ -3009,8 +2782,7 @@ try{
 if(id){
 
 await request(
-"/rest/v1/orders?id=eq."+
-encodeURIComponent(id),
+"/rest/v1/orders?id=eq."+encodeURIComponent(id),
 "PATCH",
 payload
 );
@@ -3026,7 +2798,6 @@ currentLanguage==="he"
 }else{
 
 payload.stage=0;
-
 delete payload.updated_at;
 
 await request(
@@ -3069,85 +2840,50 @@ error.message
 });
 
 
-/* =====================================================
-EDIT ORDER
-===================================================== */
+/* =========================
+EDIT
+========================= */
 
 function editOrder(id){
 
 if(role!=="المدير"){
-
-alert(
-currentLanguage==="he"
-?
-"אין לך הרשאת עריכה"
-:
-"ليس لديك صلاحية التعديل"
-);
-
 return;
 }
 
 const order=
-orders
-.map(norm)
-.find(
-x=>String(x.id)===
-String(id)
+orders.map(norm).find(
+x=>String(x.id)===String(id)
 );
 
 if(!order){
 return;
 }
 
-document.getElementById(
-"modalTitle"
-).textContent=
+document.getElementById("modalTitle").textContent=
 currentLanguage==="he"
 ?
 "✏️ עריכת הזמנה #"+order.num
 :
 "✏️ تعديل الطلبية #"+order.num;
 
-document.getElementById(
-"editId"
-).value=order.id;
-
-document.getElementById(
-"orderNum"
-).value=order.num;
-
-document.getElementById(
-"customer"
-).value=order.customer;
-
-document.getElementById(
-"phone"
-).value=order.phone;
-
-document.getElementById(
-"due"
-).value=order.due;
-
-document.getElementById(
-"notes"
-).value=order.notes;
-
-document.getElementById(
-"urgent"
-).checked=order.urgent;
+document.getElementById("editId").value=order.id;
+document.getElementById("orderNum").value=order.num;
+document.getElementById("customer").value=order.customer;
+document.getElementById("phone").value=order.phone;
+document.getElementById("due").value=order.due;
+document.getElementById("notes").value=order.notes;
+document.getElementById("urgent").checked=order.urgent;
 
 document
 .getElementById("orderModal")
-.classList
-.remove("hidden");
+.classList.remove("hidden");
 
 }
 
 
-/* =====================================================
-DELETE ORDER
-===================================================== */
+/* =========================
+DELETE
+========================= */
 
 async function deleteOrder(id){
 
@@ -3156,11 +2892,8 @@ return;
 }
 
 const order=
-orders
-.map(norm)
-.find(
-x=>String(x.id)===
-String(id)
+orders.map(norm).find(
+x=>String(x.id)===String(id)
 );
 
 if(!order){
@@ -3181,8 +2914,7 @@ return;
 try{
 
 await request(
-"/rest/v1/orders?id=eq."+
-encodeURIComponent(id),
+"/rest/v1/orders?id=eq."+encodeURIComponent(id),
 "DELETE"
 );
 
@@ -3198,35 +2930,29 @@ currentLanguage==="he"
 
 }catch(error){
 
-alert(
-"❌ "+error.message
-);
+alert("❌ "+error.message);
 
 }
 
 }
 
 
-/* =====================================================
+/* =========================
 NEXT STAGE
-===================================================== */
+========================= */
 
 async function nextStage(id){
 
 const order=
-orders
-.map(norm)
-.find(
-x=>String(x.id)===
-String(id)
+orders.map(norm).find(
+x=>String(x.id)===String(id)
 );
 
 if(!order){
 return;
 }
 
-const next=
-order.stage+1;
+const next=order.stage+1;
 
 if(next>=stages.length){
 return;
@@ -3251,13 +2977,11 @@ return;
 try{
 
 await request(
-"/rest/v1/orders?id=eq."+
-encodeURIComponent(id),
+"/rest/v1/orders?id=eq."+encodeURIComponent(id),
 "PATCH",
 {
 stage:next,
-updated_at:
-new Date().toISOString()
+updated_at:new Date().toISOString()
 }
 );
 
@@ -3273,39 +2997,33 @@ currentLanguage==="he"
 
 }catch(error){
 
-alert(
-"❌ "+error.message
-);
+alert("❌ "+error.message);
 
 }
 
 }
 
 
-/* =====================================================
+/* =========================
 DETAILS
-===================================================== */
+========================= */
 
 function details(id){
 
 const order=
-orders
-.map(norm)
-.find(
-x=>String(x.id)===
-String(id)
+orders.map(norm).find(
+x=>String(x.id)===String(id)
 );
 
 if(!order){
 return;
 }
 
-const he=
-currentLanguage==="he";
+const he=currentLanguage==="he";
 
 alert(
 
-(he?"📋 הזמנה #":"📋 الطلبية #")+
+(he?"▣ הזמנה #":"▣ الطلبية #")+
 order.num+
 
 "\n\n"+
@@ -3323,43 +3041,45 @@ order.customer+
 "\n"+
 (he?"סטטוס: ":"الحالة: ")+
 (
-stages[order.stage]?.[0]||
-"-"
+he
+?
+translateStage(stages[order.stage]?.[0])
+:
+stages[order.stage]?.[0]||"-"
 )+
 
 "\n"+
 (he?"מחלקה: ":"القسم: ")+
 (
-stages[order.stage]?.[1]||
-"-"
+he
+?
+translateRole(stages[order.stage]?.[1])
+:
+stages[order.stage]?.[1]||"-"
 )+
 
 "\n"+
 (he?"הערות: ":"الملاحظات: ")+
-(
-order.notes||"-"
-)
+(order.notes||"-")
 
 );
 
 }
 
 
-/* =====================================================
+/* =========================
 ORDER HTML
-===================================================== */
+========================= */
 
 function orderHtml(order){
 
-const he=
-currentLanguage==="he";
+const he=currentLanguage==="he";
 
-const stage=
-stages[order.stage];
+const stage=stages[order.stage];
 
 const stageName=
 stage?.[0] ||
-(he?"בטיפול":"في العمل");
+"في العمل";
 
 const department=
 stage?.[1] ||
@@ -3378,9 +3098,14 @@ nextButton=`
 class="btn primary"
 onclick="nextStage('${order.id}')"
 >
-➡️ ${he?"בוצע ":"تم "}${esc(nextDepartment)}
+➡️ ${
+he
+?
+"בוצע "+esc(translateRole(nextDepartment))
+:
+"تم "+esc(nextDepartment)
+}
 </button>
-
 `;
 
 }else{
@@ -3388,9 +3113,8 @@ onclick="nextStage('${order.id}')"
 nextButton=`
 
 <span class="badge">
-${he?"✅ הושלם":"✅ مكتملة"}
+${he?"✓ הושלם":"✓ مكتملة"}
 </span>
-
 `;
 
 }
@@ -3405,7 +3129,7 @@ return `
 
 <div class="order-number">
 
-${order.urgent?"⭐ ":""}
+${order.urgent?"★ ":""}
 
 #${esc(order.num)}
 
@@ -3417,32 +3141,37 @@ ${esc(order.customer)}
 
 </div>
 
-<span class="badge ${
-overdue(order)
-?
-"overdue"
-:
-""
-}">
+<span class="badge ${overdue(order)?"overdue":""}">
 
 ${
 overdue(order)
 ?
 (he?"באיחור":"متأخرة")
 :
+(
+he
+?
+esc(translateStage(stageName))
+:
 esc(stageName)
+)
 }
 
 </span>
 
 </div>
 
-
 <div class="info">
 
 <div class="info-box">
 
-📞 ${he?"טלפון":"الهاتف"}
+☎ ${
+he
+?
+"טלפון"
+:
+"الهاتف"
+}
 
 <b>
 ${esc(order.phone||"-")}
@@ -3450,10 +3179,15 @@ ${esc(order.phone||"-")}
 
 </div>
 
-
 <div class="info-box">
 
-📅 ${he?"מסירה":"التسليم"}
+▣ ${
+he
+?
+"מסירה"
+:
+"التسليم"
+}
 
 <b>
 ${esc(order.due||"-")}
@@ -3461,19 +3195,29 @@ ${esc(order.due||"-")}
 
 </div>
 
-
 <div class="info-box">
 
-🏭 ${he?"מחלקה":"القسم"}
+⚙ ${
+he
+?
+"מחלקה"
+:
+"القسم"
+}
 
 <b>
-${esc(department)}
+${esc(
+he
+?
+translateRole(department)
+:
+department
+)}
 </b>
 
 </div>
 
 </div>
-
 
 <div class="actions">
 
@@ -3481,9 +3225,8 @@ ${esc(department)}
 class="btn secondary"
 onclick="details('${order.id}')"
 >
-📋 ${he?"פרטים":"التفاصيل"}
+▣ ${he?"פרטים":"التفاصيل"}
 </button>
-
 
 ${
 role==="المدير"
@@ -3503,12 +3246,10 @@ onclick="deleteOrder('${order.id}')"
 >
 🗑️ ${he?"מחיקה":"حذف"}
 </button>
-
 `
 :
 ""
 }
-
 
 ${nextButton}
 
@@ -3521,69 +3262,57 @@ ${nextButton}
 }
 
 
-/* =====================================================
+/* =========================
 DASHBOARD
-===================================================== */
+========================= */
 
 function renderDashboard(){
 
-const list=
-orders.map(norm);
+const list=orders.map(norm);
 
-document.getElementById(
-"totalCount"
-).textContent=
+document.getElementById("totalCount").textContent=
 list.length;
 
-document.getElementById(
-"activeCount"
-).textContent=
+document.getElementById("activeCount").textContent=
 list.filter(
 o=>o.stage<stages.length-1
 ).length;
 
-document.getElementById(
-"urgentCount"
-).textContent=
-list.filter(
-o=>o.urgent
-).length;
+document.getElementById("urgentCount").textContent=
+list.filter(o=>o.urgent).length;
 
-document.getElementById(
-"overdueCount"
-).textContent=
+document.getElementById("overdueCount").textContent=
 list.filter(overdue).length;
 
-document.getElementById(
-"latestOrders"
-).innerHTML=
-list
-.slice(0,5)
+document.getElementById("latestOrders").innerHTML=
+list.slice(0,5)
 .map(orderHtml)
 .join("")
 ||
 `
 <div class="empty">
-${currentLanguage==="he"
-?"אין הזמנות עדיין"
-:"لا توجد طلبيات حتى الآن"}
+${
+currentLanguage==="he"
+?
+"אין הזמנות עדיין"
+:
+"لا توجد طلبيات حتى الآن"
+}
 </div>
 `;
 
 }
 
 
-/* =====================================================
+/* =========================
 SEARCH
-===================================================== */
+========================= */
 
 function renderOrders(){
 
 const q=
 (
-document.getElementById(
-"search"
-)?.value||
+document.getElementById("search")?.value ||
 ""
 )
 .trim()
@@ -3593,7 +3322,6 @@ const list=
 orders
 .map(norm)
 .filter(order=>
-
 [
 order.num,
 order.customer,
@@ -3602,22 +3330,17 @@ order.phone
 .join(" ")
 .toLowerCase()
 .includes(q)
-
 );
 
 const box=
-document.getElementById(
-"ordersList"
-);
+document.getElementById("ordersList");
 
 if(!box){
 return;
 }
 
 box.innerHTML=
-list
-.map(orderHtml)
-.join("")
+list.map(orderHtml).join("")
 ||
 `
 <div class="empty">
@@ -3634,24 +3357,19 @@ currentLanguage==="he"
 }
 
 
-/* =====================================================
+/* =========================
 STAGES
-===================================================== */
+========================= */
 
 function renderStages(){
 
-const list=
-orders.map(norm);
+const list=orders.map(norm);
 
-const he=
-currentLanguage==="he";
+const he=currentLanguage==="he";
 
-document.getElementById(
-"stageList"
-).innerHTML=
+document.getElementById("stageList").innerHTML=
 
-stages
-.map(
+stages.map(
 (stage,index)=>{
 
 const stageOrders=
@@ -3668,6 +3386,7 @@ return `
 <div>
 
 <div class="order-number">
+
 ${esc(
 he
 ?
@@ -3675,6 +3394,7 @@ translateStage(stage[0])
 :
 stage[0]
 )}
+
 </div>
 
 <div class="customer">
@@ -3688,7 +3408,11 @@ he
 }
 
 ${esc(
+he
+?
 translateRole(stage[1])
+:
+stage[1]
 )}
 
 </div>
@@ -3696,29 +3420,30 @@ translateRole(stage[1])
 </div>
 
 <span class="badge">
+
 ${stageOrders.length}
-${he?"הזמנות":"طلبية"}
+${he?" הזמנות":" طلبية"}
+
 </span>
 
 </div>
 
-
 ${
 stageOrders.length
 ?
-stageOrders
-.map(orderHtml)
-.join("")
+stageOrders.map(orderHtml).join("")
 :
 `
 <div class="empty">
+
 ${
 he
 ?
-"ไม่มี הזמנות בשלב זה"
+"אין הזמנות בשלב זה"
 :
 "لا توجد طلبيات في هذه المرحلة"
 }
+
 </div>
 `
 }
@@ -3728,15 +3453,14 @@ he
 `;
 
 }
-)
-.join("");
+).join("");
 
 }
 
 
-/* =====================================================
-TRANSLATE STAGES / ROLES
-===================================================== */
+/* =========================
+TRANSLATIONS
+========================= */
 
 function translateStage(value){
 
@@ -3744,7 +3468,7 @@ const map={
 
 "في العمل":"בטיפול",
 "تم القص":"בוצע חיתוך",
-"تم الكنت":"בוצע קנטים",
+"تم الكنت":"בוצעו קנטים",
 "تم CNC":"בוצע CNC",
 "تم التركيب":"בוצעה הרכבה",
 "تم الدهان":"בוצע צבע",
@@ -3780,9 +3504,9 @@ return map[value] || value;
 }
 
 
-/* =====================================================
-LOAD USERS
-===================================================== */
+/* =========================
+USERS
+========================= */
 
 async function loadUsers(){
 
@@ -3791,17 +3515,16 @@ return;
 }
 
 const usersList=
-document.getElementById(
-"usersList"
-);
+document.getElementById("usersList");
 
 if(!usersList){
 return;
 }
 
-usersList.innerHTML=
-`
+usersList.innerHTML=`
+
 <div class="empty">
+
 ⏳ ${
 currentLanguage==="he"
 ?
@@ -3809,6 +3532,7 @@ currentLanguage==="he"
 :
 "جاري تحميل المستخدمين..."
 }
+
 </div>
 `;
 
@@ -3822,18 +3546,17 @@ await request(
 );
 
 if(!Array.isArray(users)){
-
 throw new Error(
 "البيانات المستلمة من get_all_profiles غير صحيحة"
 );
-
 }
 
 if(users.length===0){
 
-usersList.innerHTML=
-`
+usersList.innerHTML=`
+
 <div class="empty">
+
 ${
 currentLanguage==="he"
 ?
@@ -3841,6 +3564,7 @@ currentLanguage==="he"
 :
 "لا يوجد مستخدمون في النظام"
 }
+
 </div>
 `;
 
@@ -3848,13 +3572,10 @@ return;
 
 }
 
-const he=
-currentLanguage==="he";
+const he=currentLanguage==="he";
 
 usersList.innerHTML=
-users
-.map(
-user=>{
+users.map(user=>{
 
 const isActive=
 user.active!==false;
@@ -3870,8 +3591,8 @@ return `
 <div class="order-number">
 
 ${esc(
-user.full_name||
-user.username||
+user.full_name ||
+user.username ||
 (he?"ללא שם":"بدون اسم")
 )}
 
@@ -3879,10 +3600,7 @@ user.username||
 
 <div class="customer">
 
-@${esc(
-user.username||
-"-"
-)}
+@${esc(user.username||"-")}
 
 </div>
 
@@ -3902,7 +3620,6 @@ user.role||"-"
 
 </div>
 
-
 <div class="info">
 
 <div class="info-box">
@@ -3920,7 +3637,6 @@ ${esc(user.username||"-")}
 </b>
 
 </div>
-
 
 <div class="info-box">
 
@@ -3944,10 +3660,9 @@ user.role||"-"
 
 </div>
 
-
 <div class="info-box">
 
-📧 ${
+✉ ${
 he
 ?
 "דואר אלקטרוני"
@@ -3963,15 +3678,10 @@ ${esc(user.email||"-")}
 
 </div>
 
-
 <div class="actions">
 
 <span class="badge ${
-isActive
-?
-""
-:
-"overdue"
+isActive?"":"overdue"
 }">
 
 ${
@@ -4002,9 +3712,7 @@ he
 
 `;
 
-}
-)
-.join("");
+}).join("");
 
 }catch(error){
 
@@ -4013,9 +3721,10 @@ console.error(
 error
 );
 
-usersList.innerHTML=
-`
+usersList.innerHTML=`
+
 <div class="empty">
+
 ❌ ${
 currentLanguage==="he"
 ?
@@ -4038,9 +3747,9 @@ ${esc(error.message)}
 }
 
 
-/* =====================================================
+/* =========================
 USER MODAL
-===================================================== */
+========================= */
 
 function openUserModal(){
 
@@ -4061,14 +3770,11 @@ document
 .getElementById("userForm")
 .reset();
 
-document.getElementById(
-"newActive"
-).checked=true;
+document.getElementById("newActive").checked=true;
 
 document
 .getElementById("userModal")
-.classList
-.remove("hidden");
+.classList.remove("hidden");
 
 }
 
@@ -4077,15 +3783,14 @@ function closeUserModal(){
 
 document
 .getElementById("userModal")
-.classList
-.add("hidden");
+.classList.add("hidden");
 
 }
 
 
-/* =====================================================
+/* =========================
 CREATE USER
-===================================================== */
+========================= */
 
 document
 .getElementById("userForm")
@@ -4100,34 +3805,28 @@ return;
 }
 
 const username=
-document.getElementById(
-"newUsername"
-).value.trim();
+document.getElementById("newUsername")
+.value.trim();
 
 const fullName=
-document.getElementById(
-"newFullName"
-).value.trim();
+document.getElementById("newFullName")
+.value.trim();
 
 const email=
-document.getElementById(
-"newEmail"
-).value.trim();
+document.getElementById("newEmail")
+.value.trim();
 
 const password=
-document.getElementById(
-"newPassword"
-).value;
+document.getElementById("newPassword")
+.value;
 
 const userRole=
-document.getElementById(
-"newRole"
-).value;
+document.getElementById("newRole")
+.value;
 
 const active=
-document.getElementById(
-"newActive"
-).checked;
+document.getElementById("newActive")
+.checked;
 
 if(
 !username ||
@@ -4179,29 +3878,23 @@ currentLanguage==="he"
 
 }
 
-
 const response=
 await fetch(
 CREATE_USER_FUNCTION,
 {
 method:"POST",
 headers:{
-"Content-Type":
-"application/json",
-"Authorization":
-"Bearer "+token,
-"apikey":
-SUPABASE_KEY
+"Content-Type":"application/json",
+"Authorization":"Bearer "+token,
+"apikey":SUPABASE_KEY
 },
 body:JSON.stringify({
-
 username,
 full_name:fullName,
 email,
 password,
 role:userRole,
 active
-
 })
 }
 );
@@ -4220,14 +3913,13 @@ data={message:text};
 if(!response.ok){
 
 throw new Error(
-data.message||
-data.error||
-data.error_description||
+data.message ||
+data.error ||
+data.error_description ||
 "فشل إنشاء المستخدم"
 );
 
 }
-
 
 closeUserModal();
 
@@ -4235,9 +3927,7 @@ document
 .getElementById("userForm")
 .reset();
 
-document.getElementById(
-"newActive"
-).checked=true;
+document.getElementById("newActive").checked=true;
 
 await loadUsers();
 
@@ -4257,15 +3947,13 @@ error
 );
 
 let message=
-error.message||
+error.message ||
 "فشل إنشاء المستخدم";
 
 if(
 message
 .toLowerCase()
-.includes(
-"already registered"
-)
+.includes("already registered")
 ){
 
 message=
@@ -4295,9 +3983,9 @@ message
 });
 
 
-/* =====================================================
+/* =========================
 RENDER ALL
-===================================================== */
+========================= */
 
 function renderAll(){
 
@@ -4308,18 +3996,18 @@ renderStages();
 }
 
 
-/* =====================================================
+/* =========================
 START
-===================================================== */
+========================= */
 
 applyLanguage();
 
 checkSession();
 
 
-/* =====================================================
+/* =========================
 SERVICE WORKER
-===================================================== */
+========================= */
 
 if("serviceWorker" in navigator){
 
