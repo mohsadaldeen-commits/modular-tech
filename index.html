@@ -25,8 +25,6 @@ color:#172033
 display:none!important
 }
 
-/* LOGIN */
-
 #loginPage{
 min-height:100vh;
 display:flex;
@@ -97,8 +95,6 @@ display:none;
 font-weight:bold
 }
 
-/* HEADER */
-
 header{
 background:#0f172a;
 color:white;
@@ -127,8 +123,6 @@ color:white;
 padding:8px 12px;
 margin-right:10px
 }
-
-/* MAIN */
 
 .container{
 max-width:1250px;
@@ -420,7 +414,6 @@ grid-template-columns:repeat(2,1fr)
 }
 
 @media(max-width:600px){
-
 .container{
 padding:12px
 }
@@ -466,8 +459,6 @@ padding:24px
 </head>
 
 <body>
-
-<!-- ================= LOGIN ================= -->
 
 <div id="loginPage">
 
@@ -515,9 +506,6 @@ onclick="login()"
 
 </div>
 
-
-<!-- ================= APP ================= -->
-
 <div id="app" class="hidden">
 
 <header>
@@ -539,7 +527,6 @@ onclick="logout()"
 </div>
 
 </header>
-
 
 <div class="container">
 
@@ -572,9 +559,6 @@ onclick="showSection('users',this)"
 </button>
 
 </div>
-
-
-<!-- DASHBOARD -->
 
 <section id="dashboard">
 
@@ -634,7 +618,6 @@ id="overdueCount"
 
 </div>
 
-
 <div class="panel">
 
 <div class="order-head">
@@ -657,9 +640,6 @@ onclick="openAddModal()"
 </div>
 
 </section>
-
-
-<!-- ORDERS -->
 
 <section
 id="ordersSection"
@@ -700,9 +680,6 @@ class="order-list"
 
 </section>
 
-
-<!-- PRODUCTION -->
-
 <section
 id="production"
 class="hidden"
@@ -722,9 +699,6 @@ class="order-list"
 </div>
 
 </section>
-
-
-<!-- USERS -->
 
 <section
 id="users"
@@ -758,16 +732,10 @@ onclick="openUserModal()"
 
 </div>
 
-
-<!-- MESSAGE -->
-
 <div
 id="message"
 class="message"
 ></div>
-
-
-<!-- ORDER MODAL -->
 
 <div
 id="orderModal"
@@ -896,9 +864,6 @@ onclick="closeModal()"
 
 </div>
 
-
-<!-- USER MODAL -->
-
 <div
 id="userModal"
 class="modal hidden"
@@ -1024,7 +989,6 @@ onclick="closeUserModal()"
 
 </div>
 
-
 <script>
 
 /* =====================================================
@@ -1036,7 +1000,6 @@ const SUPABASE_URL =
 
 const SUPABASE_KEY =
 "sb_publishable_vVXVJGcWpoPvPEH_bfm23Q_dZ5eXvmE";
-
 
 let orders = [];
 
@@ -1239,10 +1202,6 @@ return;
 
 try{
 
-/*
-نبحث عن البريد الداخلي المرتبط باسم المستخدم
-*/
-
 const result=
 await supabaseRequest(
 "rpc/get_login_email",
@@ -1271,11 +1230,6 @@ throw new Error(
 
 }
 
-
-/*
-تسجيل الدخول الحقيقي
-*/
-
 const session=
 await authRequest(
 "token?grant_type=password",
@@ -1285,11 +1239,6 @@ email:email,
 password:password
 }
 );
-
-
-/*
-حفظ الجلسة
-*/
 
 localStorage.setItem(
 "supabase_access_token",
@@ -1301,12 +1250,17 @@ localStorage.setItem(
 session.refresh_token
 );
 
-
 /*
-تحميل بيانات المستخدم
+الإصلاح:
+نرسل ID والبريد الإلكتروني.
+إذا لم يجد profiles الـ ID
+سيبحث بالبريد الإلكتروني.
 */
 
-await loadProfile(session.user.id);
+await loadProfile(
+session.user.id,
+session.user.email
+);
 
 document
 .getElementById("loginPage")
@@ -1339,12 +1293,21 @@ errorBox.style.display="block";
 
 
 /* =====================================================
-LOAD PROFILE
+LOAD PROFILE - FIXED
 ===================================================== */
 
-async function loadProfile(userId){
+async function loadProfile(userId,userEmail=null){
 
-const data=
+let data=[];
+
+/*
+المحاولة الأولى:
+البحث بواسطة Auth User ID
+*/
+
+try{
+
+data=
 await supabaseRequest(
 "profiles",
 "GET",
@@ -1354,17 +1317,74 @@ encodeURIComponent(userId)+
 "&limit=1"
 );
 
-if(!data || !data.length){
+}catch(error){
+
+console.error(
+"Profile ID lookup failed:",
+error
+);
+
+}
+
+/*
+المحاولة الثانية:
+إذا لم نجد الملف بواسطة ID
+نبحث بواسطة البريد الإلكتروني
+*/
+
+if(
+(!data || !data.length)
+&&
+userEmail
+){
+
+try{
+
+data=
+await supabaseRequest(
+"profiles",
+"GET",
+null,
+"?select=id,username,full_name,role,active,email&email=eq."+
+encodeURIComponent(userEmail)+
+"&limit=1"
+);
+
+}catch(error){
+
+console.error(
+"Profile email lookup failed:",
+error
+);
+
+}
+
+}
+
+/*
+إذا لم نجد المستخدم بأي طريقة
+*/
+
+if(
+!data ||
+!data.length
+){
 
 throw new Error(
-"لم يتم العثور على ملف المستخدم"
+"لم يتم العثور على ملف المستخدم المرتبط بهذا الحساب"
 );
 
 }
 
 currentProfile=data[0];
 
-if(!currentProfile.active){
+/*
+التأكد من أن الحساب فعال
+*/
+
+if(
+!currentProfile.active
+){
 
 throw new Error(
 "هذا الحساب غير فعال"
@@ -1426,7 +1446,15 @@ throw new Error();
 const user=
 await response.json();
 
-await loadProfile(user.id);
+/*
+الإصلاح:
+إرسال ID والبريد الإلكتروني
+*/
+
+await loadProfile(
+user.id,
+user.email
+);
 
 document
 .getElementById("loginPage")
@@ -1441,6 +1469,8 @@ applyPermissions();
 await loadOrders();
 
 }catch(error){
+
+console.error(error);
 
 localStorage.removeItem(
 "supabase_access_token"
@@ -1483,10 +1513,6 @@ function applyPermissions(){
 const isAdmin=
 role==="المدير";
 
-/*
-المستخدمون للمدير فقط
-*/
-
 if(!isAdmin){
 
 document
@@ -1494,10 +1520,6 @@ document
 .classList.add("hidden");
 
 }
-
-/*
-الإضافة والتعديل والحذف للمدير فقط
-*/
 
 document
 .querySelectorAll(
@@ -1996,11 +2018,6 @@ order.stage+1;
 
 if(next>=stages.length)return;
 
-/*
-المدير يستطيع كل المراحل.
-الموظف يستطيع المرحلة التابعة لقسمه.
-*/
-
 if(role!=="المدير"){
 
 const expected=
@@ -2364,7 +2381,7 @@ onclick="nextStage('${order.id}')"
 
 
 /* =====================================================
-STAGES
+RENDER STAGES
 ===================================================== */
 
 function renderStages(){
