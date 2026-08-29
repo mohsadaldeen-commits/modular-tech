@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>MODULAR TECH</title>
 
 <style>
@@ -27,8 +28,15 @@ top:0;
 z-index:20
 }
 
-.logo{font-size:21px;font-weight:bold}
-.user{font-size:13px;opacity:.9}
+.logo{
+font-size:21px;
+font-weight:bold
+}
+
+.user{
+font-size:13px;
+opacity:.9
+}
 
 .container{
 max-width:1250px;
@@ -92,7 +100,9 @@ box-shadow:0 3px 14px #0000000b;
 margin-bottom:18px
 }
 
-.panel h2{margin-top:0}
+.panel h2{
+margin-top:0
+}
 
 .row{
 display:grid;
@@ -115,7 +125,9 @@ font-size:15px;
 font-family:inherit
 }
 
-textarea{resize:vertical}
+textarea{
+resize:vertical
+}
 
 button{
 border:0;
@@ -125,10 +137,25 @@ cursor:pointer;
 font-weight:bold
 }
 
-.primary{background:#1f6feb;color:white}
-.success{background:#198754;color:white}
-.danger{background:#d92d20;color:white}
-.secondary{background:#e8eef5;color:#172033}
+.primary{
+background:#1f6feb;
+color:white
+}
+
+.success{
+background:#198754;
+color:white
+}
+
+.danger{
+background:#d92d20;
+color:white
+}
+
+.secondary{
+background:#e8eef5;
+color:#172033
+}
 
 .actions{
 display:flex;
@@ -137,7 +164,9 @@ flex-wrap:wrap;
 margin-top:10px
 }
 
-.search{margin-bottom:15px}
+.search{
+margin-bottom:15px
+}
 
 .order-list{
 display:grid;
@@ -282,60 +311,30 @@ width:auto;
 margin:0
 }
 
-.stage-card{
-background:#fff;
-border:1px solid #e3e8ef;
-border-radius:14px;
-padding:15px
-}
-
-.stage-title{
-font-size:17px;
-font-weight:bold
-}
-
-.stage-orders{
-display:grid;
-gap:9px;
-margin-top:12px
-}
-
-.stage-order{
-background:#f6f8fb;
-border-radius:12px;
-padding:12px
-}
-
-.history{
-margin-top:15px;
-border-top:1px solid #e3e8ef;
-padding-top:12px
-}
-
-.history-item{
-padding:9px;
-background:#f6f8fb;
-border-radius:8px;
-margin-bottom:7px;
-font-size:13px
-}
-
 @media(max-width:900px){
-.stats{grid-template-columns:repeat(2,1fr)}
+.stats{
+grid-template-columns:repeat(2,1fr)
+}
 }
 
 @media(max-width:600px){
 
-.container{padding:12px}
+.container{
+padding:12px
+}
 
 .stats{
 grid-template-columns:1fr 1fr;
 gap:9px
 }
 
-.stat{padding:13px}
+.stat{
+padding:13px
+}
 
-.stat-number{font-size:24px}
+.stat-number{
+font-size:24px
+}
 
 .row{
 grid-template-columns:1fr
@@ -344,11 +343,6 @@ grid-template-columns:1fr
 .info{
 grid-template-columns:1fr 1fr
 }
-
-.order-head{
-align-items:flex-start
-}
-
 }
 </style>
 
@@ -365,7 +359,9 @@ align-items:flex-start
 MODULAR TECH
 </div>
 
-<div class="user" id="userLabel"></div>
+<div class="user" id="userLabel">
+جاري الاتصال...
+</div>
 
 </header>
 
@@ -390,9 +386,6 @@ MODULAR TECH
 </button>
 
 </div>
-
-
-<!-- الرئيسية -->
 
 <section id="dashboard">
 
@@ -438,9 +431,6 @@ MODULAR TECH
 
 </section>
 
-
-<!-- الطلبيات -->
-
 <section id="ordersSection" class="hidden">
 
 <div class="panel">
@@ -469,27 +459,17 @@ oninput="renderOrders()"
 
 </section>
 
-
-<!-- مراحل العمل -->
-
 <section id="production" class="hidden">
 
 <div class="panel">
 
 <h2>🏭 مراحل العمل</h2>
 
-<p>
-هنا تظهر الطلبيات حسب المرحلة الحالية.
-</p>
-
 <div id="stageList" class="order-list"></div>
 
 </div>
 
 </section>
-
-
-<!-- المستخدمون -->
 
 <section id="users" class="hidden">
 
@@ -513,13 +493,7 @@ oninput="renderOrders()"
 
 </div>
 
-
-<!-- رسالة -->
-
 <div id="message" class="message"></div>
-
-
-<!-- نافذة الطلبية -->
 
 <div id="orderModal" class="modal hidden">
 
@@ -539,7 +513,7 @@ oninput="renderOrders()"
 
 <form id="orderForm">
 
-<input type="hidden" id="editIndex">
+<input type="hidden" id="editId">
 
 <label>رقم الطلبية</label>
 
@@ -629,8 +603,18 @@ onclick="closeModal()"
 
 </div>
 
-
 <script>
+
+/* ==========================
+   إعداد Supabase
+========================== */
+
+const SUPABASE_URL =
+"https://bvrfrcmblwzuqprjknam.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_vVXVJGcWpoPvPEH_bfm23Q_dZ5eXvmE";
+
 
 /* ==========================
    مراحل العمل
@@ -649,40 +633,77 @@ const stages=[
 ];
 
 
+let orders=[];
+let role="المدير";
+
+
 /* ==========================
-   تحميل البيانات
+   Supabase REST
 ========================== */
 
-let orders=[];
+async function supabaseRequest(
+table,
+method="GET",
+body=null,
+query=""
+){
 
-try{
+const options={
+method:method,
+headers:{
+"apikey":SUPABASE_KEY,
+"Authorization":"Bearer "+SUPABASE_KEY,
+"Content-Type":"application/json",
+"Prefer":"return=representation"
+}
+};
 
-orders=JSON.parse(
-localStorage.getItem("mt_orders") || "[]"
+if(body!==null){
+options.body=JSON.stringify(body);
+}
+
+const response=
+await fetch(
+SUPABASE_URL+
+"/rest/v1/"+
+table+
+query,
+options
 );
 
-if(!Array.isArray(orders)){
-orders=[];
-}
+const text=await response.text();
 
+let data=null;
+
+try{
+data=text?JSON.parse(text):null;
 }catch(e){
+data=text;
+}
 
-orders=[];
+if(!response.ok){
+
+console.error(
+"Supabase error:",
+data
+);
+
+throw new Error(
+typeof data==="object"
+?
+(data.message||data.error||JSON.stringify(data))
+:
+data
+);
 
 }
 
-
-let role=
-localStorage.getItem("mt_role") ||
-"المدير";
-
-
-document.getElementById("userLabel").textContent=
-"المستخدم: "+role;
+return data;
+}
 
 
 /* ==========================
-   الرسائل
+   رسالة
 ========================== */
 
 function message(text){
@@ -695,34 +716,40 @@ box.textContent=text;
 box.style.display="block";
 
 setTimeout(()=>{
-
 box.style.display="none";
-
 },2500);
 
 }
 
 
 /* ==========================
-   الحفظ
+   تحميل الطلبيات
 ========================== */
 
-function save(){
+async function loadOrders(){
 
 try{
 
-localStorage.setItem(
-"mt_orders",
-JSON.stringify(orders)
+const data=
+await supabaseRequest(
+"orders",
+"GET",
+null,
+"?select=*&order=created_at.desc"
 );
 
-return true;
+orders=Array.isArray(data)?data:[];
 
-}catch(e){
+renderAll();
 
-alert("تعذر حفظ البيانات في الجهاز");
+}
+catch(error){
 
-return false;
+console.error(error);
+
+message(
+"❌ لم يتم تحميل الطلبيات"
+);
 
 }
 
@@ -730,32 +757,46 @@ return false;
 
 
 /* ==========================
-   التنقل
+   تحويل بيانات Supabase
 ========================== */
 
-function showSection(id,button){
+function normalizeOrder(order){
 
-document
-.querySelectorAll(".container > section")
-.forEach(section=>{
+return {
 
-section.classList.add("hidden");
+id:order.id,
 
-});
+num:
+order.order_number ??
+order["order number"] ??
+"",
 
-document
-.getElementById(id)
-.classList.remove("hidden");
+customer:
+order.custmer_name ??
+order["custmer name"] ??
+"",
 
-document
-.querySelectorAll(".nav button")
-.forEach(btn=>{
+phone:order.phone||"",
 
-btn.classList.remove("active");
+due:
+order.due_date ??
+order["due date"] ??
+"",
 
-});
+notes:order.notes||"",
 
-button.classList.add("active");
+urgent:!!order.urgent,
+
+stage:
+Number(order.stage||0),
+
+created_at:
+order.created_at,
+
+updated_at:
+order.updated_at
+
+};
 
 }
 
@@ -780,7 +821,34 @@ order.stage<stages.length-1;
 
 
 /* ==========================
-   إضافة طلبية
+   التنقل
+========================== */
+
+function showSection(id,button){
+
+document
+.querySelectorAll(".container > section")
+.forEach(section=>{
+section.classList.add("hidden");
+});
+
+document
+.getElementById(id)
+.classList.remove("hidden");
+
+document
+.querySelectorAll(".nav button")
+.forEach(btn=>{
+btn.classList.remove("active");
+});
+
+button.classList.add("active");
+
+}
+
+
+/* ==========================
+   إضافة
 ========================== */
 
 function openAddModal(){
@@ -788,7 +856,7 @@ function openAddModal(){
 document.getElementById("modalTitle").textContent=
 "➕ إضافة طلبية";
 
-document.getElementById("editIndex").value="";
+document.getElementById("editId").value="";
 
 document.getElementById("orderForm").reset();
 
@@ -802,20 +870,143 @@ document.getElementById("orderModal")
 
 
 /* ==========================
-   تعديل طلبية
+   إغلاق
 ========================== */
 
-function editOrder(index){
+function closeModal(){
 
-if(role!=="المدير"){
+document
+.getElementById("orderModal")
+.classList.add("hidden");
 
-alert("ليس لديك صلاحية تعديل الطلبية");
+}
+
+
+/* ==========================
+   حفظ
+========================== */
+
+document
+.getElementById("orderForm")
+.addEventListener(
+"submit",
+async function(e){
+
+e.preventDefault();
+
+const editId=
+document.getElementById("editId").value;
+
+const num=
+document.getElementById("orderNum")
+.value.trim();
+
+const customer=
+document.getElementById("customer")
+.value.trim();
+
+const phone=
+document.getElementById("phone")
+.value.trim();
+
+const due=
+document.getElementById("due")
+.value;
+
+const notes=
+document.getElementById("notes")
+.value.trim();
+
+const urgent=
+document.getElementById("urgent")
+.checked;
+
+
+if(!num || !customer || !due){
+
+alert("يرجى تعبئة البيانات المطلوبة");
 
 return;
 
 }
 
-const order=orders[index];
+
+try{
+
+/* تعديل */
+
+if(editId){
+
+await supabaseRequest(
+"orders",
+"PATCH",
+{
+order_number:num,
+custmer_name:customer,
+phone:phone,
+due_date:due,
+notes:notes,
+urgent:urgent,
+updated_at:new Date().toISOString()
+},
+"?id=eq."+encodeURIComponent(editId)
+);
+
+message("✅ تم تعديل الطلبية وحفظها");
+
+}
+
+/* إضافة */
+
+else{
+
+await supabaseRequest(
+"orders",
+"POST",
+{
+order_number:num,
+custmer_name:customer,
+phone:phone,
+due_date:due,
+notes:notes,
+urgent:urgent,
+stage:0
+}
+);
+
+message("✅ تم إضافة الطلبية وحفظها");
+
+}
+
+closeModal();
+
+await loadOrders();
+
+}
+catch(error){
+
+console.error(error);
+
+alert(
+"❌ تعذر الحفظ:\n\n"+
+error.message
+);
+
+}
+
+});
+
+
+/* ==========================
+   تعديل
+========================== */
+
+async function editOrder(id){
+
+const order=
+orders
+.map(normalizeOrder)
+.find(o=>String(o.id)===String(id));
 
 if(!order){
 return;
@@ -824,25 +1015,26 @@ return;
 document.getElementById("modalTitle").textContent=
 "✏️ تعديل الطلبية #"+order.num;
 
-document.getElementById("editIndex").value=index;
+document.getElementById("editId").value=
+order.id;
 
 document.getElementById("orderNum").value=
-order.num || "";
+order.num;
 
 document.getElementById("customer").value=
-order.customer || "";
+order.customer;
 
 document.getElementById("phone").value=
-order.phone || "";
+order.phone;
 
 document.getElementById("due").value=
-order.due || "";
+order.due;
 
 document.getElementById("notes").value=
-order.notes || "";
+order.notes;
 
 document.getElementById("urgent").checked=
-!!order.urgent;
+order.urgent;
 
 document.getElementById("orderModal")
 .classList.remove("hidden");
@@ -851,216 +1043,195 @@ document.getElementById("orderModal")
 
 
 /* ==========================
-   إغلاق النافذة
+   حذف
 ========================== */
 
-function closeModal(){
+async function deleteOrder(id){
 
-document.getElementById("orderModal")
-.classList.add("hidden");
+if(role!=="المدير"){
 
-}
-
-
-/* ==========================
-   حفظ الطلبية
-========================== */
-
-document
-.getElementById("orderForm")
-.addEventListener("submit",function(e){
-
-e.preventDefault();
-
-
-const editIndex=
-document.getElementById("editIndex").value;
-
-
-const num=
-document.getElementById("orderNum")
-.value
-.trim();
-
-
-const customer=
-document.getElementById("customer")
-.value
-.trim();
-
-
-const phone=
-document.getElementById("phone")
-.value
-.trim();
-
-
-const due=
-document.getElementById("due")
-.value;
-
-
-const notes=
-document.getElementById("notes")
-.value
-.trim();
-
-
-const urgent=
-document.getElementById("urgent")
-.checked;
-
-
-/* منع التكرار */
-
-const duplicate=
-orders.some((o,i)=>
-
-String(o.num).toLowerCase()===
-String(num).toLowerCase()
-&&
-String(i)!==
-String(editIndex)
-
-);
-
-
-if(duplicate){
-
-alert("رقم الطلبية موجود مسبقًا");
+alert("ليس لديك صلاحية حذف الطلبية");
 
 return;
 
 }
 
-
-/* تعديل */
-
-if(editIndex!==""){
-
-const index=
-Number(editIndex);
-
 const order=
-orders[index];
+orders
+.map(normalizeOrder)
+.find(o=>String(o.id)===String(id));
 
 if(!order){
 return;
 }
 
-order.num=num;
-order.customer=customer;
-order.phone=phone;
-order.due=due;
-order.notes=notes;
-order.urgent=urgent;
+if(!confirm(
+"هل تريد حذف الطلبية #"+order.num+" ؟"
+)){
+return;
+}
 
+try{
 
-if(save()){
-
-closeModal();
-
-message(
-"✅ تم تعديل الطلبية وحفظها"
+await supabaseRequest(
+"orders",
+"DELETE",
+null,
+"?id=eq."+encodeURIComponent(id)
 );
 
-renderAll();
+message("🗑️ تم حذف الطلبية");
+
+await loadOrders();
 
 }
+catch(error){
+
+console.error(error);
+
+alert(
+"تعذر حذف الطلبية:\n\n"+
+error.message
+);
+
+}
+
+}
+
+
+/* ==========================
+   المرحلة التالية
+========================== */
+
+async function nextStage(id){
+
+const order=
+orders
+.map(normalizeOrder)
+.find(o=>String(o.id)===String(id));
+
+if(!order){
+return;
+}
+
+const next=
+order.stage+1;
+
+if(next>=stages.length){
+return;
+}
+
+if(role!=="المدير"){
+
+const expected=
+stages[next]?.[1];
+
+if(expected!==role){
+
+alert("هذه الطلبية ليست في قسمك");
 
 return;
 
 }
 
-
-/* إضافة */
-
-const newOrder={
-
-id:Date.now(),
-
-num:num,
-
-customer:customer,
-
-phone:phone,
-
-due:due,
-
-notes:notes,
-
-urgent:urgent,
-
-stage:0,
-
-createdAt:
-new Date().toISOString(),
-
-history:[
-
-{
-
-stage:0,
-
-at:new Date().toLocaleString("ar"),
-
-by:role
-
 }
 
-]
+try{
 
-};
-
-
-orders.unshift(newOrder);
-
-
-if(save()){
-
-closeModal();
-
-message(
-"✅ تم إضافة الطلبية وحفظها"
+await supabaseRequest(
+"orders",
+"PATCH",
+{
+stage:next,
+updated_at:new Date().toISOString()
+},
+"?id=eq."+encodeURIComponent(id)
 );
 
-renderAll();
+message(
+"✅ تم نقل الطلبية إلى "+
+stages[next][0]
+);
+
+await loadOrders();
+
+}
+catch(error){
+
+console.error(error);
+
+alert(
+"تعذر تحديث المرحلة:\n\n"+
+error.message
+);
 
 }
 
-});
+}
 
 
 /* ==========================
-   لوحة التحكم
+   تفاصيل
+========================== */
+
+function details(id){
+
+const order=
+orders
+.map(normalizeOrder)
+.find(o=>String(o.id)===String(id));
+
+if(!order){
+return;
+}
+
+alert(
+"📋 الطلبية #"+order.num+
+"\n\n"+
+"الزبون: "+order.customer+
+"\n"+
+"الهاتف: "+(order.phone||"-")+
+"\n"+
+"موعد التسليم: "+(order.due||"-")+
+"\n"+
+"الحالة: "+stages[order.stage][0]+
+"\n"+
+"القسم: "+stages[order.stage][1]+
+"\n"+
+"الملاحظات: "+(order.notes||"-")
+);
+
+}
+
+
+/* ==========================
+   الرئيسية
 ========================== */
 
 function renderDashboard(){
 
-document.getElementById("totalCount")
-.textContent=orders.length;
+const normalized=
+orders.map(normalizeOrder);
 
+document.getElementById("totalCount")
+.textContent=normalized.length;
 
 document.getElementById("activeCount")
 .textContent=
-orders.filter(o=>
-o.stage<stages.length-1
+normalized.filter(
+o=>o.stage<stages.length-1
 ).length;
-
 
 document.getElementById("urgentCount")
 .textContent=
-orders.filter(o=>o.urgent).length;
-
+normalized.filter(o=>o.urgent).length;
 
 document.getElementById("overdueCount")
 .textContent=
-orders.filter(o=>isOverdue(o)).length;
-
+normalized.filter(o=>isOverdue(o)).length;
 
 const latest=
-orders.slice(0,5);
-
+normalized.slice(0,5);
 
 if(!latest.length){
 
@@ -1072,22 +1243,19 @@ return;
 
 }
 
-
 document.getElementById("latestOrders")
 .innerHTML=
 
 latest.map(order=>`
 
-<div class="order ${order.urgent?'urgent':''}">
+<div class="order ${order.urgent?"urgent":""}">
 
 <div class="order-head">
 
 <div>
 
 <div class="order-number">
-
-${order.urgent?'⭐ ':''}#${order.num}
-
+${order.urgent?"⭐ ":""}#${order.num}
 </div>
 
 <div class="customer">
@@ -1129,7 +1297,7 @@ ${stages[order.stage]?.[0]||"في العمل"}
 
 
 /* ==========================
-   عرض الطلبيات
+   الطلبيات
 ========================== */
 
 function renderOrders(){
@@ -1139,9 +1307,11 @@ const search=
 .trim()
 .toLowerCase();
 
+const normalized=
+orders.map(normalizeOrder);
 
 const filtered=
-orders.filter(order=>
+normalized.filter(order=>
 
 [
 order.num,
@@ -1154,7 +1324,6 @@ order.phone
 
 );
 
-
 if(!filtered.length){
 
 document.getElementById("ordersList")
@@ -1165,28 +1334,19 @@ return;
 
 }
 
-
 document.getElementById("ordersList")
 .innerHTML=
 
-filtered.map(order=>{
+filtered.map(order=>`
 
-const index=
-orders.indexOf(order);
-
-
-return `
-
-<div class="order ${order.urgent?'urgent':''}">
+<div class="order ${order.urgent?"urgent":""}">
 
 <div class="order-head">
 
 <div>
 
 <div class="order-number">
-
-${order.urgent?'⭐ ':''}#${order.num}
-
+${order.urgent?"⭐ ":""}#${order.num}
 </div>
 
 <div class="customer">
@@ -1195,20 +1355,17 @@ ${order.customer}
 
 </div>
 
-<span class="badge ${isOverdue(order)?'overdue':''}">
-
+<span class="badge ${
+isOverdue(order)?"overdue":""
+}">
 ${
 isOverdue(order)
-?
-"متأخرة"
-:
-stages[order.stage]?.[0]||"في العمل"
+?"متأخرة"
+:stages[order.stage]?.[0]||"في العمل"
 }
-
 </span>
 
 </div>
-
 
 <div class="info">
 
@@ -1229,54 +1386,47 @@ stages[order.stage]?.[0]||"في العمل"
 
 </div>
 
-
 <div class="actions">
 
 <button
 class="secondary"
-onclick="details(${index})"
+onclick="details('${order.id}')"
 >
 📋 التفاصيل
 </button>
-
 
 ${
 role==="المدير"
 ?
 `
-
 <button
 class="success"
-onclick="editOrder(${index})"
+onclick="editOrder('${order.id}')"
 >
 ✏️ تعديل
 </button>
 
 <button
 class="danger"
-onclick="deleteOrder(${index})"
+onclick="deleteOrder('${order.id}')"
 >
 🗑️ حذف
 </button>
-
 `
 :
 ""
 }
 
-
 ${
 order.stage<stages.length-1
 ?
 `
-
 <button
 class="primary"
-onclick="nextStage(${index})"
+onclick="nextStage('${order.id}')"
 >
 ➡️ تم ${stages[order.stage+1][1]}
 </button>
-
 `
 :
 `
@@ -1290,194 +1440,7 @@ onclick="nextStage(${index})"
 
 </div>
 
-`;
-
-}).join("");
-
-}
-
-
-/* ==========================
-   تفاصيل الطلبية
-========================== */
-
-function details(index){
-
-const order=orders[index];
-
-if(!order){
-return;
-}
-
-
-let text=
-
-"📋 الطلبية #"+order.num+
-"\n\n"+
-"الزبون: "+order.customer+
-"\n"+
-"الهاتف: "+(order.phone||"-")+
-"\n"+
-"موعد التسليم: "+(order.due||"-")+
-"\n"+
-"الحالة: "+stages[order.stage][0]+
-"\n"+
-"القسم الحالي: "+stages[order.stage][1]+
-"\n"+
-"الملاحظات: "+(order.notes||"-")+
-"\n\n"+
-"🕘 سجل الحركة:\n";
-
-
-text+=
-
-(order.history||[])
-.map(h=>
-
-(stages[h.stage]?.[0]||"مرحلة")+
-" — "+
-(h.at||"")+
-(h.by?" — "+h.by:"")
-
-)
-.join("\n");
-
-
-alert(text);
-
-}
-
-
-/* ==========================
-   المرحلة التالية
-========================== */
-
-function nextStage(index){
-
-const order=orders[index];
-
-if(!order){
-return;
-}
-
-
-/* المدير يستطيع نقل أي طلب */
-
-if(role==="المدير"){
-
-order.stage=
-Math.min(
-order.stage+1,
-stages.length-1
-);
-
-}
-
-/* باقي الأقسام */
-
-else{
-
-const expected=
-stages[order.stage+1]?.[1];
-
-
-if(expected!==role){
-
-alert(
-"هذه الطلبية ليست في قسمك"
-);
-
-return;
-
-}
-
-
-order.stage++;
-
-}
-
-
-/* سجل الحركة */
-
-if(!Array.isArray(order.history)){
-
-order.history=[];
-
-}
-
-
-order.history.push({
-
-stage:order.stage,
-
-at:new Date().toLocaleString("ar"),
-
-by:role
-
-});
-
-
-if(save()){
-
-message(
-"✅ تم نقل الطلبية إلى "+
-stages[order.stage][0]
-);
-
-renderAll();
-
-}
-
-}
-
-
-/* ==========================
-   حذف
-========================== */
-
-function deleteOrder(index){
-
-if(role!=="المدير"){
-
-alert(
-"ليس لديك صلاحية حذف الطلبية"
-);
-
-return;
-
-}
-
-
-const order=orders[index];
-
-if(!order){
-return;
-}
-
-
-if(!confirm(
-"هل تريد حذف الطلبية #"+
-order.num+
-" ؟"
-)){
-
-return;
-
-}
-
-
-orders.splice(index,1);
-
-
-if(save()){
-
-message(
-"🗑️ تم حذف الطلبية"
-);
-
-renderAll();
-
-}
+`).join("");
 
 }
 
@@ -1488,60 +1451,40 @@ renderAll();
 
 function renderStages(){
 
-const stageList=
-document.getElementById("stageList");
+const normalized=
+orders.map(normalizeOrder);
 
-
-stageList.innerHTML=
+document.getElementById("stageList").innerHTML=
 
 stages.map((stage,index)=>{
 
-const stageOrders=
-orders.filter(o=>o.stage===index);
-
+const list=
+normalized.filter(
+o=>o.stage===index
+);
 
 return `
 
-<div class="stage-card">
+<div class="panel">
 
 <div class="order-head">
 
-<div>
-
-<div class="stage-title">
-${index===0?"🏭":"➡️"} ${stage[0]}
-</div>
-
-<div class="customer">
-القسم المسؤول: ${stage[1]}
-</div>
-
-</div>
+<h2>
+${stage[0]}
+</h2>
 
 <span class="badge">
-${stageOrders.length} طلبية
+${list.length} طلبية
 </span>
 
 </div>
 
-
 ${
-stageOrders.length
+list.length
 ?
+list.map(order=>`
 
-`
-
-<div class="stage-orders">
-
-${stageOrders.map(order=>{
-
-const realIndex=
-orders.indexOf(order);
-
-
-return `
-
-<div class="stage-order">
+<div class="order">
 
 <div class="order-head">
 
@@ -1557,76 +1500,37 @@ ${order.customer}
 
 </div>
 
-<span class="badge ${
-isOverdue(order)?"overdue":""
-}">
-
-${
-isOverdue(order)
-?
-"متأخرة"
-:
-"التسليم: "+(order.due||"-")
-}
-
+<span class="badge">
+${order.due||"-"}
 </span>
 
 </div>
-
-
-<div class="info">
-
-<div class="info-box">
-📞 الهاتف
-<b>${order.phone||"-"}</b>
-</div>
-
-<div class="info-box">
-🏭 المرحلة
-<b>${stage[0]}</b>
-</div>
-
-<div class="info-box">
-👤 المسؤول
-<b>${stage[1]}</b>
-</div>
-
-</div>
-
 
 <div class="actions">
 
 <button
 class="secondary"
-onclick="details(${realIndex})"
+onclick="details('${order.id}')"
 >
 📋 التفاصيل
 </button>
 
-
 ${
 order.stage<stages.length-1
 ?
-
 `
-
 <button
 class="primary"
-onclick="nextStage(${realIndex})"
+onclick="nextStage('${order.id}')"
 >
 ➡️ تم ${stages[order.stage+1][1]}
 </button>
-
 `
-
 :
-
 `
-
 <span class="badge">
 ✅ مكتملة
 </span>
-
 `
 }
 
@@ -1634,24 +1538,9 @@ onclick="nextStage(${realIndex})"
 
 </div>
 
-`;
-
-}).join("")}
-
-</div>
-
-`
-
+`).join("")
 :
-
-`
-
-<div class="empty">
-لا توجد طلبيات في هذه المرحلة
-</div>
-
-`
-
+"<div class='empty'>لا توجد طلبيات في هذه المرحلة</div>"
 }
 
 </div>
@@ -1664,7 +1553,7 @@ onclick="nextStage(${realIndex})"
 
 
 /* ==========================
-   تحديث التطبيق
+   تحديث
 ========================== */
 
 function renderAll(){
@@ -1679,10 +1568,14 @@ renderStages();
 
 
 /* ==========================
-   تشغيل
+   بدء التطبيق
 ========================== */
 
-renderAll();
+document.getElementById("userLabel")
+.textContent=
+"المستخدم: المدير";
+
+loadOrders();
 
 
 /* ==========================
@@ -1693,17 +1586,8 @@ if("serviceWorker" in navigator){
 
 navigator.serviceWorker
 .register("./sw.js")
-.then(()=>{
-
-console.log(
-"MODULAR TECH Service Worker ready"
-);
-
-})
 .catch(error=>{
-
 console.log(error);
-
 });
 
 }
