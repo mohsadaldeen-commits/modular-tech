@@ -1,60 +1,63 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
-
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0b1220">
 
-<link rel="manifest" href="manifest.webmanifest">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/png" href="./icon-192.png">
 
 <title>MODULAR TECH — نظام إدارة الطلبيات</title>
 
 <style>
-
 :root{
   --bg:#f5f7fb;
   --card:#ffffff;
-  --text:#0f172a;
+  --text:#111827;
   --muted:#64748b;
   --primary:#2563eb;
   --primary2:#0ea5e9;
-  --danger:#dc2626;
+  --danger:#ef4444;
   --success:#16a34a;
   --warning:#f59e0b;
-  --border:#e2e8f0;
-  --dark:#0b1220;
-  --dark2:#111c35;
-  --shadow:0 15px 45px rgba(15,23,42,.10);
-  --radius:20px;
+  --border:#dbe3ef;
+  --sidebar:#0b1220;
+  --sidebar2:#111c31;
+  --shadow:0 15px 40px rgba(15,23,42,.10);
+  --radius:24px;
+  --sidebar-width:330px;
 }
 
 *{
   box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
-html{
-  scroll-behavior:smooth;
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100%;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+  background:
+    radial-gradient(circle at top right,#dbeafe 0,#f5f7fb 35%,#eef3f9 100%);
+  color:var(--text);
 }
 
 body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:
-    "Noto Sans Arabic",
-    "Noto Sans Hebrew",
-    Arial,
-    Tahoma,
-    sans-serif;
-  min-height:100vh;
+  overflow-x:hidden;
 }
 
 button,
 input,
 textarea,
 select{
-  font-family:inherit;
+  font:inherit;
 }
 
 button{
@@ -69,177 +72,188 @@ button{
    LOGIN
 ========================= */
 
-#loginPage{
+#loginScreen{
   min-height:100vh;
-  min-height:100svh;
-  background:
-    radial-gradient(circle at 15% 10%,rgba(59,130,246,.45),transparent 35%),
-    radial-gradient(circle at 85% 90%,rgba(14,165,233,.20),transparent 30%),
-    linear-gradient(135deg,#2563eb 0%,#172554 48%,#020617 100%);
+  min-height:100dvh;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:28px 16px;
+  padding:20px;
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(135deg,#eef4ff 0%,#f8fafc 48%,#e8f7ff 100%);
+}
+
+#loginScreen::before{
+  content:"";
+  position:absolute;
+  width:520px;
+  height:520px;
+  border-radius:50%;
+  background:rgba(37,99,235,.10);
+  top:-280px;
+  right:-220px;
+  filter:blur(10px);
+}
+
+#loginScreen::after{
+  content:"";
+  position:absolute;
+  width:500px;
+  height:500px;
+  border-radius:50%;
+  background:rgba(14,165,233,.10);
+  bottom:-300px;
+  left:-200px;
+  filter:blur(10px);
 }
 
 .login-card{
-  width:min(100%,780px);
-  background:rgba(255,255,255,.97);
-  border-radius:34px;
-  padding:34px 36px 28px;
-  box-shadow:
-    0 35px 90px rgba(0,0,0,.30),
-    0 0 0 1px rgba(255,255,255,.5);
   position:relative;
-  overflow:hidden;
+  z-index:2;
+  width:min(760px,100%);
+  min-height:850px;
+  background:rgba(255,255,255,.94);
+  border:1px solid #dce5f0;
+  border-radius:48px;
+  box-shadow:
+    0 35px 90px rgba(15,23,42,.16),
+    0 5px 20px rgba(37,99,235,.06);
+  padding:40px 38px 28px;
+  display:flex;
+  flex-direction:column;
 }
 
-.language-login{
+.login-language{
   display:flex;
   justify-content:flex-start;
-  margin-bottom:10px;
+  direction:ltr;
 }
 
-[dir="rtl"] .language-login{
-  justify-content:flex-start;
-}
-
-.language-btn{
+.lang-btn{
   border:0;
-  background:#e8eef8;
+  background:#edf3fc;
   color:#172033;
-  border-radius:16px;
-  padding:12px 20px;
-  font-size:17px;
+  padding:17px 42px;
+  border-radius:28px;
+  font-size:22px;
   font-weight:800;
-  min-width:100px;
-  box-shadow:0 4px 12px rgba(15,23,42,.06);
-}
-
-.language-btn:hover{
-  background:#dbe5f3;
+  box-shadow:0 8px 22px rgba(15,23,42,.05);
 }
 
 .login-logo{
-  width:100%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  margin:8px auto 22px;
-}
-
-.login-logo img{
-  width:min(100%,610px);
-  max-height:150px;
+  width:125px;
+  height:125px;
   object-fit:contain;
   display:block;
+  margin:48px auto 12px;
+  border-radius:30px;
+}
+
+.login-title{
+  text-align:center;
+  margin:0;
+  font-size:42px;
+  font-weight:900;
+  letter-spacing:-1px;
 }
 
 .login-brand{
   text-align:center;
-  margin-bottom:34px;
-}
-
-.login-brand h1{
-  margin:0;
-  font-size:34px;
-  line-height:1.25;
-  font-weight:900;
-  color:#111827;
-}
-
-.login-brand .english{
-  margin-top:8px;
-  font-size:26px;
-  font-weight:900;
   color:#64748b;
-  letter-spacing:.5px;
-  direction:ltr;
+  font-size:40px;
+  font-weight:800;
+  letter-spacing:1px;
+  margin-top:8px;
 }
 
 .login-form{
-  width:100%;
+  margin-top:62px;
 }
 
 .form-group{
-  margin-bottom:20px;
+  margin-bottom:38px;
 }
 
 .form-label{
   display:block;
-  margin-bottom:9px;
-  font-size:19px;
+  font-size:30px;
   font-weight:800;
-  color:#111827;
+  margin-bottom:14px;
 }
 
 .form-input{
   width:100%;
-  height:70px;
-  border:2px solid #e2e8f0;
-  border-radius:22px;
-  padding:0 22px;
-  font-size:19px;
-  outline:none;
+  height:118px;
+  border:4px solid #e1e8f1;
+  border-radius:38px;
   background:#fff;
-  color:#111827;
+  padding:0 30px;
+  outline:none;
+  color:#172033;
+  font-size:31px;
   transition:.2s;
 }
 
 .form-input:focus{
-  border-color:#60a5fa;
-  box-shadow:0 0 0 4px rgba(37,99,235,.10);
-}
-
-.form-input::placeholder{
-  color:#a1a1aa;
+  border-color:#8db5ff;
+  box-shadow:0 0 0 5px rgba(37,99,235,.08);
 }
 
 .login-button{
   width:100%;
-  min-height:72px;
+  min-height:132px;
   border:0;
-  border-radius:22px;
-  color:#fff;
-  font-size:23px;
+  border-radius:40px;
+  color:white;
+  background:
+    linear-gradient(100deg,#2864ed,#0ea5e9);
+  font-size:36px;
   font-weight:900;
-  background:linear-gradient(90deg,#2563eb,#0ea5e9);
-  box-shadow:0 15px 30px rgba(37,99,235,.25);
-  margin-top:8px;
+  box-shadow:
+    0 20px 35px rgba(37,99,235,.25);
   transition:.2s;
 }
 
-.login-button:hover{
-  transform:translateY(-1px);
+.login-button:active{
+  transform:scale(.985);
 }
 
 .login-button:disabled{
-  opacity:.7;
+  opacity:.65;
   cursor:not-allowed;
 }
 
-.login-note{
-  margin-top:28px;
-  border:2px solid #dbe7f5;
-  border-radius:22px;
-  padding:18px 20px;
+.login-message{
+  margin-top:58px;
+  min-height:150px;
+  border:4px solid #dce7f4;
+  border-radius:36px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   text-align:center;
-  color:#64748b;
-  font-size:17px;
-  line-height:1.7;
-  background:#f8fafc;
+  padding:25px;
+  color:#71829b;
+  font-size:25px;
+  line-height:1.8;
+  font-weight:700;
 }
 
 .designer{
+  margin-top:auto;
+  padding-top:48px;
   text-align:center;
-  margin-top:26px;
   color:#64748b;
-  font-size:17px;
+  font-size:25px;
+  font-weight:700;
 }
 
 .designer strong{
-  color:#2563eb;
-  font-size:20px;
+  color:#2864ed;
+  font-size:32px;
+  font-weight:900;
   direction:ltr;
   display:inline-block;
 }
@@ -250,663 +264,465 @@ button{
 
 #app{
   min-height:100vh;
-  display:none;
-}
-
-#app.visible{
-  display:block;
-}
-
-.topbar{
-  height:76px;
-  background:#fff;
-  border-bottom:1px solid var(--border);
+  min-height:100dvh;
   display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-  padding:0 22px;
-  position:sticky;
-  top:0;
-  z-index:100;
-  box-shadow:0 4px 20px rgba(15,23,42,.06);
-}
-
-.topbar-brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  min-width:0;
-}
-
-.topbar-logo{
-  width:145px;
-  max-height:52px;
-  object-fit:contain;
-}
-
-.topbar-title{
-  font-size:18px;
-  font-weight:900;
-  white-space:nowrap;
-}
-
-.topbar-right{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.current-user{
-  background:#f1f5f9;
-  border-radius:14px;
-  padding:10px 14px;
-  font-size:14px;
-  font-weight:800;
-  color:#334155;
-}
-
-.logout{
-  border:0;
-  background:#fee2e2;
-  color:#b91c1c;
-  border-radius:14px;
-  padding:11px 17px;
-  font-size:15px;
-  font-weight:900;
-}
-
-.logout:hover{
-  background:#fecaca;
-}
-
-/* =========================
-   LAYOUT
-========================= */
-
-.app-layout{
-  display:grid;
-  grid-template-columns:250px 1fr;
-  min-height:calc(100vh - 76px);
-}
-
-[dir="rtl"] .app-layout{
-  grid-template-columns:1fr 250px;
 }
 
 .sidebar{
-  background:linear-gradient(180deg,#0b1220,#111c35);
-  color:#fff;
-  padding:22px 14px;
-  position:sticky;
-  top:76px;
-  height:calc(100vh - 76px);
-  overflow:auto;
+  width:var(--sidebar-width);
+  background:
+    linear-gradient(180deg,var(--sidebar),var(--sidebar2));
+  color:white;
+  position:fixed;
+  right:0;
+  top:0;
+  bottom:0;
+  z-index:100;
+  padding:25px 18px;
+  overflow-y:auto;
+  box-shadow:-15px 0 40px rgba(0,0,0,.12);
+}
+
+.sidebar-header{
+  padding:15px 12px 30px;
+  border-bottom:1px solid rgba(255,255,255,.10);
 }
 
 .sidebar-logo{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:4px 8px 24px;
-  border-bottom:1px solid rgba(255,255,255,.08);
-  margin-bottom:18px;
+  width:90px;
+  height:90px;
+  object-fit:contain;
+  display:block;
+  margin:0 auto 15px;
+  border-radius:24px;
 }
 
-.sidebar-logo img{
-  width:190px;
-  max-height:75px;
-  object-fit:contain;
-  background:#fff;
-  border-radius:12px;
-  padding:7px;
+.sidebar-brand{
+  text-align:center;
+  font-size:25px;
+  font-weight:900;
+}
+
+.sidebar-subtitle{
+  text-align:center;
+  color:#94a3b8;
+  margin-top:5px;
+  font-size:14px;
+}
+
+.user-box{
+  margin:20px 5px;
+  padding:18px;
+  border-radius:20px;
+  background:rgba(255,255,255,.07);
+}
+
+.user-name{
+  font-size:18px;
+  font-weight:800;
+}
+
+.user-role{
+  color:#93c5fd;
+  margin-top:5px;
+  font-size:14px;
 }
 
 .nav{
   display:flex;
   flex-direction:column;
   gap:8px;
+  margin-top:18px;
 }
 
-.nav-button{
+.nav-btn{
   width:100%;
   border:0;
   background:transparent;
   color:#cbd5e1;
+  padding:15px 17px;
+  border-radius:17px;
   text-align:right;
-  border-radius:15px;
-  padding:14px 16px;
   font-size:16px;
+  font-weight:700;
+  transition:.2s;
+}
+
+.nav-btn:hover,
+.nav-btn.active{
+  background:rgba(59,130,246,.18);
+  color:#fff;
+}
+
+.nav-icon{
+  display:inline-flex;
+  width:32px;
+  justify-content:center;
+  margin-left:8px;
+}
+
+.logout-btn{
+  margin-top:25px;
+  color:#fecaca;
+  background:rgba(239,68,68,.10);
+}
+
+.main{
+  flex:1;
+  margin-right:var(--sidebar-width);
+  min-width:0;
+}
+
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(245,247,251,.90);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(203,213,225,.7);
+  padding:18px 28px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+
+.page-title{
+  font-size:28px;
+  font-weight:900;
+  margin:0;
+}
+
+.top-actions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.mobile-menu{
+  display:none;
+}
+
+.content{
+  padding:28px;
+  max-width:1700px;
+  margin:auto;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  margin-bottom:25px;
+}
+
+.stat-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:24px;
+  box-shadow:var(--shadow);
+}
+
+.stat-title{
+  color:var(--muted);
+  font-size:15px;
+  font-weight:700;
+}
+
+.stat-value{
+  margin-top:8px;
+  font-size:38px;
+  font-weight:900;
+}
+
+.dashboard-grid{
+  display:grid;
+  grid-template-columns:1.5fr 1fr;
+  gap:20px;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:26px;
+  box-shadow:var(--shadow);
+  padding:23px;
+}
+
+.card-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:20px;
+}
+
+.card-title{
+  margin:0;
+  font-size:21px;
+  font-weight:900;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn{
+  border:0;
+  border-radius:14px;
+  padding:12px 18px;
   font-weight:800;
   transition:.2s;
 }
 
-[dir="ltr"] .nav-button{
-  text-align:left;
+.btn-primary{
+  color:white;
+  background:linear-gradient(100deg,#2563eb,#0ea5e9);
 }
 
-.nav-button:hover{
-  background:rgba(255,255,255,.08);
-  color:#fff;
+.btn-success{
+  color:white;
+  background:#16a34a;
 }
 
-.nav-button.active{
-  background:linear-gradient(90deg,#2563eb,#0ea5e9);
-  color:#fff;
-  box-shadow:0 8px 20px rgba(37,99,235,.22);
+.btn-danger{
+  color:white;
+  background:#ef4444;
 }
 
-.main{
-  min-width:0;
-  padding:26px;
+.btn-secondary{
+  background:#e8eef7;
+  color:#1e293b;
 }
 
-.section{
-  display:none;
-}
-
-.section.active{
-  display:block;
-}
-
-/* =========================
-   SECTION HEAD
-========================= */
-
-.section-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-  margin-bottom:22px;
-}
-
-.section-title{
-  margin:0;
-  font-size:28px;
-  font-weight:950;
-}
-
-.section-subtitle{
-  margin:5px 0 0;
-  color:var(--muted);
-  font-size:15px;
-}
-
-.primary-btn{
-  border:0;
-  color:#fff;
-  background:linear-gradient(90deg,#2563eb,#0ea5e9);
-  border-radius:15px;
-  padding:13px 18px;
-  font-size:15px;
-  font-weight:900;
-  box-shadow:0 9px 22px rgba(37,99,235,.18);
-}
-
-.secondary-btn{
-  border:1px solid var(--border);
-  background:#fff;
-  color:#334155;
-  border-radius:14px;
-  padding:12px 17px;
-  font-weight:800;
-}
-
-.danger-btn{
-  border:0;
-  background:#fee2e2;
-  color:#b91c1c;
-  border-radius:12px;
-  padding:9px 13px;
-  font-weight:800;
-}
-
-/* =========================
-   DASHBOARD
-========================= */
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:16px;
-  margin-bottom:24px;
-}
-
-.stat-card{
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:20px;
-  box-shadow:var(--shadow);
-}
-
-.stat-label{
-  color:var(--muted);
-  font-size:14px;
-  font-weight:800;
-}
-
-.stat-value{
-  margin-top:9px;
-  font-size:34px;
-  font-weight:950;
-}
-
-.stat-card.urgent .stat-value{
-  color:#dc2626;
-}
-
-.stat-card.overdue .stat-value{
-  color:#f59e0b;
-}
-
-.card{
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:22px;
-  box-shadow:var(--shadow);
-}
-
-.card-head{
-  padding:18px 20px;
-  border-bottom:1px solid var(--border);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-}
-
-.card-head h3{
-  margin:0;
-  font-size:18px;
-}
-
-.card-body{
-  padding:20px;
+.btn:active{
+  transform:scale(.98);
 }
 
 /* =========================
    SEARCH
 ========================= */
 
-.search-box{
-  margin-bottom:18px;
+.toolbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:20px;
+  flex-wrap:wrap;
 }
 
-.search-input{
-  width:100%;
-  height:58px;
+.search{
+  flex:1;
+  min-width:230px;
+  height:50px;
   border:1px solid var(--border);
-  background:#fff;
-  border-radius:17px;
-  padding:0 18px;
-  font-size:16px;
+  border-radius:15px;
+  padding:0 17px;
   outline:none;
+  background:white;
 }
 
-.search-input:focus{
-  border-color:#60a5fa;
-  box-shadow:0 0 0 4px rgba(37,99,235,.08);
+.search:focus{
+  border-color:#8db5ff;
 }
 
 /* =========================
-   ORDERS
+   TABLE
 ========================= */
 
-.orders-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:17px;
-}
-
-.order-card{
-  background:#fff;
+.table-wrap{
+  overflow:auto;
   border:1px solid var(--border);
   border-radius:20px;
-  padding:18px;
-  box-shadow:0 7px 25px rgba(15,23,42,.06);
-  position:relative;
-  overflow:hidden;
 }
 
-.order-card.urgent{
-  border:2px solid #ef4444;
-  background:linear-gradient(180deg,#fff,#fff7f7);
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:850px;
 }
 
-.order-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:12px;
+th,
+td{
+  padding:15px 13px;
+  text-align:right;
+  border-bottom:1px solid #edf1f6;
+  white-space:nowrap;
 }
 
-.order-number{
-  font-size:20px;
-  font-weight:950;
-}
-
-.order-customer{
+th{
+  background:#f8fafc;
   color:#475569;
-  margin-top:4px;
-  font-size:15px;
-  font-weight:700;
+  font-size:14px;
 }
 
-.urgent-badge{
-  background:#fee2e2;
-  color:#b91c1c;
-  padding:6px 9px;
-  border-radius:10px;
-  font-size:12px;
-  font-weight:900;
+td{
+  font-size:14px;
 }
 
-.status-badge{
+tr:last-child td{
+  border-bottom:0;
+}
+
+.urgent-row{
+  background:#fff7ed;
+}
+
+.badge{
   display:inline-flex;
-  margin-top:14px;
-  background:#eff6ff;
-  color:#1d4ed8;
-  padding:7px 10px;
-  border-radius:10px;
-  font-size:13px;
-  font-weight:900;
-}
-
-.order-info{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:15px;
-}
-
-.info-item{
-  background:#f8fafc;
-  border-radius:12px;
-  padding:10px;
-}
-
-.info-label{
-  color:#64748b;
+  align-items:center;
+  justify-content:center;
+  padding:7px 12px;
+  border-radius:999px;
   font-size:12px;
-  font-weight:800;
-}
-
-.info-value{
-  margin-top:3px;
-  font-size:14px;
-  font-weight:800;
-  word-break:break-word;
-}
-
-.order-notes{
-  margin-top:12px;
-  background:#f8fafc;
-  border-radius:12px;
-  padding:11px;
-  color:#475569;
-  font-size:14px;
-  line-height:1.6;
-}
-
-.order-actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-top:15px;
-}
-
-.action-btn{
-  border:0;
-  border-radius:11px;
-  padding:9px 12px;
-  font-size:13px;
   font-weight:900;
 }
 
-.action-details{
-  background:#e0f2fe;
-  color:#0369a1;
+.badge-stage{
+  background:#eaf2ff;
+  color:#2563eb;
 }
 
-.action-edit{
-  background:#e0e7ff;
-  color:#3730a3;
-}
-
-.action-delete{
+.badge-urgent{
   background:#fee2e2;
-  color:#b91c1c;
+  color:#dc2626;
 }
 
-.action-next{
-  background:#dcfce7;
-  color:#166534;
+.badge-normal{
+  background:#ecfdf5;
+  color:#15803d;
+}
+
+.badge-role{
+  background:#f1f5f9;
+  color:#334155;
 }
 
 /* =========================
    STAGES
 ========================= */
 
-.stages-grid{
+.stages{
   display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:16px;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
 }
 
 .stage-card{
-  background:#fff;
+  background:white;
   border:1px solid var(--border);
   border-radius:20px;
-  overflow:hidden;
-  box-shadow:0 7px 25px rgba(15,23,42,.06);
+  padding:18px;
 }
 
-.stage-head{
-  padding:17px;
-  background:linear-gradient(90deg,#0f172a,#1e3a8a);
-  color:#fff;
-}
-
-.stage-title{
-  font-size:18px;
-  font-weight:950;
-}
-
-.stage-role{
-  margin-top:4px;
-  color:#cbd5e1;
-  font-size:13px;
+.stage-name{
+  font-weight:900;
 }
 
 .stage-count{
-  margin-top:8px;
-  font-size:13px;
-  color:#bfdbfe;
-  font-weight:800;
-}
-
-.stage-body{
-  padding:12px;
-  min-height:100px;
-}
-
-.stage-order{
-  background:#f8fafc;
-  border-radius:13px;
-  padding:11px;
-  margin-bottom:8px;
-}
-
-.stage-order:last-child{
-  margin-bottom:0;
-}
-
-.stage-order-number{
+  font-size:32px;
   font-weight:900;
-}
-
-.stage-order-name{
-  color:#64748b;
-  font-size:13px;
-  margin-top:3px;
-}
-
-/* =========================
-   USERS
-========================= */
-
-.users-table-wrap{
-  overflow:auto;
-}
-
-.users-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:650px;
-}
-
-.users-table th,
-.users-table td{
-  padding:14px 12px;
-  border-bottom:1px solid var(--border);
-  text-align:right;
-}
-
-.users-table th{
-  color:#64748b;
-  font-size:13px;
-}
-
-.users-table td{
-  font-weight:700;
-}
-
-.role-badge{
-  display:inline-block;
-  background:#eef2ff;
-  color:#3730a3;
-  border-radius:9px;
-  padding:6px 9px;
-  font-size:12px;
-  font-weight:900;
-}
-
-.active-badge{
-  background:#dcfce7;
-  color:#166534;
-  border-radius:9px;
-  padding:6px 9px;
-  font-size:12px;
-  font-weight:900;
-}
-
-.inactive-badge{
-  background:#fee2e2;
-  color:#991b1b;
-  border-radius:9px;
-  padding:6px 9px;
-  font-size:12px;
-  font-weight:900;
-}
-
-/* =========================
-   EMPTY
-========================= */
-
-.empty{
-  text-align:center;
-  padding:35px 20px;
-  color:#64748b;
-  font-weight:800;
+  margin-top:12px;
+  color:#2563eb;
 }
 
 /* =========================
    MODAL
 ========================= */
 
-.modal{
+.modal-backdrop{
   position:fixed;
   inset:0;
-  background:rgba(2,6,23,.65);
-  display:none;
+  background:rgba(15,23,42,.58);
+  backdrop-filter:blur(5px);
+  z-index:300;
+  display:flex;
   align-items:center;
   justify-content:center;
   padding:18px;
-  z-index:500;
-  backdrop-filter:blur(5px);
 }
 
-.modal.show{
-  display:flex;
-}
-
-.modal-card{
-  width:min(100%,650px);
+.modal{
+  width:min(680px,100%);
   max-height:92vh;
   overflow:auto;
-  background:#fff;
-  border-radius:25px;
-  box-shadow:0 30px 80px rgba(0,0,0,.30);
+  background:white;
+  border-radius:28px;
+  box-shadow:0 30px 80px rgba(0,0,0,.25);
+  padding:25px;
 }
 
-.modal-head{
-  padding:19px 21px;
-  border-bottom:1px solid var(--border);
+.modal-header{
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  gap:12px;
+  align-items:center;
+  margin-bottom:20px;
 }
 
-.modal-head h3{
+.modal-title{
   margin:0;
-  font-size:21px;
+  font-size:23px;
+  font-weight:900;
 }
 
-.close-btn{
-  width:40px;
-  height:40px;
+.close{
   border:0;
-  border-radius:12px;
+  width:42px;
+  height:42px;
+  border-radius:50%;
   background:#f1f5f9;
   font-size:22px;
-  color:#334155;
 }
 
-.modal-body{
-  padding:22px;
+.modal-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.modal-group{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.modal-group.full{
+  grid-column:1/-1;
+}
+
+.modal-label{
+  font-size:14px;
+  font-weight:800;
+  color:#475569;
+}
+
+.modal-input,
+.modal-select,
+.modal-textarea{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:13px;
+  padding:12px 14px;
+  outline:none;
+  background:#fff;
+}
+
+.modal-textarea{
+  min-height:110px;
+  resize:vertical;
 }
 
 .modal-actions{
   display:flex;
-  justify-content:flex-end;
   gap:10px;
-  padding:0 22px 22px;
-}
-
-.form-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:16px;
-}
-
-.form-grid .full{
-  grid-column:1/-1;
-}
-
-.checkbox-row{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:14px 0;
-  font-weight:800;
-}
-
-.checkbox-row input{
-  width:20px;
-  height:20px;
+  justify-content:flex-start;
+  margin-top:22px;
 }
 
 /* =========================
@@ -917,245 +733,275 @@ button{
   position:fixed;
   left:50%;
   bottom:25px;
-  transform:translate(-50%,120px);
-  opacity:0;
+  transform:translateX(-50%) translateY(20px);
   background:#0f172a;
-  color:#fff;
-  padding:14px 20px;
-  border-radius:14px;
+  color:white;
+  padding:15px 22px;
+  border-radius:17px;
   font-weight:800;
   z-index:1000;
-  box-shadow:0 15px 40px rgba(0,0,0,.25);
-  transition:.3s;
-  max-width:90%;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  max-width:min(90vw,500px);
   text-align:center;
 }
 
 #toast.show{
-  transform:translate(-50%,0);
   opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+#toast.error{
+  background:#991b1b;
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty{
+  padding:40px 20px;
+  text-align:center;
+  color:#64748b;
+  font-weight:700;
 }
 
 /* =========================
    RESPONSIVE
 ========================= */
 
-@media(max-width:1050px){
+@media(max-width:1100px){
 
-  .stats{
+  :root{
+    --sidebar-width:280px;
+  }
+
+  .stats-grid{
     grid-template-columns:repeat(2,1fr);
   }
 
-  .stages-grid{
-    grid-template-columns:repeat(2,1fr);
+  .dashboard-grid{
+    grid-template-columns:1fr;
   }
 
 }
 
 @media(max-width:800px){
 
-  .topbar{
-    padding:0 12px;
-  }
-
-  .topbar-title{
-    display:none;
-  }
-
-  .current-user{
-    display:none;
-  }
-
-  .topbar-logo{
-    width:130px;
-  }
-
-  .app-layout,
-  [dir="rtl"] .app-layout{
-    display:block;
-  }
-
   .sidebar{
-    position:sticky;
-    top:76px;
-    height:auto;
-    padding:8px;
-    z-index:90;
+    transform:translateX(100%);
+    transition:.25s;
   }
 
-  .sidebar-logo{
-    display:none;
-  }
-
-  .nav{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:5px;
-  }
-
-  .nav-button{
-    padding:10px 5px;
-    text-align:center!important;
-    font-size:12px;
-    border-radius:11px;
+  .sidebar.open{
+    transform:translateX(0);
   }
 
   .main{
+    margin-right:0;
+  }
+
+  .mobile-menu{
+    display:block;
+  }
+
+  .topbar{
     padding:15px;
   }
 
-  .section-head{
-    align-items:flex-start;
+  .content{
+    padding:15px;
   }
 
-  .section-title{
-    font-size:23px;
+  .page-title{
+    font-size:22px;
   }
 
-  .orders-grid{
-    grid-template-columns:1fr;
+  .stats-grid{
+    grid-template-columns:1fr 1fr;
+    gap:12px;
   }
 
-  .stages-grid{
-    grid-template-columns:1fr;
+  .stat-card{
+    padding:18px;
+  }
+
+  .stat-value{
+    font-size:30px;
+  }
+
+  .stages{
+    grid-template-columns:1fr 1fr;
   }
 
 }
 
 @media(max-width:600px){
 
-  #loginPage{
-    padding:15px 10px;
-    align-items:flex-start;
+  #loginScreen{
+    padding:10px;
   }
 
   .login-card{
-    margin-top:10px;
-    padding:22px 18px 24px;
-    border-radius:28px;
+    min-height:calc(100dvh - 20px);
+    border-radius:38px;
+    padding:25px 18px 20px;
   }
 
-  .login-logo img{
-    width:100%;
-    max-height:105px;
+  .lang-btn{
+    padding:14px 28px;
+    font-size:19px;
   }
 
-  .login-brand h1{
+  .login-logo{
+    width:105px;
+    height:105px;
+    margin-top:35px;
+  }
+
+  .login-title{
+    font-size:31px;
+  }
+
+  .login-brand{
     font-size:27px;
   }
 
-  .login-brand .english{
-    font-size:21px;
+  .login-form{
+    margin-top:40px;
   }
 
   .form-label{
-    font-size:17px;
+    font-size:24px;
   }
 
   .form-input{
-    height:64px;
-    font-size:17px;
+    height:86px;
+    font-size:25px;
+    border-radius:28px;
   }
 
   .login-button{
-    min-height:68px;
-    font-size:20px;
+    min-height:96px;
+    font-size:28px;
+    border-radius:30px;
   }
 
-  .stats{
+  .login-message{
+    margin-top:35px;
+    min-height:110px;
+    font-size:19px;
+  }
+
+  .designer{
+    font-size:18px;
+    padding-top:30px;
+  }
+
+  .designer strong{
+    font-size:23px;
+  }
+
+  .stats-grid{
     grid-template-columns:1fr 1fr;
-    gap:10px;
   }
 
-  .stat-card{
-    padding:15px;
-  }
-
-  .stat-value{
-    font-size:27px;
-  }
-
-  .form-grid{
+  .stages{
     grid-template-columns:1fr;
   }
 
-  .form-grid .full{
+  .modal-grid{
+    grid-template-columns:1fr;
+  }
+
+  .modal-group.full{
     grid-column:auto;
   }
 
-  .section-head{
-    flex-direction:column;
-  }
-
-  .section-head .primary-btn{
-    width:100%;
-  }
-
 }
 
-html[lang="he"]{
-  font-family:
-    "Noto Sans Hebrew",
-    "Noto Sans",
-    Arial,
-    sans-serif;
+/* Hebrew */
+html[dir="ltr"] .sidebar{
+  right:auto;
+  left:0;
 }
 
+html[dir="ltr"] .main{
+  margin-right:0;
+  margin-left:var(--sidebar-width);
+}
+
+html[dir="ltr"] .nav-btn{
+  text-align:left;
+}
+
+html[dir="ltr"] .logout-btn{
+  text-align:left;
+}
+
+html[dir="ltr"] th,
+html[dir="ltr"] td{
+  text-align:left;
+}
+
+@media(max-width:800px){
+  html[dir="ltr"] .sidebar{
+    transform:translateX(-100%);
+  }
+
+  html[dir="ltr"] .sidebar.open{
+    transform:translateX(0);
+  }
+
+  html[dir="ltr"] .main{
+    margin-left:0;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
+<!-- =========================
+     LOGIN
+========================= -->
 
-<div id="loginPage">
+<section id="loginScreen">
 
   <div class="login-card">
 
-    <div class="language-login">
-
+    <div class="login-language">
       <button
+        id="languageButton"
+        class="lang-btn"
         type="button"
-        id="loginLanguageBtn"
-        class="language-btn"
         onclick="toggleLanguage()">
         עברית
       </button>
-
     </div>
 
-    <div class="login-logo">
+    <!-- الشعار الموجود في icon-192.png -->
+    <img
+      id="loginLogo"
+      class="login-logo"
+      src="./icon-192.png"
+      alt="MODULAR TECH"
+      onerror="this.style.display='none';"
+    >
 
-      <img
-        src="./icon_compact.jpg"
-        alt="Modulartech"
-        onerror="this.style.display='none';">
+    <h1 id="loginTitle" class="login-title">
+      نظام إدارة الطلبيات
+    </h1>
 
+    <div id="loginBrand" class="login-brand">
+      MODULAR TECH
     </div>
 
-    <div class="login-brand">
-
-      <h1 id="loginTitle">
-        نظام إدارة الطلبيات
-      </h1>
-
-      <div class="english">
-        MODULAR TECH
-      </div>
-
-    </div>
-
-    <form
-      class="login-form"
-      id="loginForm"
-      onsubmit="login(event)">
+    <form id="loginForm" class="login-form">
 
       <div class="form-group">
-
-        <label
-          class="form-label"
-          id="usernameLabel"
-          for="username">
+        <label id="usernameLabel" class="form-label">
           اسم المستخدم
         </label>
 
@@ -1164,17 +1010,14 @@ html[lang="he"]{
           class="form-input"
           type="text"
           autocomplete="username"
-          placeholder="أدخل اسم المستخدم"
-          required>
-
+          placeholder=""
+          required
+          dir="auto"
+        >
       </div>
 
       <div class="form-group">
-
-        <label
-          class="form-label"
-          id="passwordLabel"
-          for="password">
+        <label id="passwordLabel" class="form-label">
           كلمة المرور
         </label>
 
@@ -1183,270 +1026,215 @@ html[lang="he"]{
           class="form-input"
           type="password"
           autocomplete="current-password"
-          placeholder="أدخل كلمة المرور"
-          required>
-
+          required
+          dir="ltr"
+        >
       </div>
 
       <button
         id="loginButton"
         class="login-button"
         type="submit">
-        🔐 تسجيل الدخول
+        تسجيل الدخول 🔐
       </button>
 
     </form>
 
-    <div
-      id="loginNote"
-      class="login-note">
+    <div id="loginMessage" class="login-message">
       يجب أن يكون حسابك فعالاً. في حال وجود مشكلة، تواصل مع المدير.
     </div>
 
     <div class="designer">
-
-      <span id="designedText">
-        صمم بواسطة
-      </span>
-
-      <strong>
-        mohammad sad aldeen
-      </strong>
-
+      <span id="designedText">صمم بواسطة</span>
+      <strong>mohammad sad aldeen</strong>
     </div>
 
   </div>
 
-</div>
+</section>
 
 
-<!-- APPLICATION -->
+<!-- =========================
+     APPLICATION
+========================= -->
 
-<div id="app">
+<section id="app" class="hidden">
 
-  <header class="topbar">
+  <aside id="sidebar" class="sidebar">
 
-    <div class="topbar-brand">
+    <div class="sidebar-header">
 
       <img
-        class="topbar-logo"
-        src="./icon_compact.jpg"
-        alt="Modulartech"
-        onerror="this.style.display='none';">
+        class="sidebar-logo"
+        src="./icon-192.png"
+        alt="MODULAR TECH"
+        onerror="this.style.display='none';"
+      >
 
-      <div
-        class="topbar-title"
-        id="topbarTitle">
+      <div class="sidebar-brand">
+        MODULAR TECH
+      </div>
+
+      <div id="sidebarSubtitle" class="sidebar-subtitle">
         نظام إدارة الطلبيات
       </div>
 
     </div>
 
-    <div class="topbar-right">
-
-      <div
-        id="currentUser"
-        class="current-user">
-      </div>
-
-      <button
-        id="languageBtn"
-        class="language-btn"
-        onclick="toggleLanguage()">
-        עברית
-      </button>
-
-      <button
-        id="logoutButton"
-        class="logout"
-        onclick="logout()">
-        خروج
-      </button>
-
+    <div class="user-box">
+      <div id="currentUserName" class="user-name">—</div>
+      <div id="currentUserRole" class="user-role">—</div>
     </div>
 
-  </header>
+    <nav class="nav">
 
-  <div class="app-layout">
+      <button
+        class="nav-btn active"
+        data-page="dashboard"
+        onclick="showPage('dashboard')">
+        <span class="nav-icon">📊</span>
+        <span data-i18n="dashboard">لوحة التحكم</span>
+      </button>
 
-    <aside class="sidebar">
+      <button
+        class="nav-btn"
+        data-page="orders"
+        onclick="showPage('orders')">
+        <span class="nav-icon">📋</span>
+        <span data-i18n="orders">الطلبيات</span>
+      </button>
 
-      <div class="sidebar-logo">
+      <button
+        class="nav-btn"
+        data-page="stages"
+        onclick="showPage('stages')">
+        <span class="nav-icon">⚙️</span>
+        <span data-i18n="stages">مراحل الإنتاج</span>
+      </button>
 
-        <img
-          src="./icon_compact.jpg"
-          alt="Modulartech"
-          onerror="this.style.display='none';">
+      <button
+        id="usersNav"
+        class="nav-btn"
+        data-page="users"
+        onclick="showPage('users')">
+        <span class="nav-icon">👥</span>
+        <span data-i18n="users">المستخدمون</span>
+      </button>
+
+      <button
+        class="nav-btn logout-btn"
+        onclick="logout()">
+        <span class="nav-icon">🚪</span>
+        <span data-i18n="logout">تسجيل الخروج</span>
+      </button>
+
+    </nav>
+
+  </aside>
+
+
+  <main class="main">
+
+    <header class="topbar">
+
+      <div style="display:flex;align-items:center;gap:12px;">
+
+        <button
+          class="btn btn-secondary mobile-menu"
+          onclick="toggleSidebar()">
+          ☰
+        </button>
+
+        <h1 id="pageTitle" class="page-title">
+          لوحة التحكم
+        </h1>
 
       </div>
 
-      <nav class="nav">
+      <div class="top-actions">
 
         <button
-          class="nav-button active"
-          data-section="dashboard"
-          onclick="navigate('dashboard')">
-
-          <span id="navDashboard">
-            🏠 الرئيسية
-          </span>
-
+          id="topAddOrder"
+          class="btn btn-primary"
+          onclick="openOrderModal()">
+          ＋ إضافة طلبية
         </button>
 
-        <button
-          class="nav-button"
-          data-section="orders"
-          onclick="navigate('orders')">
+      </div>
 
-          <span id="navOrders">
-            📦 الطلبيات
-          </span>
+    </header>
 
-        </button>
 
-        <button
-          class="nav-button"
-          data-section="production"
-          onclick="navigate('production')">
-
-          <span id="navProduction">
-            ⚙️ مراحل العمل
-          </span>
-
-        </button>
-
-        <button
-          id="usersNav"
-          class="nav-button"
-          data-section="users"
-          onclick="navigate('users')">
-
-          <span id="navUsers">
-            👥 المستخدمون
-          </span>
-
-        </button>
-
-      </nav>
-
-    </aside>
-
-    <main class="main">
+    <div class="content">
 
       <!-- DASHBOARD -->
 
-      <section
-        id="dashboard"
-        class="section active">
+      <section id="page-dashboard" class="page">
 
-        <div class="section-head">
-
-          <div>
-
-            <h2
-              class="section-title"
-              id="dashboardTitle">
-              لوحة التحكم
-            </h2>
-
-            <p
-              class="section-subtitle"
-              id="dashboardSubtitle">
-              نظرة عامة على الطلبيات وحالتها الحالية.
-            </p>
-
-          </div>
-
-        </div>
-
-        <div class="stats">
+        <div class="stats-grid">
 
           <div class="stat-card">
-
-            <div
-              class="stat-label"
-              id="statTotalLabel">
+            <div class="stat-title" data-i18n="totalOrders">
               إجمالي الطلبيات
             </div>
-
-            <div
-              id="statTotal"
-              class="stat-value">
-              0
-            </div>
-
+            <div id="statTotal" class="stat-value">0</div>
           </div>
 
           <div class="stat-card">
-
-            <div
-              class="stat-label"
-              id="statActiveLabel">
-              قيد العمل
+            <div class="stat-title" data-i18n="activeOrders">
+              الطلبيات النشطة
             </div>
-
-            <div
-              id="statActive"
-              class="stat-value">
-              0
-            </div>
-
+            <div id="statActive" class="stat-value">0</div>
           </div>
 
-          <div class="stat-card urgent">
-
-            <div
-              class="stat-label"
-              id="statUrgentLabel">
-              مهمة جدًا
+          <div class="stat-card">
+            <div class="stat-title" data-i18n="urgentOrders">
+              الطلبيات المهمة
             </div>
-
-            <div
-              id="statUrgent"
-              class="stat-value">
-              0
-            </div>
-
+            <div id="statUrgent" class="stat-value">0</div>
           </div>
 
-          <div class="stat-card overdue">
-
-            <div
-              class="stat-label"
-              id="statOverdueLabel">
-              متأخرة
+          <div class="stat-card">
+            <div class="stat-title" data-i18n="overdueOrders">
+              الطلبيات المتأخرة
             </div>
-
-            <div
-              id="statOverdue"
-              class="stat-value">
-              0
-            </div>
-
+            <div id="statOverdue" class="stat-value">0</div>
           </div>
 
         </div>
 
-        <div class="card">
 
-          <div class="card-head">
+        <div class="dashboard-grid">
 
-            <h3 id="latestOrdersTitle">
-              آخر الطلبيات
-            </h3>
+          <div class="card">
 
-            <button
-              class="secondary-btn"
-              onclick="navigate('orders')"
-              id="manageOrdersButton">
-              إدارة الطلبيات
-            </button>
+            <div class="card-header">
+              <h2 class="card-title" data-i18n="latestOrders">
+                آخر الطلبيات
+              </h2>
+
+              <button
+                class="btn btn-secondary"
+                onclick="showPage('orders')">
+                عرض الكل
+              </button>
+            </div>
+
+            <div id="latestOrders"></div>
 
           </div>
 
-          <div
-            id="latestOrders"
-            class="card-body">
+
+          <div class="card">
+
+            <div class="card-header">
+              <h2 class="card-title" data-i18n="productionStatus">
+                حالة الإنتاج
+              </h2>
+            </div>
+
+            <div id="dashboardStages" class="stages"></div>
+
           </div>
 
         </div>
@@ -1456,85 +1244,68 @@ html[lang="he"]{
 
       <!-- ORDERS -->
 
-      <section
-        id="orders"
-        class="section">
+      <section id="page-orders" class="page hidden">
 
-        <div class="section-head">
+        <div class="card">
 
-          <div>
+          <div class="toolbar">
 
-            <h2
-              class="section-title"
-              id="ordersTitle">
-              إدارة الطلبيات
-            </h2>
+            <input
+              id="orderSearch"
+              class="search"
+              type="search"
+              placeholder="🔎 البحث عن طلبية..."
+              oninput="renderOrders()"
+            >
 
-            <p
-              class="section-subtitle"
-              id="ordersSubtitle">
-              إضافة وتعديل ومتابعة الطلبيات.
-            </p>
+            <button
+              id="addOrderButton"
+              class="btn btn-primary"
+              onclick="openOrderModal()">
+              ＋ إضافة طلبية
+            </button>
 
           </div>
 
-          <button
-            id="addOrderButton"
-            class="primary-btn"
-            onclick="openAddModal()">
-            + إضافة طلبية
-          </button>
+          <div class="table-wrap">
+            <table>
 
-        </div>
+              <thead>
+                <tr>
+                  <th>رقم الطلبية</th>
+                  <th>الزبون</th>
+                  <th>الهاتف</th>
+                  <th>التسليم</th>
+                  <th>الحالة</th>
+                  <th>الأهمية</th>
+                  <th>الإجراءات</th>
+                </tr>
+              </thead>
 
-        <div class="search-box">
+              <tbody id="ordersTable"></tbody>
 
-          <input
-            id="searchInput"
-            class="search-input"
-            type="search"
-            placeholder="بحث حسب رقم الطلبية أو اسم العميل أو الهاتف"
-            oninput="renderOrders()">
+            </table>
+          </div>
 
-        </div>
-
-        <div
-          id="ordersGrid"
-          class="orders-grid">
         </div>
 
       </section>
 
 
-      <!-- PRODUCTION -->
+      <!-- STAGES -->
 
-      <section
-        id="production"
-        class="section">
+      <section id="page-stages" class="page hidden">
 
-        <div class="section-head">
+        <div class="card">
 
-          <div>
-
-            <h2
-              class="section-title"
-              id="productionTitle">
-              مراحل العمل
+          <div class="card-header">
+            <h2 class="card-title">
+              مراحل الإنتاج
             </h2>
-
-            <p
-              class="section-subtitle"
-              id="productionSubtitle">
-              متابعة تقدم كل طلبية والقسم المسؤول عنها.
-            </p>
-
           </div>
 
-        </div>
+          <div id="stagesPage" class="stages"></div>
 
-        <div
-          id="stagesGrid"
-          class="stages-grid">
         </div>
 
       </section>
@@ -1542,76 +1313,39 @@ html[lang="he"]{
 
       <!-- USERS -->
 
-      <section
-        id="users"
-        class="section">
-
-        <div class="section-head">
-
-          <div>
-
-            <h2
-              class="section-title"
-              id="usersTitle">
-              المستخدمون
-            </h2>
-
-            <p
-              class="section-subtitle"
-              id="usersSubtitle">
-              إدارة بيانات المستخدمين والصلاحيات.
-            </p>
-
-          </div>
-
-          <button
-            id="addUserButton"
-            class="primary-btn"
-            onclick="openUserModal()">
-            + إضافة مستخدم
-          </button>
-
-        </div>
+      <section id="page-users" class="page hidden">
 
         <div class="card">
 
-          <div class="card-body users-table-wrap">
+          <div class="card-header">
 
-            <table class="users-table">
+            <h2 class="card-title">
+              المستخدمون
+            </h2>
+
+            <button
+              class="btn btn-primary"
+              onclick="openUserModal()">
+              ＋ إضافة مستخدم
+            </button>
+
+          </div>
+
+          <div class="table-wrap">
+
+            <table>
 
               <thead>
-
                 <tr>
-
-                  <th id="thUsername">
-                    اسم المستخدم
-                  </th>
-
-                  <th id="thFullName">
-                    الاسم الكامل
-                  </th>
-
-                  <th id="thRole">
-                    القسم
-                  </th>
-
-                  <th id="thPhone">
-                    رقم الهاتف
-                  </th>
-
-                  <th id="thEmail">
-                    البريد الإلكتروني
-                  </th>
-
-                  <th id="thStatus">
-                    الحالة
-                  </th>
-
+                  <th>اسم المستخدم</th>
+                  <th>الاسم الكامل</th>
+                  <th>الدور</th>
+                  <th>البريد</th>
+                  <th>الحالة</th>
                 </tr>
-
               </thead>
 
-              <tbody id="usersBody"></tbody>
+              <tbody id="usersTable"></tbody>
 
             </table>
 
@@ -1621,378 +1355,268 @@ html[lang="he"]{
 
       </section>
 
-    </main>
+    </div>
 
-  </div>
+  </main>
 
-</div>
+</section>
 
 
-<!-- ORDER MODAL -->
+<!-- =========================
+     ORDER MODAL
+========================= -->
 
-<div
-  id="orderModal"
-  class="modal"
-  onclick="if(event.target===this) closeOrderModal()">
+<div id="orderModal" class="modal-backdrop hidden">
 
-  <div class="modal-card">
+  <div class="modal">
 
-    <div class="modal-head">
+    <div class="modal-header">
 
-      <h3 id="orderModalTitle">
+      <h2 id="orderModalTitle" class="modal-title">
         إضافة طلبية
-      </h3>
+      </h2>
 
       <button
-        class="close-btn"
+        class="close"
         onclick="closeOrderModal()">
         ×
       </button>
 
     </div>
 
-    <div class="modal-body">
+    <form id="orderForm">
 
-      <form id="orderForm">
+      <input id="orderId" type="hidden">
 
-        <input
-          id="orderId"
-          type="hidden">
+      <div class="modal-grid">
 
-        <div class="form-grid">
+        <div class="modal-group">
+          <label class="modal-label">
+            رقم الطلبية
+          </label>
+          <input
+            id="orderNumber"
+            class="modal-input"
+            required>
+        </div>
 
-          <div class="form-group">
+        <div class="modal-group">
+          <label class="modal-label">
+            اسم الزبون
+          </label>
+          <input
+            id="customerName"
+            class="modal-input"
+            required>
+        </div>
 
-            <label
-              class="form-label"
-              id="orderNumberLabel">
-              رقم الطلبية
-            </label>
+        <div class="modal-group">
+          <label class="modal-label">
+            رقم الهاتف
+          </label>
+          <input
+            id="customerPhone"
+            class="modal-input"
+            type="tel">
+        </div>
 
-            <input
-              id="orderNumber"
-              class="form-input"
-              placeholder="مثال: 10025"
-              required>
+        <div class="modal-group">
+          <label class="modal-label">
+            تاريخ التسليم
+          </label>
+          <input
+            id="dueDate"
+            class="modal-input"
+            type="date">
+        </div>
 
-          </div>
+        <div class="modal-group">
+          <label class="modal-label">
+            الحالة
+          </label>
 
-          <div class="form-group">
-
-            <label
-              class="form-label"
-              id="customerLabel">
-              اسم العميل
-            </label>
-
-            <input
-              id="customerName"
-              class="form-input"
-              placeholder="اسم العميل"
-              required>
-
-          </div>
-
-          <div class="form-group">
-
-            <label
-              class="form-label"
-              id="phoneLabel">
-              رقم الهاتف
-            </label>
-
-            <input
-              id="customerPhone"
-              class="form-input"
-              type="tel"
-              placeholder="0500000000">
-
-          </div>
-
-          <div class="form-group">
-
-            <label
-              class="form-label"
-              id="deliveryLabel">
-              موعد التسليم
-            </label>
-
-            <input
-              id="dueDate"
-              class="form-input"
-              type="date">
-
-          </div>
-
-          <div class="form-group full">
-
-            <label
-              class="form-label"
-              id="notesLabel">
-              الملاحظات
-            </label>
-
-            <textarea
-              id="notes"
-              class="form-input"
-              style="height:120px;padding-top:15px;resize:vertical"
-              placeholder="أدخل الملاحظات"></textarea>
-
-          </div>
-
-          <div class="form-group full">
-
-            <label class="checkbox-row">
-
-              <input
-                id="urgent"
-                type="checkbox">
-
-              <span id="urgentLabel">
-                الطلبية مهمة جدًا ⭐
-              </span>
-
-            </label>
-
-          </div>
+          <select
+            id="orderStage"
+            class="modal-select">
+          </select>
 
         </div>
 
-      </form>
+        <div class="modal-group">
 
-    </div>
+          <label class="modal-label">
+            الأولوية
+          </label>
 
-    <div class="modal-actions">
+          <select
+            id="orderUrgent"
+            class="modal-select">
 
-      <button
-        class="secondary-btn"
-        onclick="closeOrderModal()"
-        id="cancelOrderButton">
-        إلغاء
-      </button>
+            <option value="false">
+              عادية
+            </option>
 
-      <button
-        class="primary-btn"
-        onclick="saveOrder()"
-        id="saveOrderButton">
-        حفظ الطلبية
-      </button>
+            <option value="true">
+              مهمة جدًا
+            </option>
 
-    </div>
+          </select>
+
+        </div>
+
+        <div class="modal-group full">
+
+          <label class="modal-label">
+            ملاحظات
+          </label>
+
+          <textarea
+            id="orderNotes"
+            class="modal-textarea">
+          </textarea>
+
+        </div>
+
+      </div>
+
+      <div class="modal-actions">
+
+        <button
+          type="submit"
+          class="btn btn-primary">
+          حفظ
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-secondary"
+          onclick="closeOrderModal()">
+          إلغاء
+        </button>
+
+      </div>
+
+    </form>
 
   </div>
 
 </div>
 
 
-<!-- USER MODAL -->
+<!-- =========================
+     USER MODAL
+========================= -->
 
-<div
-  id="userModal"
-  class="modal"
-  onclick="if(event.target===this) closeUserModal()">
+<div id="userModal" class="modal-backdrop hidden">
 
-  <div class="modal-card">
+  <div class="modal">
 
-    <div class="modal-head">
+    <div class="modal-header">
 
-      <h3 id="userModalTitle">
+      <h2 class="modal-title">
         إضافة مستخدم
-      </h3>
+      </h2>
 
       <button
-        class="close-btn"
+        class="close"
         onclick="closeUserModal()">
         ×
       </button>
 
     </div>
 
-    <div class="modal-body">
+    <form id="userForm">
 
-      <div class="form-grid">
+      <div class="modal-grid">
 
-        <div class="form-group">
+        <div class="modal-group">
 
-          <label
-            class="form-label"
-            id="userUsernameLabel">
+          <label class="modal-label">
             اسم المستخدم
           </label>
 
           <input
             id="newUsername"
-            class="form-input">
+            class="modal-input"
+            required>
 
         </div>
 
-        <div class="form-group">
+        <div class="modal-group">
 
-          <label
-            class="form-label"
-            id="userFullNameLabel">
+          <label class="modal-label">
             الاسم الكامل
           </label>
 
           <input
             id="newFullName"
-            class="form-input">
+            class="modal-input"
+            required>
 
         </div>
 
-        <div class="form-group">
+        <div class="modal-group">
 
-          <label
-            class="form-label"
-            id="userEmailLabel">
+          <label class="modal-label">
             البريد الإلكتروني
           </label>
 
           <input
             id="newEmail"
-            class="form-input"
-            type="email">
+            class="modal-input"
+            type="email"
+            required>
 
         </div>
 
-        <div class="form-group">
+        <div class="modal-group">
 
-          <label
-            class="form-label"
-            id="userPhoneLabel">
-            رقم الهاتف
-          </label>
-
-          <input
-            id="newPhone"
-            class="form-input"
-            type="tel">
-
-        </div>
-
-        <div class="form-group">
-
-          <label
-            class="form-label"
-            id="userPasswordLabel">
+          <label class="modal-label">
             كلمة المرور
           </label>
 
           <input
             id="newPassword"
-            class="form-input"
-            type="password">
+            class="modal-input"
+            type="password"
+            required>
 
         </div>
 
-        <div class="form-group">
+        <div class="modal-group full">
 
-          <label
-            class="form-label"
-            id="userRoleLabel">
-            القسم
+          <label class="modal-label">
+            الدور
           </label>
 
           <select
             id="newRole"
-            class="form-input">
-
-            <option value="المدير">المدير</option>
-            <option value="القص">القص</option>
-            <option value="الكنت">الكنت</option>
-            <option value="CNC">CNC</option>
-            <option value="التركيب">التركيب</option>
-            <option value="الدهان">الدهان</option>
-            <option value="التغليف">التغليف</option>
-            <option value="التحميل">التحميل</option>
-            <option value="التسليم">التسليم</option>
+            class="modal-select">
 
           </select>
 
         </div>
 
-        <div class="form-group full">
+      </div>
 
-          <label class="checkbox-row">
+      <div class="modal-actions">
 
-            <input
-              id="newActive"
-              type="checkbox"
-              checked>
+        <button
+          type="submit"
+          class="btn btn-primary">
+          إنشاء المستخدم
+        </button>
 
-            <span id="userActiveLabel">
-              الحساب فعال
-            </span>
-
-          </label>
-
-        </div>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          onclick="closeUserModal()">
+          إلغاء
+        </button>
 
       </div>
 
-    </div>
-
-    <div class="modal-actions">
-
-      <button
-        class="secondary-btn"
-        onclick="closeUserModal()"
-        id="cancelUserButton">
-        إلغاء
-      </button>
-
-      <button
-        class="primary-btn"
-        onclick="createUser()"
-        id="createUserButton">
-        إنشاء مستخدم
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- DETAILS MODAL -->
-
-<div
-  id="detailsModal"
-  class="modal"
-  onclick="if(event.target===this) closeDetailsModal()">
-
-  <div class="modal-card">
-
-    <div class="modal-head">
-
-      <h3 id="detailsTitle">
-        تفاصيل الطلبية
-      </h3>
-
-      <button
-        class="close-btn"
-        onclick="closeDetailsModal()">
-        ×
-      </button>
-
-    </div>
-
-    <div
-      id="detailsBody"
-      class="modal-body">
-    </div>
-
-    <div class="modal-actions">
-
-      <button
-        class="secondary-btn"
-        onclick="closeDetailsModal()"
-        id="detailsCloseButton">
-        إغلاق
-      </button>
-
-    </div>
+    </form>
 
   </div>
 
@@ -2004,648 +1628,132 @@ html[lang="he"]{
 
 <script>
 
-/* =====================================================
-   SUPABASE CONFIGURATION
-===================================================== */
+/* =========================================================
+   SUPABASE
+========================================================= */
 
 const SUPABASE_URL =
   "https://bvrfrcmblwzuqprjknam.supabase.co";
 
+/*
+  استخدم Publishable Key فقط في الواجهة.
+  لا تضع sb_secret داخل هذا الملف.
+*/
 const SUPABASE_KEY =
   "sb_publishable_vVXVJGcWpoPvPEH_bfm23Q_dZ5eXvmE";
 
 
-/* =====================================================
-   LANGUAGE
-===================================================== */
-
-let currentLanguage =
-  localStorage.getItem("modular_language") || "ar";
-
-
-const translations = {
-
-  ar: {
-
-    appTitle:"نظام إدارة الطلبيات",
-
-    loginTitle:"نظام إدارة الطلبيات",
-    username:"اسم المستخدم",
-    usernamePlaceholder:"أدخل اسم المستخدم",
-    password:"كلمة المرور",
-    passwordPlaceholder:"أدخل كلمة المرور",
-
-    login:"🔐 تسجيل الدخول",
-    loggingIn:"جاري تسجيل الدخول...",
-
-    logout:"خروج",
-
-    dashboard:"🏠 الرئيسية",
-    orders:"📦 الطلبيات",
-    production:"⚙️ مراحل العمل",
-    users:"👥 المستخدمون",
-
-    dashboardTitle:"لوحة التحكم",
-
-    dashboardSubtitle:
-      "نظرة عامة على الطلبيات وحالتها الحالية.",
-
-    totalOrders:"إجمالي الطلبيات",
-    activeOrders:"قيد العمل",
-    urgent:"مهمة جدًا",
-    overdue:"متأخرة",
-
-    latestOrders:"آخر الطلبيات",
-    manageOrders:"إدارة الطلبيات",
-
-    ordersTitle:"إدارة الطلبيات",
-
-    ordersSubtitle:
-      "إضافة وتعديل ومتابعة الطلبيات.",
-
-    addOrder:"+ إضافة طلبية",
-
-    searchPlaceholder:
-      "بحث حسب رقم الطلبية أو اسم العميل أو الهاتف",
-
-    productionTitle:"مراحل العمل",
-
-    productionSubtitle:
-      "متابعة تقدم كل طلبية والقسم المسؤول عنها.",
-
-    usersTitle:"المستخدمون",
-
-    usersSubtitle:
-      "إدارة بيانات المستخدمين والصلاحيات.",
-
-    addUser:"+ إضافة مستخدم",
-
-    orderNumber:"رقم الطلبية",
-    customer:"اسم العميل",
-    phone:"رقم الهاتف",
-    delivery:"موعد التسليم",
-    notes:"الملاحظات",
-    department:"القسم",
-
-    saveOrder:"حفظ الطلبية",
-    cancel:"إلغاء",
-
-    addOrderTitle:"إضافة طلبية",
-    editOrderTitle:"تعديل الطلبية",
-
-    urgentOrder:"الطلبية مهمة جدًا ⭐",
-
-    details:"📋 التفاصيل",
-    edit:"✏️ تعديل",
-    delete:"🗑️ حذف",
-    next:"➡️ المرحلة التالية",
-
-    completed:"✓ مكتمل",
-    done:"تم",
-
-    responsible:"القسم المسؤول:",
-
-    noOrders:"لا توجد طلبيات بعد",
-
-    noMatchingOrders:
-      "لم يتم العثور على طلبيات مطابقة",
-
-    noOrdersStage:
-      "لا توجد طلبيات في هذه المرحلة",
-
-    noUsers:"لا يوجد مستخدمون",
-
-    orderDeleted:"🗑️ تم حذف الطلبية",
-
-    orderSaved:
-      "✅ تم حفظ الطلبية بنجاح",
-
-    orderUpdated:
-      "✅ تم تحديث الطلبية بنجاح",
-
-    stageUpdated:
-      "✅ تم تحديث المرحلة إلى:",
-
-    loadOrdersFailed:
-      "❌ لا يمكن تحميل الطلبيات",
-
-    loadUsersFailed:
-      "❌ لا يمكن تحميل المستخدمين",
-
-    loginSuccess:
-      "✅ تمت عملية تسجيل الدخول بنجاح",
-
-    invalidLogin:
-      "يرجى إدخال اسم المستخدم وكلمة المرور",
-
-    usernameNotFound:
-      "اسم المستخدم غير موجود أو أن الحساب غير فعال",
-
-    sessionFailed:
-      "لم يتم الحصول على جلسة دخول صحيحة",
-
-    profileNotFound:
-      "لم يتم العثور على ملف المستخدم في جدول profiles",
-
-    accountInactive:
-      "هذا الحساب غير فعال",
-
-    addOrderDenied:
-      "ليس لديك صلاحية لإضافة طلبية",
-
-    saveOrderDenied:
-      "ليس لديك صلاحية لحفظ الطلبية",
-
-    editDenied:
-      "ليس لديك صلاحية للتعديل",
-
-    deleteDenied:
-      "ليس لديك صلاحية للحذف",
-
-    stageDenied:
-      "هذه المرحلة ليست ضمن صلاحيات قسمك",
-
-    deleteConfirm:
-      "هل تريد حذف الطلبية",
-
-    saveFailed:
-      "❌ فشل حفظ الطلبية",
-
-    deleteFailed:
-      "❌ فشل حذف الطلبية",
-
-    usersOnly:
-      "هذه الصفحة مخصصة للمدير فقط",
-
-    authFunction:
-      "إنشاء مستخدم Auth يحتاج إلى Edge Function آمنة في Supabase.",
-
-    orderExample:
-      "مثال: 10025",
-
-    customerPlaceholder:
-      "اسم العميل",
-
-    notesPlaceholder:
-      "أدخل الملاحظات",
-
-    fullName:
-      "الاسم الكامل",
-
-    activeAccount:
-      "الحساب فعال",
-
-    active:
-      "فعال",
-
-    stopped:
-      "معطل",
-
-    email:
-      "البريد الإلكتروني",
-
-    close:
-      "إغلاق",
-
-    designedBy:
-      "صمم بواسطة",
-
-    createUser:
-      "إنشاء مستخدم"
-
-  },
-
-
-  he: {
-
-    appTitle:
-      "מערכת לניהול הזמנות",
-
-    loginTitle:
-      "מערכת לניהול הזמנות",
-
-    username:
-      "שם משתמש",
-
-    usernamePlaceholder:
-      "הזן שם משתמש",
-
-    password:
-      "סיסמה",
-
-    passwordPlaceholder:
-      "הזן סיסמה",
-
-    login:
-      "🔐 התחברות",
-
-    loggingIn:
-      "מתחבר...",
-
-    logout:
-      "יציאה",
-
-    dashboard:
-      "🏠 ראשי",
-
-    orders:
-      "📦 הזמנות",
-
-    production:
-      "⚙️ שלבי עבודה",
-
-    users:
-      "👥 משתמשים",
-
-    dashboardTitle:
-      "לוח בקרה",
-
-    dashboardSubtitle:
-      "סקירה כללית של ההזמנות ומצבן הנוכחי.",
-
-    totalOrders:
-      "סה״כ הזמנות",
-
-    activeOrders:
-      "בטיפול",
-
-    urgent:
-      "דחופות מאוד",
-
-    overdue:
-      "באיחור",
-
-    latestOrders:
-      "הזמנות אחרונות",
-
-    manageOrders:
-      "ניהול הזמנות",
-
-    ordersTitle:
-      "ניהול הזמנות",
-
-    ordersSubtitle:
-      "הוספה, עריכה ומעקב אחר הזמנות.",
-
-    addOrder:
-      "+ הוספת הזמנה",
-
-    searchPlaceholder:
-      "חיפוש לפי מספר הזמנה, שם לקוח או טלפון",
-
-    productionTitle:
-      "שלבי עבודה",
-
-    productionSubtitle:
-      "מעקב אחר התקדמות כל הזמנה והמחלקה האחראית עליה.",
-
-    usersTitle:
-      "משתמשים",
-
-    usersSubtitle:
-      "ניהול פרטי המשתמשים וההרשאות.",
-
-    addUser:
-      "+ הוספת משתמש",
-
-    orderNumber:
-      "מספר הזמנה",
-
-    customer:
-      "שם הלקוח",
-
-    phone:
-      "מספר טלפון",
-
-    delivery:
-      "מועד מסירה",
-
-    notes:
-      "הערות",
-
-    department:
-      "מחלקה",
-
-    saveOrder:
-      "שמירת הזמנה",
-
-    cancel:
-      "ביטול",
-
-    addOrderTitle:
-      "הוספת הזמנה",
-
-    editOrderTitle:
-      "עריכת הזמנה",
-
-    urgentOrder:
-      "הזמנה דחופה מאוד ⭐",
-
-    details:
-      "📋 פרטים",
-
-    edit:
-      "✏️ עריכה",
-
-    delete:
-      "🗑️ מחיקה",
-
-    next:
-      "➡️ השלב הבא",
-
-    completed:
-      "✓ הושלם",
-
-    done:
-      "בוצע",
-
-    responsible:
-      "המחלקה האחראית:",
-
-    noOrders:
-      "אין הזמנות עדיין",
-
-    noMatchingOrders:
-      "לא נמצאו הזמנות תואמות",
-
-    noOrdersStage:
-      "אין הזמנות בשלב זה",
-
-    noUsers:
-      "אין משתמשים",
-
-    orderDeleted:
-      "🗑️ ההזמנה נמחקה",
-
-    orderSaved:
-      "✅ ההזמנה נשמרה בהצלחה",
-
-    orderUpdated:
-      "✅ ההזמנה עודכנה בהצלחה",
-
-    stageUpdated:
-      "✅ השלב עודכן ל:",
-
-    loadOrdersFailed:
-      "❌ לא ניתן לטעון את ההזמנות",
-
-    loadUsersFailed:
-      "❌ לא ניתן לטעון את המשתמשים",
-
-    loginSuccess:
-      "✅ ההתחברות הצליחה",
-
-    invalidLogin:
-      "יש להזין שם משתמש וסיסמה",
-
-    usernameNotFound:
-      "שם המשתמש לא נמצא או שהחשבון אינו פעיל",
-
-    sessionFailed:
-      "לא התקבלה התחברות תקינה",
-
-    profileNotFound:
-      "לא נמצא פרופיל משתמש בטבלת profiles",
-
-    accountInactive:
-      "חשבון זה אינו פעיל",
-
-    addOrderDenied:
-      "אין לך הרשאה להוסיף הזמנה",
-
-    saveOrderDenied:
-      "אין לך הרשאה לשמור הזמנה",
-
-    editDenied:
-      "אין לך הרשאה לערוך",
-
-    deleteDenied:
-      "אין לך הרשאה למחוק",
-
-    stageDenied:
-      "שלב זה אינו נמצא בהרשאות המחלקה שלך",
-
-    deleteConfirm:
-      "האם למחוק את ההזמנה",
-
-    saveFailed:
-      "❌ שמירת ההזמנה נכשלה",
-
-    deleteFailed:
-      "❌ המחיקה נכשלה",
-
-    usersOnly:
-      "עמוד זה מיועד למנהל בלבד",
-
-    authFunction:
-      "יצירת משתמש Auth דורשת Edge Function מאובטחת ב-Supabase.",
-
-    orderExample:
-      "לדוגמה: 10025",
-
-    customerPlaceholder:
-      "שם הלקוח",
-
-    notesPlaceholder:
-      "הזן הערות",
-
-    fullName:
-      "שם מלא",
-
-    activeAccount:
-      "החשבון פעיל",
-
-    active:
-      "פעיל",
-
-    stopped:
-      "מושבת",
-
-    email:
-      "דוא״ל",
-
-    close:
-      "סגירה",
-
-    designedBy:
-      "עוצב על ידי",
-
-    createUser:
-      "יצירת משתמש"
-
-  }
-
-};
-
-
-function t(key){
-
-  return translations[currentLanguage]?.[key]
-    || translations.ar[key]
-    || key;
-
-}
-
-
-/* =====================================================
-   STAGE TRANSLATIONS
-===================================================== */
-
-const stageTranslations = {
-
-  ar:{
-
-    "في العمل":"في العمل",
-    "تم القص":"تم القص",
-    "تم الكنت":"تم الكنت",
-    "تم CNC":"تم CNC",
-    "تم التركيب":"تم التركيب",
-    "تم الدهان":"تم الدهان",
-    "تم التغليف":"تم التغليف",
-    "تم التحميل":"تم التحميل",
-    "تم التسليم":"تم التسليم",
-
-    "المدير":"المدير",
-    "القص":"القص",
-    "الكنت":"الكنت",
-    "التركيب":"التركيب",
-    "الدهان":"الدهان",
-    "التغليف":"التغليف",
-    "التحميل":"التحميل",
-    "التسليم":"التسليم",
-    "CNC":"CNC"
-
-  },
-
-  he:{
-
-    "في العمل":"בטיפול",
-    "تم القص":"החיתוך הושלם",
-    "تم الكنت":"הקנט הושלם",
-    "تم CNC":"CNC הושלם",
-    "تم التركيب":"ההרכבה הושלמה",
-    "تم الدهان":"הצביעה הושלמה",
-    "تم التغليف":"האריזה הושלמה",
-    "تم التحميل":"ההעמסה הושלמה",
-    "تم التسليم":"נמסר",
-
-    "المدير":"מנהל",
-    "القص":"חיתוך",
-    "الكنت":"קנט",
-    "التركيب":"הרכבה",
-    "الدهان":"צביעה",
-    "التغليف":"אריזה",
-    "التحميل":"העמסה",
-    "التسليم":"מסירה",
-    "CNC":"CNC"
-
-  }
-
-};
-
-
-function stageText(value){
-
-  return stageTranslations[currentLanguage]?.[value]
-    || value;
-
-}
-
-
-/* =====================================================
-   PRODUCTION STAGES
-===================================================== */
-
-const stages = [
-
-  ["في العمل","المدير"],
-  ["تم القص","القص"],
-  ["تم الكنت","الكنت"],
-  ["تم CNC","CNC"],
-  ["تم التركيب","التركيب"],
-  ["تم الدهان","الدهان"],
-  ["تم التغليف","التغليف"],
-  ["تم التحميل","التحميل"],
-  ["تم التسليم","التسليم"]
-
-];
-
-
-/* =====================================================
-   STATE
-===================================================== */
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+let currentUserId = null;
+let currentProfile = null;
+let role = null;
 
 let orders = [];
 let users = [];
 
-let currentProfile = null;
-let currentUserId = null;
+let currentLanguage = "ar";
 
-let role = "";
+const STAGES = [
+  "في العمل",
+  "تم القص",
+  "تم الكنت",
+  "تم CNC",
+  "تم التركيب",
+  "تم الدهان",
+  "تم التغليف",
+  "تم التحميل",
+  "تم التسليم"
+];
 
-let editingOrderId = null;
+const ROLES = [
+  "المدير",
+  "القص",
+  "الكنت",
+  "CNC",
+  "التركيب",
+  "الدهان",
+  "التغليف",
+  "التحميل",
+  "التسليم"
+];
 
-let toastTimer = null;
+
+/* =========================================================
+   TRANSLATIONS
+========================================================= */
+
+const translations = {
+
+  ar:{
+    dashboard:"لوحة التحكم",
+    orders:"الطلبيات",
+    stages:"مراحل الإنتاج",
+    users:"المستخدمون",
+    logout:"تسجيل الخروج",
+    totalOrders:"إجمالي الطلبيات",
+    activeOrders:"الطلبيات النشطة",
+    urgentOrders:"الطلبيات المهمة",
+    overdueOrders:"الطلبيات المتأخرة",
+    latestOrders:"آخر الطلبيات",
+    productionStatus:"حالة الإنتاج"
+  },
+
+  he:{
+    dashboard:"לוח בקרה",
+    orders:"הזמנות",
+    stages:"שלבי ייצור",
+    users:"משתמשים",
+    logout:"התנתקות",
+    totalOrders:"סה״כ הזמנות",
+    activeOrders:"הזמנות פעילות",
+    urgentOrders:"הזמנות דחופות",
+    overdueOrders:"הזמנות באיחור",
+    latestOrders:"הזמנות אחרונות",
+    productionStatus:"מצב הייצור"
+  }
+
+};
 
 
-/* =====================================================
-   SUPABASE REQUEST
-===================================================== */
+/* =========================================================
+   REQUEST
+========================================================= */
 
-async function request(
-  path,
-  options = {}
-){
+async function request(path, options = {}){
 
   const accessToken =
-    localStorage.getItem(
-      "supabase_access_token"
-    );
+    localStorage.getItem("supabase_access_token");
 
   const headers = {
-
-    "apikey":
-      SUPABASE_KEY,
-
-    "Content-Type":
-      "application/json",
-
-    ...options.headers
-
+    "apikey": SUPABASE_KEY,
+    "Content-Type":"application/json",
+    ...(options.headers || {})
   };
 
   if(accessToken){
-
     headers["Authorization"] =
       "Bearer " + accessToken;
-
   }
 
-  const response =
-    await fetch(
-      SUPABASE_URL + path,
-      {
-        ...options,
-        headers
-      }
-    );
+  const response = await fetch(
+    SUPABASE_URL + path,
+    {
+      ...options,
+      headers
+    }
+  );
 
-  const text =
-    await response.text();
+  const text = await response.text();
 
   let data = null;
 
   try{
-
-    data =
-      text
-        ? JSON.parse(text)
-        : null;
-
+    data = text ? JSON.parse(text) : null;
   }catch{
-
     data = text;
-
   }
 
   if(!response.ok){
@@ -2654,479 +1762,1707 @@ async function request(
       data?.message ||
       data?.error_description ||
       data?.error ||
+      text ||
       `HTTP ${response.status}`;
 
     throw new Error(message);
-
   }
 
   return data;
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer = null;
+
+function showToast(message, error = false){
+
+  const toast =
+    document.getElementById("toast");
+
+  toast.textContent = message;
+
+  toast.classList.toggle("error", error);
+  toast.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer = setTimeout(()=>{
+    toast.classList.remove("show");
+  },4000);
+}
+
+
+/* =========================================================
+   LANGUAGE
+========================================================= */
+
+function toggleLanguage(){
+
+  currentLanguage =
+    currentLanguage === "ar"
+      ? "he"
+      : "ar";
+
+  applyLanguage();
+}
+
+
+function applyLanguage(){
+
+  const html =
+    document.documentElement;
+
+  if(currentLanguage === "he"){
+
+    html.lang = "he";
+    html.dir = "ltr";
+
+    document.getElementById("languageButton")
+      .textContent = "العربية";
+
+    document.getElementById("loginTitle")
+      .textContent = "מערכת ניהול הזמנות";
+
+    document.getElementById("loginBrand")
+      .textContent = "MODULAR TECH";
+
+    document.getElementById("usernameLabel")
+      .textContent = "שם משתמש";
+
+    document.getElementById("passwordLabel")
+      .textContent = "סיסמה";
+
+    document.getElementById("loginButton")
+      .textContent = "התחברות 🔐";
+
+    document.getElementById("loginMessage")
+      .textContent =
+      "החשבון חייב להיות פעיל. במקרה של בעיה, פנה למנהל.";
+
+    document.getElementById("designedText")
+      .textContent = "עוצב על ידי";
+
+  }else{
+
+    html.lang = "ar";
+    html.dir = "rtl";
+
+    document.getElementById("languageButton")
+      .textContent = "עברית";
+
+    document.getElementById("loginTitle")
+      .textContent = "نظام إدارة الطلبيات";
+
+    document.getElementById("loginBrand")
+      .textContent = "MODULAR TECH";
+
+    document.getElementById("usernameLabel")
+      .textContent = "اسم المستخدم";
+
+    document.getElementById("passwordLabel")
+      .textContent = "كلمة المرور";
+
+    document.getElementById("loginButton")
+      .textContent = "تسجيل الدخول 🔐";
+
+    document.getElementById("loginMessage")
+      .textContent =
+      "يجب أن يكون حسابك فعالاً. في حال وجود مشكلة، تواصل مع المدير.";
+
+    document.getElementById("designedText")
+      .textContent = "صمم بواسطة";
+  }
+
+  document.querySelectorAll("[data-i18n]")
+    .forEach(el=>{
+
+      const key =
+        el.getAttribute("data-i18n");
+
+      if(translations[currentLanguage][key]){
+        el.textContent =
+          translations[currentLanguage][key];
+      }
+
+    });
 
 }
 
 
-/* =====================================================
-   AUTH LOGIN
-===================================================== */
+/* =========================================================
+   LOGIN
+========================================================= */
 
-async function login(event){
+document
+  .getElementById("loginForm")
+  .addEventListener("submit", async function(e){
 
-  event.preventDefault();
+    e.preventDefault();
 
-  const username =
-    document.getElementById("username")
-      .value
-      .trim();
+    const username =
+      document.getElementById("username")
+        .value
+        .trim();
 
-  const password =
-    document.getElementById("password")
-      .value;
+    const password =
+      document.getElementById("password")
+        .value;
 
-  if(!username || !password){
-
-    showToast(
-      t("invalidLogin")
-    );
-
-    return;
-
-  }
-
-  const button =
-    document.getElementById("loginButton");
-
-  button.disabled = true;
-
-  button.textContent =
-    t("loggingIn");
-
-  try{
-
-    /*
-      Find profile by username.
-    */
-
-    const profiles =
-      await request(
-        "/rest/v1/profiles?select=id,username,full_name,role,active,email,user_id,phone&username=eq."
-        +
-        encodeURIComponent(username)
-        +
-        "&limit=1"
-      );
-
-    if(
-      !profiles ||
-      !profiles.length
-    ){
-
-      throw new Error(
-        t("usernameNotFound")
-      );
-
+    if(!username || !password){
+      showToast("يرجى إدخال اسم المستخدم وكلمة المرور",true);
+      return;
     }
 
-    const profile =
-      profiles[0];
+    const button =
+      document.getElementById("loginButton");
 
-    if(
-      profile.active !== true
-    ){
+    button.disabled = true;
 
-      throw new Error(
-        t("accountInactive")
-      );
-
-    }
-
-    if(
-      !profile.email
-    ){
-
-      throw new Error(
-        currentLanguage === "he"
-          ? "לא מוגדר דוא״ל למשתמש זה"
-          : "لا يوجد بريد إلكتروني لهذا المستخدم"
-      );
-
-    }
-
-
-    /*
-      Supabase Auth login.
-    */
-
-    const authResponse =
-      await fetch(
-        SUPABASE_URL +
-        "/auth/v1/token?grant_type=password",
-        {
-
-          method:"POST",
-
-          headers:{
-
-            "apikey":
-              SUPABASE_KEY,
-
-            "Content-Type":
-              "application/json"
-
-          },
-
-          body:JSON.stringify({
-
-            email:
-              profile.email,
-
-            password:
-              password
-
-          })
-
-        }
-      );
-
-
-    const authText =
-      await authResponse.text();
-
-    let authData = null;
+    button.textContent =
+      currentLanguage === "he"
+        ? "מתחבר..."
+        : "جارٍ تسجيل الدخول...";
 
     try{
 
-      authData =
-        authText
-          ? JSON.parse(authText)
-          : null;
+      /*
+        الخطوة الأولى:
+        نبحث عن المستخدم بواسطة username.
 
-    }catch{
+        لا نستخدم user_id هنا.
+      */
 
-      authData = null;
+      const profileResult =
+        await request(
+          "/rest/v1/profiles" +
+          "?select=id,username,full_name,role,active,email" +
+          "&username=eq." +
+          encodeURIComponent(username) +
+          "&limit=1"
+        );
 
-    }
+      if(!profileResult || !profileResult.length){
 
+        throw new Error(
+          currentLanguage === "he"
+            ? "שם המשתמש לא נמצא"
+            : "اسم المستخدم غير موجود"
+        );
+      }
 
-    if(
-      !authResponse.ok
-    ){
+      const profile =
+        profileResult[0];
 
-      console.error(
-        "Supabase Auth:",
-        authData
-      );
+      if(profile.active === false){
 
-      throw new Error(
-        currentLanguage === "he"
-          ? "שם המשתמש או הסיסמה שגויים"
-          : "اسم المستخدم أو كلمة المرور غير صحيحة"
-      );
+        throw new Error(
+          currentLanguage === "he"
+            ? "החשבון אינו פעיל"
+            : "الحساب غير فعال"
+        );
+      }
 
-    }
+      if(!profile.email){
 
-
-    if(
-      !authData?.access_token
-    ){
-
-      throw new Error(
-        t("sessionFailed")
-      );
-
-    }
-
-
-    localStorage.setItem(
-      "supabase_access_token",
-      authData.access_token
-    );
+        throw new Error(
+          "لا يوجد بريد إلكتروني مرتبط بهذا المستخدم"
+        );
+      }
 
 
-    if(
-      authData.refresh_token
-    ){
+      /*
+        تسجيل الدخول الحقيقي عبر Supabase Auth
+      */
+
+      const loginResponse =
+        await fetch(
+          SUPABASE_URL +
+          "/auth/v1/token?grant_type=password",
+          {
+            method:"POST",
+            headers:{
+              "apikey":SUPABASE_KEY,
+              "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+              email:profile.email,
+              password:password
+            })
+          }
+        );
+
+      const loginText =
+        await loginResponse.text();
+
+      let loginData = null;
+
+      try{
+        loginData =
+          loginText
+            ? JSON.parse(loginText)
+            : null;
+      }catch{
+        loginData = loginText;
+      }
+
+      if(!loginResponse.ok){
+
+        throw new Error(
+          loginData?.msg ||
+          loginData?.message ||
+          loginData?.error_description ||
+          loginData?.error ||
+          "فشل تسجيل الدخول"
+        );
+      }
+
 
       localStorage.setItem(
-        "supabase_refresh_token",
-        authData.refresh_token
+        "supabase_access_token",
+        loginData.access_token
+      );
+
+      if(loginData.refresh_token){
+
+        localStorage.setItem(
+          "supabase_refresh_token",
+          loginData.refresh_token
+        );
+
+      }
+
+
+      /*
+        تحميل بيانات المستخدم.
+
+        مهم:
+        هنا تم إصلاح الخطأ.
+
+        لا يوجد profiles.user_id
+        لذلك نستخدم profiles.id
+      */
+
+      await loadProfile();
+
+
+      document
+        .getElementById("loginScreen")
+        .classList.add("hidden");
+
+      document
+        .getElementById("app")
+        .classList.remove("hidden");
+
+
+      await initializeApp();
+
+      showToast(
+        currentLanguage === "he"
+          ? "התחברת בהצלחה"
+          : "تم تسجيل الدخول بنجاح"
+      );
+
+    }catch(error){
+
+      console.error(error);
+
+      showToast(
+        error.message ||
+        "حدث خطأ أثناء تسجيل الدخول",
+        true
+      );
+
+    }finally{
+
+      button.disabled = false;
+
+      button.textContent =
+        currentLanguage === "he"
+          ? "התחברות 🔐"
+          : "تسجيل الدخول 🔐";
+
+    }
+
+  });
+
+
+/* =========================================================
+   LOAD PROFILE
+========================================================= */
+
+async function loadProfile(){
+
+  /*
+    نحصل على مستخدم Supabase Auth
+  */
+
+  const user =
+    await request("/auth/v1/user");
+
+  if(!user || !user.id){
+
+    throw new Error(
+      "لم يتم العثور على مستخدم Auth"
+    );
+  }
+
+
+  /*
+    الإصلاح الأساسي:
+
+    الجدول profiles عندك لا يحتوي
+    على user_id.
+
+    لذلك لا نرسل:
+
+    user_id=eq...
+
+    وإنما:
+
+    id=eq...
+  */
+
+  const profiles =
+    await request(
+      "/rest/v1/profiles" +
+      "?select=id,username,full_name,role,active,email" +
+      "&id=eq." +
+      encodeURIComponent(user.id) +
+      "&limit=1"
+    );
+
+
+  if(!profiles || !profiles.length){
+
+    /*
+      في حال كان id في profiles مختلفًا عن Auth UUID،
+      نحاول البحث بواسطة البريد الإلكتروني.
+    */
+
+    if(user.email){
+
+      const byEmail =
+        await request(
+          "/rest/v1/profiles" +
+          "?select=id,username,full_name,role,active,email" +
+          "&email=eq." +
+          encodeURIComponent(user.email) +
+          "&limit=1"
+        );
+
+      if(byEmail && byEmail.length){
+
+        currentProfile =
+          byEmail[0];
+
+        currentUserId =
+          currentProfile.id;
+
+        role =
+          currentProfile.role;
+
+        return currentProfile;
+      }
+    }
+
+    throw new Error(
+      "تم تسجيل الدخول، ولكن لم يتم العثور على بيانات المستخدم في جدول profiles"
+    );
+  }
+
+
+  const profile =
+    profiles[0];
+
+  if(profile.active === false){
+
+    throw new Error(
+      "هذا الحساب غير فعال"
+    );
+  }
+
+  currentUserId =
+    profile.id;
+
+  currentProfile =
+    profile;
+
+  role =
+    profile.role;
+
+  return profile;
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+async function initializeApp(){
+
+  document.getElementById("currentUserName")
+    .textContent =
+    currentProfile?.full_name ||
+    currentProfile?.username ||
+    "—";
+
+  document.getElementById("currentUserRole")
+    .textContent =
+    currentProfile?.role ||
+    "—";
+
+
+  /*
+    المستخدمون يظهرون للمدير فقط
+  */
+
+  const isAdmin =
+    role === "المدير";
+
+  document
+    .getElementById("usersNav")
+    .classList.toggle("hidden",!isAdmin);
+
+  document
+    .getElementById("addOrderButton")
+    .classList.toggle("hidden",!isAdmin);
+
+  document
+    .getElementById("topAddOrder")
+    .classList.toggle("hidden",!isAdmin);
+
+
+  await Promise.all([
+    loadOrders(),
+    isAdmin ? loadUsers() : Promise.resolve()
+  ]);
+
+  renderEverything();
+}
+
+
+/* =========================================================
+   ORDERS
+========================================================= */
+
+async function loadOrders(){
+
+  const data =
+    await request(
+      "/rest/v1/orders" +
+      "?select=*" +
+      "&order=created_at.desc"
+    );
+
+  orders =
+    (data || []).map(normalizeOrder);
+}
+
+
+function normalizeOrder(order){
+
+  return {
+    ...order,
+
+    order_number:
+      order.order_number ??
+      order.number ??
+      "",
+
+    customer_name:
+      order.customer_name ??
+      order.customer ??
+      "",
+
+    phone:
+      order.phone ??
+      "",
+
+    due_date:
+      order.due_date ??
+      null,
+
+    notes:
+      order.notes ??
+      "",
+
+    urgent:
+      Boolean(order.urgent),
+
+    stage:
+      order.stage ||
+      "في العمل"
+  };
+}
+
+
+/* =========================================================
+   RENDER EVERYTHING
+========================================================= */
+
+function renderEverything(){
+
+  renderDashboard();
+  renderOrders();
+  renderStages();
+
+  if(role === "المدير"){
+    renderUsers();
+  }
+
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function renderDashboard(){
+
+  const total =
+    orders.length;
+
+  const active =
+    orders.filter(
+      o=>o.stage !== "تم التسليم"
+    ).length;
+
+  const urgent =
+    orders.filter(
+      o=>o.urgent
+    ).length;
+
+  const today =
+    new Date();
+
+  today.setHours(0,0,0,0);
+
+  const overdue =
+    orders.filter(o=>{
+
+      if(!o.due_date) return false;
+
+      if(o.stage === "تم التسليم")
+        return false;
+
+      const date =
+        new Date(o.due_date);
+
+      date.setHours(0,0,0,0);
+
+      return date < today;
+
+    }).length;
+
+
+  document.getElementById("statTotal")
+    .textContent = total;
+
+  document.getElementById("statActive")
+    .textContent = active;
+
+  document.getElementById("statUrgent")
+    .textContent = urgent;
+
+  document.getElementById("statOverdue")
+    .textContent = overdue;
+
+
+  const latest =
+    orders.slice(0,6);
+
+  const container =
+    document.getElementById("latestOrders");
+
+  if(!latest.length){
+
+    container.innerHTML =
+      `<div class="empty">لا توجد طلبيات</div>`;
+
+  }else{
+
+    container.innerHTML =
+      latest.map(order=>`
+
+        <div style="
+          padding:15px 0;
+          border-bottom:1px solid #edf1f6;
+          display:flex;
+          justify-content:space-between;
+          gap:10px;
+          align-items:center;
+        ">
+
+          <div>
+
+            <div style="
+              font-weight:900;
+              font-size:16px;
+            ">
+              ${escapeHtml(order.order_number)}
+            </div>
+
+            <div style="
+              color:#64748b;
+              margin-top:4px;
+            ">
+              ${escapeHtml(order.customer_name)}
+            </div>
+
+          </div>
+
+          <span class="badge badge-stage">
+            ${escapeHtml(order.stage)}
+          </span>
+
+        </div>
+
+      `).join("");
+
+  }
+
+
+  const stageContainer =
+    document.getElementById("dashboardStages");
+
+  stageContainer.innerHTML =
+    STAGES.map(stage=>{
+
+      const count =
+        orders.filter(
+          o=>o.stage === stage
+        ).length;
+
+      return `
+
+        <div class="stage-card">
+
+          <div class="stage-name">
+            ${escapeHtml(stage)}
+          </div>
+
+          <div class="stage-count">
+            ${count}
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+}
+
+
+/* =========================================================
+   ORDERS TABLE
+========================================================= */
+
+function renderOrders(){
+
+  const tbody =
+    document.getElementById("ordersTable");
+
+  if(!tbody) return;
+
+  const search =
+    document.getElementById("orderSearch")
+      ?.value
+      .trim()
+      .toLowerCase() || "";
+
+
+  const filtered =
+    orders.filter(order=>{
+
+      const text =
+        [
+          order.order_number,
+          order.customer_name,
+          order.phone,
+          order.stage,
+          order.notes
+        ]
+        .join(" ")
+        .toLowerCase();
+
+      return text.includes(search);
+
+    });
+
+
+  if(!filtered.length){
+
+    tbody.innerHTML =
+      `
+      <tr>
+        <td colspan="7">
+          <div class="empty">
+            لا توجد طلبيات
+          </div>
+        </td>
+      </tr>
+      `;
+
+    return;
+  }
+
+
+  tbody.innerHTML =
+    filtered.map(order=>{
+
+      const urgent =
+        order.urgent;
+
+      const actions =
+        renderOrderActions(order);
+
+      return `
+
+        <tr class="${urgent ? "urgent-row" : ""}">
+
+          <td>
+            <strong>
+              ${escapeHtml(order.order_number)}
+            </strong>
+          </td>
+
+          <td>
+            ${escapeHtml(order.customer_name)}
+          </td>
+
+          <td>
+            ${escapeHtml(order.phone || "—")}
+          </td>
+
+          <td>
+            ${formatDate(order.due_date)}
+          </td>
+
+          <td>
+            <span class="badge badge-stage">
+              ${escapeHtml(order.stage)}
+            </span>
+          </td>
+
+          <td>
+
+            ${
+              urgent
+                ? `<span class="badge badge-urgent">مهمة جدًا</span>`
+                : `<span class="badge badge-normal">عادية</span>`
+            }
+
+          </td>
+
+          <td>
+            ${actions}
+          </td>
+
+        </tr>
+
+      `;
+
+    }).join("");
+}
+
+
+/* =========================================================
+   ORDER ACTIONS
+========================================================= */
+
+function renderOrderActions(order){
+
+  let html = "";
+
+  /*
+    المدير يستطيع التعديل والحذف
+  */
+
+  if(role === "المدير"){
+
+    html += `
+      <button
+        class="btn btn-secondary"
+        onclick="editOrder('${order.id}')">
+        تعديل
+      </button>
+    `;
+
+  }
+
+
+  /*
+    الانتقال للمرحلة التالية
+  */
+
+  const next =
+    getNextStage(order.stage);
+
+  if(next){
+
+    const allowed =
+      role === "المدير" ||
+      role === next.role;
+
+    if(allowed){
+
+      html += `
+        <button
+          class="btn btn-success"
+          style="margin-right:5px;"
+          onclick="advanceOrder('${order.id}')">
+          ${escapeHtml(next.stage)}
+        </button>
+      `;
+
+    }
+
+  }
+
+
+  if(role === "المدير"){
+
+    html += `
+      <button
+        class="btn btn-danger"
+        style="margin-right:5px;"
+        onclick="deleteOrder('${order.id}')">
+        حذف
+      </button>
+    `;
+
+  }
+
+
+  if(!html){
+
+    html =
+      `<span style="color:#94a3b8;">—</span>`;
+
+  }
+
+  return html;
+}
+
+
+/* =========================================================
+   NEXT STAGE
+========================================================= */
+
+function getNextStage(currentStage){
+
+  const index =
+    STAGES.indexOf(currentStage);
+
+  if(index < 0 || index >= STAGES.length - 1)
+    return null;
+
+  const nextStage =
+    STAGES[index + 1];
+
+  /*
+    المرحلة التي تستطيع تنفيذ الانتقال
+  */
+
+  const roleMap = {
+    "تم القص":"الكنت",
+    "تم الكنت":"CNC",
+    "تم CNC":"التركيب",
+    "تم التركيب":"الدهان",
+    "تم الدهان":"التغليف",
+    "تم التغليف":"التحميل",
+    "تم التحميل":"التسليم"
+  };
+
+  return {
+    stage:nextStage,
+    role:roleMap[currentStage] || null
+  };
+}
+
+
+/* =========================================================
+   ADVANCE ORDER
+========================================================= */
+
+async function advanceOrder(id){
+
+  const order =
+    orders.find(
+      o=>String(o.id) === String(id)
+    );
+
+  if(!order) return;
+
+  const next =
+    getNextStage(order.stage);
+
+  if(!next) return;
+
+  const allowed =
+    role === "المدير" ||
+    role === next.role;
+
+  if(!allowed){
+
+    showToast(
+      "ليس لديك صلاحية لنقل الطلبية لهذه المرحلة",
+      true
+    );
+
+    return;
+  }
+
+
+  try{
+
+    await request(
+      "/rest/v1/orders?id=eq." +
+      encodeURIComponent(id),
+      {
+        method:"PATCH",
+        headers:{
+          "Prefer":"return=minimal"
+        },
+        body:JSON.stringify({
+          stage:next.stage
+        })
+      }
+    );
+
+
+    order.stage =
+      next.stage;
+
+    renderEverything();
+
+
+    /*
+      إشعار داخلي بسيط.
+      يمكن ربط WhatsApp لاحقًا من Edge Function.
+    */
+
+    showToast(
+      `الطلبية رقم ${order.order_number} أصبحت في حالة ${next.stage}`
+    );
+
+
+  }catch(error){
+
+    console.error(error);
+
+    showToast(
+      "تعذر تحديث حالة الطلبية: " +
+      error.message,
+      true
+    );
+
+  }
+}
+
+
+/* =========================================================
+   ORDER MODAL
+========================================================= */
+
+function populateStageSelect(){
+
+  const select =
+    document.getElementById("orderStage");
+
+  select.innerHTML =
+    STAGES.map(stage=>
+      `<option value="${escapeAttr(stage)}">
+        ${escapeHtml(stage)}
+      </option>`
+    ).join("");
+}
+
+
+function openOrderModal(order = null){
+
+  if(role !== "المدير"){
+
+    showToast(
+      "إضافة وتعديل الطلبيات متاحان للمدير فقط",
+      true
+    );
+
+    return;
+  }
+
+  populateStageSelect();
+
+  document
+    .getElementById("orderModal")
+    .classList.remove("hidden");
+
+  if(order){
+
+    document.getElementById("orderModalTitle")
+      .textContent = "تعديل الطلبية";
+
+    document.getElementById("orderId")
+      .value = order.id || "";
+
+    document.getElementById("orderNumber")
+      .value = order.order_number || "";
+
+    document.getElementById("customerName")
+      .value = order.customer_name || "";
+
+    document.getElementById("customerPhone")
+      .value = order.phone || "";
+
+    document.getElementById("dueDate")
+      .value = order.due_date || "";
+
+    document.getElementById("orderStage")
+      .value = order.stage || "في العمل";
+
+    document.getElementById("orderUrgent")
+      .value = String(Boolean(order.urgent));
+
+    document.getElementById("orderNotes")
+      .value = order.notes || "";
+
+  }else{
+
+    document.getElementById("orderModalTitle")
+      .textContent = "إضافة طلبية";
+
+    document.getElementById("orderForm")
+      .reset();
+
+    document.getElementById("orderId")
+      .value = "";
+
+    document.getElementById("orderStage")
+      .value = "في العمل";
+
+  }
+}
+
+
+function closeOrderModal(){
+
+  document
+    .getElementById("orderModal")
+    .classList.add("hidden");
+
+}
+
+
+/* =========================================================
+   SAVE ORDER
+========================================================= */
+
+document
+  .getElementById("orderForm")
+  .addEventListener("submit",async function(e){
+
+    e.preventDefault();
+
+    if(role !== "المدير"){
+
+      showToast(
+        "ليس لديك صلاحية",
+        true
+      );
+
+      return;
+    }
+
+
+    const id =
+      document.getElementById("orderId")
+        .value;
+
+    const payload = {
+
+      order_number:
+        document.getElementById("orderNumber")
+          .value
+          .trim(),
+
+      customer_name:
+        document.getElementById("customerName")
+          .value
+          .trim(),
+
+      phone:
+        document.getElementById("customerPhone")
+          .value
+          .trim(),
+
+      due_date:
+        document.getElementById("dueDate")
+          .value || null,
+
+      stage:
+        document.getElementById("orderStage")
+          .value,
+
+      urgent:
+        document.getElementById("orderUrgent")
+          .value === "true",
+
+      notes:
+        document.getElementById("orderNotes")
+          .value
+          .trim()
+
+    };
+
+
+    try{
+
+      if(id){
+
+        await request(
+          "/rest/v1/orders?id=eq." +
+          encodeURIComponent(id),
+          {
+            method:"PATCH",
+            headers:{
+              "Prefer":"return=minimal"
+            },
+            body:JSON.stringify(payload)
+          }
+        );
+
+        showToast(
+          "تم تعديل الطلبية بنجاح"
+        );
+
+      }else{
+
+        await request(
+          "/rest/v1/orders",
+          {
+            method:"POST",
+            headers:{
+              "Prefer":"return=representation"
+            },
+            body:JSON.stringify(payload)
+          }
+        );
+
+        showToast(
+          "تمت إضافة الطلبية بنجاح"
+        );
+
+      }
+
+
+      closeOrderModal();
+
+      await loadOrders();
+
+      renderEverything();
+
+    }catch(error){
+
+      console.error(error);
+
+      showToast(
+        "تعذر حفظ الطلبية: " +
+        error.message,
+        true
       );
 
     }
 
-
-    currentUserId =
-      profile.user_id ||
-      profile.id;
-
-    currentProfile =
-      profile;
-
-    role =
-      profile.role || "";
+  });
 
 
-    document.getElementById(
-      "loginPage"
-    ).style.display =
-      "none";
+/* =========================================================
+   EDIT ORDER
+========================================================= */
 
+function editOrder(id){
 
-    document.getElementById(
-      "app"
-    ).classList.add(
-      "visible"
+  const order =
+    orders.find(
+      o=>String(o.id) === String(id)
     );
 
+  if(!order) return;
 
-    applyPermissions();
+  openOrderModal(order);
+}
 
-    applyLanguage();
+
+/* =========================================================
+   DELETE ORDER
+========================================================= */
+
+async function deleteOrder(id){
+
+  if(role !== "المدير")
+    return;
+
+  const order =
+    orders.find(
+      o=>String(o.id) === String(id)
+    );
+
+  if(!order) return;
+
+  const confirmed =
+    confirm(
+      `هل أنت متأكد من حذف الطلبية رقم ${order.order_number}؟`
+    );
+
+  if(!confirmed)
+    return;
 
 
-    showToast(
-      t("loginSuccess")
+  try{
+
+    await request(
+      "/rest/v1/orders?id=eq." +
+      encodeURIComponent(id),
+      {
+        method:"DELETE",
+        headers:{
+          "Prefer":"return=minimal"
+        }
+      }
     );
 
 
     await loadOrders();
 
+    renderEverything();
 
-    if(
-      role === "المدير"
-    ){
+    showToast(
+      "تم حذف الطلبية"
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    showToast(
+      "تعذر حذف الطلبية: " +
+      error.message,
+      true
+    );
+
+  }
+}
+
+
+/* =========================================================
+   STAGES
+========================================================= */
+
+function renderStages(){
+
+  const container =
+    document.getElementById("stagesPage");
+
+  if(!container) return;
+
+  container.innerHTML =
+    STAGES.map(stage=>{
+
+      const count =
+        orders.filter(
+          o=>o.stage === stage
+        ).length;
+
+      return `
+
+        <div class="stage-card">
+
+          <div class="stage-name">
+            ${escapeHtml(stage)}
+          </div>
+
+          <div class="stage-count">
+            ${count}
+          </div>
+
+          <div style="
+            color:#64748b;
+            margin-top:5px;
+            font-size:13px;
+          ">
+            طلبية
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+}
+
+
+/* =========================================================
+   USERS
+========================================================= */
+
+async function loadUsers(){
+
+  if(role !== "المدير")
+    return;
+
+  const data =
+    await request(
+      "/rest/v1/profiles" +
+      "?select=id,username,full_name,role,active,email" +
+      "&order=username.asc"
+    );
+
+  users =
+    data || [];
+}
+
+
+function renderUsers(){
+
+  if(role !== "المدير")
+    return;
+
+  const tbody =
+    document.getElementById("usersTable");
+
+  if(!tbody)
+    return;
+
+  if(!users.length){
+
+    tbody.innerHTML =
+      `
+      <tr>
+        <td colspan="5">
+          <div class="empty">
+            لا يوجد مستخدمون
+          </div>
+        </td>
+      </tr>
+      `;
+
+    return;
+  }
+
+
+  tbody.innerHTML =
+    users.map(user=>`
+
+      <tr>
+
+        <td>
+          <strong>
+            ${escapeHtml(user.username || "—")}
+          </strong>
+        </td>
+
+        <td>
+          ${escapeHtml(user.full_name || "—")}
+        </td>
+
+        <td>
+          <span class="badge badge-role">
+            ${escapeHtml(user.role || "—")}
+          </span>
+        </td>
+
+        <td>
+          ${escapeHtml(user.email || "—")}
+        </td>
+
+        <td>
+
+          ${
+            user.active
+              ? `<span class="badge badge-normal">فعال</span>`
+              : `<span class="badge badge-urgent">غير فعال</span>`
+          }
+
+        </td>
+
+      </tr>
+
+    `).join("");
+}
+
+
+/* =========================================================
+   USER MODAL
+========================================================= */
+
+function populateRoles(){
+
+  const select =
+    document.getElementById("newRole");
+
+  select.innerHTML =
+    ROLES.map(roleName=>
+      `<option value="${escapeAttr(roleName)}">
+        ${escapeHtml(roleName)}
+      </option>`
+    ).join("");
+}
+
+
+function openUserModal(){
+
+  if(role !== "المدير"){
+
+    showToast(
+      "إدارة المستخدمين للمدير فقط",
+      true
+    );
+
+    return;
+  }
+
+  populateRoles();
+
+  document
+    .getElementById("userModal")
+    .classList.remove("hidden");
+
+}
+
+
+function closeUserModal(){
+
+  document
+    .getElementById("userModal")
+    .classList.add("hidden");
+
+}
+
+
+/* =========================================================
+   CREATE USER
+========================================================= */
+
+document
+  .getElementById("userForm")
+  .addEventListener("submit",async function(e){
+
+    e.preventDefault();
+
+    if(role !== "المدير")
+      return;
+
+
+    /*
+      إنشاء مستخدم Auth يجب أن يتم بواسطة
+      Edge Function آمنة.
+
+      لا نضع service_role داخل index.html.
+    */
+
+    const payload = {
+
+      username:
+        document.getElementById("newUsername")
+          .value
+          .trim(),
+
+      full_name:
+        document.getElementById("newFullName")
+          .value
+          .trim(),
+
+      email:
+        document.getElementById("newEmail")
+          .value
+          .trim(),
+
+      password:
+        document.getElementById("newPassword")
+          .value,
+
+      role:
+        document.getElementById("newRole")
+          .value
+
+    };
+
+
+    try{
+
+      /*
+        إذا كانت Edge Function الخاصة بك
+        هي rapid-function يمكن استخدامها هنا.
+      */
+
+      const accessToken =
+        localStorage.getItem(
+          "supabase_access_token"
+        );
+
+      const response =
+        await fetch(
+          SUPABASE_URL +
+          "/functions/v1/rapid-function",
+          {
+            method:"POST",
+            headers:{
+              "apikey":SUPABASE_KEY,
+              "Authorization":
+                "Bearer " + accessToken,
+              "Content-Type":
+                "application/json"
+            },
+            body:JSON.stringify(payload)
+          }
+        );
+
+
+      const text =
+        await response.text();
+
+      let data = null;
+
+      try{
+        data =
+          text ? JSON.parse(text) : null;
+      }catch{
+        data = text;
+      }
+
+
+      if(!response.ok){
+
+        throw new Error(
+          data?.message ||
+          data?.error ||
+          text ||
+          "فشل إنشاء المستخدم"
+        );
+
+      }
+
+
+      closeUserModal();
+
+      document
+        .getElementById("userForm")
+        .reset();
 
       await loadUsers();
 
-    }
-
-
-    renderAll();
-
-    navigate(
-      "dashboard"
-    );
-
-
-  }catch(error){
-
-    console.error(
-      "Login error:",
-      error
-    );
-
-    showToast(
-      error.message ||
-      t("sessionFailed")
-    );
-
-
-  }finally{
-
-    button.disabled =
-      false;
-
-    button.textContent =
-      t("login");
-
-  }
-
-}
-
-
-/* =====================================================
-   LOAD PROFILE
-===================================================== */
-
-async function loadProfile(){
-
-  const token =
-    localStorage.getItem(
-      "supabase_access_token"
-    );
-
-  if(!token){
-
-    return false;
-
-  }
-
-  try{
-
-    const user =
-      await request(
-        "/auth/v1/user"
-      );
-
-    if(
-      !user?.id
-    ){
-
-      return false;
-
-    }
-
-    currentUserId =
-      user.id;
-
-
-    let profiles =
-      await request(
-        "/rest/v1/profiles?select=id,username,full_name,role,active,email,user_id,phone&user_id=eq."
-        +
-        encodeURIComponent(user.id)
-        +
-        "&limit=1"
-      );
-
-
-    let profile =
-      profiles?.[0];
-
-
-    if(!profile){
-
-      const byId =
-        await request(
-          "/rest/v1/profiles?select=id,username,full_name,role,active,email,user_id,phone&id=eq."
-          +
-          encodeURIComponent(user.id)
-          +
-          "&limit=1"
-        );
-
-      profile =
-        byId?.[0];
-
-    }
-
-
-    if(!profile){
+      renderUsers();
 
       showToast(
-        t("profileNotFound")
+        "تم إنشاء المستخدم بنجاح"
       );
 
-      return false;
+    }catch(error){
 
-    }
-
-
-    if(
-      profile.active !== true
-    ){
+      console.error(error);
 
       showToast(
-        t("accountInactive")
+        "تعذر إنشاء المستخدم: " +
+        error.message,
+        true
       );
-
-      return false;
 
     }
 
-
-    currentProfile =
-      profile;
-
-    role =
-      profile.role || "";
+  });
 
 
-    return true;
+/* =========================================================
+   PAGE NAVIGATION
+========================================================= */
+
+function showPage(page){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(el=>{
+      el.classList.add("hidden");
+    });
 
 
-  }catch(error){
-
-    console.error(
-      "Profile error:",
-      error
+  const selected =
+    document.getElementById(
+      "page-" + page
     );
 
-    return false;
+  if(selected)
+    selected.classList.remove("hidden");
 
-  }
+
+  document
+    .querySelectorAll(".nav-btn[data-page]")
+    .forEach(btn=>{
+
+      btn.classList.toggle(
+        "active",
+        btn.dataset.page === page
+      );
+
+    });
+
+
+  const titles = {
+
+    dashboard:
+      currentLanguage === "he"
+        ? "לוח בקרה"
+        : "لوحة التحكم",
+
+    orders:
+      currentLanguage === "he"
+        ? "הזמנות"
+        : "الطلبيات",
+
+    stages:
+      currentLanguage === "he"
+        ? "שלבי ייצור"
+        : "مراحل الإنتاج",
+
+    users:
+      currentLanguage === "he"
+        ? "משתמשים"
+        : "المستخدمون"
+
+  };
+
+
+  document.getElementById("pageTitle")
+    .textContent =
+    titles[page] || "";
+
+
+  document
+    .getElementById("sidebar")
+    .classList.remove("open");
 
 }
 
 
-/* =====================================================
-   SESSION CHECK
-===================================================== */
+/* =========================================================
+   SIDEBAR
+========================================================= */
 
-async function checkSession(){
+function toggleSidebar(){
 
-  const ok =
-    await loadProfile();
-
-
-  if(!ok){
-
-    localStorage.removeItem(
-      "supabase_access_token"
-    );
-
-    localStorage.removeItem(
-      "supabase_refresh_token"
-    );
-
-
-    document.getElementById(
-      "loginPage"
-    ).style.display =
-      "flex";
-
-
-    document.getElementById(
-      "app"
-    ).classList.remove(
-      "visible"
-    );
-
-
-    applyLanguage();
-
-    return;
-
-  }
-
-
-  document.getElementById(
-    "loginPage"
-  ).style.display =
-    "none";
-
-
-  document.getElementById(
-    "app"
-  ).classList.add(
-    "visible"
-  );
-
-
-  applyPermissions();
-
-  applyLanguage();
-
-
-  await loadOrders();
-
-
-  if(
-    role === "المدير"
-  ){
-
-    await loadUsers();
-
-  }
-
-
-  renderAll();
+  document
+    .getElementById("sidebar")
+    .classList.toggle("open");
 
 }
 
 
-/* =====================================================
+/* =========================================================
    LOGOUT
-===================================================== */
+========================================================= */
 
 async function logout(){
 
@@ -3137,26 +3473,18 @@ async function logout(){
         "supabase_access_token"
       );
 
-
     if(token){
 
       await fetch(
         SUPABASE_URL +
         "/auth/v1/logout",
         {
-
           method:"POST",
-
           headers:{
-
-            "apikey":
-              SUPABASE_KEY,
-
+            "apikey":SUPABASE_KEY,
             "Authorization":
               "Bearer " + token
-
           }
-
         }
       );
 
@@ -3164,10 +3492,7 @@ async function logout(){
 
   }catch(error){
 
-    console.error(
-      "Logout:",
-      error
-    );
+    console.warn(error);
 
   }
 
@@ -3180,2687 +3505,183 @@ async function logout(){
     "supabase_refresh_token"
   );
 
-
-  currentProfile =
-    null;
-
-  currentUserId =
-    null;
-
-  role =
-    "";
-
-  orders =
-    [];
-
-  users =
-    [];
+  currentUserId = null;
+  currentProfile = null;
+  role = null;
+  orders = [];
+  users = [];
 
 
-  document.getElementById(
-    "app"
-  ).classList.remove(
-    "visible"
-  );
+  document
+    .getElementById("app")
+    .classList.add("hidden");
+
+  document
+    .getElementById("loginScreen")
+    .classList.remove("hidden");
 
 
-  document.getElementById(
-    "loginPage"
-  ).style.display =
-    "flex";
-
-
-  document.getElementById(
-    "password"
-  ).value =
-    "";
-
-
-  applyLanguage();
+  document
+    .getElementById("password")
+    .value = "";
 
 }
 
 
-/* =====================================================
-   PERMISSIONS
-===================================================== */
+/* =========================================================
+   SESSION CHECK
+========================================================= */
 
-function applyPermissions(){
+async function checkExistingSession(){
 
-  const isAdmin =
-    role === "المدير";
+  const token =
+    localStorage.getItem(
+      "supabase_access_token"
+    );
 
+  if(!token)
+    return;
 
-  document.getElementById(
-    "addOrderButton"
-  ).style.display =
-    isAdmin ? "" : "none";
-
-
-  document.getElementById(
-    "usersNav"
-  ).style.display =
-    isAdmin ? "" : "none";
-
-
-  document.getElementById(
-    "addUserButton"
-  ).style.display =
-    isAdmin ? "" : "none";
-
-}
-
-
-/* =====================================================
-   LOAD ORDERS
-===================================================== */
-
-async function loadOrders(){
 
   try{
 
-    const data =
-      await request(
-        "/rest/v1/orders?select=*&order=created_at.desc"
-      );
+    await loadProfile();
 
+    document
+      .getElementById("loginScreen")
+      .classList.add("hidden");
 
-    orders =
-      Array.isArray(data)
-        ? data.map(normalizeOrder)
-        : [];
+    document
+      .getElementById("app")
+      .classList.remove("hidden");
 
+    await initializeApp();
 
   }catch(error){
 
-    console.error(
-      "Orders:",
+    console.warn(
+      "Session invalid:",
       error
     );
 
+    localStorage.removeItem(
+      "supabase_access_token"
+    );
 
-    showToast(
-      t("loadOrdersFailed") +
-      (
-        error?.message
-          ? " — " + error.message
-          : ""
-      )
+    localStorage.removeItem(
+      "supabase_refresh_token"
     );
 
   }
-
 }
 
 
-/* =====================================================
-   NORMALIZE ORDER
-===================================================== */
+/* =========================================================
+   DATE
+========================================================= */
 
-function normalizeOrder(order){
+function formatDate(date){
 
-  return {
+  if(!date)
+    return "—";
 
-    ...order,
+  try{
 
-    order_number:
-      order.order_number ??
-      order.order_no ??
-      order.number ??
-      "",
-
-    customer_name:
-      order.customer_name ??
-      order.customer ??
-      order.client_name ??
-      "",
-
-    phone:
-      order.phone ??
-      order.customer_phone ??
-      "",
-
-    due_date:
-      order.due_date ??
-      order.delivery_date ??
-      null,
-
-    notes:
-      order.notes ??
-      "",
-
-    urgent:
-      Boolean(
-        order.urgent ??
-        order.is_urgent ??
-        false
-      ),
-
-    stage:
-      order.stage ??
-      order.status ??
-      "في العمل"
-
-  };
-
-}
-
-
-/* =====================================================
-   DATE / OVERDUE
-===================================================== */
-
-function isOverdue(order){
-
-  if(
-    !order.due_date ||
-    order.stage === "تم التسليم"
-  ){
-
-    return false;
-
-  }
-
-
-  const today =
-    new Date();
-
-  today.setHours(
-    0,
-    0,
-    0,
-    0
-  );
-
-
-  const due =
-    new Date(
-      order.due_date +
-      "T00:00:00"
-    );
-
-
-  return due < today;
-
-}
-
-
-/* =====================================================
-   NAVIGATION
-===================================================== */
-
-function navigate(section){
-
-  if(
-    section === "users" &&
-    role !== "المدير"
-  ){
-
-    showToast(
-      t("usersOnly")
-    );
-
-    return;
-
-  }
-
-
-  document
-    .querySelectorAll(".section")
-    .forEach(
-      el => {
-
-        el.classList.toggle(
-          "active",
-          el.id === section
-        );
-
-      }
-    );
-
-
-  document
-    .querySelectorAll(".nav-button")
-    .forEach(
-      btn => {
-
-        btn.classList.toggle(
-          "active",
-          btn.dataset.section === section
-        );
-
-      }
-    );
-
-
-  if(
-    section === "dashboard"
-  ){
-
-    renderDashboard();
-
-  }
-
-
-  if(
-    section === "orders"
-  ){
-
-    renderOrders();
-
-  }
-
-
-  if(
-    section === "production"
-  ){
-
-    renderStages();
-
-  }
-
-
-  if(
-    section === "users"
-  ){
-
-    renderUsers();
-
-  }
-
-}
-
-
-/* =====================================================
-   ORDER MODAL
-===================================================== */
-
-function openAddModal(){
-
-  if(
-    role !== "المدير"
-  ){
-
-    showToast(
-      t("addOrderDenied")
-    );
-
-    return;
-
-  }
-
-
-  editingOrderId =
-    null;
-
-
-  document.getElementById(
-    "orderForm"
-  ).reset();
-
-
-  document.getElementById(
-    "orderId"
-  ).value =
-    "";
-
-
-  document.getElementById(
-    "orderModalTitle"
-  ).textContent =
-    t("addOrderTitle");
-
-
-  document.getElementById(
-    "orderModal"
-  ).classList.add(
-    "show"
-  );
-
-}
-
-
-function openEditModal(id){
-
-  if(
-    role !== "المدير"
-  ){
-
-    showToast(
-      t("editDenied")
-    );
-
-    return;
-
-  }
-
-
-  const order =
-    orders.find(
-      o =>
-        String(o.id) ===
-        String(id)
-    );
-
-
-  if(!order){
-
-    return;
-
-  }
-
-
-  editingOrderId =
-    order.id;
-
-
-  document.getElementById(
-    "orderId"
-  ).value =
-    order.id;
-
-
-  document.getElementById(
-    "orderNumber"
-  ).value =
-    order.order_number || "";
-
-
-  document.getElementById(
-    "customerName"
-  ).value =
-    order.customer_name || "";
-
-
-  document.getElementById(
-    "customerPhone"
-  ).value =
-    order.phone || "";
-
-
-  document.getElementById(
-    "dueDate"
-  ).value =
-    order.due_date || "";
-
-
-  document.getElementById(
-    "notes"
-  ).value =
-    order.notes || "";
-
-
-  document.getElementById(
-    "urgent"
-  ).checked =
-    Boolean(order.urgent);
-
-
-  document.getElementById(
-    "orderModalTitle"
-  ).textContent =
-    t("editOrderTitle");
-
-
-  document.getElementById(
-    "orderModal"
-  ).classList.add(
-    "show"
-  );
-
-}
-
-
-function closeOrderModal(){
-
-  document.getElementById(
-    "orderModal"
-  ).classList.remove(
-    "show"
-  );
-
-}
-
-
-/* =====================================================
-   SAVE ORDER
-===================================================== */
-
-async function saveOrder(){
-
-  if(
-    role !== "المدير"
-  ){
-
-    showToast(
-      t("saveOrderDenied")
-    );
-
-    return;
-
-  }
-
-
-  const orderNumber =
-    document.getElementById(
-      "orderNumber"
-    ).value.trim();
-
-
-  const customerName =
-    document.getElementById(
-      "customerName"
-    ).value.trim();
-
-
-  const phone =
-    document.getElementById(
-      "customerPhone"
-    ).value.trim();
-
-
-  const dueDate =
-    document.getElementById(
-      "dueDate"
-    ).value ||
-    null;
-
-
-  const notes =
-    document.getElementById(
-      "notes"
-    ).value.trim();
-
-
-  const urgent =
-    document.getElementById(
-      "urgent"
-    ).checked;
-
-
-  if(
-    !orderNumber ||
-    !customerName
-  ){
-
-    showToast(
+    return new Intl.DateTimeFormat(
       currentLanguage === "he"
-        ? "יש להזין מספר הזמנה ושם לקוח"
-        : "يجب إدخال رقم الطلبية واسم العميل"
-    );
-
-    return;
-
-  }
-
-
-  const payload = {
-
-    order_number:
-      orderNumber,
-
-    customer_name:
-      customerName,
-
-    phone:
-      phone,
-
-    due_date:
-      dueDate,
-
-    notes:
-      notes,
-
-    urgent:
-      urgent
-
-  };
-
-
-  try{
-
-    if(
-      editingOrderId
-    ){
-
-      const updated =
-        await request(
-          "/rest/v1/orders?id=eq."
-          +
-          encodeURIComponent(
-            editingOrderId
-          ),
-          {
-
-            method:"PATCH",
-
-            headers:{
-
-              "Prefer":
-                "return=representation"
-
-            },
-
-            body:
-              JSON.stringify(
-                payload
-              )
-
-          }
-        );
-
-
-      const index =
-        orders.findIndex(
-          o =>
-            String(o.id) ===
-            String(editingOrderId)
-        );
-
-
-      if(
-        index !== -1 &&
-        updated?.[0]
-      ){
-
-        orders[index] =
-          normalizeOrder(
-            updated[0]
-          );
-
-      }
-
-
-      showToast(
-        t("orderUpdated")
-      );
-
-
-    }else{
-
-      payload.stage =
-        "في العمل";
-
-
-      const created =
-        await request(
-          "/rest/v1/orders",
-          {
-
-            method:"POST",
-
-            headers:{
-
-              "Prefer":
-                "return=representation"
-
-            },
-
-            body:
-              JSON.stringify(
-                payload
-              )
-
-          }
-        );
-
-
-      if(
-        created?.[0]
-      ){
-
-        orders.unshift(
-          normalizeOrder(
-            created[0]
-          )
-        );
-
-      }
-
-
-      showToast(
-        t("orderSaved")
-      );
-
-    }
-
-
-    closeOrderModal();
-
-    renderAll();
-
-
-  }catch(error){
-
-    console.error(
-      "Save order:",
-      error
-    );
-
-
-    showToast(
-      t("saveFailed") +
-      " — " +
-      (
-        error?.message ||
-        ""
-      )
-    );
-
-  }
-
-}
-
-
-/* =====================================================
-   DELETE ORDER
-===================================================== */
-
-async function deleteOrder(id){
-
-  if(
-    role !== "المدير"
-  ){
-
-    showToast(
-      t("deleteDenied")
-    );
-
-    return;
-
-  }
-
-
-  const order =
-    orders.find(
-      o =>
-        String(o.id) ===
-        String(id)
-    );
-
-
-  if(!order){
-
-    return;
-
-  }
-
-
-  const confirmed =
-    confirm(
-      t("deleteConfirm") +
-      " #" +
-      order.order_number +
-      "؟"
-    );
-
-
-  if(!confirmed){
-
-    return;
-
-  }
-
-
-  try{
-
-    await request(
-      "/rest/v1/orders?id=eq."
-      +
-      encodeURIComponent(id),
+        ? "he-IL"
+        : "ar-PS",
       {
-
-        method:"DELETE"
-
+        year:"numeric",
+        month:"2-digit",
+        day:"2-digit"
       }
-    );
+    ).format(new Date(date));
 
+  }catch{
 
-    orders =
-      orders.filter(
-        o =>
-          String(o.id) !==
-          String(id)
-      );
-
-
-    showToast(
-      t("orderDeleted")
-    );
-
-
-    renderAll();
-
-
-  }catch(error){
-
-    console.error(
-      "Delete:",
-      error
-    );
-
-
-    showToast(
-      t("deleteFailed") +
-      " — " +
-      (
-        error?.message ||
-        ""
-      )
-    );
+    return date;
 
   }
-
 }
 
 
-/* =====================================================
-   NEXT STAGE
-===================================================== */
-
-async function nextStage(id){
-
-  const order =
-    orders.find(
-      o =>
-        String(o.id) ===
-        String(id)
-    );
-
-
-  if(!order){
-
-    return;
-
-  }
-
-
-  const currentIndex =
-    stages.findIndex(
-      s =>
-        s[0] ===
-        order.stage
-    );
-
-
-  if(
-    currentIndex < 0
-  ){
-
-    return;
-
-  }
-
-
-  if(
-    currentIndex >=
-    stages.length - 1
-  ){
-
-    showToast(
-      t("completed")
-    );
-
-    return;
-
-  }
-
-
-  const next =
-    stages[
-      currentIndex + 1
-    ];
-
-
-  /*
-    Manager can advance everything.
-    Other departments can advance
-    when the next stage belongs
-    to their department.
-  */
-
-  if(
-    role !== "المدير" &&
-    role !== next[1]
-  ){
-
-    showToast(
-      t("stageDenied")
-    );
-
-    return;
-
-  }
-
-
-  try{
-
-    const updated =
-      await request(
-        "/rest/v1/orders?id=eq."
-        +
-        encodeURIComponent(id),
-        {
-
-          method:"PATCH",
-
-          headers:{
-
-            "Prefer":
-              "return=representation"
-
-          },
-
-          body:
-            JSON.stringify({
-
-              stage:
-                next[0]
-
-            })
-
-        }
-      );
-
-
-    if(
-      updated?.[0]
-    ){
-
-      const index =
-        orders.findIndex(
-          o =>
-            String(o.id) ===
-            String(id)
-        );
-
-
-      if(
-        index !== -1
-      ){
-
-        orders[index] =
-          normalizeOrder(
-            updated[0]
-          );
-
-      }
-
-    }else{
-
-      order.stage =
-        next[0];
-
-    }
-
-
-    showToast(
-      t("stageUpdated") +
-      " " +
-      stageText(
-        next[0]
-      )
-    );
-
-
-    renderAll();
-
-
-  }catch(error){
-
-    console.error(
-      "Stage update:",
-      error
-    );
-
-
-    showToast(
-      "❌ " +
-      (
-        currentLanguage === "he"
-          ? "עדכון השלב נכשל"
-          : "فشل تحديث المرحلة"
-      ) +
-      (
-        error?.message
-          ? " — " + error.message
-          : ""
-      )
-    );
-
-  }
-
-}
-
-
-/* =====================================================
-   DETAILS
-===================================================== */
-
-function details(id){
-
-  const order =
-    orders.find(
-      o =>
-        String(o.id) ===
-        String(id)
-    );
-
-
-  if(!order){
-
-    return;
-
-  }
-
-
-  const due =
-    order.due_date ||
-    "—";
-
-
-  const urgentText =
-    order.urgent
-      ? t("urgent")
-      : "—";
-
-
-  const department =
-    stages.find(
-      s =>
-        s[0] ===
-        order.stage
-    )?.[1] ||
-    "";
-
-
-  document.getElementById(
-    "detailsBody"
-  ).innerHTML = `
-
-    <div class="order-info">
-
-      <div class="info-item">
-
-        <div class="info-label">
-          ${t("orderNumber")}
-        </div>
-
-        <div class="info-value">
-          ${escapeHtml(
-            order.order_number
-          )}
-        </div>
-
-      </div>
-
-      <div class="info-item">
-
-        <div class="info-label">
-          ${t("customer")}
-        </div>
-
-        <div class="info-value">
-          ${escapeHtml(
-            order.customer_name
-          )}
-        </div>
-
-      </div>
-
-      <div class="info-item">
-
-        <div class="info-label">
-          ${t("phone")}
-        </div>
-
-        <div class="info-value">
-          ${escapeHtml(
-            order.phone || "—"
-          )}
-        </div>
-
-      </div>
-
-      <div class="info-item">
-
-        <div class="info-label">
-          ${t("delivery")}
-        </div>
-
-        <div class="info-value">
-          ${escapeHtml(due)}
-        </div>
-
-      </div>
-
-      <div class="info-item">
-
-        <div class="info-label">
-          ${t("department")}
-        </div>
-
-        <div class="info-value">
-          ${stageText(department)}
-        </div>
-
-      </div>
-
-      <div class="info-item">
-
-        <div class="info-label">
-          ${
-            currentLanguage === "he"
-              ? "סטטוס"
-              : "الحالة"
-          }
-        </div>
-
-        <div class="info-value">
-          ${stageText(order.stage)}
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="order-notes">
-
-      <strong>
-        ${t("notes")}:
-      </strong>
-
-      <div style="margin-top:7px">
-        ${escapeHtml(
-          order.notes || "—"
-        )}
-      </div>
-
-    </div>
-
-    <div class="order-notes">
-
-      <strong>
-        ${t("urgent")}:
-      </strong>
-
-      <div style="margin-top:7px">
-        ${escapeHtml(
-          urgentText
-        )}
-      </div>
-
-    </div>
-
-  `;
-
-
-  document.getElementById(
-    "detailsModal"
-  ).classList.add(
-    "show"
-  );
-
-}
-
-
-function closeDetailsModal(){
-
-  document.getElementById(
-    "detailsModal"
-  ).classList.remove(
-    "show"
-  );
-
-}
-
-
-/* =====================================================
-   ORDER HTML
-===================================================== */
-
-function orderHtml(order){
-
-  const currentIndex =
-    stages.findIndex(
-      s =>
-        s[0] ===
-        order.stage
-    );
-
-
-  const canNext =
-    currentIndex >= 0 &&
-    currentIndex <
-      stages.length - 1 &&
-    (
-      role === "المدير" ||
-      role ===
-        stages[
-          currentIndex + 1
-        ][1]
-    );
-
-
-  const nextButton =
-    canNext
-      ? `
-
-        <button
-          class="action-btn action-next"
-          onclick="nextStage('${escapeAttr(order.id)}')">
-
-          ${t("next")}
-
-        </button>
-
-      `
-      : "";
-
-
-  return `
-
-    <article
-      class="order-card ${
-        order.urgent
-          ? "urgent"
-          : ""
-      }">
-
-      <div class="order-top">
-
-        <div>
-
-          <div class="order-number">
-            #${escapeHtml(
-              order.order_number
-            )}
-          </div>
-
-          <div class="order-customer">
-            ${escapeHtml(
-              order.customer_name
-            )}
-          </div>
-
-        </div>
-
-        ${
-          order.urgent
-            ? `
-
-              <div class="urgent-badge">
-                ⭐ ${t("urgent")}
-              </div>
-
-            `
-            : ""
-        }
-
-      </div>
-
-      <div class="status-badge">
-
-        ${stageText(
-          order.stage
-        )}
-
-      </div>
-
-      <div class="order-info">
-
-        <div class="info-item">
-
-          <div class="info-label">
-            ${t("phone")}
-          </div>
-
-          <div class="info-value">
-            ${escapeHtml(
-              order.phone || "—"
-            )}
-          </div>
-
-        </div>
-
-        <div class="info-item">
-
-          <div class="info-label">
-            ${t("delivery")}
-          </div>
-
-          <div class="info-value">
-            ${escapeHtml(
-              order.due_date || "—"
-            )}
-          </div>
-
-        </div>
-
-        <div class="info-item">
-
-          <div class="info-label">
-            ${t("department")}
-          </div>
-
-          <div class="info-value">
-
-            ${
-              stageText(
-                stages.find(
-                  s =>
-                    s[0] ===
-                    order.stage
-                )?.[1] ||
-                ""
-              )
-            }
-
-          </div>
-
-        </div>
-
-        <div class="info-item">
-
-          <div class="info-label">
-            ${t("overdue")}
-          </div>
-
-          <div class="info-value">
-
-            ${
-              isOverdue(order)
-                ? "⚠️ " + t("overdue")
-                : t("done")
-            }
-
-          </div>
-
-        </div>
-
-      </div>
-
-      ${
-        order.notes
-          ? `
-
-            <div class="order-notes">
-
-              <strong>
-                ${t("notes")}:
-              </strong>
-
-              ${escapeHtml(
-                order.notes
-              )}
-
-            </div>
-
-          `
-          : ""
-      }
-
-      <div class="order-actions">
-
-        <button
-          class="action-btn action-details"
-          onclick="details('${escapeAttr(order.id)}')">
-
-          ${t("details")}
-
-        </button>
-
-        ${
-          role === "المدير"
-            ? `
-
-              <button
-                class="action-btn action-edit"
-                onclick="openEditModal('${escapeAttr(order.id)}')">
-
-                ${t("edit")}
-
-              </button>
-
-              <button
-                class="action-btn action-delete"
-                onclick="deleteOrder('${escapeAttr(order.id)}')">
-
-                ${t("delete")}
-
-              </button>
-
-            `
-            : ""
-        }
-
-        ${nextButton}
-
-      </div>
-
-    </article>
-
-  `;
-
-}
-
-
-/* =====================================================
-   DASHBOARD
-===================================================== */
-
-function renderDashboard(){
-
-  const total =
-    orders.length;
-
-
-  const active =
-    orders.filter(
-      o =>
-        o.stage !==
-        "تم التسليم"
-    ).length;
-
-
-  const urgent =
-    orders.filter(
-      o =>
-        o.urgent
-    ).length;
-
-
-  const overdue =
-    orders.filter(
-      o =>
-        isOverdue(o)
-    ).length;
-
-
-  document.getElementById(
-    "statTotal"
-  ).textContent =
-    total;
-
-
-  document.getElementById(
-    "statActive"
-  ).textContent =
-    active;
-
-
-  document.getElementById(
-    "statUrgent"
-  ).textContent =
-    urgent;
-
-
-  document.getElementById(
-    "statOverdue"
-  ).textContent =
-    overdue;
-
-
-  const latest =
-    orders.slice(
-      0,
-      5
-    );
-
-
-  const container =
-    document.getElementById(
-      "latestOrders"
-    );
-
-
-  if(!latest.length){
-
-    container.innerHTML =
-      `<div class="empty">
-        ${t("noOrders")}
-      </div>`;
-
-    return;
-
-  }
-
-
-  container.innerHTML = `
-
-    <div class="orders-grid">
-
-      ${
-        latest
-          .map(orderHtml)
-          .join("")
-      }
-
-    </div>
-
-  `;
-
-}
-
-
-/* =====================================================
-   ORDERS RENDER
-===================================================== */
-
-function renderOrders(){
-
-  const container =
-    document.getElementById(
-      "ordersGrid"
-    );
-
-
-  const search =
-    document.getElementById(
-      "searchInput"
-    );
-
-
-  const query =
-    search
-      ? search.value
-          .trim()
-          .toLowerCase()
-      : "";
-
-
-  let filtered =
-    orders;
-
-
-  if(query){
-
-    filtered =
-      orders.filter(
-        order => {
-
-          const text = [
-
-            order.order_number,
-            order.customer_name,
-            order.phone,
-            order.stage
-
-          ]
-          .join(" ")
-          .toLowerCase();
-
-
-          return text.includes(
-            query
-          );
-
-        }
-      );
-
-  }
-
-
-  if(!filtered.length){
-
-    container.innerHTML = `
-
-      <div
-        class="card"
-        style="grid-column:1/-1">
-
-        <div class="empty">
-
-          ${
-            query
-              ? t(
-                  "noMatchingOrders"
-                )
-              : t(
-                  "noOrders"
-                )
-          }
-
-        </div>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  container.innerHTML =
-    filtered
-      .map(orderHtml)
-      .join("");
-
-}
-
-
-/* =====================================================
-   STAGES RENDER
-===================================================== */
-
-function renderStages(){
-
-  const container =
-    document.getElementById(
-      "stagesGrid"
-    );
-
-
-  container.innerHTML =
-    stages
-      .map(
-        stage => {
-
-          const stageOrders =
-            orders.filter(
-              order =>
-                order.stage ===
-                stage[0]
-            );
-
-
-          return `
-
-            <div class="stage-card">
-
-              <div class="stage-head">
-
-                <div class="stage-title">
-                  ${stageText(
-                    stage[0]
-                  )}
-                </div>
-
-                <div class="stage-role">
-
-                  ${t("responsible")}
-
-                  ${stageText(
-                    stage[1]
-                  )}
-
-                </div>
-
-                <div class="stage-count">
-
-                  ${stageOrders.length}
-
-                  ${
-                    currentLanguage === "he"
-                      ? "הזמנות"
-                      : "طلبية"
-                  }
-
-                </div>
-
-              </div>
-
-              <div class="stage-body">
-
-                ${
-                  stageOrders.length
-                    ? stageOrders
-                        .map(
-                          order => `
-
-                            <div class="stage-order">
-
-                              <div class="stage-order-number">
-                                #${escapeHtml(
-                                  order.order_number
-                                )}
-                              </div>
-
-                              <div class="stage-order-name">
-                                ${escapeHtml(
-                                  order.customer_name
-                                )}
-                              </div>
-
-                            </div>
-
-                          `
-                        )
-                        .join("")
-                    : `
-
-                      <div class="empty">
-                        ${t(
-                          "noOrdersStage"
-                        )}
-                      </div>
-
-                    `
-                }
-
-              </div>
-
-            </div>
-
-          `;
-
-        }
-      )
-      .join("");
-
-}
-
-
-/* =====================================================
-   USERS
-===================================================== */
-
-async function loadUsers(){
-
-  if(
-    role !== "المدير"
-  ){
-
-    users = [];
-
-    return;
-
-  }
-
-
-  try{
-
-    const data =
-      await request(
-        "/rest/v1/profiles?select=id,username,full_name,role,active,email,phone&order=username.asc"
-      );
-
-
-    users =
-      Array.isArray(data)
-        ? data
-        : [];
-
-
-  }catch(error){
-
-    console.error(
-      "Users:",
-      error
-    );
-
-
-    showToast(
-      t("loadUsersFailed") +
-      (
-        error?.message
-          ? " — " +
-            error.message
-          : ""
-      )
-    );
-
-  }
-
-}
-
-
-function renderUsers(){
-
-  if(
-    role !== "المدير"
-  ){
-
-    return;
-
-  }
-
-
-  const body =
-    document.getElementById(
-      "usersBody"
-    );
-
-
-  if(!users.length){
-
-    body.innerHTML = `
-
-      <tr>
-
-        <td
-          colspan="6"
-          class="empty">
-
-          ${t("noUsers")}
-
-        </td>
-
-      </tr>
-
-    `;
-
-    return;
-
-  }
-
-
-  body.innerHTML =
-    users
-      .map(
-        user => `
-
-          <tr>
-
-            <td>
-              ${escapeHtml(
-                user.username ||
-                "—"
-              )}
-            </td>
-
-            <td>
-              ${escapeHtml(
-                user.full_name ||
-                "—"
-              )}
-            </td>
-
-            <td>
-
-              <span class="role-badge">
-
-                ${stageText(
-                  user.role ||
-                  ""
-                )}
-
-              </span>
-
-            </td>
-
-            <td>
-              ${escapeHtml(
-                user.phone ||
-                "—"
-              )}
-            </td>
-
-            <td dir="ltr">
-              ${escapeHtml(
-                user.email ||
-                "—"
-              )}
-            </td>
-
-            <td>
-
-              ${
-                user.active
-                  ? `
-
-                    <span
-                      class="active-badge">
-
-                      ${t("active")}
-
-                    </span>
-
-                  `
-                  : `
-
-                    <span
-                      class="inactive-badge">
-
-                      ${t("stopped")}
-
-                    </span>
-
-                  `
-              }
-
-            </td>
-
-          </tr>
-
-        `
-      )
-      .join("");
-
-}
-
-
-/* =====================================================
-   USER MODAL
-===================================================== */
-
-function openUserModal(){
-
-  if(
-    role !== "المدير"
-  ){
-
-    showToast(
-      t("usersOnly")
-    );
-
-    return;
-
-  }
-
-
-  document.getElementById(
-    "newUsername"
-  ).value =
-    "";
-
-
-  document.getElementById(
-    "newFullName"
-  ).value =
-    "";
-
-
-  document.getElementById(
-    "newEmail"
-  ).value =
-    "";
-
-
-  document.getElementById(
-    "newPhone"
-  ).value =
-    "";
-
-
-  document.getElementById(
-    "newPassword"
-  ).value =
-    "";
-
-
-  document.getElementById(
-    "newRole"
-  ).value =
-    "القص";
-
-
-  document.getElementById(
-    "newActive"
-  ).checked =
-    true;
-
-
-  document.getElementById(
-    "userModal"
-  ).classList.add(
-    "show"
-  );
-
-}
-
-
-function closeUserModal(){
-
-  document.getElementById(
-    "userModal"
-  ).classList.remove(
-    "show"
-  );
-
-}
-
-
-/* =====================================================
-   CREATE USER
-===================================================== */
-
-async function createUser(){
-
-  if(
-    role !== "المدير"
-  ){
-
-    showToast(
-      t("usersOnly")
-    );
-
-    return;
-
-  }
-
-
-  /*
-    Auth user creation must be done
-    through a secure Edge Function.
-    Never put service_role / sb_secret
-    inside this HTML.
-  */
-
-  alert(
-    t("authFunction")
-  );
-
-}
-
-
-/* =====================================================
-   RENDER ALL
-===================================================== */
-
-function renderAll(){
-
-  renderDashboard();
-
-  renderOrders();
-
-  renderStages();
-
-
-  if(
-    role === "المدير"
-  ){
-
-    renderUsers();
-
-  }
-
-}
-
-
-/* =====================================================
-   LANGUAGE
-===================================================== */
-
-function applyLanguage(){
-
-  document.documentElement.lang =
-    currentLanguage;
-
-
-  document.documentElement.dir =
-    "rtl";
-
-
-  document.title =
-    "MODULAR TECH — " +
-    t("appTitle");
-
-
-  /* Login */
-
-  setText(
-    "loginTitle",
-    t("loginTitle")
-  );
-
-
-  setText(
-    "usernameLabel",
-    t("username")
-  );
-
-
-  setText(
-    "passwordLabel",
-    t("password")
-  );
-
-
-  setPlaceholder(
-    "username",
-    t("usernamePlaceholder")
-  );
-
-
-  setPlaceholder(
-    "password",
-    t("passwordPlaceholder")
-  );
-
-
-  setText(
-    "loginNote",
-
-    currentLanguage === "he"
-
-      ? "החשבון חייב להיות פעיל. במקרה של בעיה, פנה למנהל."
-
-      : "يجب أن يكون حسابك فعالاً. في حال وجود مشكلة، تواصل مع المدير."
-
-  );
-
-
-  setText(
-    "designedText",
-    t("designedBy")
-  );
-
-
-  const loginButton =
-    document.getElementById(
-      "loginButton"
-    );
-
-
-  if(
-    loginButton &&
-    !loginButton.disabled
-  ){
-
-    loginButton.textContent =
-      t("login");
-
-  }
-
-
-  /* Language */
-
-  setText(
-    "loginLanguageBtn",
-
-    currentLanguage === "ar"
-      ? "עברית"
-      : "العربية"
-
-  );
-
-
-  setText(
-    "languageBtn",
-
-    currentLanguage === "ar"
-      ? "עברית"
-      : "العربية"
-
-  );
-
-
-  /* Top */
-
-  setText(
-    "topbarTitle",
-    t("appTitle")
-  );
-
-
-  setText(
-    "logoutButton",
-    t("logout")
-  );
-
-
-  if(currentProfile){
-
-    const displayName =
-      currentProfile.full_name ||
-      currentProfile.username ||
-      "";
-
-
-    setText(
-      "currentUser",
-
-      displayName +
-      " — " +
-      stageText(
-        currentProfile.role ||
-        ""
-      )
-
-    );
-
-  }
-
-
-  /* Navigation */
-
-  setText(
-    "navDashboard",
-    t("dashboard")
-  );
-
-
-  setText(
-    "navOrders",
-    t("orders")
-  );
-
-
-  setText(
-    "navProduction",
-    t("production")
-  );
-
-
-  setText(
-    "navUsers",
-    t("users")
-  );
-
-
-  /* Dashboard */
-
-  setText(
-    "dashboardTitle",
-    t("dashboardTitle")
-  );
-
-
-  setText(
-    "dashboardSubtitle",
-    t("dashboardSubtitle")
-  );
-
-
-  setText(
-    "statTotalLabel",
-    t("totalOrders")
-  );
-
-
-  setText(
-    "statActiveLabel",
-    t("activeOrders")
-  );
-
-
-  setText(
-    "statUrgentLabel",
-    t("urgent")
-  );
-
-
-  setText(
-    "statOverdueLabel",
-    t("overdue")
-  );
-
-
-  setText(
-    "latestOrdersTitle",
-    t("latestOrders")
-  );
-
-
-  setText(
-    "manageOrdersButton",
-    t("manageOrders")
-  );
-
-
-  /* Orders */
-
-  setText(
-    "ordersTitle",
-    t("ordersTitle")
-  );
-
-
-  setText(
-    "ordersSubtitle",
-    t("ordersSubtitle")
-  );
-
-
-  setText(
-    "addOrderButton",
-    t("addOrder")
-  );
-
-
-  setPlaceholder(
-    "searchInput",
-    t("searchPlaceholder")
-  );
-
-
-  /* Production */
-
-  setText(
-    "productionTitle",
-    t("productionTitle")
-  );
-
-
-  setText(
-    "productionSubtitle",
-    t("productionSubtitle")
-  );
-
-
-  /* Users */
-
-  setText(
-    "usersTitle",
-    t("usersTitle")
-  );
-
-
-  setText(
-    "usersSubtitle",
-    t("usersSubtitle")
-  );
-
-
-  setText(
-    "addUserButton",
-    t("addUser")
-  );
-
-
-  setText(
-    "thUsername",
-    t("username")
-  );
-
-
-  setText(
-    "thFullName",
-    t("fullName")
-  );
-
-
-  setText(
-    "thRole",
-    t("department")
-  );
-
-
-  setText(
-    "thPhone",
-    t("phone")
-  );
-
-
-  setText(
-    "thEmail",
-    t("email")
-  );
-
-
-  setText(
-    "thStatus",
-
-    currentLanguage === "he"
-      ? "סטטוס"
-      : "الحالة"
-
-  );
-
-
-  /* Order modal */
-
-  setText(
-    "orderNumberLabel",
-    t("orderNumber")
-  );
-
-
-  setText(
-    "customerLabel",
-    t("customer")
-  );
-
-
-  setText(
-    "phoneLabel",
-    t("phone")
-  );
-
-
-  setText(
-    "deliveryLabel",
-    t("delivery")
-  );
-
-
-  setText(
-    "notesLabel",
-    t("notes")
-  );
-
-
-  setText(
-    "urgentLabel",
-    t("urgentOrder")
-  );
-
-
-  setPlaceholder(
-    "orderNumber",
-    t("orderExample")
-  );
-
-
-  setPlaceholder(
-    "customerName",
-    t("customerPlaceholder")
-  );
-
-
-  setPlaceholder(
-    "notes",
-    t("notesPlaceholder")
-  );
-
-
-  setText(
-    "cancelOrderButton",
-    t("cancel")
-  );
-
-
-  setText(
-    "saveOrderButton",
-    t("saveOrder")
-  );
-
-
-  document.getElementById(
-    "orderModalTitle"
-  ).textContent =
-
-    editingOrderId
-      ? t("editOrderTitle")
-      : t("addOrderTitle");
-
-
-  /* User modal */
-
-  setText(
-    "userModalTitle",
-    t("addUser")
-  );
-
-
-  setText(
-    "userUsernameLabel",
-    t("username")
-  );
-
-
-  setText(
-    "userFullNameLabel",
-    t("fullName")
-  );
-
-
-  setText(
-    "userEmailLabel",
-    t("email")
-  );
-
-
-  setText(
-    "userPhoneLabel",
-    t("phone")
-  );
-
-
-  setText(
-    "userPasswordLabel",
-    t("password")
-  );
-
-
-  setText(
-    "userRoleLabel",
-    t("department")
-  );
-
-
-  setText(
-    "userActiveLabel",
-    t("activeAccount")
-  );
-
-
-  setText(
-    "cancelUserButton",
-    t("cancel")
-  );
-
-
-  setText(
-    "createUserButton",
-    t("createUser")
-  );
-
-
-  /* Details */
-
-  setText(
-    "detailsTitle",
-
-    currentLanguage === "he"
-      ? "פרטי ההזמנה"
-      : "تفاصيل الطلبية"
-
-  );
-
-
-  setText(
-    "detailsCloseButton",
-    t("close")
-  );
-
-}
-
-
-/* =====================================================
-   LANGUAGE TOGGLE
-===================================================== */
-
-function toggleLanguage(){
-
-  currentLanguage =
-    currentLanguage === "ar"
-      ? "he"
-      : "ar";
-
-
-  localStorage.setItem(
-    "modular_language",
-    currentLanguage
-  );
-
-
-  applyLanguage();
-
-  renderAll();
-
-}
-
-
-/* =====================================================
-   TOAST
-===================================================== */
-
-function showToast(message){
-
-  const toast =
-    document.getElementById(
-      "toast"
-    );
-
-
-  toast.textContent =
-    message;
-
-
-  toast.classList.add(
-    "show"
-  );
-
-
-  clearTimeout(
-    toastTimer
-  );
-
-
-  toastTimer =
-    setTimeout(
-      () => {
-
-        toast.classList.remove(
-          "show"
-        );
-
-      },
-      3500
-    );
-
-}
-
-
-/* =====================================================
-   ESCAPE
-===================================================== */
+/* =========================================================
+   SECURITY HELPERS
+========================================================= */
 
 function escapeHtml(value){
 
-  return String(
-    value ?? ""
-  )
-
-  .replaceAll(
-    "&",
-    "&amp;"
-  )
-
-  .replaceAll(
-    "<",
-    "&lt;"
-  )
-
-  .replaceAll(
-    ">",
-    "&gt;"
-  )
-
-  .replaceAll(
-    '"',
-    "&quot;"
-  )
-
-  .replaceAll(
-    "'",
-    "&#039;"
-  );
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
 }
 
 
 function escapeAttr(value){
 
-  return String(
-    value ?? ""
-  )
-
-  .replaceAll(
-    "\\",
-    "\\\\"
-  )
-
-  .replaceAll(
-    "'",
-    "\\'"
-  );
-
+  return escapeHtml(value)
+    .replace(/`/g,"&#096;");
 }
 
 
-function setText(
-  id,
-  value
-){
+/* =========================================================
+   CLOSE MODALS WHEN CLICKING BACKDROP
+========================================================= */
 
-  const element =
-    document.getElementById(
-      id
-    );
+document
+  .getElementById("orderModal")
+  .addEventListener("click",function(e){
 
+    if(e.target === this)
+      closeOrderModal();
 
-  if(element){
-
-    element.textContent =
-      value;
-
-  }
-
-}
+  });
 
 
-function setPlaceholder(
-  id,
-  value
-){
+document
+  .getElementById("userModal")
+  .addEventListener("click",function(e){
 
-  const element =
-    document.getElementById(
-      id
-    );
+    if(e.target === this)
+      closeUserModal();
 
-
-  if(element){
-
-    element.placeholder =
-      value;
-
-  }
-
-}
+  });
 
 
-/* =====================================================
+/* =========================================================
    SERVICE WORKER
-===================================================== */
+========================================================= */
 
-if(
-  "serviceWorker" in navigator
-){
+if("serviceWorker" in navigator){
 
-  window.addEventListener(
-    "load",
-    () => {
+  window.addEventListener("load",()=>{
 
-      navigator.serviceWorker
-        .register(
-          "./sw.js"
-        )
-        .catch(
-          error => {
-
-            console.error(
-              "Service Worker:",
-              error
-            );
-
-          }
+    navigator.serviceWorker
+      .register("./sw.js")
+      .catch(error=>{
+        console.warn(
+          "Service Worker:",
+          error
         );
+      });
 
-    }
-  );
+  });
 
 }
 
 
-/* =====================================================
+/* =========================================================
    START
-===================================================== */
+========================================================= */
 
-document.addEventListener(
-  "DOMContentLoaded",
-  async () => {
+applyLanguage();
 
-    applyLanguage();
-
-    await checkSession();
-
-  }
-);
+checkExistingSession();
 
 </script>
 
