@@ -774,11 +774,6 @@ button{
   text-align:right;
 }
 
-[dir="ltr"] .users-table th,
-[dir="ltr"] .users-table td{
-  text-align:left;
-}
-
 .users-table th{
   color:#64748b;
   font-size:13px;
@@ -1098,7 +1093,6 @@ button{
 
 }
 
-/* Hebrew */
 html[lang="he"]{
   font-family:
     "Noto Sans Hebrew",
@@ -1112,15 +1106,14 @@ html[lang="he"]{
 
 <body>
 
-<!-- =========================
-     LOGIN PAGE
-========================= -->
+<!-- LOGIN -->
 
 <div id="loginPage">
 
   <div class="login-card">
 
     <div class="language-login">
+
       <button
         type="button"
         id="loginLanguageBtn"
@@ -1128,13 +1121,16 @@ html[lang="he"]{
         onclick="toggleLanguage()">
         עברית
       </button>
+
     </div>
 
     <div class="login-logo">
+
       <img
         src="./icon_compact.jpg"
         alt="Modulartech"
         onerror="this.style.display='none';">
+
     </div>
 
     <div class="login-brand">
@@ -1208,8 +1204,15 @@ html[lang="he"]{
     </div>
 
     <div class="designer">
-      <span id="designedText">صمم بواسطة</span>
-      <strong>mohammad sad aldeen</strong>
+
+      <span id="designedText">
+        صمم بواسطة
+      </span>
+
+      <strong>
+        mohammad sad aldeen
+      </strong>
+
     </div>
 
   </div>
@@ -1217,9 +1220,7 @@ html[lang="he"]{
 </div>
 
 
-<!-- =========================
-     APPLICATION
-========================= -->
+<!-- APPLICATION -->
 
 <div id="app">
 
@@ -1266,10 +1267,7 @@ html[lang="he"]{
 
   </header>
 
-
   <div class="app-layout">
-
-    <!-- SIDEBAR -->
 
     <aside class="sidebar">
 
@@ -1288,21 +1286,33 @@ html[lang="he"]{
           class="nav-button active"
           data-section="dashboard"
           onclick="navigate('dashboard')">
-          <span id="navDashboard">🏠 الرئيسية</span>
+
+          <span id="navDashboard">
+            🏠 الرئيسية
+          </span>
+
         </button>
 
         <button
           class="nav-button"
           data-section="orders"
           onclick="navigate('orders')">
-          <span id="navOrders">📦 الطلبيات</span>
+
+          <span id="navOrders">
+            📦 الطلبيات
+          </span>
+
         </button>
 
         <button
           class="nav-button"
           data-section="production"
           onclick="navigate('production')">
-          <span id="navProduction">⚙️ مراحل العمل</span>
+
+          <span id="navProduction">
+            ⚙️ مراحل العمل
+          </span>
+
         </button>
 
         <button
@@ -1310,15 +1320,16 @@ html[lang="he"]{
           class="nav-button"
           data-section="users"
           onclick="navigate('users')">
-          <span id="navUsers">👥 المستخدمون</span>
+
+          <span id="navUsers">
+            👥 المستخدمون
+          </span>
+
         </button>
 
       </nav>
 
     </aside>
-
-
-    <!-- MAIN -->
 
     <main class="main">
 
@@ -1331,6 +1342,7 @@ html[lang="he"]{
         <div class="section-head">
 
           <div>
+
             <h2
               class="section-title"
               id="dashboardTitle">
@@ -1342,10 +1354,10 @@ html[lang="he"]{
               id="dashboardSubtitle">
               نظرة عامة على الطلبيات وحالتها الحالية.
             </p>
+
           </div>
 
         </div>
-
 
         <div class="stats">
 
@@ -1365,7 +1377,6 @@ html[lang="he"]{
 
           </div>
 
-
           <div class="stat-card">
 
             <div
@@ -1382,7 +1393,6 @@ html[lang="he"]{
 
           </div>
 
-
           <div class="stat-card urgent">
 
             <div
@@ -1398,7 +1408,6 @@ html[lang="he"]{
             </div>
 
           </div>
-
 
           <div class="stat-card overdue">
 
@@ -1417,7 +1426,6 @@ html[lang="he"]{
           </div>
 
         </div>
-
 
         <div class="card">
 
@@ -1479,7 +1487,6 @@ html[lang="he"]{
 
         </div>
 
-
         <div class="search-box">
 
           <input
@@ -1490,7 +1497,6 @@ html[lang="he"]{
             oninput="renderOrders()">
 
         </div>
-
 
         <div
           id="ordersGrid"
@@ -1525,7 +1531,6 @@ html[lang="he"]{
           </div>
 
         </div>
-
 
         <div
           id="stagesGrid"
@@ -1567,7 +1572,6 @@ html[lang="he"]{
           </button>
 
         </div>
-
 
         <div class="card">
 
@@ -1624,9 +1628,7 @@ html[lang="he"]{
 </div>
 
 
-<!-- =========================
-     ORDER MODAL
-========================= -->
+<!-- ORDER MODAL -->
 
 <div
   id="orderModal"
@@ -1648,7 +1650,6 @@ html[lang="he"]{
       </button>
 
     </div>
-
 
     <div class="modal-body">
 
@@ -1676,7 +1677,6 @@ html[lang="he"]{
 
           </div>
 
-
           <div class="form-group">
 
             <label
@@ -1692,7 +1692,6 @@ html[lang="he"]{
               required>
 
           </div>
-
 
           <div class="form-group">
 
@@ -1710,7 +1709,6 @@ html[lang="he"]{
 
           </div>
 
-
           <div class="form-group">
 
             <label
@@ -1725,7 +1723,6 @@ html[lang="he"]{
               type="date">
 
           </div>
-
 
           <div class="form-group full">
 
@@ -1742,7 +1739,6 @@ html[lang="he"]{
               placeholder="أدخل الملاحظات"></textarea>
 
           </div>
-
 
           <div class="form-group full">
 
@@ -1765,7 +1761,6 @@ html[lang="he"]{
       </form>
 
     </div>
-
 
     <div class="modal-actions">
 
@@ -1790,9 +1785,7 @@ html[lang="he"]{
 </div>
 
 
-<!-- =========================
-     USER MODAL
-========================= -->
+<!-- USER MODAL -->
 
 <div
   id="userModal"
@@ -1815,7 +1808,6 @@ html[lang="he"]{
 
     </div>
 
-
     <div class="modal-body">
 
       <div class="form-grid">
@@ -1834,7 +1826,6 @@ html[lang="he"]{
 
         </div>
 
-
         <div class="form-group">
 
           <label
@@ -1848,7 +1839,6 @@ html[lang="he"]{
             class="form-input">
 
         </div>
-
 
         <div class="form-group">
 
@@ -1865,7 +1855,6 @@ html[lang="he"]{
 
         </div>
 
-
         <div class="form-group">
 
           <label
@@ -1881,7 +1870,6 @@ html[lang="he"]{
 
         </div>
 
-
         <div class="form-group">
 
           <label
@@ -1896,7 +1884,6 @@ html[lang="he"]{
             type="password">
 
         </div>
-
 
         <div class="form-group">
 
@@ -1924,7 +1911,6 @@ html[lang="he"]{
 
         </div>
 
-
         <div class="form-group full">
 
           <label class="checkbox-row">
@@ -1945,7 +1931,6 @@ html[lang="he"]{
       </div>
 
     </div>
-
 
     <div class="modal-actions">
 
@@ -2020,14 +2005,15 @@ html[lang="he"]{
 <script>
 
 /* =====================================================
-   SUPABASE
+   SUPABASE CONFIGURATION
 ===================================================== */
 
 const SUPABASE_URL =
   "https://bvrfrcmblwzuqprjknam.supabase.co";
 
 const SUPABASE_KEY =
-  "sb_publishable_vVXVJGcWpoPvPEH_bfm23Q_dZ5eXvm";
+  "sb_publishable_vVXVJGcWpoPvPEH_bfm23Q_dZ5eXvmE";
+
 
 /* =====================================================
    LANGUAGE
@@ -2048,8 +2034,10 @@ const translations = {
     usernamePlaceholder:"أدخل اسم المستخدم",
     password:"كلمة المرور",
     passwordPlaceholder:"أدخل كلمة المرور",
+
     login:"🔐 تسجيل الدخول",
     loggingIn:"جاري تسجيل الدخول...",
+
     logout:"خروج",
 
     dashboard:"🏠 الرئيسية",
@@ -2058,7 +2046,9 @@ const translations = {
     users:"👥 المستخدمون",
 
     dashboardTitle:"لوحة التحكم",
-    dashboardSubtitle:"نظرة عامة على الطلبيات وحالتها الحالية.",
+
+    dashboardSubtitle:
+      "نظرة عامة على الطلبيات وحالتها الحالية.",
 
     totalOrders:"إجمالي الطلبيات",
     activeOrders:"قيد العمل",
@@ -2069,7 +2059,9 @@ const translations = {
     manageOrders:"إدارة الطلبيات",
 
     ordersTitle:"إدارة الطلبيات",
-    ordersSubtitle:"إضافة وتعديل ومتابعة الطلبيات.",
+
+    ordersSubtitle:
+      "إضافة وتعديل ومتابعة الطلبيات.",
 
     addOrder:"+ إضافة طلبية",
 
@@ -2114,30 +2106,49 @@ const translations = {
     responsible:"القسم المسؤول:",
 
     noOrders:"لا توجد طلبيات بعد",
-    noMatchingOrders:"لم يتم العثور على طلبيات مطابقة",
-    noOrdersStage:"لا توجد طلبيات في هذه المرحلة",
+
+    noMatchingOrders:
+      "لم يتم العثور على طلبيات مطابقة",
+
+    noOrdersStage:
+      "لا توجد طلبيات في هذه المرحلة",
 
     noUsers:"لا يوجد مستخدمون",
 
     orderDeleted:"🗑️ تم حذف الطلبية",
-    orderSaved:"✅ تم حفظ الطلبية بنجاح",
-    orderUpdated:"✅ تم تحديث الطلبية بنجاح",
-    stageUpdated:"✅ تم تحديث المرحلة إلى:",
 
-    loadOrdersFailed:"❌ لا يمكن تحميل الطلبيات",
-    loadUsersFailed:"❌ لا يمكن تحميل المستخدمين",
+    orderSaved:
+      "✅ تم حفظ الطلبية بنجاح",
 
-    loginSuccess:"✅ تمت عملية تسجيل الدخول بنجاح",
-    invalidLogin:"يرجى إدخال اسم المستخدم وكلمة المرور",
+    orderUpdated:
+      "✅ تم تحديث الطلبية بنجاح",
+
+    stageUpdated:
+      "✅ تم تحديث المرحلة إلى:",
+
+    loadOrdersFailed:
+      "❌ لا يمكن تحميل الطلبيات",
+
+    loadUsersFailed:
+      "❌ لا يمكن تحميل المستخدمين",
+
+    loginSuccess:
+      "✅ تمت عملية تسجيل الدخول بنجاح",
+
+    invalidLogin:
+      "يرجى إدخال اسم المستخدم وكلمة المرور",
+
     usernameNotFound:
       "اسم المستخدم غير موجود أو أن الحساب غير فعال",
 
-    sessionFailed:"لم يتم الحصول على جلسة دخول صحيحة",
+    sessionFailed:
+      "لم يتم الحصول على جلسة دخول صحيحة",
 
     profileNotFound:
       "لم يتم العثور على ملف المستخدم في جدول profiles",
 
-    accountInactive:"هذا الحساب غير فعال",
+    accountInactive:
+      "هذا الحساب غير فعال",
 
     addOrderDenied:
       "ليس لديك صلاحية لإضافة طلبية",
@@ -2169,129 +2180,235 @@ const translations = {
     authFunction:
       "إنشاء مستخدم Auth يحتاج إلى Edge Function آمنة في Supabase.",
 
-    orderExample:"مثال: 10025",
+    orderExample:
+      "مثال: 10025",
 
-    customerPlaceholder:"اسم العميل",
+    customerPlaceholder:
+      "اسم العميل",
 
-    notesPlaceholder:"أدخل الملاحظات",
+    notesPlaceholder:
+      "أدخل الملاحظات",
 
-    fullName:"الاسم الكامل",
+    fullName:
+      "الاسم الكامل",
 
-    activeAccount:"الحساب فعال",
+    activeAccount:
+      "الحساب فعال",
 
-    active:"فعال",
+    active:
+      "فعال",
 
-    stopped:"معطل",
+    stopped:
+      "معطل",
 
-    email:"البريد الإلكتروني",
+    email:
+      "البريد الإلكتروني",
 
-    close:"إغلاق",
+    close:
+      "إغلاق",
 
-    designedBy:"صمم بواسطة"
+    designedBy:
+      "صمم بواسطة",
+
+    createUser:
+      "إنشاء مستخدم"
 
   },
 
 
   he: {
 
-    appTitle:"מערכת לניהול הזמנות",
+    appTitle:
+      "מערכת לניהול הזמנות",
 
-    loginTitle:"מערכת לניהול הזמנות",
-    username:"שם משתמש",
-    usernamePlaceholder:"הזן שם משתמש",
-    password:"סיסמה",
-    passwordPlaceholder:"הזן סיסמה",
-    login:"🔐 התחברות",
-    loggingIn:"מתחבר...",
-    logout:"יציאה",
+    loginTitle:
+      "מערכת לניהול הזמנות",
 
-    dashboard:"🏠 ראשי",
-    orders:"📦 הזמנות",
-    production:"⚙️ שלבי עבודה",
-    users:"👥 משתמשים",
+    username:
+      "שם משתמש",
 
-    dashboardTitle:"לוח בקרה",
-    dashboardSubtitle:"סקירה כללית של ההזמנות ומצבן הנוכחי.",
+    usernamePlaceholder:
+      "הזן שם משתמש",
 
-    totalOrders:"סה״כ הזמנות",
-    activeOrders:"בטיפול",
-    urgent:"דחופות מאוד",
-    overdue:"באיחור",
+    password:
+      "סיסמה",
 
-    latestOrders:"הזמנות אחרונות",
-    manageOrders:"ניהול הזמנות",
+    passwordPlaceholder:
+      "הזן סיסמה",
 
-    ordersTitle:"ניהול הזמנות",
-    ordersSubtitle:"הוספה, עריכה ומעקב אחר הזמנות.",
+    login:
+      "🔐 התחברות",
 
-    addOrder:"+ הוספת הזמנה",
+    loggingIn:
+      "מתחבר...",
+
+    logout:
+      "יציאה",
+
+    dashboard:
+      "🏠 ראשי",
+
+    orders:
+      "📦 הזמנות",
+
+    production:
+      "⚙️ שלבי עבודה",
+
+    users:
+      "👥 משתמשים",
+
+    dashboardTitle:
+      "לוח בקרה",
+
+    dashboardSubtitle:
+      "סקירה כללית של ההזמנות ומצבן הנוכחי.",
+
+    totalOrders:
+      "סה״כ הזמנות",
+
+    activeOrders:
+      "בטיפול",
+
+    urgent:
+      "דחופות מאוד",
+
+    overdue:
+      "באיחור",
+
+    latestOrders:
+      "הזמנות אחרונות",
+
+    manageOrders:
+      "ניהול הזמנות",
+
+    ordersTitle:
+      "ניהול הזמנות",
+
+    ordersSubtitle:
+      "הוספה, עריכה ומעקב אחר הזמנות.",
+
+    addOrder:
+      "+ הוספת הזמנה",
 
     searchPlaceholder:
       "חיפוש לפי מספר הזמנה, שם לקוח או טלפון",
 
-    productionTitle:"שלבי עבודה",
+    productionTitle:
+      "שלבי עבודה",
 
     productionSubtitle:
       "מעקב אחר התקדמות כל הזמנה והמחלקה האחראית עליה.",
 
-    usersTitle:"משתמשים",
+    usersTitle:
+      "משתמשים",
 
     usersSubtitle:
       "ניהול פרטי המשתמשים וההרשאות.",
 
-    addUser:"+ הוספת משתמש",
+    addUser:
+      "+ הוספת משתמש",
 
-    orderNumber:"מספר הזמנה",
-    customer:"שם הלקוח",
-    phone:"מספר טלפון",
-    delivery:"מועד מסירה",
-    notes:"הערות",
-    department:"מחלקה",
+    orderNumber:
+      "מספר הזמנה",
 
-    saveOrder:"שמירת הזמנה",
-    cancel:"ביטול",
+    customer:
+      "שם הלקוח",
 
-    addOrderTitle:"הוספת הזמנה",
-    editOrderTitle:"עריכת הזמנה",
+    phone:
+      "מספר טלפון",
 
-    urgentOrder:"הזמנה דחופה מאוד ⭐",
+    delivery:
+      "מועד מסירה",
 
-    details:"📋 פרטים",
-    edit:"✏️ עריכה",
-    delete:"🗑️ מחיקה",
-    next:"➡️ השלב הבא",
+    notes:
+      "הערות",
 
-    completed:"✓ הושלם",
-    done:"בוצע",
+    department:
+      "מחלקה",
 
-    responsible:"המחלקה האחראית:",
+    saveOrder:
+      "שמירת הזמנה",
 
-    noOrders:"אין הזמנות עדיין",
-    noMatchingOrders:"לא נמצאו הזמנות תואמות",
-    noOrdersStage:"אין הזמנות בשלב זה",
+    cancel:
+      "ביטול",
 
-    noUsers:"אין משתמשים",
+    addOrderTitle:
+      "הוספת הזמנה",
 
-    orderDeleted:"🗑️ ההזמנה נמחקה",
-    orderSaved:"✅ ההזמנה נשמרה בהצלחה",
-    orderUpdated:"✅ ההזמנה עודכנה בהצלחה",
-    stageUpdated:"✅ השלב עודכן ל:",
+    editOrderTitle:
+      "עריכת הזמנה",
 
-    loadOrdersFailed:"❌ לא ניתן לטעון את ההזמנות",
-    loadUsersFailed:"❌ לא ניתן לטעון את המשתמשים",
+    urgentOrder:
+      "הזמנה דחופה מאוד ⭐",
 
-    loginSuccess:"✅ ההתחברות הצליחה",
-    invalidLogin:"יש להזין שם משתמש וסיסמה",
+    details:
+      "📋 פרטים",
+
+    edit:
+      "✏️ עריכה",
+
+    delete:
+      "🗑️ מחיקה",
+
+    next:
+      "➡️ השלב הבא",
+
+    completed:
+      "✓ הושלם",
+
+    done:
+      "בוצע",
+
+    responsible:
+      "המחלקה האחראית:",
+
+    noOrders:
+      "אין הזמנות עדיין",
+
+    noMatchingOrders:
+      "לא נמצאו הזמנות תואמות",
+
+    noOrdersStage:
+      "אין הזמנות בשלב זה",
+
+    noUsers:
+      "אין משתמשים",
+
+    orderDeleted:
+      "🗑️ ההזמנה נמחקה",
+
+    orderSaved:
+      "✅ ההזמנה נשמרה בהצלחה",
+
+    orderUpdated:
+      "✅ ההזמנה עודכנה בהצלחה",
+
+    stageUpdated:
+      "✅ השלב עודכן ל:",
+
+    loadOrdersFailed:
+      "❌ לא ניתן לטעון את ההזמנות",
+
+    loadUsersFailed:
+      "❌ לא ניתן לטעון את המשתמשים",
+
+    loginSuccess:
+      "✅ ההתחברות הצליחה",
+
+    invalidLogin:
+      "יש להזין שם משתמש וסיסמה",
 
     usernameNotFound:
       "שם המשתמש לא נמצא או שהחשבון אינו פעיל",
 
-    sessionFailed:"לא התקבלה התחברות תקינה",
+    sessionFailed:
+      "לא התקבלה התחברות תקינה",
 
     profileNotFound:
       "לא נמצא פרופיל משתמש בטבלת profiles",
 
-    accountInactive:"חשבון זה אינו פעיל",
+    accountInactive:
+      "חשבון זה אינו פעיל",
 
     addOrderDenied:
       "אין לך הרשאה להוסיף הזמנה",
@@ -2323,25 +2440,38 @@ const translations = {
     authFunction:
       "יצירת משתמש Auth דורשת Edge Function מאובטחת ב-Supabase.",
 
-    orderExample:"לדוגמה: 10025",
+    orderExample:
+      "לדוגמה: 10025",
 
-    customerPlaceholder:"שם הלקוח",
+    customerPlaceholder:
+      "שם הלקוח",
 
-    notesPlaceholder:"הזן הערות",
+    notesPlaceholder:
+      "הזן הערות",
 
-    fullName:"שם מלא",
+    fullName:
+      "שם מלא",
 
-    activeAccount:"החשבון פעיל",
+    activeAccount:
+      "החשבון פעיל",
 
-    active:"פעיל",
+    active:
+      "פעיל",
 
-    stopped:"מושבת",
+    stopped:
+      "מושבת",
 
-    email:"דוא״ל",
+    email:
+      "דוא״ל",
 
-    close:"סגירה",
+    close:
+      "סגירה",
 
-    designedBy:"עוצב על ידי"
+    designedBy:
+      "עוצב על ידי",
+
+    createUser:
+      "יצירת משתמש"
 
   }
 
@@ -2416,15 +2546,14 @@ const stageTranslations = {
 
 function stageText(value){
 
-  return stageTranslations[currentLanguage]?.[value] || value;
+  return stageTranslations[currentLanguage]?.[value]
+    || value;
 
 }
 
 
 /* =====================================================
    PRODUCTION STAGES
-   IMPORTANT:
-   Keep Arabic values because Supabase uses them
 ===================================================== */
 
 const stages = [
@@ -2469,13 +2598,17 @@ async function request(
 ){
 
   const accessToken =
-    localStorage.getItem("supabase_access_token");
+    localStorage.getItem(
+      "supabase_access_token"
+    );
 
   const headers = {
 
-    "apikey":SUPABASE_KEY,
+    "apikey":
+      SUPABASE_KEY,
 
-    "Content-Type":"application/json",
+    "Content-Type":
+      "application/json",
 
     ...options.headers
 
@@ -2504,7 +2637,10 @@ async function request(
 
   try{
 
-    data = text ? JSON.parse(text) : null;
+    data =
+      text
+        ? JSON.parse(text)
+        : null;
 
   }catch{
 
@@ -2518,7 +2654,7 @@ async function request(
       data?.message ||
       data?.error_description ||
       data?.error ||
-      "Request failed";
+      `HTTP ${response.status}`;
 
     throw new Error(message);
 
@@ -2548,7 +2684,9 @@ async function login(event){
 
   if(!username || !password){
 
-    showToast(t("invalidLogin"));
+    showToast(
+      t("invalidLogin")
+    );
 
     return;
 
@@ -2559,23 +2697,28 @@ async function login(event){
 
   button.disabled = true;
 
-  button.textContent = t("loggingIn");
+  button.textContent =
+    t("loggingIn");
 
   try{
 
     /*
-      First find the user's email from profiles.
-      Role values remain Arabic.
+      Find profile by username.
     */
 
     const profiles =
       await request(
-        "/rest/v1/profiles?select=id,username,full_name,role,active,email&username=eq."
-        + encodeURIComponent(username)
-        + "&limit=1"
+        "/rest/v1/profiles?select=id,username,full_name,role,active,email,user_id,phone&username=eq."
+        +
+        encodeURIComponent(username)
+        +
+        "&limit=1"
       );
 
-    if(!profiles || !profiles.length){
+    if(
+      !profiles ||
+      !profiles.length
+    ){
 
       throw new Error(
         t("usernameNotFound")
@@ -2586,7 +2729,9 @@ async function login(event){
     const profile =
       profiles[0];
 
-    if(profile.active !== true){
+    if(
+      profile.active !== true
+    ){
 
       throw new Error(
         t("accountInactive")
@@ -2594,16 +2739,21 @@ async function login(event){
 
     }
 
-    if(!profile.email){
+    if(
+      !profile.email
+    ){
 
       throw new Error(
-        "لا يوجد بريد إلكتروني لهذا المستخدم"
+        currentLanguage === "he"
+          ? "לא מוגדר דוא״ל למשתמש זה"
+          : "لا يوجد بريد إلكتروني لهذا المستخدم"
       );
 
     }
 
+
     /*
-      Sign in with Supabase Auth.
+      Supabase Auth login.
     */
 
     const authResponse =
@@ -2611,27 +2761,60 @@ async function login(event){
         SUPABASE_URL +
         "/auth/v1/token?grant_type=password",
         {
+
           method:"POST",
 
           headers:{
-            "apikey":SUPABASE_KEY,
-            "Content-Type":"application/json"
+
+            "apikey":
+              SUPABASE_KEY,
+
+            "Content-Type":
+              "application/json"
+
           },
 
           body:JSON.stringify({
 
-            email:profile.email,
-            password:password
+            email:
+              profile.email,
+
+            password:
+              password
 
           })
 
         }
       );
 
-    const authData =
-      await authResponse.json();
 
-    if(!authResponse.ok){
+    const authText =
+      await authResponse.text();
+
+    let authData = null;
+
+    try{
+
+      authData =
+        authText
+          ? JSON.parse(authText)
+          : null;
+
+    }catch{
+
+      authData = null;
+
+    }
+
+
+    if(
+      !authResponse.ok
+    ){
+
+      console.error(
+        "Supabase Auth:",
+        authData
+      );
 
       throw new Error(
         currentLanguage === "he"
@@ -2641,12 +2824,27 @@ async function login(event){
 
     }
 
+
+    if(
+      !authData?.access_token
+    ){
+
+      throw new Error(
+        t("sessionFailed")
+      );
+
+    }
+
+
     localStorage.setItem(
       "supabase_access_token",
       authData.access_token
     );
 
-    if(authData.refresh_token){
+
+    if(
+      authData.refresh_token
+    ){
 
       localStorage.setItem(
         "supabase_refresh_token",
@@ -2655,7 +2853,9 @@ async function login(event){
 
     }
 
+
     currentUserId =
+      profile.user_id ||
       profile.id;
 
     currentProfile =
@@ -2664,43 +2864,69 @@ async function login(event){
     role =
       profile.role || "";
 
-    document.getElementById("loginPage")
-      .style.display = "none";
 
-    document.getElementById("app")
-      .classList.add("visible");
+    document.getElementById(
+      "loginPage"
+    ).style.display =
+      "none";
+
+
+    document.getElementById(
+      "app"
+    ).classList.add(
+      "visible"
+    );
+
 
     applyPermissions();
 
     applyLanguage();
 
-    showToast(t("loginSuccess"));
+
+    showToast(
+      t("loginSuccess")
+    );
+
 
     await loadOrders();
 
-    if(role === "المدير"){
+
+    if(
+      role === "المدير"
+    ){
 
       await loadUsers();
 
     }
 
+
     renderAll();
 
-    navigate("dashboard");
+    navigate(
+      "dashboard"
+    );
+
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Login error:",
+      error
+    );
 
     showToast(
-      error.message || t("sessionFailed")
+      error.message ||
+      t("sessionFailed")
     );
+
 
   }finally{
 
-    button.disabled = false;
+    button.disabled =
+      false;
 
-    button.textContent = t("login");
+    button.textContent =
+      t("login");
 
   }
 
@@ -2731,7 +2957,9 @@ async function loadProfile(){
         "/auth/v1/user"
       );
 
-    if(!user?.id){
+    if(
+      !user?.id
+    ){
 
       return false;
 
@@ -2740,35 +2968,37 @@ async function loadProfile(){
     currentUserId =
       user.id;
 
-    const profiles =
+
+    let profiles =
       await request(
-        "/rest/v1/profiles?select=id,username,full_name,role,active,email&user_id=eq."
-        + encodeURIComponent(user.id)
-        + "&limit=1"
+        "/rest/v1/profiles?select=id,username,full_name,role,active,email,user_id,phone&user_id=eq."
+        +
+        encodeURIComponent(user.id)
+        +
+        "&limit=1"
       );
 
-    /*
-      Some databases use id as the auth user id.
-      If user_id does not return anything,
-      try id.
-    */
 
     let profile =
       profiles?.[0];
+
 
     if(!profile){
 
       const byId =
         await request(
-          "/rest/v1/profiles?select=id,username,full_name,role,active,email&id=eq."
-          + encodeURIComponent(user.id)
-          + "&limit=1"
+          "/rest/v1/profiles?select=id,username,full_name,role,active,email,user_id,phone&id=eq."
+          +
+          encodeURIComponent(user.id)
+          +
+          "&limit=1"
         );
 
       profile =
         byId?.[0];
 
     }
+
 
     if(!profile){
 
@@ -2780,7 +3010,10 @@ async function loadProfile(){
 
     }
 
-    if(profile.active !== true){
+
+    if(
+      profile.active !== true
+    ){
 
       showToast(
         t("accountInactive")
@@ -2790,17 +3023,23 @@ async function loadProfile(){
 
     }
 
+
     currentProfile =
       profile;
 
     role =
-      currentProfile.role || "";
+      profile.role || "";
+
 
     return true;
 
+
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Profile error:",
+      error
+    );
 
     return false;
 
@@ -2818,6 +3057,7 @@ async function checkSession(){
   const ok =
     await loadProfile();
 
+
   if(!ok){
 
     localStorage.removeItem(
@@ -2828,11 +3068,19 @@ async function checkSession(){
       "supabase_refresh_token"
     );
 
-    document.getElementById("loginPage")
-      .style.display = "flex";
 
-    document.getElementById("app")
-      .classList.remove("visible");
+    document.getElementById(
+      "loginPage"
+    ).style.display =
+      "flex";
+
+
+    document.getElementById(
+      "app"
+    ).classList.remove(
+      "visible"
+    );
+
 
     applyLanguage();
 
@@ -2840,23 +3088,36 @@ async function checkSession(){
 
   }
 
-  document.getElementById("loginPage")
-    .style.display = "none";
 
-  document.getElementById("app")
-    .classList.add("visible");
+  document.getElementById(
+    "loginPage"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "app"
+  ).classList.add(
+    "visible"
+  );
+
 
   applyPermissions();
 
   applyLanguage();
 
+
   await loadOrders();
 
-  if(role === "المدير"){
+
+  if(
+    role === "المدير"
+  ){
 
     await loadUsers();
 
   }
+
 
   renderAll();
 
@@ -2876,16 +3137,24 @@ async function logout(){
         "supabase_access_token"
       );
 
+
     if(token){
 
       await fetch(
-        SUPABASE_URL + "/auth/v1/logout",
+        SUPABASE_URL +
+        "/auth/v1/logout",
         {
+
           method:"POST",
 
           headers:{
-            "apikey":SUPABASE_KEY,
-            "Authorization":"Bearer " + token
+
+            "apikey":
+              SUPABASE_KEY,
+
+            "Authorization":
+              "Bearer " + token
+
           }
 
         }
@@ -2895,9 +3164,13 @@ async function logout(){
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Logout:",
+      error
+    );
 
   }
+
 
   localStorage.removeItem(
     "supabase_access_token"
@@ -2907,20 +3180,41 @@ async function logout(){
     "supabase_refresh_token"
   );
 
-  currentProfile = null;
-  currentUserId = null;
-  role = "";
-  orders = [];
-  users = [];
 
-  document.getElementById("app")
-    .classList.remove("visible");
+  currentProfile =
+    null;
 
-  document.getElementById("loginPage")
-    .style.display = "flex";
+  currentUserId =
+    null;
 
-  document.getElementById("password")
-    .value = "";
+  role =
+    "";
+
+  orders =
+    [];
+
+  users =
+    [];
+
+
+  document.getElementById(
+    "app"
+  ).classList.remove(
+    "visible"
+  );
+
+
+  document.getElementById(
+    "loginPage"
+  ).style.display =
+    "flex";
+
+
+  document.getElementById(
+    "password"
+  ).value =
+    "";
+
 
   applyLanguage();
 
@@ -2936,17 +3230,23 @@ function applyPermissions(){
   const isAdmin =
     role === "المدير";
 
-  document.getElementById("addOrderButton")
-    .style.display =
-      isAdmin ? "" : "none";
 
-  document.getElementById("usersNav")
-    .style.display =
-      isAdmin ? "" : "none";
+  document.getElementById(
+    "addOrderButton"
+  ).style.display =
+    isAdmin ? "" : "none";
 
-  document.getElementById("addUserButton")
-    .style.display =
-      isAdmin ? "" : "none";
+
+  document.getElementById(
+    "usersNav"
+  ).style.display =
+    isAdmin ? "" : "none";
+
+
+  document.getElementById(
+    "addUserButton"
+  ).style.display =
+    isAdmin ? "" : "none";
 
 }
 
@@ -2964,17 +3264,28 @@ async function loadOrders(){
         "/rest/v1/orders?select=*&order=created_at.desc"
       );
 
+
     orders =
       Array.isArray(data)
         ? data.map(normalizeOrder)
         : [];
 
+
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Orders:",
+      error
+    );
+
 
     showToast(
-      t("loadOrdersFailed")
+      t("loadOrdersFailed") +
+      (
+        error?.message
+          ? " — " + error.message
+          : ""
+      )
     );
 
   }
@@ -3050,15 +3361,24 @@ function isOverdue(order){
 
   }
 
+
   const today =
     new Date();
 
-  today.setHours(0,0,0,0);
+  today.setHours(
+    0,
+    0,
+    0,
+    0
+  );
+
 
   const due =
     new Date(
-      order.due_date + "T00:00:00"
+      order.due_date +
+      "T00:00:00"
     );
+
 
   return due < today;
 
@@ -3084,47 +3404,65 @@ function navigate(section){
 
   }
 
+
   document
     .querySelectorAll(".section")
-    .forEach(el => {
+    .forEach(
+      el => {
 
-      el.classList.toggle(
-        "active",
-        el.id === section
-      );
+        el.classList.toggle(
+          "active",
+          el.id === section
+        );
 
-    });
+      }
+    );
+
 
   document
     .querySelectorAll(".nav-button")
-    .forEach(btn => {
+    .forEach(
+      btn => {
 
-      btn.classList.toggle(
-        "active",
-        btn.dataset.section === section
-      );
+        btn.classList.toggle(
+          "active",
+          btn.dataset.section === section
+        );
 
-    });
+      }
+    );
 
-  if(section === "dashboard"){
+
+  if(
+    section === "dashboard"
+  ){
 
     renderDashboard();
 
   }
 
-  if(section === "orders"){
+
+  if(
+    section === "orders"
+  ){
 
     renderOrders();
 
   }
 
-  if(section === "production"){
+
+  if(
+    section === "production"
+  ){
 
     renderStages();
 
   }
 
-  if(section === "users"){
+
+  if(
+    section === "users"
+  ){
 
     renderUsers();
 
@@ -3139,7 +3477,9 @@ function navigate(section){
 
 function openAddModal(){
 
-  if(role !== "المدير"){
+  if(
+    role !== "المدير"
+  ){
 
     showToast(
       t("addOrderDenied")
@@ -3149,27 +3489,42 @@ function openAddModal(){
 
   }
 
-  editingOrderId = null;
 
-  document.getElementById("orderForm")
-    .reset();
+  editingOrderId =
+    null;
 
-  document.getElementById("orderId")
-    .value = "";
 
-  document.getElementById("orderModalTitle")
-    .textContent =
-      t("addOrderTitle");
+  document.getElementById(
+    "orderForm"
+  ).reset();
 
-  document.getElementById("orderModal")
-    .classList.add("show");
+
+  document.getElementById(
+    "orderId"
+  ).value =
+    "";
+
+
+  document.getElementById(
+    "orderModalTitle"
+  ).textContent =
+    t("addOrderTitle");
+
+
+  document.getElementById(
+    "orderModal"
+  ).classList.add(
+    "show"
+  );
 
 }
 
 
 function openEditModal(id){
 
-  if(role !== "المدير"){
+  if(
+    role !== "المدير"
+  ){
 
     showToast(
       t("editDenied")
@@ -3179,10 +3534,14 @@ function openEditModal(id){
 
   }
 
+
   const order =
     orders.find(
-      o => String(o.id) === String(id)
+      o =>
+        String(o.id) ===
+        String(id)
     );
+
 
   if(!order){
 
@@ -3190,44 +3549,75 @@ function openEditModal(id){
 
   }
 
+
   editingOrderId =
     order.id;
 
-  document.getElementById("orderId")
-    .value = order.id;
 
-  document.getElementById("orderNumber")
-    .value = order.order_number || "";
+  document.getElementById(
+    "orderId"
+  ).value =
+    order.id;
 
-  document.getElementById("customerName")
-    .value = order.customer_name || "";
 
-  document.getElementById("customerPhone")
-    .value = order.phone || "";
+  document.getElementById(
+    "orderNumber"
+  ).value =
+    order.order_number || "";
 
-  document.getElementById("dueDate")
-    .value = order.due_date || "";
 
-  document.getElementById("notes")
-    .value = order.notes || "";
+  document.getElementById(
+    "customerName"
+  ).value =
+    order.customer_name || "";
 
-  document.getElementById("urgent")
-    .checked = Boolean(order.urgent);
 
-  document.getElementById("orderModalTitle")
-    .textContent =
-      t("editOrderTitle");
+  document.getElementById(
+    "customerPhone"
+  ).value =
+    order.phone || "";
 
-  document.getElementById("orderModal")
-    .classList.add("show");
+
+  document.getElementById(
+    "dueDate"
+  ).value =
+    order.due_date || "";
+
+
+  document.getElementById(
+    "notes"
+  ).value =
+    order.notes || "";
+
+
+  document.getElementById(
+    "urgent"
+  ).checked =
+    Boolean(order.urgent);
+
+
+  document.getElementById(
+    "orderModalTitle"
+  ).textContent =
+    t("editOrderTitle");
+
+
+  document.getElementById(
+    "orderModal"
+  ).classList.add(
+    "show"
+  );
 
 }
 
 
 function closeOrderModal(){
 
-  document.getElementById("orderModal")
-    .classList.remove("show");
+  document.getElementById(
+    "orderModal"
+  ).classList.remove(
+    "show"
+  );
 
 }
 
@@ -3238,7 +3628,9 @@ function closeOrderModal(){
 
 async function saveOrder(){
 
-  if(role !== "المدير"){
+  if(
+    role !== "المدير"
+  ){
 
     showToast(
       t("saveOrderDenied")
@@ -3248,35 +3640,48 @@ async function saveOrder(){
 
   }
 
+
   const orderNumber =
-    document.getElementById("orderNumber")
-      .value
-      .trim();
+    document.getElementById(
+      "orderNumber"
+    ).value.trim();
+
 
   const customerName =
-    document.getElementById("customerName")
-      .value
-      .trim();
+    document.getElementById(
+      "customerName"
+    ).value.trim();
+
 
   const phone =
-    document.getElementById("customerPhone")
-      .value
-      .trim();
+    document.getElementById(
+      "customerPhone"
+    ).value.trim();
+
 
   const dueDate =
-    document.getElementById("dueDate")
-      .value || null;
+    document.getElementById(
+      "dueDate"
+    ).value ||
+    null;
+
 
   const notes =
-    document.getElementById("notes")
-      .value
-      .trim();
+    document.getElementById(
+      "notes"
+    ).value.trim();
+
 
   const urgent =
-    document.getElementById("urgent")
-      .checked;
+    document.getElementById(
+      "urgent"
+    ).checked;
 
-  if(!orderNumber || !customerName){
+
+  if(
+    !orderNumber ||
+    !customerName
+  ){
 
     showToast(
       currentLanguage === "he"
@@ -3289,92 +3694,129 @@ async function saveOrder(){
   }
 
 
-  /*
-    IMPORTANT:
-    We use Arabic DB values.
-  */
-
   const payload = {
 
-    order_number:orderNumber,
+    order_number:
+      orderNumber,
 
-    customer_name:customerName,
+    customer_name:
+      customerName,
 
-    phone:phone,
+    phone:
+      phone,
 
-    due_date:dueDate,
+    due_date:
+      dueDate,
 
-    notes:notes,
+    notes:
+      notes,
 
-    urgent:urgent
+    urgent:
+      urgent
 
   };
 
 
   try{
 
-    if(editingOrderId){
+    if(
+      editingOrderId
+    ){
 
       const updated =
         await request(
           "/rest/v1/orders?id=eq."
-          + encodeURIComponent(editingOrderId),
+          +
+          encodeURIComponent(
+            editingOrderId
+          ),
           {
+
             method:"PATCH",
 
             headers:{
-              "Prefer":"return=representation"
+
+              "Prefer":
+                "return=representation"
+
             },
 
-            body:JSON.stringify(payload)
+            body:
+              JSON.stringify(
+                payload
+              )
 
           }
         );
 
+
       const index =
         orders.findIndex(
-          o => String(o.id) ===
-               String(editingOrderId)
+          o =>
+            String(o.id) ===
+            String(editingOrderId)
         );
 
-      if(index !== -1 && updated?.[0]){
+
+      if(
+        index !== -1 &&
+        updated?.[0]
+      ){
 
         orders[index] =
-          normalizeOrder(updated[0]);
+          normalizeOrder(
+            updated[0]
+          );
 
       }
+
 
       showToast(
         t("orderUpdated")
       );
+
 
     }else{
 
       payload.stage =
         "في العمل";
 
+
       const created =
         await request(
           "/rest/v1/orders",
           {
+
             method:"POST",
 
             headers:{
-              "Prefer":"return=representation"
+
+              "Prefer":
+                "return=representation"
+
             },
 
-            body:JSON.stringify(payload)
+            body:
+              JSON.stringify(
+                payload
+              )
 
           }
         );
 
-      if(created?.[0]){
+
+      if(
+        created?.[0]
+      ){
 
         orders.unshift(
-          normalizeOrder(created[0])
+          normalizeOrder(
+            created[0]
+          )
         );
 
       }
+
 
       showToast(
         t("orderSaved")
@@ -3382,18 +3824,27 @@ async function saveOrder(){
 
     }
 
+
     closeOrderModal();
 
     renderAll();
 
+
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Save order:",
+      error
+    );
+
 
     showToast(
       t("saveFailed") +
       " — " +
-      (error.message || "")
+      (
+        error?.message ||
+        ""
+      )
     );
 
   }
@@ -3407,7 +3858,9 @@ async function saveOrder(){
 
 async function deleteOrder(id){
 
-  if(role !== "المدير"){
+  if(
+    role !== "المدير"
+  ){
 
     showToast(
       t("deleteDenied")
@@ -3417,16 +3870,21 @@ async function deleteOrder(id){
 
   }
 
+
   const order =
     orders.find(
-      o => String(o.id) === String(id)
+      o =>
+        String(o.id) ===
+        String(id)
     );
+
 
   if(!order){
 
     return;
 
   }
+
 
   const confirmed =
     confirm(
@@ -3436,39 +3894,59 @@ async function deleteOrder(id){
       "؟"
     );
 
+
   if(!confirmed){
 
     return;
 
   }
 
+
   try{
 
     await request(
       "/rest/v1/orders?id=eq."
-      + encodeURIComponent(id),
+      +
+      encodeURIComponent(id),
       {
+
         method:"DELETE"
+
       }
     );
 
+
     orders =
       orders.filter(
-        o => String(o.id) !== String(id)
+        o =>
+          String(o.id) !==
+          String(id)
       );
+
 
     showToast(
       t("orderDeleted")
     );
 
+
     renderAll();
+
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Delete:",
+      error
+    );
+
 
     showToast(
-      t("deleteFailed")
+      t("deleteFailed") +
+      " — " +
+      (
+        error?.message ||
+        ""
+      )
     );
 
   }
@@ -3484,8 +3962,11 @@ async function nextStage(id){
 
   const order =
     orders.find(
-      o => String(o.id) === String(id)
+      o =>
+        String(o.id) ===
+        String(id)
     );
+
 
   if(!order){
 
@@ -3493,18 +3974,28 @@ async function nextStage(id){
 
   }
 
+
   const currentIndex =
     stages.findIndex(
-      s => s[0] === order.stage
+      s =>
+        s[0] ===
+        order.stage
     );
 
-  if(currentIndex < 0){
+
+  if(
+    currentIndex < 0
+  ){
 
     return;
 
   }
 
-  if(currentIndex >= stages.length - 1){
+
+  if(
+    currentIndex >=
+    stages.length - 1
+  ){
 
     showToast(
       t("completed")
@@ -3514,14 +4005,18 @@ async function nextStage(id){
 
   }
 
+
   const next =
-    stages[currentIndex + 1];
+    stages[
+      currentIndex + 1
+    ];
+
 
   /*
-    Permission:
     Manager can advance everything.
-    Other departments can only advance
-    when current stage belongs to their role.
+    Other departments can advance
+    when the next stage belongs
+    to their department.
   */
 
   if(
@@ -3537,49 +4032,57 @@ async function nextStage(id){
 
   }
 
-  /*
-    For example:
-    current = تم القص
-    next = تم الكنت
-    role = الكنت
-
-    The employee of "الكنت" can move it
-    to "تم الكنت".
-  */
 
   try{
 
     const updated =
       await request(
         "/rest/v1/orders?id=eq."
-        + encodeURIComponent(id),
+        +
+        encodeURIComponent(id),
         {
+
           method:"PATCH",
 
           headers:{
-            "Prefer":"return=representation"
+
+            "Prefer":
+              "return=representation"
+
           },
 
-          body:JSON.stringify({
+          body:
+            JSON.stringify({
 
-            stage:next[0]
+              stage:
+                next[0]
 
-          })
+            })
 
         }
       );
 
-    if(updated?.[0]){
+
+    if(
+      updated?.[0]
+    ){
 
       const index =
         orders.findIndex(
-          o => String(o.id) === String(id)
+          o =>
+            String(o.id) ===
+            String(id)
         );
 
-      if(index !== -1){
+
+      if(
+        index !== -1
+      ){
 
         orders[index] =
-          normalizeOrder(updated[0]);
+          normalizeOrder(
+            updated[0]
+          );
 
       }
 
@@ -3590,23 +4093,39 @@ async function nextStage(id){
 
     }
 
+
     showToast(
       t("stageUpdated") +
       " " +
-      stageText(next[0])
+      stageText(
+        next[0]
+      )
     );
+
 
     renderAll();
 
+
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Stage update:",
+      error
+    );
+
 
     showToast(
       "❌ " +
-      (currentLanguage === "he"
-        ? "עדכון השלב נכשל"
-        : "فشل تحديث المرحلة")
+      (
+        currentLanguage === "he"
+          ? "עדכון השלב נכשל"
+          : "فشل تحديث المرحلة"
+      ) +
+      (
+        error?.message
+          ? " — " + error.message
+          : ""
+      )
     );
 
   }
@@ -3615,15 +4134,18 @@ async function nextStage(id){
 
 
 /* =====================================================
-   ORDER DETAILS
+   DETAILS
 ===================================================== */
 
 function details(id){
 
   const order =
     orders.find(
-      o => String(o.id) === String(id)
+      o =>
+        String(o.id) ===
+        String(id)
     );
+
 
   if(!order){
 
@@ -3631,144 +4153,164 @@ function details(id){
 
   }
 
+
   const due =
-    order.due_date
-      ? order.due_date
-      : "—";
+    order.due_date ||
+    "—";
+
 
   const urgentText =
     order.urgent
       ? t("urgent")
       : "—";
 
-  document.getElementById("detailsBody")
-    .innerHTML = `
 
-      <div class="order-info">
+  const department =
+    stages.find(
+      s =>
+        s[0] ===
+        order.stage
+    )?.[1] ||
+    "";
 
-        <div class="info-item">
 
-          <div class="info-label">
-            ${t("orderNumber")}
-          </div>
+  document.getElementById(
+    "detailsBody"
+  ).innerHTML = `
 
-          <div class="info-value">
-            ${escapeHtml(order.order_number)}
-          </div>
+    <div class="order-info">
 
+      <div class="info-item">
+
+        <div class="info-label">
+          ${t("orderNumber")}
         </div>
 
-
-        <div class="info-item">
-
-          <div class="info-label">
-            ${t("customer")}
-          </div>
-
-          <div class="info-value">
-            ${escapeHtml(order.customer_name)}
-          </div>
-
+        <div class="info-value">
+          ${escapeHtml(
+            order.order_number
+          )}
         </div>
 
+      </div>
 
-        <div class="info-item">
+      <div class="info-item">
 
-          <div class="info-label">
-            ${t("phone")}
-          </div>
-
-          <div class="info-value">
-            ${escapeHtml(order.phone || "—")}
-          </div>
-
+        <div class="info-label">
+          ${t("customer")}
         </div>
 
-
-        <div class="info-item">
-
-          <div class="info-label">
-            ${t("delivery")}
-          </div>
-
-          <div class="info-value">
-            ${escapeHtml(due)}
-          </div>
-
+        <div class="info-value">
+          ${escapeHtml(
+            order.customer_name
+          )}
         </div>
 
+      </div>
 
-        <div class="info-item">
+      <div class="info-item">
 
-          <div class="info-label">
-            ${t("department")}
-          </div>
-
-          <div class="info-value">
-            ${stageText(
-              stages.find(
-                s => s[0] === order.stage
-              )?.[1] || ""
-            )}
-          </div>
-
+        <div class="info-label">
+          ${t("phone")}
         </div>
 
+        <div class="info-value">
+          ${escapeHtml(
+            order.phone || "—"
+          )}
+        </div>
 
-        <div class="info-item">
+      </div>
 
-          <div class="info-label">
-            ${currentLanguage === "he"
+      <div class="info-item">
+
+        <div class="info-label">
+          ${t("delivery")}
+        </div>
+
+        <div class="info-value">
+          ${escapeHtml(due)}
+        </div>
+
+      </div>
+
+      <div class="info-item">
+
+        <div class="info-label">
+          ${t("department")}
+        </div>
+
+        <div class="info-value">
+          ${stageText(department)}
+        </div>
+
+      </div>
+
+      <div class="info-item">
+
+        <div class="info-label">
+          ${
+            currentLanguage === "he"
               ? "סטטוס"
-              : "الحالة"}
-          </div>
+              : "الحالة"
+          }
+        </div>
 
-          <div class="info-value">
-            ${stageText(order.stage)}
-          </div>
-
+        <div class="info-value">
+          ${stageText(order.stage)}
         </div>
 
       </div>
 
+    </div>
 
-      <div class="order-notes">
+    <div class="order-notes">
 
-        <strong>
-          ${t("notes")}:
-        </strong>
+      <strong>
+        ${t("notes")}:
+      </strong>
 
-        <div style="margin-top:7px">
-          ${escapeHtml(order.notes || "—")}
-        </div>
-
+      <div style="margin-top:7px">
+        ${escapeHtml(
+          order.notes || "—"
+        )}
       </div>
 
+    </div>
 
-      <div class="order-notes">
+    <div class="order-notes">
 
-        <strong>
-          ${t("urgent")}:
-        </strong>
+      <strong>
+        ${t("urgent")}:
+      </strong>
 
-        <div style="margin-top:7px">
-          ${escapeHtml(urgentText)}
-        </div>
-
+      <div style="margin-top:7px">
+        ${escapeHtml(
+          urgentText
+        )}
       </div>
+
+    </div>
 
   `;
 
-  document.getElementById("detailsModal")
-    .classList.add("show");
+
+  document.getElementById(
+    "detailsModal"
+  ).classList.add(
+    "show"
+  );
 
 }
 
 
 function closeDetailsModal(){
 
-  document.getElementById("detailsModal")
-    .classList.remove("show");
+  document.getElementById(
+    "detailsModal"
+  ).classList.remove(
+    "show"
+  );
 
 }
 
@@ -3781,63 +4323,89 @@ function orderHtml(order){
 
   const currentIndex =
     stages.findIndex(
-      s => s[0] === order.stage
+      s =>
+        s[0] ===
+        order.stage
     );
+
 
   const canNext =
     currentIndex >= 0 &&
-    currentIndex < stages.length - 1 &&
+    currentIndex <
+      stages.length - 1 &&
     (
       role === "المدير" ||
-      role === stages[currentIndex + 1][1]
+      role ===
+        stages[
+          currentIndex + 1
+        ][1]
     );
+
 
   const nextButton =
     canNext
       ? `
+
         <button
           class="action-btn action-next"
           onclick="nextStage('${escapeAttr(order.id)}')">
+
           ${t("next")}
+
         </button>
+
       `
       : "";
 
+
   return `
 
-    <article class="order-card ${order.urgent ? "urgent" : ""}">
+    <article
+      class="order-card ${
+        order.urgent
+          ? "urgent"
+          : ""
+      }">
 
       <div class="order-top">
 
         <div>
 
           <div class="order-number">
-            #${escapeHtml(order.order_number)}
+            #${escapeHtml(
+              order.order_number
+            )}
           </div>
 
           <div class="order-customer">
-            ${escapeHtml(order.customer_name)}
+            ${escapeHtml(
+              order.customer_name
+            )}
           </div>
 
         </div>
 
         ${
           order.urgent
-          ? `
-            <div class="urgent-badge">
-              ⭐ ${t("urgent")}
-            </div>
-          `
-          : ""
+            ? `
+
+              <div class="urgent-badge">
+                ⭐ ${t("urgent")}
+              </div>
+
+            `
+            : ""
         }
 
       </div>
 
-
       <div class="status-badge">
-        ${stageText(order.stage)}
-      </div>
 
+        ${stageText(
+          order.stage
+        )}
+
+      </div>
 
       <div class="order-info">
 
@@ -3848,11 +4416,12 @@ function orderHtml(order){
           </div>
 
           <div class="info-value">
-            ${escapeHtml(order.phone || "—")}
+            ${escapeHtml(
+              order.phone || "—"
+            )}
           </div>
 
         </div>
-
 
         <div class="info-item">
 
@@ -3861,11 +4430,12 @@ function orderHtml(order){
           </div>
 
           <div class="info-value">
-            ${escapeHtml(order.due_date || "—")}
+            ${escapeHtml(
+              order.due_date || "—"
+            )}
           </div>
 
         </div>
-
 
         <div class="info-item">
 
@@ -3874,17 +4444,21 @@ function orderHtml(order){
           </div>
 
           <div class="info-value">
+
             ${
               stageText(
                 stages.find(
-                  s => s[0] === order.stage
-                )?.[1] || ""
+                  s =>
+                    s[0] ===
+                    order.stage
+                )?.[1] ||
+                ""
               )
             }
+
           </div>
 
         </div>
-
 
         <div class="info-item">
 
@@ -3893,54 +4467,71 @@ function orderHtml(order){
           </div>
 
           <div class="info-value">
+
             ${
               isOverdue(order)
                 ? "⚠️ " + t("overdue")
                 : t("done")
             }
+
           </div>
 
         </div>
 
       </div>
 
-
       ${
         order.notes
-        ? `
-          <div class="order-notes">
-            <strong>${t("notes")}:</strong>
-            ${escapeHtml(order.notes)}
-          </div>
-        `
-        : ""
-      }
+          ? `
 
+            <div class="order-notes">
+
+              <strong>
+                ${t("notes")}:
+              </strong>
+
+              ${escapeHtml(
+                order.notes
+              )}
+
+            </div>
+
+          `
+          : ""
+      }
 
       <div class="order-actions">
 
         <button
           class="action-btn action-details"
           onclick="details('${escapeAttr(order.id)}')">
+
           ${t("details")}
+
         </button>
 
         ${
           role === "المدير"
-          ? `
-            <button
-              class="action-btn action-edit"
-              onclick="openEditModal('${escapeAttr(order.id)}')">
-              ${t("edit")}
-            </button>
+            ? `
 
-            <button
-              class="action-btn action-delete"
-              onclick="deleteOrder('${escapeAttr(order.id)}')">
-              ${t("delete")}
-            </button>
-          `
-          : ""
+              <button
+                class="action-btn action-edit"
+                onclick="openEditModal('${escapeAttr(order.id)}')">
+
+                ${t("edit")}
+
+              </button>
+
+              <button
+                class="action-btn action-delete"
+                onclick="deleteOrder('${escapeAttr(order.id)}')">
+
+                ${t("delete")}
+
+              </button>
+
+            `
+            : ""
         }
 
         ${nextButton}
@@ -3955,7 +4546,7 @@ function orderHtml(order){
 
 
 /* =====================================================
-   RENDER DASHBOARD
+   DASHBOARD
 ===================================================== */
 
 function renderDashboard(){
@@ -3963,54 +4554,87 @@ function renderDashboard(){
   const total =
     orders.length;
 
+
   const active =
     orders.filter(
-      o => o.stage !== "تم التسليم"
+      o =>
+        o.stage !==
+        "تم التسليم"
     ).length;
+
 
   const urgent =
     orders.filter(
-      o => o.urgent
+      o =>
+        o.urgent
     ).length;
+
 
   const overdue =
     orders.filter(
-      o => isOverdue(o)
+      o =>
+        isOverdue(o)
     ).length;
 
-  document.getElementById("statTotal")
-    .textContent = total;
 
-  document.getElementById("statActive")
-    .textContent = active;
+  document.getElementById(
+    "statTotal"
+  ).textContent =
+    total;
 
-  document.getElementById("statUrgent")
-    .textContent = urgent;
 
-  document.getElementById("statOverdue")
-    .textContent = overdue;
+  document.getElementById(
+    "statActive"
+  ).textContent =
+    active;
+
+
+  document.getElementById(
+    "statUrgent"
+  ).textContent =
+    urgent;
+
+
+  document.getElementById(
+    "statOverdue"
+  ).textContent =
+    overdue;
 
 
   const latest =
-    orders.slice(0,5);
+    orders.slice(
+      0,
+      5
+    );
+
 
   const container =
-    document.getElementById("latestOrders");
+    document.getElementById(
+      "latestOrders"
+    );
+
 
   if(!latest.length){
 
     container.innerHTML =
-      `<div class="empty">${t("noOrders")}</div>`;
+      `<div class="empty">
+        ${t("noOrders")}
+      </div>`;
 
     return;
 
   }
 
+
   container.innerHTML = `
 
     <div class="orders-grid">
 
-      ${latest.map(orderHtml).join("")}
+      ${
+        latest
+          .map(orderHtml)
+          .join("")
+      }
 
     </div>
 
@@ -4020,61 +4644,93 @@ function renderDashboard(){
 
 
 /* =====================================================
-   RENDER ORDERS
+   ORDERS RENDER
 ===================================================== */
 
 function renderOrders(){
 
   const container =
-    document.getElementById("ordersGrid");
+    document.getElementById(
+      "ordersGrid"
+    );
+
+
+  const search =
+    document.getElementById(
+      "searchInput"
+    );
+
 
   const query =
-    document.getElementById("searchInput")
-      .value
-      .trim()
-      .toLowerCase();
+    search
+      ? search.value
+          .trim()
+          .toLowerCase()
+      : "";
+
 
   let filtered =
     orders;
 
+
   if(query){
 
     filtered =
-      orders.filter(order => {
+      orders.filter(
+        order => {
 
-        const text = [
+          const text = [
 
-          order.order_number,
-          order.customer_name,
-          order.phone,
-          order.stage
+            order.order_number,
+            order.customer_name,
+            order.phone,
+            order.stage
 
-        ]
-        .join(" ")
-        .toLowerCase();
+          ]
+          .join(" ")
+          .toLowerCase();
 
-        return text.includes(query);
 
-      });
+          return text.includes(
+            query
+          );
+
+        }
+      );
 
   }
 
+
   if(!filtered.length){
 
-    container.innerHTML =
-      `<div class="card" style="grid-column:1/-1">
+    container.innerHTML = `
+
+      <div
+        class="card"
+        style="grid-column:1/-1">
+
         <div class="empty">
+
           ${
             query
-              ? t("noMatchingOrders")
-              : t("noOrders")
+              ? t(
+                  "noMatchingOrders"
+                )
+              : t(
+                  "noOrders"
+                )
           }
+
         </div>
-      </div>`;
+
+      </div>
+
+    `;
 
     return;
 
   }
+
 
   container.innerHTML =
     filtered
@@ -4085,97 +4741,133 @@ function renderOrders(){
 
 
 /* =====================================================
-   RENDER STAGES
+   STAGES RENDER
 ===================================================== */
 
 function renderStages(){
 
   const container =
-    document.getElementById("stagesGrid");
+    document.getElementById(
+      "stagesGrid"
+    );
+
 
   container.innerHTML =
-    stages.map(stage => {
+    stages
+      .map(
+        stage => {
 
-      const stageOrders =
-        orders.filter(
-          order => order.stage === stage[0]
-        );
-
-      return `
-
-        <div class="stage-card">
-
-          <div class="stage-head">
-
-            <div class="stage-title">
-              ${stageText(stage[0])}
-            </div>
-
-            <div class="stage-role">
-              ${t("responsible")}
-              ${stageText(stage[1])}
-            </div>
-
-            <div class="stage-count">
-              ${stageOrders.length}
-              ${currentLanguage === "he"
-                ? "הזמנות"
-                : "طلبية"}
-            </div>
-
-          </div>
+          const stageOrders =
+            orders.filter(
+              order =>
+                order.stage ===
+                stage[0]
+            );
 
 
-          <div class="stage-body">
+          return `
 
-            ${
-              stageOrders.length
-              ? stageOrders.map(order => `
+            <div class="stage-card">
 
-                  <div class="stage-order">
+              <div class="stage-head">
 
-                    <div class="stage-order-number">
-                      #${escapeHtml(order.order_number)}
-                    </div>
-
-                    <div class="stage-order-name">
-                      ${escapeHtml(order.customer_name)}
-                    </div>
-
-                  </div>
-
-                `).join("")
-              : `
-                <div class="empty">
-                  ${t("noOrdersStage")}
+                <div class="stage-title">
+                  ${stageText(
+                    stage[0]
+                  )}
                 </div>
-              `
-            }
 
-          </div>
+                <div class="stage-role">
 
-        </div>
+                  ${t("responsible")}
 
-      `;
+                  ${stageText(
+                    stage[1]
+                  )}
 
-    }).join("");
+                </div>
+
+                <div class="stage-count">
+
+                  ${stageOrders.length}
+
+                  ${
+                    currentLanguage === "he"
+                      ? "הזמנות"
+                      : "طلبية"
+                  }
+
+                </div>
+
+              </div>
+
+              <div class="stage-body">
+
+                ${
+                  stageOrders.length
+                    ? stageOrders
+                        .map(
+                          order => `
+
+                            <div class="stage-order">
+
+                              <div class="stage-order-number">
+                                #${escapeHtml(
+                                  order.order_number
+                                )}
+                              </div>
+
+                              <div class="stage-order-name">
+                                ${escapeHtml(
+                                  order.customer_name
+                                )}
+                              </div>
+
+                            </div>
+
+                          `
+                        )
+                        .join("")
+                    : `
+
+                      <div class="empty">
+                        ${t(
+                          "noOrdersStage"
+                        )}
+                      </div>
+
+                    `
+                }
+
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      )
+      .join("");
 
 }
 
 
 /* =====================================================
-   LOAD USERS
+   USERS
 ===================================================== */
 
 async function loadUsers(){
 
-  if(role !== "المدير"){
+  if(
+    role !== "المدير"
+  ){
 
     users = [];
 
     return;
 
   }
+
 
   try{
 
@@ -4184,17 +4876,29 @@ async function loadUsers(){
         "/rest/v1/profiles?select=id,username,full_name,role,active,email,phone&order=username.asc"
       );
 
+
     users =
       Array.isArray(data)
         ? data
         : [];
 
+
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Users:",
+      error
+    );
+
 
     showToast(
-      t("loadUsersFailed")
+      t("loadUsersFailed") +
+      (
+        error?.message
+          ? " — " +
+            error.message
+          : ""
+      )
     );
 
   }
@@ -4202,20 +4906,22 @@ async function loadUsers(){
 }
 
 
-/* =====================================================
-   RENDER USERS
-===================================================== */
-
 function renderUsers(){
 
-  if(role !== "المدير"){
+  if(
+    role !== "المدير"
+  ){
 
     return;
 
   }
 
+
   const body =
-    document.getElementById("usersBody");
+    document.getElementById(
+      "usersBody"
+    );
+
 
   if(!users.length){
 
@@ -4239,54 +4945,88 @@ function renderUsers(){
 
   }
 
+
   body.innerHTML =
-    users.map(user => `
+    users
+      .map(
+        user => `
 
-      <tr>
+          <tr>
 
-        <td>
-          ${escapeHtml(user.username || "—")}
-        </td>
+            <td>
+              ${escapeHtml(
+                user.username ||
+                "—"
+              )}
+            </td>
 
-        <td>
-          ${escapeHtml(user.full_name || "—")}
-        </td>
+            <td>
+              ${escapeHtml(
+                user.full_name ||
+                "—"
+              )}
+            </td>
 
-        <td>
-          <span class="role-badge">
-            ${stageText(user.role || "")}
-          </span>
-        </td>
+            <td>
 
-        <td>
-          ${escapeHtml(user.phone || "—")}
-        </td>
+              <span class="role-badge">
 
-        <td dir="ltr">
-          ${escapeHtml(user.email || "—")}
-        </td>
+                ${stageText(
+                  user.role ||
+                  ""
+                )}
 
-        <td>
-
-          ${
-            user.active
-            ? `
-              <span class="active-badge">
-                ${t("active")}
               </span>
-            `
-            : `
-              <span class="inactive-badge">
-                ${t("stopped")}
-              </span>
-            `
-          }
 
-        </td>
+            </td>
 
-      </tr>
+            <td>
+              ${escapeHtml(
+                user.phone ||
+                "—"
+              )}
+            </td>
 
-    `).join("");
+            <td dir="ltr">
+              ${escapeHtml(
+                user.email ||
+                "—"
+              )}
+            </td>
+
+            <td>
+
+              ${
+                user.active
+                  ? `
+
+                    <span
+                      class="active-badge">
+
+                      ${t("active")}
+
+                    </span>
+
+                  `
+                  : `
+
+                    <span
+                      class="inactive-badge">
+
+                      ${t("stopped")}
+
+                    </span>
+
+                  `
+              }
+
+            </td>
+
+          </tr>
+
+        `
+      )
+      .join("");
 
 }
 
@@ -4297,7 +5037,9 @@ function renderUsers(){
 
 function openUserModal(){
 
-  if(role !== "المدير"){
+  if(
+    role !== "المدير"
+  ){
 
     showToast(
       t("usersOnly")
@@ -4307,37 +5049,65 @@ function openUserModal(){
 
   }
 
-  document.getElementById("newUsername")
-    .value = "";
 
-  document.getElementById("newFullName")
-    .value = "";
+  document.getElementById(
+    "newUsername"
+  ).value =
+    "";
 
-  document.getElementById("newEmail")
-    .value = "";
 
-  document.getElementById("newPhone")
-    .value = "";
+  document.getElementById(
+    "newFullName"
+  ).value =
+    "";
 
-  document.getElementById("newPassword")
-    .value = "";
 
-  document.getElementById("newRole")
-    .value = "القص";
+  document.getElementById(
+    "newEmail"
+  ).value =
+    "";
 
-  document.getElementById("newActive")
-    .checked = true;
 
-  document.getElementById("userModal")
-    .classList.add("show");
+  document.getElementById(
+    "newPhone"
+  ).value =
+    "";
+
+
+  document.getElementById(
+    "newPassword"
+  ).value =
+    "";
+
+
+  document.getElementById(
+    "newRole"
+  ).value =
+    "القص";
+
+
+  document.getElementById(
+    "newActive"
+  ).checked =
+    true;
+
+
+  document.getElementById(
+    "userModal"
+  ).classList.add(
+    "show"
+  );
 
 }
 
 
 function closeUserModal(){
 
-  document.getElementById("userModal")
-    .classList.remove("show");
+  document.getElementById(
+    "userModal"
+  ).classList.remove(
+    "show"
+  );
 
 }
 
@@ -4348,7 +5118,9 @@ function closeUserModal(){
 
 async function createUser(){
 
-  if(role !== "المدير"){
+  if(
+    role !== "المدير"
+  ){
 
     showToast(
       t("usersOnly")
@@ -4358,11 +5130,12 @@ async function createUser(){
 
   }
 
+
   /*
-    IMPORTANT:
-    Creating Supabase Auth users must be done
+    Auth user creation must be done
     through a secure Edge Function.
-    Never put service_role in this HTML.
+    Never put service_role / sb_secret
+    inside this HTML.
   */
 
   alert(
@@ -4384,7 +5157,10 @@ function renderAll(){
 
   renderStages();
 
-  if(role === "المدير"){
+
+  if(
+    role === "المدير"
+  ){
 
     renderUsers();
 
@@ -4394,7 +5170,7 @@ function renderAll(){
 
 
 /* =====================================================
-   LANGUAGE APPLY
+   LANGUAGE
 ===================================================== */
 
 function applyLanguage(){
@@ -4402,8 +5178,10 @@ function applyLanguage(){
   document.documentElement.lang =
     currentLanguage;
 
+
   document.documentElement.dir =
     "rtl";
+
 
   document.title =
     "MODULAR TECH — " +
@@ -4417,32 +5195,42 @@ function applyLanguage(){
     t("loginTitle")
   );
 
+
   setText(
     "usernameLabel",
     t("username")
   );
+
 
   setText(
     "passwordLabel",
     t("password")
   );
 
+
   setPlaceholder(
     "username",
     t("usernamePlaceholder")
   );
+
 
   setPlaceholder(
     "password",
     t("passwordPlaceholder")
   );
 
+
   setText(
     "loginNote",
+
     currentLanguage === "he"
+
       ? "החשבון חייב להיות פעיל. במקרה של בעיה, פנה למנהל."
+
       : "يجب أن يكون حسابك فعالاً. في حال وجود مشكلة، تواصل مع المدير."
+
   );
+
 
   setText(
     "designedText",
@@ -4451,7 +5239,10 @@ function applyLanguage(){
 
 
   const loginButton =
-    document.getElementById("loginButton");
+    document.getElementById(
+      "loginButton"
+    );
+
 
   if(
     loginButton &&
@@ -4464,20 +5255,25 @@ function applyLanguage(){
   }
 
 
-  /* Language buttons */
+  /* Language */
 
   setText(
     "loginLanguageBtn",
+
     currentLanguage === "ar"
       ? "עברית"
       : "العربية"
+
   );
+
 
   setText(
     "languageBtn",
+
     currentLanguage === "ar"
       ? "עברית"
       : "العربية"
+
   );
 
 
@@ -4487,6 +5283,7 @@ function applyLanguage(){
     "topbarTitle",
     t("appTitle")
   );
+
 
   setText(
     "logoutButton",
@@ -4501,13 +5298,17 @@ function applyLanguage(){
       currentProfile.username ||
       "";
 
+
     setText(
       "currentUser",
+
       displayName +
       " — " +
       stageText(
-        currentProfile.role || ""
+        currentProfile.role ||
+        ""
       )
+
     );
 
   }
@@ -4520,15 +5321,18 @@ function applyLanguage(){
     t("dashboard")
   );
 
+
   setText(
     "navOrders",
     t("orders")
   );
 
+
   setText(
     "navProduction",
     t("production")
   );
+
 
   setText(
     "navUsers",
@@ -4543,35 +5347,42 @@ function applyLanguage(){
     t("dashboardTitle")
   );
 
+
   setText(
     "dashboardSubtitle",
     t("dashboardSubtitle")
   );
+
 
   setText(
     "statTotalLabel",
     t("totalOrders")
   );
 
+
   setText(
     "statActiveLabel",
     t("activeOrders")
   );
+
 
   setText(
     "statUrgentLabel",
     t("urgent")
   );
 
+
   setText(
     "statOverdueLabel",
     t("overdue")
   );
 
+
   setText(
     "latestOrdersTitle",
     t("latestOrders")
   );
+
 
   setText(
     "manageOrdersButton",
@@ -4586,15 +5397,18 @@ function applyLanguage(){
     t("ordersTitle")
   );
 
+
   setText(
     "ordersSubtitle",
     t("ordersSubtitle")
   );
 
+
   setText(
     "addOrderButton",
     t("addOrder")
   );
+
 
   setPlaceholder(
     "searchInput",
@@ -4609,6 +5423,7 @@ function applyLanguage(){
     t("productionTitle")
   );
 
+
   setText(
     "productionSubtitle",
     t("productionSubtitle")
@@ -4622,46 +5437,56 @@ function applyLanguage(){
     t("usersTitle")
   );
 
+
   setText(
     "usersSubtitle",
     t("usersSubtitle")
   );
+
 
   setText(
     "addUserButton",
     t("addUser")
   );
 
+
   setText(
     "thUsername",
     t("username")
   );
+
 
   setText(
     "thFullName",
     t("fullName")
   );
 
+
   setText(
     "thRole",
     t("department")
   );
+
 
   setText(
     "thPhone",
     t("phone")
   );
 
+
   setText(
     "thEmail",
     t("email")
   );
 
+
   setText(
     "thStatus",
+
     currentLanguage === "he"
       ? "סטטוס"
       : "الحالة"
+
   );
 
 
@@ -4672,50 +5497,60 @@ function applyLanguage(){
     t("orderNumber")
   );
 
+
   setText(
     "customerLabel",
     t("customer")
   );
+
 
   setText(
     "phoneLabel",
     t("phone")
   );
 
+
   setText(
     "deliveryLabel",
     t("delivery")
   );
+
 
   setText(
     "notesLabel",
     t("notes")
   );
 
+
   setText(
     "urgentLabel",
     t("urgentOrder")
   );
+
 
   setPlaceholder(
     "orderNumber",
     t("orderExample")
   );
 
+
   setPlaceholder(
     "customerName",
     t("customerPlaceholder")
   );
+
 
   setPlaceholder(
     "notes",
     t("notesPlaceholder")
   );
 
+
   setText(
     "cancelOrderButton",
     t("cancel")
   );
+
 
   setText(
     "saveOrderButton",
@@ -4723,11 +5558,13 @@ function applyLanguage(){
   );
 
 
-  document.getElementById("orderModalTitle")
-    .textContent =
-      editingOrderId
-        ? t("editOrderTitle")
-        : t("addOrderTitle");
+  document.getElementById(
+    "orderModalTitle"
+  ).textContent =
+
+    editingOrderId
+      ? t("editOrderTitle")
+      : t("addOrderTitle");
 
 
   /* User modal */
@@ -4737,45 +5574,54 @@ function applyLanguage(){
     t("addUser")
   );
 
+
   setText(
     "userUsernameLabel",
     t("username")
   );
+
 
   setText(
     "userFullNameLabel",
     t("fullName")
   );
 
+
   setText(
     "userEmailLabel",
     t("email")
   );
+
 
   setText(
     "userPhoneLabel",
     t("phone")
   );
 
+
   setText(
     "userPasswordLabel",
     t("password")
   );
+
 
   setText(
     "userRoleLabel",
     t("department")
   );
 
+
   setText(
     "userActiveLabel",
     t("activeAccount")
   );
 
+
   setText(
     "cancelUserButton",
     t("cancel")
   );
+
 
   setText(
     "createUserButton",
@@ -4787,10 +5633,13 @@ function applyLanguage(){
 
   setText(
     "detailsTitle",
+
     currentLanguage === "he"
       ? "פרטי ההזמנה"
       : "تفاصيل الطلبية"
+
   );
+
 
   setText(
     "detailsCloseButton",
@@ -4798,17 +5647,6 @@ function applyLanguage(){
   );
 
 }
-
-
-/* =====================================================
-   CREATE USER TRANSLATION FALLBACK
-===================================================== */
-
-translations.ar.createUser =
-  "إنشاء مستخدم";
-
-translations.he.createUser =
-  "יצירת משתמש";
 
 
 /* =====================================================
@@ -4822,10 +5660,12 @@ function toggleLanguage(){
       ? "he"
       : "ar";
 
+
   localStorage.setItem(
     "modular_language",
     currentLanguage
   );
+
 
   applyLanguage();
 
@@ -4841,27 +5681,42 @@ function toggleLanguage(){
 function showToast(message){
 
   const toast =
-    document.getElementById("toast");
+    document.getElementById(
+      "toast"
+    );
+
 
   toast.textContent =
     message;
 
-  toast.classList.add("show");
 
-  clearTimeout(toastTimer);
+  toast.classList.add(
+    "show"
+  );
+
+
+  clearTimeout(
+    toastTimer
+  );
+
 
   toastTimer =
-    setTimeout(() => {
+    setTimeout(
+      () => {
 
-      toast.classList.remove("show");
+        toast.classList.remove(
+          "show"
+        );
 
-    },3500);
+      },
+      3500
+    );
 
 }
 
 
 /* =====================================================
-   ESCAPE HTML
+   ESCAPE
 ===================================================== */
 
 function escapeHtml(value){
@@ -4869,11 +5724,31 @@ function escapeHtml(value){
   return String(
     value ?? ""
   )
-  .replaceAll("&","&amp;")
-  .replaceAll("<","&lt;")
-  .replaceAll(">","&gt;")
-  .replaceAll('"',"&quot;")
-  .replaceAll("'","&#039;");
+
+  .replaceAll(
+    "&",
+    "&amp;"
+  )
+
+  .replaceAll(
+    "<",
+    "&lt;"
+  )
+
+  .replaceAll(
+    ">",
+    "&gt;"
+  )
+
+  .replaceAll(
+    '"',
+    "&quot;"
+  )
+
+  .replaceAll(
+    "'",
+    "&#039;"
+  );
 
 }
 
@@ -4883,16 +5758,30 @@ function escapeAttr(value){
   return String(
     value ?? ""
   )
-  .replaceAll("\\","\\\\")
-  .replaceAll("'","\\'");
+
+  .replaceAll(
+    "\\",
+    "\\\\"
+  )
+
+  .replaceAll(
+    "'",
+    "\\'"
+  );
 
 }
 
 
-function setText(id,value){
+function setText(
+  id,
+  value
+){
 
   const element =
-    document.getElementById(id);
+    document.getElementById(
+      id
+    );
+
 
   if(element){
 
@@ -4904,10 +5793,16 @@ function setText(id,value){
 }
 
 
-function setPlaceholder(id,value){
+function setPlaceholder(
+  id,
+  value
+){
 
   const element =
-    document.getElementById(id);
+    document.getElementById(
+      id
+    );
+
 
   if(element){
 
@@ -4932,15 +5827,19 @@ if(
     () => {
 
       navigator.serviceWorker
-        .register("./sw.js")
-        .catch(error => {
+        .register(
+          "./sw.js"
+        )
+        .catch(
+          error => {
 
-          console.error(
-            "Service Worker:",
-            error
-          );
+            console.error(
+              "Service Worker:",
+              error
+            );
 
-        });
+          }
+        );
 
     }
   );
