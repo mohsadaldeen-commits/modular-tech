@@ -963,10 +963,6 @@ html[dir="ltr"] td{
 
 <body>
 
-<!-- =========================
-     LOGIN
-========================= -->
-
 <section id="loginScreen">
 
   <div class="login-card">
@@ -981,7 +977,6 @@ html[dir="ltr"] td{
       </button>
     </div>
 
-    <!-- الشعار الموجود في icon-192.png -->
     <img
       id="loginLogo"
       class="login-logo"
@@ -1010,7 +1005,6 @@ html[dir="ltr"] td{
           class="form-input"
           type="text"
           autocomplete="username"
-          placeholder=""
           required
           dir="auto"
         >
@@ -1053,10 +1047,6 @@ html[dir="ltr"] td{
 
 </section>
 
-
-<!-- =========================
-     APPLICATION
-========================= -->
 
 <section id="app" class="hidden">
 
@@ -1167,8 +1157,6 @@ html[dir="ltr"] td{
 
     <div class="content">
 
-      <!-- DASHBOARD -->
-
       <section id="page-dashboard" class="page">
 
         <div class="stats-grid">
@@ -1242,8 +1230,6 @@ html[dir="ltr"] td{
       </section>
 
 
-      <!-- ORDERS -->
-
       <section id="page-orders" class="page hidden">
 
         <div class="card">
@@ -1292,8 +1278,6 @@ html[dir="ltr"] td{
       </section>
 
 
-      <!-- STAGES -->
-
       <section id="page-stages" class="page hidden">
 
         <div class="card">
@@ -1310,8 +1294,6 @@ html[dir="ltr"] td{
 
       </section>
 
-
-      <!-- USERS -->
 
       <section id="page-users" class="page hidden">
 
@@ -1361,10 +1343,6 @@ html[dir="ltr"] td{
 
 </section>
 
-
-<!-- =========================
-     ORDER MODAL
-========================= -->
 
 <div id="orderModal" class="modal-backdrop hidden">
 
@@ -1503,10 +1481,6 @@ html[dir="ltr"] td{
 </div>
 
 
-<!-- =========================
-     USER MODAL
-========================= -->
-
 <div id="userModal" class="modal-backdrop hidden">
 
   <div class="modal">
@@ -1592,7 +1566,6 @@ html[dir="ltr"] td{
           <select
             id="newRole"
             class="modal-select">
-
           </select>
 
         </div>
@@ -1635,10 +1608,6 @@ html[dir="ltr"] td{
 const SUPABASE_URL =
   "https://bvrfrcmblwzuqprjknam.supabase.co";
 
-/*
-  استخدم Publishable Key فقط في الواجهة.
-  لا تضع sb_secret داخل هذا الملف.
-*/
 const SUPABASE_KEY =
   "sb_publishable_vVXVJGcWpoPvPEH_bfm23Q_dZ5eXvmE";
 
@@ -1719,80 +1688,238 @@ const translations = {
 
 
 /* =========================================================
-   REQUEST
-========================================================= */
-
-async function request(path, options = {}){
-
-  const accessToken =
-    localStorage.getItem("supabase_access_token");
-
-  const headers = {
-    "apikey": SUPABASE_KEY,
-    "Content-Type":"application/json",
-    ...(options.headers || {})
-  };
-
-  if(accessToken){
-    headers["Authorization"] =
-      "Bearer " + accessToken;
-  }
-
-  const response = await fetch(
-    SUPABASE_URL + path,
-    {
-      ...options,
-      headers
-    }
-  );
-
-  const text = await response.text();
-
-  let data = null;
-
-  try{
-    data = text ? JSON.parse(text) : null;
-  }catch{
-    data = text;
-  }
-
-  if(!response.ok){
-
-    const message =
-      data?.message ||
-      data?.error_description ||
-      data?.error ||
-      text ||
-      `HTTP ${response.status}`;
-
-    throw new Error(message);
-  }
-
-  return data;
-}
-
-
-/* =========================================================
    TOAST
 ========================================================= */
 
 let toastTimer = null;
 
-function showToast(message, error = false){
+function showToast(message,error=false){
 
   const toast =
     document.getElementById("toast");
 
   toast.textContent = message;
 
-  toast.classList.toggle("error", error);
+  toast.classList.toggle(
+    "error",
+    error
+  );
+
   toast.classList.add("show");
 
   clearTimeout(toastTimer);
 
-  toastTimer = setTimeout(()=>{
-    toast.classList.remove("show");
-  },4000);
+  toastTimer =
+    setTimeout(()=>{
+      toast.classList.remove("show");
+    },4000);
+}
+
+
+/* =========================================================
+   SESSION REFRESH
+========================================================= */
+
+async function refreshSession(){
+
+  const refreshToken =
+    localStorage.getItem(
+      "supabase_refresh_token"
+    );
+
+  if(!refreshToken){
+    return false;
+  }
+
+  try{
+
+    const response =
+      await fetch(
+        SUPABASE_URL +
+        "/auth/v1/token?grant_type=refresh_token",
+        {
+          method:"POST",
+          headers:{
+            "apikey":SUPABASE_KEY,
+            "Content-Type":
+              "application/json"
+          },
+          body:JSON.stringify({
+            refresh_token:
+              refreshToken
+          })
+        }
+      );
+
+    const text =
+      await response.text();
+
+    let data = null;
+
+    try{
+      data =
+        text
+          ? JSON.parse(text)
+          : null;
+    }catch{
+      data = text;
+    }
+
+    if(!response.ok){
+
+      throw new Error(
+        data?.msg ||
+        data?.message ||
+        data?.error_description ||
+        data?.error ||
+        "تعذر تجديد الجلسة"
+      );
+
+    }
+
+    if(!data?.access_token){
+
+      throw new Error(
+        "لم يتم الحصول على Access Token جديد"
+      );
+
+    }
+
+    localStorage.setItem(
+      "supabase_access_token",
+      data.access_token
+    );
+
+    if(data.refresh_token){
+
+      localStorage.setItem(
+        "supabase_refresh_token",
+        data.refresh_token
+      );
+
+    }
+
+    return true;
+
+  }catch(error){
+
+    console.warn(
+      "Refresh session failed:",
+      error
+    );
+
+    localStorage.removeItem(
+      "supabase_access_token"
+    );
+
+    localStorage.removeItem(
+      "supabase_refresh_token"
+    );
+
+    return false;
+  }
+}
+
+
+/* =========================================================
+   REQUEST
+========================================================= */
+
+async function request(
+  path,
+  options={},
+  retry=true
+){
+
+  let accessToken =
+    localStorage.getItem(
+      "supabase_access_token"
+    );
+
+  const headers = {
+    "apikey":SUPABASE_KEY,
+    "Content-Type":
+      "application/json",
+    ...(options.headers || {})
+  };
+
+  if(accessToken){
+
+    headers["Authorization"] =
+      "Bearer " + accessToken;
+
+  }
+
+  let response =
+    await fetch(
+      SUPABASE_URL + path,
+      {
+        ...options,
+        headers
+      }
+    );
+
+
+  /*
+    إذا انتهت صلاحية Access Token
+    نجدد الجلسة ثم نعيد الطلب مرة واحدة.
+  */
+
+  if(
+    response.status === 401 &&
+    retry
+  ){
+
+    const refreshed =
+      await refreshSession();
+
+    if(refreshed){
+
+      return request(
+        path,
+        options,
+        false
+      );
+
+    }
+
+  }
+
+
+  const text =
+    await response.text();
+
+  let data = null;
+
+  try{
+
+    data =
+      text
+        ? JSON.parse(text)
+        : null;
+
+  }catch{
+
+    data = text;
+
+  }
+
+
+  if(!response.ok){
+
+    const message =
+      data?.message ||
+      data?.error_description ||
+      data?.msg ||
+      data?.error ||
+      text ||
+      `HTTP ${response.status}`;
+
+    throw new Error(message);
+
+  }
+
+  return data;
 }
 
 
@@ -1821,74 +1948,132 @@ function applyLanguage(){
     html.lang = "he";
     html.dir = "ltr";
 
-    document.getElementById("languageButton")
+    document
+      .getElementById("languageButton")
       .textContent = "العربية";
 
-    document.getElementById("loginTitle")
-      .textContent = "מערכת ניהול הזמנות";
+    document
+      .getElementById("loginTitle")
+      .textContent =
+      "מערכת ניהול הזמנות";
 
-    document.getElementById("loginBrand")
-      .textContent = "MODULAR TECH";
+    document
+      .getElementById("loginBrand")
+      .textContent =
+      "MODULAR TECH";
 
-    document.getElementById("usernameLabel")
-      .textContent = "שם משתמש";
+    document
+      .getElementById("usernameLabel")
+      .textContent =
+      "שם משתמש";
 
-    document.getElementById("passwordLabel")
-      .textContent = "סיסמה";
+    document
+      .getElementById("passwordLabel")
+      .textContent =
+      "סיסמה";
 
-    document.getElementById("loginButton")
-      .textContent = "התחברות 🔐";
+    document
+      .getElementById("loginButton")
+      .textContent =
+      "התחברות 🔐";
 
-    document.getElementById("loginMessage")
+    document
+      .getElementById("loginMessage")
       .textContent =
       "החשבון חייב להיות פעיל. במקרה של בעיה, פנה למנהל.";
 
-    document.getElementById("designedText")
-      .textContent = "עוצב על ידי";
+    document
+      .getElementById("designedText")
+      .textContent =
+      "עוצב על ידי";
 
   }else{
 
     html.lang = "ar";
     html.dir = "rtl";
 
-    document.getElementById("languageButton")
-      .textContent = "עברית";
+    document
+      .getElementById("languageButton")
+      .textContent =
+      "עברית";
 
-    document.getElementById("loginTitle")
-      .textContent = "نظام إدارة الطلبيات";
+    document
+      .getElementById("loginTitle")
+      .textContent =
+      "نظام إدارة الطلبيات";
 
-    document.getElementById("loginBrand")
-      .textContent = "MODULAR TECH";
+    document
+      .getElementById("loginBrand")
+      .textContent =
+      "MODULAR TECH";
 
-    document.getElementById("usernameLabel")
-      .textContent = "اسم المستخدم";
+    document
+      .getElementById("usernameLabel")
+      .textContent =
+      "اسم المستخدم";
 
-    document.getElementById("passwordLabel")
-      .textContent = "كلمة المرور";
+    document
+      .getElementById("passwordLabel")
+      .textContent =
+      "كلمة المرور";
 
-    document.getElementById("loginButton")
-      .textContent = "تسجيل الدخول 🔐";
+    document
+      .getElementById("loginButton")
+      .textContent =
+      "تسجيل الدخول 🔐";
 
-    document.getElementById("loginMessage")
+    document
+      .getElementById("loginMessage")
       .textContent =
       "يجب أن يكون حسابك فعالاً. في حال وجود مشكلة، تواصل مع المدير.";
 
-    document.getElementById("designedText")
-      .textContent = "صمم بواسطة";
+    document
+      .getElementById("designedText")
+      .textContent =
+      "صمم بواسطة";
+
   }
 
-  document.querySelectorAll("[data-i18n]")
+
+  document
+    .querySelectorAll("[data-i18n]")
     .forEach(el=>{
 
       const key =
-        el.getAttribute("data-i18n");
+        el.getAttribute(
+          "data-i18n"
+        );
 
-      if(translations[currentLanguage][key]){
+      if(
+        translations[currentLanguage][key]
+      ){
+
         el.textContent =
           translations[currentLanguage][key];
+
       }
 
     });
+
+
+  /*
+    تحديث عنوان الصفحة الحالية
+    بعد تغيير اللغة.
+  */
+
+  const activePage =
+    document
+      .querySelector(
+        ".nav-btn[data-page].active"
+      );
+
+  if(activePage){
+
+    showPage(
+      activePage.dataset.page
+    );
+
+  }
 
 }
 
@@ -1899,195 +2084,272 @@ function applyLanguage(){
 
 document
   .getElementById("loginForm")
-  .addEventListener("submit", async function(e){
+  .addEventListener(
+    "submit",
+    async function(e){
 
-    e.preventDefault();
+      e.preventDefault();
 
-    const username =
-      document.getElementById("username")
-        .value
-        .trim();
+      const username =
+        document
+          .getElementById("username")
+          .value
+          .trim();
 
-    const password =
-      document.getElementById("password")
-        .value;
+      const password =
+        document
+          .getElementById("password")
+          .value;
 
-    if(!username || !password){
-      showToast("يرجى إدخال اسم المستخدم وكلمة المرور",true);
-      return;
-    }
+      if(!username || !password){
 
-    const button =
-      document.getElementById("loginButton");
-
-    button.disabled = true;
-
-    button.textContent =
-      currentLanguage === "he"
-        ? "מתחבר..."
-        : "جارٍ تسجيل الدخول...";
-
-    try{
-
-      /*
-        الخطوة الأولى:
-        نبحث عن المستخدم بواسطة username.
-
-        لا نستخدم user_id هنا.
-      */
-
-      const profileResult =
-        await request(
-          "/rest/v1/profiles" +
-          "?select=id,username,full_name,role,active,email" +
-          "&username=eq." +
-          encodeURIComponent(username) +
-          "&limit=1"
-        );
-
-      if(!profileResult || !profileResult.length){
-
-        throw new Error(
+        showToast(
           currentLanguage === "he"
-            ? "שם המשתמש לא נמצא"
-            : "اسم المستخدم غير موجود"
+            ? "נא להזין שם משתמש וסיסמה"
+            : "يرجى إدخال اسم المستخدم وكلمة المرور",
+          true
         );
-      }
 
-      const profile =
-        profileResult[0];
-
-      if(profile.active === false){
-
-        throw new Error(
-          currentLanguage === "he"
-            ? "החשבון אינו פעיל"
-            : "الحساب غير فعال"
-        );
-      }
-
-      if(!profile.email){
-
-        throw new Error(
-          "لا يوجد بريد إلكتروني مرتبط بهذا المستخدم"
-        );
+        return;
       }
 
 
-      /*
-        تسجيل الدخول الحقيقي عبر Supabase Auth
-      */
+      const button =
+        document
+          .getElementById("loginButton");
 
-      const loginResponse =
-        await fetch(
-          SUPABASE_URL +
-          "/auth/v1/token?grant_type=password",
-          {
-            method:"POST",
-            headers:{
-              "apikey":SUPABASE_KEY,
-              "Content-Type":"application/json"
-            },
-            body:JSON.stringify({
-              email:profile.email,
-              password:password
-            })
-          }
-        );
-
-      const loginText =
-        await loginResponse.text();
-
-      let loginData = null;
-
-      try{
-        loginData =
-          loginText
-            ? JSON.parse(loginText)
-            : null;
-      }catch{
-        loginData = loginText;
-      }
-
-      if(!loginResponse.ok){
-
-        throw new Error(
-          loginData?.msg ||
-          loginData?.message ||
-          loginData?.error_description ||
-          loginData?.error ||
-          "فشل تسجيل الدخول"
-        );
-      }
-
-
-      localStorage.setItem(
-        "supabase_access_token",
-        loginData.access_token
-      );
-
-      if(loginData.refresh_token){
-
-        localStorage.setItem(
-          "supabase_refresh_token",
-          loginData.refresh_token
-        );
-
-      }
-
-
-      /*
-        تحميل بيانات المستخدم.
-
-        مهم:
-        هنا تم إصلاح الخطأ.
-
-        لا يوجد profiles.user_id
-        لذلك نستخدم profiles.id
-      */
-
-      await loadProfile();
-
-
-      document
-        .getElementById("loginScreen")
-        .classList.add("hidden");
-
-      document
-        .getElementById("app")
-        .classList.remove("hidden");
-
-
-      await initializeApp();
-
-      showToast(
-        currentLanguage === "he"
-          ? "התחברת בהצלחה"
-          : "تم تسجيل الدخول بنجاح"
-      );
-
-    }catch(error){
-
-      console.error(error);
-
-      showToast(
-        error.message ||
-        "حدث خطأ أثناء تسجيل الدخول",
-        true
-      );
-
-    }finally{
-
-      button.disabled = false;
+      button.disabled = true;
 
       button.textContent =
         currentLanguage === "he"
-          ? "התחברות 🔐"
-          : "تسجيل الدخول 🔐";
+          ? "מתחבר..."
+          : "جارٍ تسجيل الدخول...";
+
+
+      try{
+
+        /*
+          حذف أي جلسة قديمة تالفة
+          قبل تسجيل الدخول الجديد.
+        */
+
+        localStorage.removeItem(
+          "supabase_access_token"
+        );
+
+        localStorage.removeItem(
+          "supabase_refresh_token"
+        );
+
+
+        /*
+          البحث عن المستخدم بواسطة username.
+        */
+
+        const profileResult =
+          await request(
+            "/rest/v1/profiles" +
+            "?select=id,username,full_name,role,active,email" +
+            "&username=eq." +
+            encodeURIComponent(username) +
+            "&limit=1"
+          );
+
+
+        if(
+          !profileResult ||
+          !profileResult.length
+        ){
+
+          throw new Error(
+            currentLanguage === "he"
+              ? "שם המשתמש לא נמצא"
+              : "اسم المستخدم غير موجود"
+          );
+
+        }
+
+
+        const profile =
+          profileResult[0];
+
+
+        if(profile.active === false){
+
+          throw new Error(
+            currentLanguage === "he"
+              ? "החשבון אינו פעיל"
+              : "الحساب غير فعال"
+          );
+
+        }
+
+
+        if(!profile.email){
+
+          throw new Error(
+            currentLanguage === "he"
+              ? "לא קיים אימייל המקושר למשתמש"
+              : "لا يوجد بريد إلكتروني مرتبط بهذا المستخدم"
+          );
+
+        }
+
+
+        /*
+          تسجيل الدخول الحقيقي عبر Supabase Auth.
+        */
+
+        const loginResponse =
+          await fetch(
+            SUPABASE_URL +
+            "/auth/v1/token?grant_type=password",
+            {
+              method:"POST",
+
+              headers:{
+                "apikey":
+                  SUPABASE_KEY,
+
+                "Content-Type":
+                  "application/json"
+              },
+
+              body:
+                JSON.stringify({
+                  email:
+                    profile.email,
+
+                  password:
+                    password
+                })
+            }
+          );
+
+
+        const loginText =
+          await loginResponse.text();
+
+        let loginData = null;
+
+        try{
+
+          loginData =
+            loginText
+              ? JSON.parse(loginText)
+              : null;
+
+        }catch{
+
+          loginData =
+            loginText;
+
+        }
+
+
+        if(!loginResponse.ok){
+
+          throw new Error(
+            loginData?.msg ||
+            loginData?.message ||
+            loginData?.error_description ||
+            loginData?.error ||
+            (
+              currentLanguage === "he"
+                ? "ההתחברות נכשלה"
+                : "فشل تسجيل الدخول"
+            )
+          );
+
+        }
+
+
+        if(!loginData?.access_token){
+
+          throw new Error(
+            "لم يتم الحصول على Access Token"
+          );
+
+        }
+
+
+        /*
+          حفظ الجلسة.
+        */
+
+        localStorage.setItem(
+          "supabase_access_token",
+          loginData.access_token
+        );
+
+
+        if(loginData.refresh_token){
+
+          localStorage.setItem(
+            "supabase_refresh_token",
+            loginData.refresh_token
+          );
+
+        }
+
+
+        /*
+          تحميل Profile الحقيقي
+          بواسطة Auth UUID.
+        */
+
+        await loadProfile();
+
+
+        document
+          .getElementById("loginScreen")
+          .classList.add("hidden");
+
+        document
+          .getElementById("app")
+          .classList.remove("hidden");
+
+
+        await initializeApp();
+
+
+        showToast(
+          currentLanguage === "he"
+            ? "התחברת בהצלחה"
+            : "تم تسجيل الدخول بنجاح"
+        );
+
+
+      }catch(error){
+
+        console.error(
+          "Login error:",
+          error
+        );
+
+        showToast(
+          error.message ||
+          (
+            currentLanguage === "he"
+              ? "אירעה שגיאה"
+              : "حدث خطأ أثناء تسجيل الدخول"
+          ),
+          true
+        );
+
+      }finally{
+
+        button.disabled = false;
+
+        button.textContent =
+          currentLanguage === "he"
+            ? "התחברות 🔐"
+            : "تسجيل الدخول 🔐";
+
+      }
 
     }
-
-  });
+  );
 
 
 /* =========================================================
@@ -2096,35 +2358,20 @@ document
 
 async function loadProfile(){
 
-  /*
-    نحصل على مستخدم Supabase Auth
-  */
-
   const user =
-    await request("/auth/v1/user");
+    await request(
+      "/auth/v1/user"
+    );
+
 
   if(!user || !user.id){
 
     throw new Error(
       "لم يتم العثور على مستخدم Auth"
     );
+
   }
 
-
-  /*
-    الإصلاح الأساسي:
-
-    الجدول profiles عندك لا يحتوي
-    على user_id.
-
-    لذلك لا نرسل:
-
-    user_id=eq...
-
-    وإنما:
-
-    id=eq...
-  */
 
   const profiles =
     await request(
@@ -2136,11 +2383,13 @@ async function loadProfile(){
     );
 
 
-  if(!profiles || !profiles.length){
+  if(
+    !profiles ||
+    !profiles.length
+  ){
 
     /*
-      في حال كان id في profiles مختلفًا عن Auth UUID،
-      نحاول البحث بواسطة البريد الإلكتروني.
+      fallback بواسطة البريد الإلكتروني
     */
 
     if(user.email){
@@ -2154,7 +2403,11 @@ async function loadProfile(){
           "&limit=1"
         );
 
-      if(byEmail && byEmail.length){
+
+      if(
+        byEmail &&
+        byEmail.length
+      ){
 
         currentProfile =
           byEmail[0];
@@ -2166,24 +2419,31 @@ async function loadProfile(){
           currentProfile.role;
 
         return currentProfile;
+
       }
+
     }
+
 
     throw new Error(
       "تم تسجيل الدخول، ولكن لم يتم العثور على بيانات المستخدم في جدول profiles"
     );
+
   }
 
 
   const profile =
     profiles[0];
 
+
   if(profile.active === false){
 
     throw new Error(
       "هذا الحساب غير فعال"
     );
+
   }
+
 
   currentUserId =
     profile.id;
@@ -2193,6 +2453,7 @@ async function loadProfile(){
 
   role =
     profile.role;
+
 
   return profile;
 }
@@ -2204,42 +2465,62 @@ async function loadProfile(){
 
 async function initializeApp(){
 
-  document.getElementById("currentUserName")
+  document
+    .getElementById("currentUserName")
     .textContent =
-    currentProfile?.full_name ||
-    currentProfile?.username ||
-    "—";
+      currentProfile?.full_name ||
+      currentProfile?.username ||
+      "—";
 
-  document.getElementById("currentUserRole")
+
+  document
+    .getElementById("currentUserRole")
     .textContent =
-    currentProfile?.role ||
-    "—";
+      currentProfile?.role ||
+      "—";
 
-
-  /*
-    المستخدمون يظهرون للمدير فقط
-  */
 
   const isAdmin =
     role === "المدير";
 
+
   document
     .getElementById("usersNav")
-    .classList.toggle("hidden",!isAdmin);
+    .classList
+    .toggle(
+      "hidden",
+      !isAdmin
+    );
+
 
   document
     .getElementById("addOrderButton")
-    .classList.toggle("hidden",!isAdmin);
+    .classList
+    .toggle(
+      "hidden",
+      !isAdmin
+    );
+
 
   document
     .getElementById("topAddOrder")
-    .classList.toggle("hidden",!isAdmin);
+    .classList
+    .toggle(
+      "hidden",
+      !isAdmin
+    );
 
 
   await Promise.all([
+
     loadOrders(),
-    isAdmin ? loadUsers() : Promise.resolve()
+
+    isAdmin
+      ? loadUsers()
+      : Promise.resolve()
+
   ]);
+
 
   renderEverything();
 }
@@ -2258,14 +2539,17 @@ async function loadOrders(){
       "&order=created_at.desc"
     );
 
+
   orders =
-    (data || []).map(normalizeOrder);
+    (data || [])
+      .map(normalizeOrder);
 }
 
 
 function normalizeOrder(order){
 
   return {
+
     ...order,
 
     order_number:
@@ -2296,6 +2580,7 @@ function normalizeOrder(order){
     stage:
       order.stage ||
       "في العمل"
+
   };
 }
 
@@ -2307,11 +2592,15 @@ function normalizeOrder(order){
 function renderEverything(){
 
   renderDashboard();
+
   renderOrders();
+
   renderStages();
 
   if(role === "المدير"){
+
     renderUsers();
+
   }
 
 }
@@ -2326,134 +2615,178 @@ function renderDashboard(){
   const total =
     orders.length;
 
+
   const active =
     orders.filter(
       o=>o.stage !== "تم التسليم"
     ).length;
+
 
   const urgent =
     orders.filter(
       o=>o.urgent
     ).length;
 
+
   const today =
     new Date();
 
-  today.setHours(0,0,0,0);
+  today.setHours(
+    0,0,0,0
+  );
+
 
   const overdue =
     orders.filter(o=>{
 
-      if(!o.due_date) return false;
+      if(!o.due_date)
+        return false;
 
-      if(o.stage === "تم التسليم")
+      if(
+        o.stage === "تم التسليم"
+      )
         return false;
 
       const date =
-        new Date(o.due_date);
+        new Date(
+          o.due_date
+        );
 
-      date.setHours(0,0,0,0);
+      date.setHours(
+        0,0,0,0
+      );
 
       return date < today;
 
     }).length;
 
 
-  document.getElementById("statTotal")
-    .textContent = total;
+  document
+    .getElementById("statTotal")
+    .textContent =
+      total;
 
-  document.getElementById("statActive")
-    .textContent = active;
 
-  document.getElementById("statUrgent")
-    .textContent = urgent;
+  document
+    .getElementById("statActive")
+    .textContent =
+      active;
 
-  document.getElementById("statOverdue")
-    .textContent = overdue;
+
+  document
+    .getElementById("statUrgent")
+    .textContent =
+      urgent;
+
+
+  document
+    .getElementById("statOverdue")
+    .textContent =
+      overdue;
 
 
   const latest =
     orders.slice(0,6);
 
+
   const container =
-    document.getElementById("latestOrders");
+    document.getElementById(
+      "latestOrders"
+    );
+
 
   if(!latest.length){
 
     container.innerHTML =
-      `<div class="empty">لا توجد طلبيات</div>`;
+      `<div class="empty">
+        لا توجد طلبيات
+      </div>`;
 
   }else{
 
     container.innerHTML =
-      latest.map(order=>`
+      latest
+        .map(order=>`
 
-        <div style="
-          padding:15px 0;
-          border-bottom:1px solid #edf1f6;
-          display:flex;
-          justify-content:space-between;
-          gap:10px;
-          align-items:center;
-        ">
+          <div style="
+            padding:15px 0;
+            border-bottom:1px solid #edf1f6;
+            display:flex;
+            justify-content:space-between;
+            gap:10px;
+            align-items:center;
+          ">
 
-          <div>
+            <div>
 
-            <div style="
-              font-weight:900;
-              font-size:16px;
-            ">
-              ${escapeHtml(order.order_number)}
+              <div style="
+                font-weight:900;
+                font-size:16px;
+              ">
+                ${escapeHtml(
+                  order.order_number
+                )}
+              </div>
+
+              <div style="
+                color:#64748b;
+                margin-top:4px;
+              ">
+                ${escapeHtml(
+                  order.customer_name
+                )}
+              </div>
+
             </div>
 
-            <div style="
-              color:#64748b;
-              margin-top:4px;
-            ">
-              ${escapeHtml(order.customer_name)}
-            </div>
+            <span class="badge badge-stage">
+              ${escapeHtml(
+                order.stage
+              )}
+            </span>
 
           </div>
 
-          <span class="badge badge-stage">
-            ${escapeHtml(order.stage)}
-          </span>
-
-        </div>
-
-      `).join("");
+        `)
+        .join("");
 
   }
 
 
   const stageContainer =
-    document.getElementById("dashboardStages");
+    document.getElementById(
+      "dashboardStages"
+    );
+
 
   stageContainer.innerHTML =
-    STAGES.map(stage=>{
+    STAGES
+      .map(stage=>{
 
-      const count =
-        orders.filter(
-          o=>o.stage === stage
-        ).length;
+        const count =
+          orders.filter(
+            o=>o.stage === stage
+          ).length;
 
-      return `
 
-        <div class="stage-card">
+        return `
 
-          <div class="stage-name">
-            ${escapeHtml(stage)}
+          <div class="stage-card">
+
+            <div class="stage-name">
+              ${escapeHtml(stage)}
+            </div>
+
+            <div class="stage-count">
+              ${count}
+            </div>
+
           </div>
 
-          <div class="stage-count">
-            ${count}
-          </div>
+        `;
 
-        </div>
-
-      `;
-
-    }).join("");
+      })
+      .join("");
 }
 
 
@@ -2464,12 +2797,20 @@ function renderDashboard(){
 function renderOrders(){
 
   const tbody =
-    document.getElementById("ordersTable");
+    document.getElementById(
+      "ordersTable"
+    );
 
-  if(!tbody) return;
+
+  if(!tbody)
+    return;
+
 
   const search =
-    document.getElementById("orderSearch")
+    document
+      .getElementById(
+        "orderSearch"
+      )
       ?.value
       .trim()
       .toLowerCase() || "";
@@ -2489,7 +2830,10 @@ function renderOrders(){
         .join(" ")
         .toLowerCase();
 
-      return text.includes(search);
+
+      return text.includes(
+        search
+      );
 
     });
 
@@ -2512,61 +2856,85 @@ function renderOrders(){
 
 
   tbody.innerHTML =
-    filtered.map(order=>{
+    filtered
+      .map(order=>{
 
-      const urgent =
-        order.urgent;
+        const urgent =
+          order.urgent;
 
-      const actions =
-        renderOrderActions(order);
 
-      return `
+        const actions =
+          renderOrderActions(
+            order
+          );
 
-        <tr class="${urgent ? "urgent-row" : ""}">
 
-          <td>
-            <strong>
-              ${escapeHtml(order.order_number)}
-            </strong>
-          </td>
+        return `
 
-          <td>
-            ${escapeHtml(order.customer_name)}
-          </td>
+          <tr class="${
+            urgent
+              ? "urgent-row"
+              : ""
+          }">
 
-          <td>
-            ${escapeHtml(order.phone || "—")}
-          </td>
+            <td>
+              <strong>
+                ${escapeHtml(
+                  order.order_number
+                )}
+              </strong>
+            </td>
 
-          <td>
-            ${formatDate(order.due_date)}
-          </td>
+            <td>
+              ${escapeHtml(
+                order.customer_name
+              )}
+            </td>
 
-          <td>
-            <span class="badge badge-stage">
-              ${escapeHtml(order.stage)}
-            </span>
-          </td>
+            <td>
+              ${escapeHtml(
+                order.phone || "—"
+              )}
+            </td>
 
-          <td>
+            <td>
+              ${formatDate(
+                order.due_date
+              )}
+            </td>
 
-            ${
-              urgent
-                ? `<span class="badge badge-urgent">مهمة جدًا</span>`
-                : `<span class="badge badge-normal">عادية</span>`
-            }
+            <td>
+              <span class="badge badge-stage">
+                ${escapeHtml(
+                  order.stage
+                )}
+              </span>
+            </td>
 
-          </td>
+            <td>
 
-          <td>
-            ${actions}
-          </td>
+              ${
+                urgent
+                  ? `<span class="badge badge-urgent">
+                      مهمة جدًا
+                     </span>`
+                  : `<span class="badge badge-normal">
+                      عادية
+                     </span>`
+              }
 
-        </tr>
+            </td>
 
-      `;
+            <td>
+              ${actions}
+            </td>
 
-    }).join("");
+          </tr>
+
+        `;
+
+      })
+      .join("");
 }
 
 
@@ -2578,16 +2946,13 @@ function renderOrderActions(order){
 
   let html = "";
 
-  /*
-    المدير يستطيع التعديل والحذف
-  */
 
   if(role === "المدير"){
 
     html += `
       <button
         class="btn btn-secondary"
-        onclick="editOrder('${order.id}')">
+        onclick="editOrder('${escapeAttr(order.id)}')">
         تعديل
       </button>
     `;
@@ -2595,12 +2960,11 @@ function renderOrderActions(order){
   }
 
 
-  /*
-    الانتقال للمرحلة التالية
-  */
-
   const next =
-    getNextStage(order.stage);
+    getNextStage(
+      order.stage
+    );
+
 
   if(next){
 
@@ -2608,14 +2972,17 @@ function renderOrderActions(order){
       role === "المدير" ||
       role === next.role;
 
+
     if(allowed){
 
       html += `
         <button
           class="btn btn-success"
           style="margin-right:5px;"
-          onclick="advanceOrder('${order.id}')">
-          ${escapeHtml(next.stage)}
+          onclick="advanceOrder('${escapeAttr(order.id)}')">
+          ${escapeHtml(
+            next.stage
+          )}
         </button>
       `;
 
@@ -2630,7 +2997,7 @@ function renderOrderActions(order){
       <button
         class="btn btn-danger"
         style="margin-right:5px;"
-        onclick="deleteOrder('${order.id}')">
+        onclick="deleteOrder('${escapeAttr(order.id)}')">
         حذف
       </button>
     `;
@@ -2641,9 +3008,12 @@ function renderOrderActions(order){
   if(!html){
 
     html =
-      `<span style="color:#94a3b8;">—</span>`;
+      `<span style="color:#94a3b8;">
+        —
+      </span>`;
 
   }
+
 
   return html;
 }
@@ -2653,34 +3023,59 @@ function renderOrderActions(order){
    NEXT STAGE
 ========================================================= */
 
-function getNextStage(currentStage){
+function getNextStage(
+  currentStage
+){
 
   const index =
-    STAGES.indexOf(currentStage);
+    STAGES.indexOf(
+      currentStage
+    );
 
-  if(index < 0 || index >= STAGES.length - 1)
+
+  if(
+    index < 0 ||
+    index >= STAGES.length - 1
+  ){
+
     return null;
+
+  }
+
 
   const nextStage =
     STAGES[index + 1];
 
-  /*
-    المرحلة التي تستطيع تنفيذ الانتقال
-  */
 
   const roleMap = {
+
+    "في العمل":"القص",
+
     "تم القص":"الكنت",
+
     "تم الكنت":"CNC",
+
     "تم CNC":"التركيب",
+
     "تم التركيب":"الدهان",
+
     "تم الدهان":"التغليف",
+
     "تم التغليف":"التحميل",
+
     "تم التحميل":"التسليم"
+
   };
 
+
   return {
-    stage:nextStage,
-    role:roleMap[currentStage] || null
+
+    stage:
+      nextStage,
+
+    role:
+      roleMap[currentStage] || null
+
   };
 }
 
@@ -2696,21 +3091,32 @@ async function advanceOrder(id){
       o=>String(o.id) === String(id)
     );
 
-  if(!order) return;
+
+  if(!order)
+    return;
+
 
   const next =
-    getNextStage(order.stage);
+    getNextStage(
+      order.stage
+    );
 
-  if(!next) return;
+
+  if(!next)
+    return;
+
 
   const allowed =
     role === "المدير" ||
     role === next.role;
 
+
   if(!allowed){
 
     showToast(
-      "ليس لديك صلاحية لنقل الطلبية لهذه المرحلة",
+      currentLanguage === "he"
+        ? "אין לך הרשאה להעביר את ההזמנה לשלב זה"
+        : "ليس لديك صلاحية لنقل الطلبية لهذه المرحلة",
       true
     );
 
@@ -2725,12 +3131,17 @@ async function advanceOrder(id){
       encodeURIComponent(id),
       {
         method:"PATCH",
+
         headers:{
-          "Prefer":"return=minimal"
+          "Prefer":
+            "return=minimal"
         },
-        body:JSON.stringify({
-          stage:next.stage
-        })
+
+        body:
+          JSON.stringify({
+            stage:
+              next.stage
+          })
       }
     );
 
@@ -2738,16 +3149,14 @@ async function advanceOrder(id){
     order.stage =
       next.stage;
 
+
     renderEverything();
 
 
-    /*
-      إشعار داخلي بسيط.
-      يمكن ربط WhatsApp لاحقًا من Edge Function.
-    */
-
     showToast(
-      `الطلبية رقم ${order.order_number} أصبحت في حالة ${next.stage}`
+      currentLanguage === "he"
+        ? `הזמנה מספר ${order.order_number} נמצאת כעת ב-${next.stage}`
+        : `الطلبية رقم ${order.order_number} أصبحت في حالة ${next.stage}`
     );
 
 
@@ -2755,8 +3164,13 @@ async function advanceOrder(id){
 
     console.error(error);
 
+
     showToast(
-      "تعذر تحديث حالة الطلبية: " +
+      (
+        currentLanguage === "he"
+          ? "לא ניתן לעדכן את מצב ההזמנה: "
+          : "تعذر تحديث حالة الطلبية: "
+      ) +
       error.message,
       true
     );
@@ -2772,77 +3186,144 @@ async function advanceOrder(id){
 function populateStageSelect(){
 
   const select =
-    document.getElementById("orderStage");
+    document.getElementById(
+      "orderStage"
+    );
+
 
   select.innerHTML =
-    STAGES.map(stage=>
-      `<option value="${escapeAttr(stage)}">
-        ${escapeHtml(stage)}
-      </option>`
-    ).join("");
+    STAGES
+      .map(stage=>
+        `<option value="${escapeAttr(stage)}">
+          ${escapeHtml(stage)}
+        </option>`
+      )
+      .join("");
 }
 
 
-function openOrderModal(order = null){
+function openOrderModal(
+  order=null
+){
 
   if(role !== "المدير"){
 
     showToast(
-      "إضافة وتعديل الطلبيات متاحان للمدير فقط",
+      currentLanguage === "he"
+        ? "הוספה ועריכה זמינות למנהל בלבד"
+        : "إضافة وتعديل الطلبيات متاحان للمدير فقط",
       true
     );
 
     return;
   }
 
+
   populateStageSelect();
 
+
   document
-    .getElementById("orderModal")
-    .classList.remove("hidden");
+    .getElementById(
+      "orderModal"
+    )
+    .classList
+    .remove("hidden");
+
 
   if(order){
 
-    document.getElementById("orderModalTitle")
-      .textContent = "تعديل الطلبية";
+    document
+      .getElementById(
+        "orderModalTitle"
+      )
+      .textContent =
+      currentLanguage === "he"
+        ? "עריכת הזמנה"
+        : "تعديل الطلبية";
 
-    document.getElementById("orderId")
-      .value = order.id || "";
 
-    document.getElementById("orderNumber")
-      .value = order.order_number || "";
+    document
+      .getElementById("orderId")
+      .value =
+      order.id || "";
 
-    document.getElementById("customerName")
-      .value = order.customer_name || "";
 
-    document.getElementById("customerPhone")
-      .value = order.phone || "";
+    document
+      .getElementById("orderNumber")
+      .value =
+      order.order_number || "";
 
-    document.getElementById("dueDate")
-      .value = order.due_date || "";
 
-    document.getElementById("orderStage")
-      .value = order.stage || "في العمل";
+    document
+      .getElementById("customerName")
+      .value =
+      order.customer_name || "";
 
-    document.getElementById("orderUrgent")
-      .value = String(Boolean(order.urgent));
 
-    document.getElementById("orderNotes")
-      .value = order.notes || "";
+    document
+      .getElementById("customerPhone")
+      .value =
+      order.phone || "";
+
+
+    document
+      .getElementById("dueDate")
+      .value =
+      order.due_date || "";
+
+
+    document
+      .getElementById("orderStage")
+      .value =
+      order.stage ||
+      "في العمل";
+
+
+    document
+      .getElementById("orderUrgent")
+      .value =
+      String(
+        Boolean(order.urgent)
+      );
+
+
+    document
+      .getElementById("orderNotes")
+      .value =
+      order.notes || "";
 
   }else{
 
-    document.getElementById("orderModalTitle")
-      .textContent = "إضافة طلبية";
+    document
+      .getElementById(
+        "orderModalTitle"
+      )
+      .textContent =
+      currentLanguage === "he"
+        ? "הוספת הזמנה"
+        : "إضافة طلبية";
 
-    document.getElementById("orderForm")
+
+    document
+      .getElementById(
+        "orderForm"
+      )
       .reset();
 
-    document.getElementById("orderId")
+
+    document
+      .getElementById(
+        "orderId"
+      )
       .value = "";
 
-    document.getElementById("orderStage")
-      .value = "في العمل";
+
+    document
+      .getElementById(
+        "orderStage"
+      )
+      .value =
+      "في العمل";
 
   }
 }
@@ -2851,8 +3332,11 @@ function openOrderModal(order = null){
 function closeOrderModal(){
 
   document
-    .getElementById("orderModal")
-    .classList.add("hidden");
+    .getElementById(
+      "orderModal"
+    )
+    .classList
+    .add("hidden");
 
 }
 
@@ -2862,122 +3346,181 @@ function closeOrderModal(){
 ========================================================= */
 
 document
-  .getElementById("orderForm")
-  .addEventListener("submit",async function(e){
+  .getElementById(
+    "orderForm"
+  )
+  .addEventListener(
+    "submit",
+    async function(e){
 
-    e.preventDefault();
-
-    if(role !== "المدير"){
-
-      showToast(
-        "ليس لديك صلاحية",
-        true
-      );
-
-      return;
-    }
+      e.preventDefault();
 
 
-    const id =
-      document.getElementById("orderId")
-        .value;
-
-    const payload = {
-
-      order_number:
-        document.getElementById("orderNumber")
-          .value
-          .trim(),
-
-      customer_name:
-        document.getElementById("customerName")
-          .value
-          .trim(),
-
-      phone:
-        document.getElementById("customerPhone")
-          .value
-          .trim(),
-
-      due_date:
-        document.getElementById("dueDate")
-          .value || null,
-
-      stage:
-        document.getElementById("orderStage")
-          .value,
-
-      urgent:
-        document.getElementById("orderUrgent")
-          .value === "true",
-
-      notes:
-        document.getElementById("orderNotes")
-          .value
-          .trim()
-
-    };
-
-
-    try{
-
-      if(id){
-
-        await request(
-          "/rest/v1/orders?id=eq." +
-          encodeURIComponent(id),
-          {
-            method:"PATCH",
-            headers:{
-              "Prefer":"return=minimal"
-            },
-            body:JSON.stringify(payload)
-          }
-        );
+      if(role !== "المدير"){
 
         showToast(
-          "تم تعديل الطلبية بنجاح"
+          "ليس لديك صلاحية",
+          true
         );
 
-      }else{
+        return;
+      }
 
-        await request(
-          "/rest/v1/orders",
-          {
-            method:"POST",
-            headers:{
-              "Prefer":"return=representation"
-            },
-            body:JSON.stringify(payload)
-          }
-        );
+
+      const id =
+        document
+          .getElementById(
+            "orderId"
+          )
+          .value;
+
+
+      const payload = {
+
+        order_number:
+          document
+            .getElementById(
+              "orderNumber"
+            )
+            .value
+            .trim(),
+
+        customer_name:
+          document
+            .getElementById(
+              "customerName"
+            )
+            .value
+            .trim(),
+
+        phone:
+          document
+            .getElementById(
+              "customerPhone"
+            )
+            .value
+            .trim(),
+
+        due_date:
+          document
+            .getElementById(
+              "dueDate"
+            )
+            .value ||
+          null,
+
+        stage:
+          document
+            .getElementById(
+              "orderStage"
+            )
+            .value,
+
+        urgent:
+          document
+            .getElementById(
+              "orderUrgent"
+            )
+            .value ===
+          "true",
+
+        notes:
+          document
+            .getElementById(
+              "orderNotes"
+            )
+            .value
+            .trim()
+
+      };
+
+
+      try{
+
+        if(id){
+
+          await request(
+            "/rest/v1/orders?id=eq." +
+            encodeURIComponent(id),
+            {
+              method:"PATCH",
+
+              headers:{
+                "Prefer":
+                  "return=minimal"
+              },
+
+              body:
+                JSON.stringify(
+                  payload
+                )
+            }
+          );
+
+
+          showToast(
+            currentLanguage === "he"
+              ? "ההזמנה עודכנה בהצלחה"
+              : "تم تعديل الطلبية بنجاح"
+          );
+
+        }else{
+
+          await request(
+            "/rest/v1/orders",
+            {
+              method:"POST",
+
+              headers:{
+                "Prefer":
+                  "return=representation"
+              },
+
+              body:
+                JSON.stringify(
+                  payload
+                )
+            }
+          );
+
+
+          showToast(
+            currentLanguage === "he"
+              ? "ההזמנה נוספה בהצלחה"
+              : "تمت إضافة الطلبية بنجاح"
+          );
+
+        }
+
+
+        closeOrderModal();
+
+
+        await loadOrders();
+
+
+        renderEverything();
+
+
+      }catch(error){
+
+        console.error(error);
+
 
         showToast(
-          "تمت إضافة الطلبية بنجاح"
+          (
+            currentLanguage === "he"
+              ? "לא ניתן לשמור את ההזמנה: "
+              : "تعذر حفظ الطلبية: "
+          ) +
+          error.message,
+          true
         );
 
       }
 
-
-      closeOrderModal();
-
-      await loadOrders();
-
-      renderEverything();
-
-    }catch(error){
-
-      console.error(error);
-
-      showToast(
-        "تعذر حفظ الطلبية: " +
-        error.message,
-        true
-      );
-
     }
-
-  });
+  );
 
 
 /* =========================================================
@@ -2991,9 +3534,14 @@ function editOrder(id){
       o=>String(o.id) === String(id)
     );
 
-  if(!order) return;
 
-  openOrderModal(order);
+  if(!order)
+    return;
+
+
+  openOrderModal(
+    order
+  );
 }
 
 
@@ -3006,17 +3554,22 @@ async function deleteOrder(id){
   if(role !== "المدير")
     return;
 
+
   const order =
     orders.find(
       o=>String(o.id) === String(id)
     );
 
-  if(!order) return;
+
+  if(!order)
+    return;
+
 
   const confirmed =
     confirm(
       `هل أنت متأكد من حذف الطلبية رقم ${order.order_number}؟`
     );
+
 
   if(!confirmed)
     return;
@@ -3029,8 +3582,10 @@ async function deleteOrder(id){
       encodeURIComponent(id),
       {
         method:"DELETE",
+
         headers:{
-          "Prefer":"return=minimal"
+          "Prefer":
+            "return=minimal"
         }
       }
     );
@@ -3038,18 +3593,28 @@ async function deleteOrder(id){
 
     await loadOrders();
 
+
     renderEverything();
 
+
     showToast(
-      "تم حذف الطلبية"
+      currentLanguage === "he"
+        ? "ההזמנה נמחקה"
+        : "تم حذف الطلبية"
     );
+
 
   }catch(error){
 
     console.error(error);
 
+
     showToast(
-      "تعذر حذف الطلبية: " +
+      (
+        currentLanguage === "he"
+          ? "לא ניתן למחוק את ההזמנה: "
+          : "تعذر حذف الطلبية: "
+      ) +
       error.message,
       true
     );
@@ -3065,43 +3630,51 @@ async function deleteOrder(id){
 function renderStages(){
 
   const container =
-    document.getElementById("stagesPage");
+    document.getElementById(
+      "stagesPage"
+    );
 
-  if(!container) return;
+
+  if(!container)
+    return;
+
 
   container.innerHTML =
-    STAGES.map(stage=>{
+    STAGES
+      .map(stage=>{
 
-      const count =
-        orders.filter(
-          o=>o.stage === stage
-        ).length;
+        const count =
+          orders.filter(
+            o=>o.stage === stage
+          ).length;
 
-      return `
 
-        <div class="stage-card">
+        return `
 
-          <div class="stage-name">
-            ${escapeHtml(stage)}
+          <div class="stage-card">
+
+            <div class="stage-name">
+              ${escapeHtml(stage)}
+            </div>
+
+            <div class="stage-count">
+              ${count}
+            </div>
+
+            <div style="
+              color:#64748b;
+              margin-top:5px;
+              font-size:13px;
+            ">
+              طلبية
+            </div>
+
           </div>
 
-          <div class="stage-count">
-            ${count}
-          </div>
+        `;
 
-          <div style="
-            color:#64748b;
-            margin-top:5px;
-            font-size:13px;
-          ">
-            طلبية
-          </div>
-
-        </div>
-
-      `;
-
-    }).join("");
+      })
+      .join("");
 }
 
 
@@ -3114,12 +3687,14 @@ async function loadUsers(){
   if(role !== "المدير")
     return;
 
+
   const data =
     await request(
       "/rest/v1/profiles" +
       "?select=id,username,full_name,role,active,email" +
       "&order=username.asc"
     );
+
 
   users =
     data || [];
@@ -3131,11 +3706,16 @@ function renderUsers(){
   if(role !== "المدير")
     return;
 
+
   const tbody =
-    document.getElementById("usersTable");
+    document.getElementById(
+      "usersTable"
+    );
+
 
   if(!tbody)
     return;
+
 
   if(!users.length){
 
@@ -3155,43 +3735,61 @@ function renderUsers(){
 
 
   tbody.innerHTML =
-    users.map(user=>`
+    users
+      .map(user=>`
 
-      <tr>
+        <tr>
 
-        <td>
-          <strong>
-            ${escapeHtml(user.username || "—")}
-          </strong>
-        </td>
+          <td>
+            <strong>
+              ${escapeHtml(
+                user.username ||
+                "—"
+              )}
+            </strong>
+          </td>
 
-        <td>
-          ${escapeHtml(user.full_name || "—")}
-        </td>
+          <td>
+            ${escapeHtml(
+              user.full_name ||
+              "—"
+            )}
+          </td>
 
-        <td>
-          <span class="badge badge-role">
-            ${escapeHtml(user.role || "—")}
-          </span>
-        </td>
+          <td>
+            <span class="badge badge-role">
+              ${escapeHtml(
+                user.role ||
+                "—"
+              )}
+            </span>
+          </td>
 
-        <td>
-          ${escapeHtml(user.email || "—")}
-        </td>
+          <td>
+            ${escapeHtml(
+              user.email ||
+              "—"
+            )}
+          </td>
 
-        <td>
+          <td>
 
-          ${
-            user.active
-              ? `<span class="badge badge-normal">فعال</span>`
-              : `<span class="badge badge-urgent">غير فعال</span>`
-          }
+            ${
+              user.active
+                ? `<span class="badge badge-normal">
+                    فعال
+                   </span>`
+                : `<span class="badge badge-urgent">
+                    غير فعال
+                   </span>`
+            }
 
-        </td>
+          </td>
 
-      </tr>
+        </tr>
 
-    `).join("");
+      `)
+      .join("");
 }
 
 
@@ -3202,14 +3800,19 @@ function renderUsers(){
 function populateRoles(){
 
   const select =
-    document.getElementById("newRole");
+    document.getElementById(
+      "newRole"
+    );
+
 
   select.innerHTML =
-    ROLES.map(roleName=>
-      `<option value="${escapeAttr(roleName)}">
-        ${escapeHtml(roleName)}
-      </option>`
-    ).join("");
+    ROLES
+      .map(roleName=>
+        `<option value="${escapeAttr(roleName)}">
+          ${escapeHtml(roleName)}
+        </option>`
+      )
+      .join("");
 }
 
 
@@ -3225,11 +3828,16 @@ function openUserModal(){
     return;
   }
 
+
   populateRoles();
 
+
   document
-    .getElementById("userModal")
-    .classList.remove("hidden");
+    .getElementById(
+      "userModal"
+    )
+    .classList
+    .remove("hidden");
 
 }
 
@@ -3237,8 +3845,11 @@ function openUserModal(){
 function closeUserModal(){
 
   document
-    .getElementById("userModal")
-    .classList.add("hidden");
+    .getElementById(
+      "userModal"
+    )
+    .classList
+    .add("hidden");
 
 }
 
@@ -3248,132 +3859,253 @@ function closeUserModal(){
 ========================================================= */
 
 document
-  .getElementById("userForm")
-  .addEventListener("submit",async function(e){
+  .getElementById(
+    "userForm"
+  )
+  .addEventListener(
+    "submit",
+    async function(e){
 
-    e.preventDefault();
-
-    if(role !== "المدير")
-      return;
-
-
-    /*
-      إنشاء مستخدم Auth يجب أن يتم بواسطة
-      Edge Function آمنة.
-
-      لا نضع service_role داخل index.html.
-    */
-
-    const payload = {
-
-      username:
-        document.getElementById("newUsername")
-          .value
-          .trim(),
-
-      full_name:
-        document.getElementById("newFullName")
-          .value
-          .trim(),
-
-      email:
-        document.getElementById("newEmail")
-          .value
-          .trim(),
-
-      password:
-        document.getElementById("newPassword")
-          .value,
-
-      role:
-        document.getElementById("newRole")
-          .value
-
-    };
+      e.preventDefault();
 
 
-    try{
-
-      /*
-        إذا كانت Edge Function الخاصة بك
-        هي rapid-function يمكن استخدامها هنا.
-      */
-
-      const accessToken =
-        localStorage.getItem(
-          "supabase_access_token"
-        );
-
-      const response =
-        await fetch(
-          SUPABASE_URL +
-          "/functions/v1/rapid-function",
-          {
-            method:"POST",
-            headers:{
-              "apikey":SUPABASE_KEY,
-              "Authorization":
-                "Bearer " + accessToken,
-              "Content-Type":
-                "application/json"
-            },
-            body:JSON.stringify(payload)
-          }
-        );
+      if(role !== "المدير")
+        return;
 
 
-      const text =
-        await response.text();
+      const payload = {
 
-      let data = null;
+        username:
+          document
+            .getElementById(
+              "newUsername"
+            )
+            .value
+            .trim(),
+
+        full_name:
+          document
+            .getElementById(
+              "newFullName"
+            )
+            .value
+            .trim(),
+
+        email:
+          document
+            .getElementById(
+              "newEmail"
+            )
+            .value
+            .trim(),
+
+        password:
+          document
+            .getElementById(
+              "newPassword"
+            )
+            .value,
+
+        role:
+          document
+            .getElementById(
+              "newRole"
+            )
+            .value
+
+      };
+
 
       try{
-        data =
-          text ? JSON.parse(text) : null;
-      }catch{
-        data = text;
-      }
+
+        let accessToken =
+          localStorage.getItem(
+            "supabase_access_token"
+          );
 
 
-      if(!response.ok){
+        /*
+          إذا لم يوجد Access Token
+          نحاول تجديد الجلسة.
+        */
 
-        throw new Error(
-          data?.message ||
-          data?.error ||
-          text ||
-          "فشل إنشاء المستخدم"
+        if(!accessToken){
+
+          const refreshed =
+            await refreshSession();
+
+          if(!refreshed){
+
+            throw new Error(
+              "انتهت جلسة الدخول، يرجى تسجيل الدخول من جديد"
+            );
+
+          }
+
+
+          accessToken =
+            localStorage.getItem(
+              "supabase_access_token"
+            );
+
+        }
+
+
+        let response =
+          await fetch(
+            SUPABASE_URL +
+            "/functions/v1/rapid-function",
+            {
+              method:"POST",
+
+              headers:{
+                "apikey":
+                  SUPABASE_KEY,
+
+                "Authorization":
+                  "Bearer " +
+                  accessToken,
+
+                "Content-Type":
+                  "application/json"
+              },
+
+              body:
+                JSON.stringify(
+                  payload
+                )
+            }
+          );
+
+
+        /*
+          إذا انتهت صلاحية Access Token
+          نجدد الجلسة ونعيد استدعاء Function.
+        */
+
+        if(response.status === 401){
+
+          const refreshed =
+            await refreshSession();
+
+          if(refreshed){
+
+            accessToken =
+              localStorage.getItem(
+                "supabase_access_token"
+              );
+
+
+            response =
+              await fetch(
+                SUPABASE_URL +
+                "/functions/v1/rapid-function",
+                {
+                  method:"POST",
+
+                  headers:{
+                    "apikey":
+                      SUPABASE_KEY,
+
+                    "Authorization":
+                      "Bearer " +
+                      accessToken,
+
+                    "Content-Type":
+                      "application/json"
+                  },
+
+                  body:
+                    JSON.stringify(
+                      payload
+                    )
+                }
+              );
+
+          }
+
+        }
+
+
+        const text =
+          await response.text();
+
+
+        let data = null;
+
+
+        try{
+
+          data =
+            text
+              ? JSON.parse(text)
+              : null;
+
+        }catch{
+
+          data =
+            text;
+
+        }
+
+
+        if(!response.ok){
+
+          throw new Error(
+            data?.message ||
+            data?.error ||
+            text ||
+            "فشل إنشاء المستخدم"
+          );
+
+        }
+
+
+        closeUserModal();
+
+
+        document
+          .getElementById(
+            "userForm"
+          )
+          .reset();
+
+
+        await loadUsers();
+
+
+        renderUsers();
+
+
+        showToast(
+          currentLanguage === "he"
+            ? "המשתמש נוצר בהצלחה"
+            : "تم إنشاء المستخدم بنجاح"
+        );
+
+
+      }catch(error){
+
+        console.error(
+          "Create user error:",
+          error
+        );
+
+
+        showToast(
+          (
+            currentLanguage === "he"
+              ? "לא ניתן ליצור משתמש: "
+              : "تعذر إنشاء المستخدم: "
+          ) +
+          error.message,
+          true
         );
 
       }
 
-
-      closeUserModal();
-
-      document
-        .getElementById("userForm")
-        .reset();
-
-      await loadUsers();
-
-      renderUsers();
-
-      showToast(
-        "تم إنشاء المستخدم بنجاح"
-      );
-
-    }catch(error){
-
-      console.error(error);
-
-      showToast(
-        "تعذر إنشاء المستخدم: " +
-        error.message,
-        true
-      );
-
     }
-
-  });
+  );
 
 
 /* =========================================================
@@ -3385,7 +4117,9 @@ function showPage(page){
   document
     .querySelectorAll(".page")
     .forEach(el=>{
-      el.classList.add("hidden");
+      el.classList.add(
+        "hidden"
+      );
     });
 
 
@@ -3394,12 +4128,20 @@ function showPage(page){
       "page-" + page
     );
 
-  if(selected)
-    selected.classList.remove("hidden");
+
+  if(selected){
+
+    selected.classList.remove(
+      "hidden"
+    );
+
+  }
 
 
   document
-    .querySelectorAll(".nav-btn[data-page]")
+    .querySelectorAll(
+      ".nav-btn[data-page]"
+    )
     .forEach(btn=>{
 
       btn.classList.toggle(
@@ -3435,14 +4177,20 @@ function showPage(page){
   };
 
 
-  document.getElementById("pageTitle")
+  document
+    .getElementById(
+      "pageTitle"
+    )
     .textContent =
-    titles[page] || "";
+      titles[page] || "";
 
 
   document
-    .getElementById("sidebar")
-    .classList.remove("open");
+    .getElementById(
+      "sidebar"
+    )
+    .classList
+    .remove("open");
 
 }
 
@@ -3454,8 +4202,11 @@ function showPage(page){
 function toggleSidebar(){
 
   document
-    .getElementById("sidebar")
-    .classList.toggle("open");
+    .getElementById(
+      "sidebar"
+    )
+    .classList
+    .toggle("open");
 
 }
 
@@ -3473,6 +4224,7 @@ async function logout(){
         "supabase_access_token"
       );
 
+
     if(token){
 
       await fetch(
@@ -3480,10 +4232,14 @@ async function logout(){
         "/auth/v1/logout",
         {
           method:"POST",
+
           headers:{
-            "apikey":SUPABASE_KEY,
+            "apikey":
+              SUPABASE_KEY,
+
             "Authorization":
-              "Bearer " + token
+              "Bearer " +
+              token
           }
         }
       );
@@ -3492,7 +4248,10 @@ async function logout(){
 
   }catch(error){
 
-    console.warn(error);
+    console.warn(
+      "Logout request:",
+      error
+    );
 
   }
 
@@ -3505,25 +4264,43 @@ async function logout(){
     "supabase_refresh_token"
   );
 
+
   currentUserId = null;
   currentProfile = null;
   role = null;
+
   orders = [];
   users = [];
 
 
   document
-    .getElementById("app")
-    .classList.add("hidden");
+    .getElementById(
+      "app"
+    )
+    .classList
+    .add("hidden");
+
 
   document
-    .getElementById("loginScreen")
-    .classList.remove("hidden");
+    .getElementById(
+      "loginScreen"
+    )
+    .classList
+    .remove("hidden");
 
 
   document
-    .getElementById("password")
+    .getElementById(
+      "password"
+    )
     .value = "";
+
+
+  document
+    .getElementById(
+      "username"
+    )
+    .focus();
 
 }
 
@@ -3534,28 +4311,83 @@ async function logout(){
 
 async function checkExistingSession(){
 
-  const token =
+  let token =
     localStorage.getItem(
       "supabase_access_token"
     );
 
-  if(!token)
+
+  const refreshToken =
+    localStorage.getItem(
+      "supabase_refresh_token"
+    );
+
+
+  if(
+    !token &&
+    !refreshToken
+  ){
+
     return;
+
+  }
 
 
   try{
 
+    /*
+      إذا لم يوجد Access Token
+      ولكن يوجد Refresh Token،
+      نجدد الجلسة.
+    */
+
+    if(
+      !token &&
+      refreshToken
+    ){
+
+      const refreshed =
+        await refreshSession();
+
+
+      if(!refreshed){
+
+        throw new Error(
+          "انتهت جلسة تسجيل الدخول"
+        );
+
+      }
+
+    }
+
+
+    /*
+      loadProfile يستخدم request()
+      الذي يجدد الجلسة تلقائيًا
+      إذا كان Access Token منتهيًا.
+    */
+
     await loadProfile();
 
-    document
-      .getElementById("loginScreen")
-      .classList.add("hidden");
 
     document
-      .getElementById("app")
-      .classList.remove("hidden");
+      .getElementById(
+        "loginScreen"
+      )
+      .classList
+      .add("hidden");
+
+
+    document
+      .getElementById(
+        "app"
+      )
+      .classList
+      .remove("hidden");
+
 
     await initializeApp();
+
 
   }catch(error){
 
@@ -3564,6 +4396,7 @@ async function checkExistingSession(){
       error
     );
 
+
     localStorage.removeItem(
       "supabase_access_token"
     );
@@ -3571,6 +4404,27 @@ async function checkExistingSession(){
     localStorage.removeItem(
       "supabase_refresh_token"
     );
+
+
+    currentUserId = null;
+    currentProfile = null;
+    role = null;
+
+
+    document
+      .getElementById(
+        "app"
+      )
+      .classList
+      .add("hidden");
+
+
+    document
+      .getElementById(
+        "loginScreen"
+      )
+      .classList
+      .remove("hidden");
 
   }
 }
@@ -3585,6 +4439,7 @@ function formatDate(date){
   if(!date)
     return "—";
 
+
   try{
 
     return new Intl.DateTimeFormat(
@@ -3596,13 +4451,16 @@ function formatDate(date){
         month:"2-digit",
         day:"2-digit"
       }
-    ).format(new Date(date));
+    ).format(
+      new Date(date)
+    );
 
   }catch{
 
     return date;
 
   }
+
 }
 
 
@@ -3612,12 +4470,29 @@ function formatDate(date){
 
 function escapeHtml(value){
 
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+  return String(
+    value ?? ""
+  )
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
 
@@ -3625,52 +4500,83 @@ function escapeHtml(value){
 function escapeAttr(value){
 
   return escapeHtml(value)
-    .replace(/`/g,"&#096;");
+    .replace(
+      /`/g,
+      "&#096;"
+    );
+
 }
 
 
 /* =========================================================
-   CLOSE MODALS WHEN CLICKING BACKDROP
+   CLOSE MODALS
 ========================================================= */
 
 document
-  .getElementById("orderModal")
-  .addEventListener("click",function(e){
+  .getElementById(
+    "orderModal"
+  )
+  .addEventListener(
+    "click",
+    function(e){
 
-    if(e.target === this)
-      closeOrderModal();
+      if(
+        e.target === this
+      ){
 
-  });
+        closeOrderModal();
+
+      }
+
+    }
+  );
 
 
 document
-  .getElementById("userModal")
-  .addEventListener("click",function(e){
+  .getElementById(
+    "userModal"
+  )
+  .addEventListener(
+    "click",
+    function(e){
 
-    if(e.target === this)
-      closeUserModal();
+      if(
+        e.target === this
+      ){
 
-  });
+        closeUserModal();
+
+      }
+
+    }
+  );
 
 
 /* =========================================================
    SERVICE WORKER
 ========================================================= */
 
-if("serviceWorker" in navigator){
+if(
+  "serviceWorker" in navigator
+){
 
-  window.addEventListener("load",()=>{
+  window.addEventListener(
+    "load",
+    ()=>{
 
-    navigator.serviceWorker
-      .register("./sw.js")
-      .catch(error=>{
-        console.warn(
-          "Service Worker:",
-          error
-        );
-      });
+      navigator.serviceWorker
+        .register("./sw.js")
+        .catch(error=>{
 
-  });
+          console.warn(
+            "Service Worker:",
+            error
+          );
+
+        });
+
+    }
+  );
 
 }
 
