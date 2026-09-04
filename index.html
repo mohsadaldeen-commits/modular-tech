@@ -756,10 +756,6 @@ tr:last-child td{
   background:#991b1b;
 }
 
-/* =========================
-   EMPTY
-========================= */
-
 .empty{
   padding:40px 20px;
   text-align:center;
@@ -784,7 +780,6 @@ tr:last-child td{
   .dashboard-grid{
     grid-template-columns:1fr;
   }
-
 }
 
 @media(max-width:800px){
@@ -834,7 +829,6 @@ tr:last-child td{
   .stages{
     grid-template-columns:1fr 1fr;
   }
-
 }
 
 @media(max-width:600px){
@@ -918,10 +912,8 @@ tr:last-child td{
   .modal-group.full{
     grid-column:auto;
   }
-
 }
 
-/* Hebrew */
 html[dir="ltr"] .sidebar{
   right:auto;
   left:0;
@@ -946,6 +938,7 @@ html[dir="ltr"] td{
 }
 
 @media(max-width:800px){
+
   html[dir="ltr"] .sidebar{
     transform:translateX(-100%);
   }
@@ -1122,7 +1115,6 @@ html[dir="ltr"] td{
 
   </aside>
 
-
   <main class="main">
 
     <header class="topbar">
@@ -1153,7 +1145,6 @@ html[dir="ltr"] td{
       </div>
 
     </header>
-
 
     <div class="content">
 
@@ -1191,7 +1182,6 @@ html[dir="ltr"] td{
 
         </div>
 
-
         <div class="dashboard-grid">
 
           <div class="card">
@@ -1211,7 +1201,6 @@ html[dir="ltr"] td{
             <div id="latestOrders"></div>
 
           </div>
-
 
           <div class="card">
 
@@ -1254,6 +1243,7 @@ html[dir="ltr"] td{
           </div>
 
           <div class="table-wrap">
+
             <table>
 
               <thead>
@@ -1271,6 +1261,7 @@ html[dir="ltr"] td{
               <tbody id="ordersTable"></tbody>
 
             </table>
+
           </div>
 
         </div>
@@ -1372,6 +1363,7 @@ html[dir="ltr"] td{
           <label class="modal-label">
             رقم الطلبية
           </label>
+
           <input
             id="orderNumber"
             class="modal-input"
@@ -1382,6 +1374,7 @@ html[dir="ltr"] td{
           <label class="modal-label">
             اسم الزبون
           </label>
+
           <input
             id="customerName"
             class="modal-input"
@@ -1392,6 +1385,7 @@ html[dir="ltr"] td{
           <label class="modal-label">
             رقم الهاتف
           </label>
+
           <input
             id="customerPhone"
             class="modal-input"
@@ -1402,6 +1396,7 @@ html[dir="ltr"] td{
           <label class="modal-label">
             تاريخ التسليم
           </label>
+
           <input
             id="dueDate"
             class="modal-input"
@@ -1417,7 +1412,6 @@ html[dir="ltr"] td{
             id="orderStage"
             class="modal-select">
           </select>
-
         </div>
 
         <div class="modal-group">
@@ -1450,8 +1444,7 @@ html[dir="ltr"] td{
 
           <textarea
             id="orderNotes"
-            class="modal-textarea">
-          </textarea>
+            class="modal-textarea"></textarea>
 
         </div>
 
@@ -1611,6 +1604,10 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
   "sb_publishable_vVXVJGcWpoPvPEH_bfm23Q_dZ5eXvmE";
 
+const RAPID_FUNCTION_URL =
+  SUPABASE_URL +
+  "/functions/v1/rapid-function";
+
 
 /* =========================================================
    GLOBAL
@@ -1717,6 +1714,71 @@ function showToast(message,error=false){
 
 
 /* =========================================================
+   RAPID FUNCTION
+========================================================= */
+
+async function rapidFunction(
+  payload,
+  accessToken = null
+){
+
+  const headers = {
+    "apikey":SUPABASE_KEY,
+    "Content-Type":"application/json"
+  };
+
+  if(accessToken){
+
+    headers["Authorization"] =
+      "Bearer " + accessToken;
+
+  }
+
+  const response =
+    await fetch(
+      RAPID_FUNCTION_URL,
+      {
+        method:"POST",
+        headers,
+        body:JSON.stringify(payload)
+      }
+    );
+
+  const text =
+    await response.text();
+
+  let data = null;
+
+  try{
+
+    data =
+      text
+        ? JSON.parse(text)
+        : null;
+
+  }catch{
+
+    data = text;
+
+  }
+
+  if(!response.ok){
+
+    throw new Error(
+      data?.error ||
+      data?.message ||
+      data?.msg ||
+      text ||
+      `HTTP ${response.status}`
+    );
+
+  }
+
+  return data;
+}
+
+
+/* =========================================================
    SESSION REFRESH
 ========================================================= */
 
@@ -1766,7 +1828,6 @@ async function refreshSession(){
     }
 
     if(!response.ok){
-
       throw new Error(
         data?.msg ||
         data?.message ||
@@ -1774,15 +1835,12 @@ async function refreshSession(){
         data?.error ||
         "تعذر تجديد الجلسة"
       );
-
     }
 
     if(!data?.access_token){
-
       throw new Error(
         "لم يتم الحصول على Access Token جديد"
       );
-
     }
 
     localStorage.setItem(
@@ -1831,7 +1889,7 @@ async function request(
   retry=true
 ){
 
-  let accessToken =
+  const accessToken =
     localStorage.getItem(
       "supabase_access_token"
     );
@@ -1850,7 +1908,7 @@ async function request(
 
   }
 
-  let response =
+  const response =
     await fetch(
       SUPABASE_URL + path,
       {
@@ -1858,12 +1916,6 @@ async function request(
         headers
       }
     );
-
-
-  /*
-    إذا انتهت صلاحية Access Token
-    نجدد الجلسة ثم نعيد الطلب مرة واحدة.
-  */
 
   if(
     response.status === 401 &&
@@ -1885,7 +1937,6 @@ async function request(
 
   }
 
-
   const text =
     await response.text();
 
@@ -1903,7 +1954,6 @@ async function request(
     data = text;
 
   }
-
 
   if(!response.ok){
 
@@ -2034,15 +2084,12 @@ function applyLanguage(){
 
   }
 
-
   document
     .querySelectorAll("[data-i18n]")
     .forEach(el=>{
 
       const key =
-        el.getAttribute(
-          "data-i18n"
-        );
+        el.getAttribute("data-i18n");
 
       if(
         translations[currentLanguage][key]
@@ -2054,12 +2101,6 @@ function applyLanguage(){
       }
 
     });
-
-
-  /*
-    تحديث عنوان الصفحة الحالية
-    بعد تغيير اللغة.
-  */
 
   const activePage =
     document
@@ -2079,7 +2120,7 @@ function applyLanguage(){
 
 
 /* =========================================================
-   LOGIN
+   LOGIN — FIXED
 ========================================================= */
 
 document
@@ -2113,10 +2154,10 @@ document
         return;
       }
 
-
       const button =
-        document
-          .getElementById("loginButton");
+        document.getElementById(
+          "loginButton"
+        );
 
       button.disabled = true;
 
@@ -2125,13 +2166,7 @@ document
           ? "מתחבר..."
           : "جارٍ تسجيل الدخول...";
 
-
       try{
-
-        /*
-          حذف أي جلسة قديمة تالفة
-          قبل تسجيل الدخول الجديد.
-        */
 
         localStorage.removeItem(
           "supabase_access_token"
@@ -2141,119 +2176,24 @@ document
           "supabase_refresh_token"
         );
 
-
         /*
-          البحث عن المستخدم بواسطة username.
+          مهم:
+          لم نعد نبحث مباشرة في profiles.
+          تسجيل الدخول يتم بالكامل من خلال
+          rapid-function.
         */
 
-        const profileResult =
-          await request(
-            "/rest/v1/profiles" +
-            "?select=id,username,full_name,role,active,email" +
-            "&username=eq." +
-            encodeURIComponent(username) +
-            "&limit=1"
-          );
+        const data =
+          await rapidFunction({
+            action:"login",
+            username:username,
+            password:password
+          });
 
-
-        if(
-          !profileResult ||
-          !profileResult.length
-        ){
+        if(!data?.success){
 
           throw new Error(
-            currentLanguage === "he"
-              ? "שם המשתמש לא נמצא"
-              : "اسم المستخدم غير موجود"
-          );
-
-        }
-
-
-        const profile =
-          profileResult[0];
-
-
-        if(profile.active === false){
-
-          throw new Error(
-            currentLanguage === "he"
-              ? "החשבון אינו פעיל"
-              : "الحساب غير فعال"
-          );
-
-        }
-
-
-        if(!profile.email){
-
-          throw new Error(
-            currentLanguage === "he"
-              ? "לא קיים אימייל המקושר למשתמש"
-              : "لا يوجد بريد إلكتروني مرتبط بهذا المستخدم"
-          );
-
-        }
-
-
-        /*
-          تسجيل الدخول الحقيقي عبر Supabase Auth.
-        */
-
-        const loginResponse =
-          await fetch(
-            SUPABASE_URL +
-            "/auth/v1/token?grant_type=password",
-            {
-              method:"POST",
-
-              headers:{
-                "apikey":
-                  SUPABASE_KEY,
-
-                "Content-Type":
-                  "application/json"
-              },
-
-              body:
-                JSON.stringify({
-                  email:
-                    profile.email,
-
-                  password:
-                    password
-                })
-            }
-          );
-
-
-        const loginText =
-          await loginResponse.text();
-
-        let loginData = null;
-
-        try{
-
-          loginData =
-            loginText
-              ? JSON.parse(loginText)
-              : null;
-
-        }catch{
-
-          loginData =
-            loginText;
-
-        }
-
-
-        if(!loginResponse.ok){
-
-          throw new Error(
-            loginData?.msg ||
-            loginData?.message ||
-            loginData?.error_description ||
-            loginData?.error ||
+            data?.error ||
             (
               currentLanguage === "he"
                 ? "ההתחברות נכשלה"
@@ -2263,8 +2203,7 @@ document
 
         }
 
-
-        if(!loginData?.access_token){
+        if(!data.access_token){
 
           throw new Error(
             "لم يتم الحصول على Access Token"
@@ -2272,53 +2211,63 @@ document
 
         }
 
-
         /*
-          حفظ الجلسة.
+          حفظ الجلسة
         */
 
         localStorage.setItem(
           "supabase_access_token",
-          loginData.access_token
+          data.access_token
         );
 
-
-        if(loginData.refresh_token){
+        if(data.refresh_token){
 
           localStorage.setItem(
             "supabase_refresh_token",
-            loginData.refresh_token
+            data.refresh_token
           );
 
         }
 
-
         /*
-          تحميل Profile الحقيقي
-          بواسطة Auth UUID.
+          نستخدم الـ profile الذي أعادته
+          rapid-function مباشرة.
         */
 
-        await loadProfile();
+        if(data.profile){
 
+          currentProfile =
+            data.profile;
+
+          currentUserId =
+            data.profile.id;
+
+          role =
+            data.profile.role;
+
+        }else{
+
+          await loadProfile();
+
+        }
 
         document
           .getElementById("loginScreen")
-          .classList.add("hidden");
+          .classList
+          .add("hidden");
 
         document
           .getElementById("app")
-          .classList.remove("hidden");
-
+          .classList
+          .remove("hidden");
 
         await initializeApp();
-
 
         showToast(
           currentLanguage === "he"
             ? "התחברת בהצלחה"
             : "تم تسجيل الدخول بنجاح"
         );
-
 
       }catch(error){
 
@@ -2353,90 +2302,50 @@ document
 
 
 /* =========================================================
-   LOAD PROFILE
+   LOAD PROFILE — USING RAPID FUNCTION
 ========================================================= */
 
 async function loadProfile(){
 
-  const user =
-    await request(
-      "/auth/v1/user"
+  const token =
+    localStorage.getItem(
+      "supabase_access_token"
     );
 
-
-  if(!user || !user.id){
+  if(!token){
 
     throw new Error(
-      "لم يتم العثور على مستخدم Auth"
+      "جلسة الدخول غير موجودة"
     );
 
   }
 
-
-  const profiles =
-    await request(
-      "/rest/v1/profiles" +
-      "?select=id,username,full_name,role,active,email" +
-      "&id=eq." +
-      encodeURIComponent(user.id) +
-      "&limit=1"
+  const data =
+    await rapidFunction(
+      {
+        action:"me"
+      },
+      token
     );
 
-
-  if(
-    !profiles ||
-    !profiles.length
-  ){
-
-    /*
-      fallback بواسطة البريد الإلكتروني
-    */
-
-    if(user.email){
-
-      const byEmail =
-        await request(
-          "/rest/v1/profiles" +
-          "?select=id,username,full_name,role,active,email" +
-          "&email=eq." +
-          encodeURIComponent(user.email) +
-          "&limit=1"
-        );
-
-
-      if(
-        byEmail &&
-        byEmail.length
-      ){
-
-        currentProfile =
-          byEmail[0];
-
-        currentUserId =
-          currentProfile.id;
-
-        role =
-          currentProfile.role;
-
-        return currentProfile;
-
-      }
-
-    }
-
+  if(!data?.success){
 
     throw new Error(
-      "تم تسجيل الدخول، ولكن لم يتم العثور على بيانات المستخدم في جدول profiles"
+      data?.error ||
+      "تعذر تحميل بيانات المستخدم"
     );
 
   }
 
+  if(!data.profile){
 
-  const profile =
-    profiles[0];
+    throw new Error(
+      "بيانات المستخدم غير موجودة"
+    );
 
+  }
 
-  if(profile.active === false){
+  if(data.profile.active === false){
 
     throw new Error(
       "هذا الحساب غير فعال"
@@ -2444,18 +2353,16 @@ async function loadProfile(){
 
   }
 
+  currentProfile =
+    data.profile;
 
   currentUserId =
-    profile.id;
-
-  currentProfile =
-    profile;
+    currentProfile.id;
 
   role =
-    profile.role;
+    currentProfile.role;
 
-
-  return profile;
+  return currentProfile;
 }
 
 
@@ -2472,17 +2379,14 @@ async function initializeApp(){
       currentProfile?.username ||
       "—";
 
-
   document
     .getElementById("currentUserRole")
     .textContent =
       currentProfile?.role ||
       "—";
 
-
   const isAdmin =
     role === "المدير";
-
 
   document
     .getElementById("usersNav")
@@ -2492,7 +2396,6 @@ async function initializeApp(){
       !isAdmin
     );
 
-
   document
     .getElementById("addOrderButton")
     .classList
@@ -2501,7 +2404,6 @@ async function initializeApp(){
       !isAdmin
     );
 
-
   document
     .getElementById("topAddOrder")
     .classList
@@ -2509,7 +2411,6 @@ async function initializeApp(){
       "hidden",
       !isAdmin
     );
-
 
   await Promise.all([
 
@@ -2520,7 +2421,6 @@ async function initializeApp(){
       : Promise.resolve()
 
   ]);
-
 
   renderEverything();
 }
@@ -2538,7 +2438,6 @@ async function loadOrders(){
       "?select=*" +
       "&order=created_at.desc"
     );
-
 
   orders =
     (data || [])
@@ -2598,9 +2497,7 @@ function renderEverything(){
   renderStages();
 
   if(role === "المدير"){
-
     renderUsers();
-
   }
 
 }
@@ -2615,26 +2512,20 @@ function renderDashboard(){
   const total =
     orders.length;
 
-
   const active =
     orders.filter(
       o=>o.stage !== "تم التسليم"
     ).length;
-
 
   const urgent =
     orders.filter(
       o=>o.urgent
     ).length;
 
-
   const today =
     new Date();
 
-  today.setHours(
-    0,0,0,0
-  );
-
+  today.setHours(0,0,0,0);
 
   const overdue =
     orders.filter(o=>{
@@ -2642,58 +2533,45 @@ function renderDashboard(){
       if(!o.due_date)
         return false;
 
-      if(
-        o.stage === "تم التسليم"
-      )
+      if(o.stage === "تم التسليم")
         return false;
 
       const date =
-        new Date(
-          o.due_date
-        );
+        new Date(o.due_date);
 
-      date.setHours(
-        0,0,0,0
-      );
+      date.setHours(0,0,0,0);
 
       return date < today;
 
     }).length;
-
 
   document
     .getElementById("statTotal")
     .textContent =
       total;
 
-
   document
     .getElementById("statActive")
     .textContent =
       active;
-
 
   document
     .getElementById("statUrgent")
     .textContent =
       urgent;
 
-
   document
     .getElementById("statOverdue")
     .textContent =
       overdue;
 
-
   const latest =
     orders.slice(0,6);
-
 
   const container =
     document.getElementById(
       "latestOrders"
     );
-
 
   if(!latest.length){
 
@@ -2752,12 +2630,10 @@ function renderDashboard(){
 
   }
 
-
   const stageContainer =
     document.getElementById(
       "dashboardStages"
     );
-
 
   stageContainer.innerHTML =
     STAGES
@@ -2767,7 +2643,6 @@ function renderDashboard(){
           orders.filter(
             o=>o.stage === stage
           ).length;
-
 
         return `
 
@@ -2801,20 +2676,15 @@ function renderOrders(){
       "ordersTable"
     );
 
-
   if(!tbody)
     return;
 
-
   const search =
     document
-      .getElementById(
-        "orderSearch"
-      )
+      .getElementById("orderSearch")
       ?.value
       .trim()
       .toLowerCase() || "";
-
 
   const filtered =
     orders.filter(order=>{
@@ -2830,13 +2700,9 @@ function renderOrders(){
         .join(" ")
         .toLowerCase();
 
-
-      return text.includes(
-        search
-      );
+      return text.includes(search);
 
     });
-
 
   if(!filtered.length){
 
@@ -2854,7 +2720,6 @@ function renderOrders(){
     return;
   }
 
-
   tbody.innerHTML =
     filtered
       .map(order=>{
@@ -2862,12 +2727,8 @@ function renderOrders(){
         const urgent =
           order.urgent;
 
-
         const actions =
-          renderOrderActions(
-            order
-          );
-
+          renderOrderActions(order);
 
         return `
 
@@ -2946,7 +2807,6 @@ function renderOrderActions(order){
 
   let html = "";
 
-
   if(role === "المدير"){
 
     html += `
@@ -2959,19 +2819,14 @@ function renderOrderActions(order){
 
   }
 
-
   const next =
-    getNextStage(
-      order.stage
-    );
-
+    getNextStage(order.stage);
 
   if(next){
 
     const allowed =
       role === "المدير" ||
       role === next.role;
-
 
     if(allowed){
 
@@ -2980,16 +2835,13 @@ function renderOrderActions(order){
           class="btn btn-success"
           style="margin-right:5px;"
           onclick="advanceOrder('${escapeAttr(order.id)}')">
-          ${escapeHtml(
-            next.stage
-          )}
+          ${escapeHtml(next.stage)}
         </button>
       `;
 
     }
 
   }
-
 
   if(role === "المدير"){
 
@@ -3004,7 +2856,6 @@ function renderOrderActions(order){
 
   }
 
-
   if(!html){
 
     html =
@@ -3014,7 +2865,6 @@ function renderOrderActions(order){
 
   }
 
-
   return html;
 }
 
@@ -3023,59 +2873,37 @@ function renderOrderActions(order){
    NEXT STAGE
 ========================================================= */
 
-function getNextStage(
-  currentStage
-){
+function getNextStage(currentStage){
 
   const index =
-    STAGES.indexOf(
-      currentStage
-    );
-
+    STAGES.indexOf(currentStage);
 
   if(
     index < 0 ||
     index >= STAGES.length - 1
   ){
-
     return null;
-
   }
-
 
   const nextStage =
     STAGES[index + 1];
 
-
   const roleMap = {
 
     "في العمل":"القص",
-
     "تم القص":"الكنت",
-
     "تم الكنت":"CNC",
-
     "تم CNC":"التركيب",
-
     "تم التركيب":"الدهان",
-
     "تم الدهان":"التغليف",
-
     "تم التغليف":"التحميل",
-
     "تم التحميل":"التسليم"
 
   };
 
-
   return {
-
-    stage:
-      nextStage,
-
-    role:
-      roleMap[currentStage] || null
-
+    stage:nextStage,
+    role:roleMap[currentStage] || null
   };
 }
 
@@ -3091,25 +2919,18 @@ async function advanceOrder(id){
       o=>String(o.id) === String(id)
     );
 
-
   if(!order)
     return;
 
-
   const next =
-    getNextStage(
-      order.stage
-    );
-
+    getNextStage(order.stage);
 
   if(!next)
     return;
 
-
   const allowed =
     role === "المدير" ||
     role === next.role;
-
 
   if(!allowed){
 
@@ -3123,7 +2944,6 @@ async function advanceOrder(id){
     return;
   }
 
-
   try{
 
     await request(
@@ -3133,25 +2953,19 @@ async function advanceOrder(id){
         method:"PATCH",
 
         headers:{
-          "Prefer":
-            "return=minimal"
+          "Prefer":"return=minimal"
         },
 
-        body:
-          JSON.stringify({
-            stage:
-              next.stage
-          })
+        body:JSON.stringify({
+          stage:next.stage
+        })
       }
     );
-
 
     order.stage =
       next.stage;
 
-
     renderEverything();
-
 
     showToast(
       currentLanguage === "he"
@@ -3159,11 +2973,9 @@ async function advanceOrder(id){
         : `الطلبية رقم ${order.order_number} أصبحت في حالة ${next.stage}`
     );
 
-
   }catch(error){
 
     console.error(error);
-
 
     showToast(
       (
@@ -3190,7 +3002,6 @@ function populateStageSelect(){
       "orderStage"
     );
 
-
   select.innerHTML =
     STAGES
       .map(stage=>
@@ -3202,9 +3013,7 @@ function populateStageSelect(){
 }
 
 
-function openOrderModal(
-  order=null
-){
+function openOrderModal(order=null){
 
   if(role !== "المدير"){
 
@@ -3218,74 +3027,56 @@ function openOrderModal(
     return;
   }
 
-
   populateStageSelect();
 
-
   document
-    .getElementById(
-      "orderModal"
-    )
+    .getElementById("orderModal")
     .classList
     .remove("hidden");
-
 
   if(order){
 
     document
-      .getElementById(
-        "orderModalTitle"
-      )
+      .getElementById("orderModalTitle")
       .textContent =
       currentLanguage === "he"
         ? "עריכת הזמנה"
         : "تعديل الطلبية";
-
 
     document
       .getElementById("orderId")
       .value =
       order.id || "";
 
-
     document
       .getElementById("orderNumber")
       .value =
       order.order_number || "";
-
 
     document
       .getElementById("customerName")
       .value =
       order.customer_name || "";
 
-
     document
       .getElementById("customerPhone")
       .value =
       order.phone || "";
-
 
     document
       .getElementById("dueDate")
       .value =
       order.due_date || "";
 
-
     document
       .getElementById("orderStage")
       .value =
-      order.stage ||
-      "في العمل";
-
+      order.stage || "في العمل";
 
     document
       .getElementById("orderUrgent")
       .value =
-      String(
-        Boolean(order.urgent)
-      );
-
+      String(Boolean(order.urgent));
 
     document
       .getElementById("orderNotes")
@@ -3295,33 +3086,22 @@ function openOrderModal(
   }else{
 
     document
-      .getElementById(
-        "orderModalTitle"
-      )
+      .getElementById("orderModalTitle")
       .textContent =
       currentLanguage === "he"
         ? "הוספת הזמנה"
         : "إضافة طلبية";
 
-
     document
-      .getElementById(
-        "orderForm"
-      )
+      .getElementById("orderForm")
       .reset();
 
-
     document
-      .getElementById(
-        "orderId"
-      )
+      .getElementById("orderId")
       .value = "";
 
-
     document
-      .getElementById(
-        "orderStage"
-      )
+      .getElementById("orderStage")
       .value =
       "في العمل";
 
@@ -3332,9 +3112,7 @@ function openOrderModal(
 function closeOrderModal(){
 
   document
-    .getElementById(
-      "orderModal"
-    )
+    .getElementById("orderModal")
     .classList
     .add("hidden");
 
@@ -3346,15 +3124,12 @@ function closeOrderModal(){
 ========================================================= */
 
 document
-  .getElementById(
-    "orderForm"
-  )
+  .getElementById("orderForm")
   .addEventListener(
     "submit",
     async function(e){
 
       e.preventDefault();
-
 
       if(role !== "المدير"){
 
@@ -3366,74 +3141,54 @@ document
         return;
       }
 
-
       const id =
         document
-          .getElementById(
-            "orderId"
-          )
+          .getElementById("orderId")
           .value;
-
 
       const payload = {
 
         order_number:
           document
-            .getElementById(
-              "orderNumber"
-            )
+            .getElementById("orderNumber")
             .value
             .trim(),
 
         customer_name:
           document
-            .getElementById(
-              "customerName"
-            )
+            .getElementById("customerName")
             .value
             .trim(),
 
         phone:
           document
-            .getElementById(
-              "customerPhone"
-            )
+            .getElementById("customerPhone")
             .value
             .trim(),
 
         due_date:
           document
-            .getElementById(
-              "dueDate"
-            )
+            .getElementById("dueDate")
             .value ||
           null,
 
         stage:
           document
-            .getElementById(
-              "orderStage"
-            )
+            .getElementById("orderStage")
             .value,
 
         urgent:
           document
-            .getElementById(
-              "orderUrgent"
-            )
-            .value ===
-          "true",
+            .getElementById("orderUrgent")
+            .value === "true",
 
         notes:
           document
-            .getElementById(
-              "orderNotes"
-            )
+            .getElementById("orderNotes")
             .value
             .trim()
 
       };
-
 
       try{
 
@@ -3446,17 +3201,13 @@ document
               method:"PATCH",
 
               headers:{
-                "Prefer":
-                  "return=minimal"
+                "Prefer":"return=minimal"
               },
 
               body:
-                JSON.stringify(
-                  payload
-                )
+                JSON.stringify(payload)
             }
           );
-
 
           showToast(
             currentLanguage === "he"
@@ -3477,12 +3228,9 @@ document
               },
 
               body:
-                JSON.stringify(
-                  payload
-                )
+                JSON.stringify(payload)
             }
           );
-
 
           showToast(
             currentLanguage === "he"
@@ -3492,20 +3240,15 @@ document
 
         }
 
-
         closeOrderModal();
-
 
         await loadOrders();
 
-
         renderEverything();
-
 
       }catch(error){
 
         console.error(error);
-
 
         showToast(
           (
@@ -3534,14 +3277,10 @@ function editOrder(id){
       o=>String(o.id) === String(id)
     );
 
-
   if(!order)
     return;
 
-
-  openOrderModal(
-    order
-  );
+  openOrderModal(order);
 }
 
 
@@ -3554,26 +3293,21 @@ async function deleteOrder(id){
   if(role !== "المدير")
     return;
 
-
   const order =
     orders.find(
       o=>String(o.id) === String(id)
     );
 
-
   if(!order)
     return;
-
 
   const confirmed =
     confirm(
       `هل أنت متأكد من حذف الطلبية رقم ${order.order_number}؟`
     );
 
-
   if(!confirmed)
     return;
-
 
   try{
 
@@ -3584,18 +3318,14 @@ async function deleteOrder(id){
         method:"DELETE",
 
         headers:{
-          "Prefer":
-            "return=minimal"
+          "Prefer":"return=minimal"
         }
       }
     );
 
-
     await loadOrders();
 
-
     renderEverything();
-
 
     showToast(
       currentLanguage === "he"
@@ -3603,11 +3333,9 @@ async function deleteOrder(id){
         : "تم حذف الطلبية"
     );
 
-
   }catch(error){
 
     console.error(error);
-
 
     showToast(
       (
@@ -3634,10 +3362,8 @@ function renderStages(){
       "stagesPage"
     );
 
-
   if(!container)
     return;
-
 
   container.innerHTML =
     STAGES
@@ -3647,7 +3373,6 @@ function renderStages(){
           orders.filter(
             o=>o.stage === stage
           ).length;
-
 
         return `
 
@@ -3687,14 +3412,12 @@ async function loadUsers(){
   if(role !== "المدير")
     return;
 
-
   const data =
     await request(
       "/rest/v1/profiles" +
       "?select=id,username,full_name,role,active,email" +
       "&order=username.asc"
     );
-
 
   users =
     data || [];
@@ -3706,16 +3429,13 @@ function renderUsers(){
   if(role !== "المدير")
     return;
 
-
   const tbody =
     document.getElementById(
       "usersTable"
     );
 
-
   if(!tbody)
     return;
-
 
   if(!users.length){
 
@@ -3733,7 +3453,6 @@ function renderUsers(){
     return;
   }
 
-
   tbody.innerHTML =
     users
       .map(user=>`
@@ -3743,32 +3462,28 @@ function renderUsers(){
           <td>
             <strong>
               ${escapeHtml(
-                user.username ||
-                "—"
+                user.username || "—"
               )}
             </strong>
           </td>
 
           <td>
             ${escapeHtml(
-              user.full_name ||
-              "—"
+              user.full_name || "—"
             )}
           </td>
 
           <td>
             <span class="badge badge-role">
               ${escapeHtml(
-                user.role ||
-                "—"
+                user.role || "—"
               )}
             </span>
           </td>
 
           <td>
             ${escapeHtml(
-              user.email ||
-              "—"
+              user.email || "—"
             )}
           </td>
 
@@ -3804,7 +3519,6 @@ function populateRoles(){
       "newRole"
     );
 
-
   select.innerHTML =
     ROLES
       .map(roleName=>
@@ -3828,29 +3542,21 @@ function openUserModal(){
     return;
   }
 
-
   populateRoles();
 
-
   document
-    .getElementById(
-      "userModal"
-    )
+    .getElementById("userModal")
     .classList
     .remove("hidden");
-
 }
 
 
 function closeUserModal(){
 
   document
-    .getElementById(
-      "userModal"
-    )
+    .getElementById("userModal")
     .classList
     .add("hidden");
-
 }
 
 
@@ -3859,62 +3565,49 @@ function closeUserModal(){
 ========================================================= */
 
 document
-  .getElementById(
-    "userForm"
-  )
+  .getElementById("userForm")
   .addEventListener(
     "submit",
     async function(e){
 
       e.preventDefault();
 
-
       if(role !== "المدير")
         return;
 
-
       const payload = {
+
+        action:"create_user",
 
         username:
           document
-            .getElementById(
-              "newUsername"
-            )
+            .getElementById("newUsername")
             .value
             .trim(),
 
         full_name:
           document
-            .getElementById(
-              "newFullName"
-            )
+            .getElementById("newFullName")
             .value
             .trim(),
 
         email:
           document
-            .getElementById(
-              "newEmail"
-            )
+            .getElementById("newEmail")
             .value
             .trim(),
 
         password:
           document
-            .getElementById(
-              "newPassword"
-            )
+            .getElementById("newPassword")
             .value,
 
         role:
           document
-            .getElementById(
-              "newRole"
-            )
+            .getElementById("newRole")
             .value
 
       };
-
 
       try{
 
@@ -3922,12 +3615,6 @@ document
           localStorage.getItem(
             "supabase_access_token"
           );
-
-
-        /*
-          إذا لم يوجد Access Token
-          نحاول تجديد الجلسة.
-        */
 
         if(!accessToken){
 
@@ -3942,7 +3629,6 @@ document
 
           }
 
-
           accessToken =
             localStorage.getItem(
               "supabase_access_token"
@@ -3950,132 +3636,67 @@ document
 
         }
 
-
-        let response =
-          await fetch(
-            SUPABASE_URL +
-            "/functions/v1/rapid-function",
-            {
-              method:"POST",
-
-              headers:{
-                "apikey":
-                  SUPABASE_KEY,
-
-                "Authorization":
-                  "Bearer " +
-                  accessToken,
-
-                "Content-Type":
-                  "application/json"
-              },
-
-              body:
-                JSON.stringify(
-                  payload
-                )
-            }
+        let data =
+          await rapidFunction(
+            payload,
+            accessToken
           );
 
-
         /*
-          إذا انتهت صلاحية Access Token
-          نجدد الجلسة ونعيد استدعاء Function.
+          إذا أعادت الدالة أن الجلسة غير صالحة،
+          نحاول التجديد مرة واحدة.
         */
 
-        if(response.status === 401){
+        if(
+          data?.success === false &&
+          (
+            data.code === "UNAUTHORIZED" ||
+            data.code === "TOKEN_INVALID"
+          )
+        ){
 
           const refreshed =
             await refreshSession();
 
-          if(refreshed){
+          if(!refreshed){
 
-            accessToken =
-              localStorage.getItem(
-                "supabase_access_token"
-              );
-
-
-            response =
-              await fetch(
-                SUPABASE_URL +
-                "/functions/v1/rapid-function",
-                {
-                  method:"POST",
-
-                  headers:{
-                    "apikey":
-                      SUPABASE_KEY,
-
-                    "Authorization":
-                      "Bearer " +
-                      accessToken,
-
-                    "Content-Type":
-                      "application/json"
-                  },
-
-                  body:
-                    JSON.stringify(
-                      payload
-                    )
-                }
-              );
+            throw new Error(
+              "انتهت جلسة الدخول"
+            );
 
           }
 
-        }
-
-
-        const text =
-          await response.text();
-
-
-        let data = null;
-
-
-        try{
+          accessToken =
+            localStorage.getItem(
+              "supabase_access_token"
+            );
 
           data =
-            text
-              ? JSON.parse(text)
-              : null;
-
-        }catch{
-
-          data =
-            text;
+            await rapidFunction(
+              payload,
+              accessToken
+            );
 
         }
 
-
-        if(!response.ok){
+        if(!data?.success){
 
           throw new Error(
-            data?.message ||
             data?.error ||
-            text ||
             "فشل إنشاء المستخدم"
           );
 
         }
 
-
         closeUserModal();
 
-
         document
-          .getElementById(
-            "userForm"
-          )
+          .getElementById("userForm")
           .reset();
-
 
         await loadUsers();
 
-
         renderUsers();
-
 
         showToast(
           currentLanguage === "he"
@@ -4083,14 +3704,12 @@ document
             : "تم إنشاء المستخدم بنجاح"
         );
 
-
       }catch(error){
 
         console.error(
           "Create user error:",
           error
         );
-
 
         showToast(
           (
@@ -4117,17 +3736,13 @@ function showPage(page){
   document
     .querySelectorAll(".page")
     .forEach(el=>{
-      el.classList.add(
-        "hidden"
-      );
+      el.classList.add("hidden");
     });
-
 
   const selected =
     document.getElementById(
       "page-" + page
     );
-
 
   if(selected){
 
@@ -4136,7 +3751,6 @@ function showPage(page){
     );
 
   }
-
 
   document
     .querySelectorAll(
@@ -4150,7 +3764,6 @@ function showPage(page){
       );
 
     });
-
 
   const titles = {
 
@@ -4176,22 +3789,15 @@ function showPage(page){
 
   };
 
-
   document
-    .getElementById(
-      "pageTitle"
-    )
+    .getElementById("pageTitle")
     .textContent =
       titles[page] || "";
 
-
   document
-    .getElementById(
-      "sidebar"
-    )
+    .getElementById("sidebar")
     .classList
     .remove("open");
-
 }
 
 
@@ -4202,12 +3808,9 @@ function showPage(page){
 function toggleSidebar(){
 
   document
-    .getElementById(
-      "sidebar"
-    )
+    .getElementById("sidebar")
     .classList
     .toggle("open");
-
 }
 
 
@@ -4224,7 +3827,6 @@ async function logout(){
         "supabase_access_token"
       );
 
-
     if(token){
 
       await fetch(
@@ -4238,8 +3840,7 @@ async function logout(){
               SUPABASE_KEY,
 
             "Authorization":
-              "Bearer " +
-              token
+              "Bearer " + token
           }
         }
       );
@@ -4255,7 +3856,6 @@ async function logout(){
 
   }
 
-
   localStorage.removeItem(
     "supabase_access_token"
   );
@@ -4264,7 +3864,6 @@ async function logout(){
     "supabase_refresh_token"
   );
 
-
   currentUserId = null;
   currentProfile = null;
   role = null;
@@ -4272,41 +3871,28 @@ async function logout(){
   orders = [];
   users = [];
 
-
   document
-    .getElementById(
-      "app"
-    )
+    .getElementById("app")
     .classList
     .add("hidden");
 
-
   document
-    .getElementById(
-      "loginScreen"
-    )
+    .getElementById("loginScreen")
     .classList
     .remove("hidden");
 
-
   document
-    .getElementById(
-      "password"
-    )
+    .getElementById("password")
     .value = "";
 
-
   document
-    .getElementById(
-      "username"
-    )
+    .getElementById("username")
     .focus();
-
 }
 
 
 /* =========================================================
-   SESSION CHECK
+   SESSION CHECK — FIXED
 ========================================================= */
 
 async function checkExistingSession(){
@@ -4316,39 +3902,21 @@ async function checkExistingSession(){
       "supabase_access_token"
     );
 
-
   const refreshToken =
     localStorage.getItem(
       "supabase_refresh_token"
     );
 
-
-  if(
-    !token &&
-    !refreshToken
-  ){
-
+  if(!token && !refreshToken){
     return;
-
   }
-
 
   try{
 
-    /*
-      إذا لم يوجد Access Token
-      ولكن يوجد Refresh Token،
-      نجدد الجلسة.
-    */
-
-    if(
-      !token &&
-      refreshToken
-    ){
+    if(!token && refreshToken){
 
       const refreshed =
         await refreshSession();
-
 
       if(!refreshed){
 
@@ -4358,36 +3926,31 @@ async function checkExistingSession(){
 
       }
 
+      token =
+        localStorage.getItem(
+          "supabase_access_token"
+        );
+
     }
 
-
     /*
-      loadProfile يستخدم request()
-      الذي يجدد الجلسة تلقائيًا
-      إذا كان Access Token منتهيًا.
+      بدل البحث المباشر في profiles،
+      نستخدم rapid-function.
     */
 
     await loadProfile();
 
-
     document
-      .getElementById(
-        "loginScreen"
-      )
+      .getElementById("loginScreen")
       .classList
       .add("hidden");
 
-
     document
-      .getElementById(
-        "app"
-      )
+      .getElementById("app")
       .classList
       .remove("hidden");
 
-
     await initializeApp();
-
 
   }catch(error){
 
@@ -4395,7 +3958,6 @@ async function checkExistingSession(){
       "Session invalid:",
       error
     );
-
 
     localStorage.removeItem(
       "supabase_access_token"
@@ -4405,27 +3967,19 @@ async function checkExistingSession(){
       "supabase_refresh_token"
     );
 
-
     currentUserId = null;
     currentProfile = null;
     role = null;
 
-
     document
-      .getElementById(
-        "app"
-      )
+      .getElementById("app")
       .classList
       .add("hidden");
 
-
     document
-      .getElementById(
-        "loginScreen"
-      )
+      .getElementById("loginScreen")
       .classList
       .remove("hidden");
-
   }
 }
 
@@ -4438,7 +3992,6 @@ function formatDate(date){
 
   if(!date)
     return "—";
-
 
   try{
 
@@ -4460,7 +4013,6 @@ function formatDate(date){
     return date;
 
   }
-
 }
 
 
@@ -4470,41 +4022,19 @@ function formatDate(date){
 
 function escapeHtml(value){
 
-  return String(
-    value ?? ""
-  )
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-    .replace(
-      /</g,
-      "&lt;"
-    )
-    .replace(
-      />/g,
-      "&gt;"
-    )
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 }
 
 
 function escapeAttr(value){
 
   return escapeHtml(value)
-    .replace(
-      /`/g,
-      "&#096;"
-    );
-
+    .replace(/`/g,"&#096;");
 }
 
 
@@ -4513,19 +4043,13 @@ function escapeAttr(value){
 ========================================================= */
 
 document
-  .getElementById(
-    "orderModal"
-  )
+  .getElementById("orderModal")
   .addEventListener(
     "click",
     function(e){
 
-      if(
-        e.target === this
-      ){
-
+      if(e.target === this){
         closeOrderModal();
-
       }
 
     }
@@ -4533,19 +4057,13 @@ document
 
 
 document
-  .getElementById(
-    "userModal"
-  )
+  .getElementById("userModal")
   .addEventListener(
     "click",
     function(e){
 
-      if(
-        e.target === this
-      ){
-
+      if(e.target === this){
         closeUserModal();
-
       }
 
     }
@@ -4556,9 +4074,7 @@ document
    SERVICE WORKER
 ========================================================= */
 
-if(
-  "serviceWorker" in navigator
-){
+if("serviceWorker" in navigator){
 
   window.addEventListener(
     "load",
