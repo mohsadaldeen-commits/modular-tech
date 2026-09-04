@@ -397,6 +397,7 @@ button{
   display:flex;
   gap:10px;
   align-items:center;
+  flex-wrap:wrap;
 }
 
 .mobile-menu{
@@ -912,6 +913,15 @@ tr:last-child td{
   .modal-group.full{
     grid-column:auto;
   }
+
+  .top-actions{
+    gap:6px;
+  }
+
+  .top-actions .btn{
+    padding:9px 11px;
+    font-size:12px;
+  }
 }
 
 html[dir="ltr"] .sidebar{
@@ -1134,6 +1144,13 @@ html[dir="ltr"] td{
       </div>
 
       <div class="top-actions">
+
+        <button
+          id="serpTestButton"
+          class="btn btn-secondary hidden"
+          onclick="testSerpApi()">
+          🔎 اختبار SerpApi
+        </button>
 
         <button
           id="topAddOrder"
@@ -1601,8 +1618,12 @@ html[dir="ltr"] td{
 const SUPABASE_URL =
   "https://bvrfrcmblwzuqprjknam.supabase.co";
 
+/*
+  ضع هنا نفس SUPABASE_KEY المنشور الموجود في ملفك الحالي.
+  لا تضع SERPAPI_KEY هنا.
+*/
 const SUPABASE_KEY =
-  "sb_publishable_vVXVJGcWpoPvPEH_bfm23Q_dZ5eXvmE";
+  "ضع_هنا_مفتاح_Supabase_المنشور_الحالي";
 
 const RAPID_FUNCTION_URL =
   SUPABASE_URL +
@@ -1770,6 +1791,156 @@ async function rapidFunction(
       data?.msg ||
       text ||
       `HTTP ${response.status}`
+    );
+
+  }
+
+  return data;
+}
+
+
+/* =========================================================
+   SERPAPI TEST
+========================================================= */
+
+async function testSerpApi(){
+
+  if(role !== "المدير"){
+
+    showToast(
+      currentLanguage === "he"
+        ? "הבדיקה זמינה למנהל בלבד"
+        : "اختبار SerpApi متاح للمدير فقط",
+      true
+    );
+
+    return;
+  }
+
+  try{
+
+    let accessToken =
+      localStorage.getItem(
+        "supabase_access_token"
+      );
+
+    if(!accessToken){
+
+      const refreshed =
+        await refreshSession();
+
+      if(refreshed){
+
+        accessToken =
+          localStorage.getItem(
+            "supabase_access_token"
+          );
+
+      }
+
+    }
+
+    const data =
+      await rapidFunction(
+        {
+          action:"test"
+        },
+        accessToken
+      );
+
+    if(
+      data?.success &&
+      data?.serpapi_configured
+    ){
+
+      showToast(
+        currentLanguage === "he"
+          ? "✅ SerpApi מחובר ופועל בהצלחה"
+          : "✅ اتصال SerpApi يعمل بنجاح"
+      );
+
+      return;
+    }
+
+    showToast(
+      data?.error ||
+      (
+        currentLanguage === "he"
+          ? "❌ מפתח SerpApi אינו מוגדר"
+          : "❌ مفتاح SerpApi غير مضبوط"
+      ),
+      true
+    );
+
+  }catch(error){
+
+    console.error(
+      "SerpApi test:",
+      error
+    );
+
+    showToast(
+      (
+        currentLanguage === "he"
+          ? "❌ בדיקת SerpApi נכשלה: "
+          : "❌ فشل اختبار SerpApi: "
+      ) +
+      error.message,
+      true
+    );
+
+  }
+}
+
+
+/* =========================================================
+   SERPAPI SEARCH
+========================================================= */
+
+async function serpApiSearch(query){
+
+  const text =
+    String(query || "").trim();
+
+  if(!text){
+
+    throw new Error(
+      currentLanguage === "he"
+        ? "נא להזין חיפוש"
+        : "يرجى إدخال عبارة البحث"
+    );
+
+  }
+
+  let accessToken =
+    localStorage.getItem(
+      "supabase_access_token"
+    );
+
+  const data =
+    await rapidFunction(
+      {
+        action:"search",
+        query:text,
+        engine:"google",
+        hl:
+          currentLanguage === "he"
+            ? "he"
+            : "ar",
+        gl:"ps"
+      },
+      accessToken
+    );
+
+  if(!data?.success){
+
+    throw new Error(
+      data?.error ||
+      (
+        currentLanguage === "he"
+          ? "החיפוש נכשל"
+          : "فشل البحث"
+      )
     );
 
   }
@@ -2120,7 +2291,7 @@ function applyLanguage(){
 
 
 /* =========================================================
-   LOGIN — FIXED
+   LOGIN
 ========================================================= */
 
 document
@@ -2176,13 +2347,6 @@ document
           "supabase_refresh_token"
         );
 
-        /*
-          مهم:
-          لم نعد نبحث مباشرة في profiles.
-          تسجيل الدخول يتم بالكامل من خلال
-          rapid-function.
-        */
-
         const data =
           await rapidFunction({
             action:"login",
@@ -2211,10 +2375,6 @@ document
 
         }
 
-        /*
-          حفظ الجلسة
-        */
-
         localStorage.setItem(
           "supabase_access_token",
           data.access_token
@@ -2228,11 +2388,6 @@ document
           );
 
         }
-
-        /*
-          نستخدم الـ profile الذي أعادته
-          rapid-function مباشرة.
-        */
 
         if(data.profile){
 
@@ -2302,7 +2457,7 @@ document
 
 
 /* =========================================================
-   LOAD PROFILE — USING RAPID FUNCTION
+   LOAD PROFILE
 ========================================================= */
 
 async function loadProfile(){
@@ -2406,6 +2561,14 @@ async function initializeApp(){
 
   document
     .getElementById("topAddOrder")
+    .classList
+    .toggle(
+      "hidden",
+      !isAdmin
+    );
+
+  document
+    .getElementById("serpTestButton")
     .classList
     .toggle(
       "hidden",
@@ -3400,6 +3563,7 @@ function renderStages(){
 
       })
       .join("");
+
 }
 
 
@@ -3642,11 +3806,6 @@ document
             accessToken
           );
 
-        /*
-          إذا أعادت الدالة أن الجلسة غير صالحة،
-          نحاول التجديد مرة واحدة.
-        */
-
         if(
           data?.success === false &&
           (
@@ -3732,6 +3891,13 @@ document
 ========================================================= */
 
 function showPage(page){
+
+  if(
+    page === "users" &&
+    role !== "المدير"
+  ){
+    page = "dashboard";
+  }
 
   document
     .querySelectorAll(".page")
@@ -3892,7 +4058,7 @@ async function logout(){
 
 
 /* =========================================================
-   SESSION CHECK — FIXED
+   SESSION CHECK
 ========================================================= */
 
 async function checkExistingSession(){
@@ -3932,11 +4098,6 @@ async function checkExistingSession(){
         );
 
     }
-
-    /*
-      بدل البحث المباشر في profiles،
-      نستخدم rapid-function.
-    */
 
     await loadProfile();
 
