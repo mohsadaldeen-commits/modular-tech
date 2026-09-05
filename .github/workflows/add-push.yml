@@ -1,0 +1,512 @@
+name: Add Web Push Notifications
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  add-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Patch index.html
+        shell: python
+        run: |
+          import re
+          from pathlib import Path
+
+          path = Path("index.html")
+          html = path.read_text(encoding="utf-8")
+
+          if "enablePushNotifications" in html:
+              print("Push notifications are already installed.")
+              raise SystemExit(0)
+
+          # -------------------------------------------------
+          # 1. Add notification button
+          # -------------------------------------------------
+
+          button = r'''
+          <button
+            id="enableNotificationsButton"
+            class="btn btn-secondary"
+            onclick="enablePushNotifications()">
+            🔔 تفعيل الإشعارات
+          </button>
+          '''
+
+          top_actions = '<div class="top-actions">'
+
+          if top_actions not in html:
+              raise RuntimeError(
+                  'Could not find <div class="top-actions">'
+              )
+
+          html = html.replace(
+              top_actions,
+              top_actions + button,
+              1
+          )
+
+          # -------------------------------------------------
+          # 2. Add Web Push JavaScript
+          # -------------------------------------------------
+
+          push_code = r'''
+          const VAPID_PUBLIC_KEY =
+            "BFmcCH6Ftbr3eO7b2UWsTVE0rVxM2yD1nAApIaMVGQBFl8-h4-J5fJ-kA0M27kSi2WveG8C-xjxt1LDbDDT82oU";
+
+          function urlBase64ToUint8Array(base64String){
+            const padding =
+              "=".repeat(
+                (4 - base64String.length % 4) % 4
+              );
+
+            const base64 =
+              (
+                base64String +
+                padding
+              )
+              .replace(/-/g, "+")
+              .replace(/_/g, "/");
+
+            const rawData =
+              window.atob(base64);
+
+            return Uint8Array.from(
+              [...rawData].map(
+                char => char.charCodeAt(0)
+              )
+            );
+          }
+
+          async function enablePushNotifications(){
+
+            const button =
+              document.getElementById(
+                "enableNotificationsButton"
+              );
+
+            if(
+              !("serviceWorker" in navigator) ||
+              !("PushManager" in window)
+            ){
+
+              showToast(
+                currentLanguage === "he"
+                  ? "הדפדפן אינו תומך בהתראות Push"
+                  : "هذا المتصفح لا يدعم إشعارات Push",
+                true
+              );
+
+              return;
+            }
+
+            if(
+              !currentUserId ||
+              !getAccessToken()
+            ){
+
+              showToast(
+                currentLanguage === "he"
+                  ? "נא להתחבר תחילה"
+                  : "يجب تسجيل الدخول أولاً",
+                true
+              );
+
+              return;
+            }
+
+            try{
+
+              button.disabled = true;
+
+              button.textContent =
+                currentLanguage === "he"
+                  ? "מתחבר להתראות..."
+                  : "جارٍ تفعيل الإشعارات...";
+
+              const permission =
+                await Notification.requestPermission();
+
+              if(permission !== "granted"){
+
+                throw new Error(
+                  currentLanguage === "he"
+                    ? "לא אושר שימוש בהתראות"
+                    : "لم يتم السماح بالإشعارات"
+                );
+              }
+
+              const registration =
+                await navigator.serviceWorker.ready;
+
+              let subscription =
+                await registration
+                  .pushManager
+                  .getSubscription();
+
+              if(!subscription){
+
+                subscription =
+                  await registration.pushManager.subscribe({
+
+                    userVisibleOnly:true,
+
+                    applicationServerKey:
+                      urlBase64ToUint8Array(
+                        VAPID_PUBLIC_KEY
+                      )
+
+                  });
+              }
+
+              const json =
+                subscription.toJSON();
+
+              if(
+                !json.endpoint ||
+                !json.keys?.p256dh ||
+                !json.keys?.auth
+              ){
+
+                throw new Error(
+                  "بيانات الاشتراك غير مكتملة"
+                );
+              }
+
+              const data =
+                await rapidFunction({
+
+                  action:"save_push_subscription",
+
+                  user_id:
+                    currentUserId,
+
+                  endpoint:
+                    json.endpoint,
+
+                  p256dh:
+                    json.keys.p256dh,
+
+                  auth:
+                    json.keys.auth
+
+                });
+
+              if(!data?.success){
+
+                throw new Error(
+                  data?.error ||
+                  "تعذر حفظ اشتراك الإشعارات"
+                );
+              }
+
+              button.textContent =
+                currentLanguage === "he"
+                  ? "🔔 ההתראות פעילות"
+                  : "🔔 الإشعارات مفعّلة";
+
+              showToast(
+                currentLanguage === "he"
+                  ? "✅ ההתראות הופעלו בהצלחה"
+                  : "✅ تم تفعيل الإشعارات بنجاح"
+              );
+
+            }catch(error){
+
+              console.error(
+                "Push notification error:",
+                error
+              );
+
+              showToast(
+                (
+                  currentLanguage === "he"
+                    ? "❌ הפעלת ההתראות נכשלה: "
+                    : "❌ فشل تفعيل الإشعارات: "
+                ) +
+                error.message,
+                true
+              );
+
+              button.textContent =
+                currentLanguage === "he"
+                  ? "🔔 הפעל התראות"
+                  : "🔔 تفعيل الإشعارات";
+
+            }finally{
+
+              button.disabled = false;
+
+            }
+          }
+
+          async function checkPushNotificationStatus(){
+
+            const button =
+              document.getElementById(
+                "enableNotificationsButton"
+              );
+
+            if(!button)
+              return;
+
+            if(
+              !("Notification" in window) ||
+              !("serviceWorker" in navigator) ||
+              !("PushManager" in window)
+            ){
+
+              button.classList.add("hidden");
+              return;
+            }
+
+            if(
+              Notification.permission === "granted"
+            ){
+
+              try{
+
+                const registration =
+                  await navigator.serviceWorker.ready;
+
+                const subscription =
+                  await registration
+                    .pushManager
+                    .getSubscription();
+
+                if(subscription){
+
+                  button.textContent =
+                    currentLanguage === "he"
+                      ? "🔔 ההתראות פעילות"
+                      : "🔔 الإشعارات مفعّلة";
+
+                  return;
+                }
+
+              }catch(error){
+
+                console.warn(
+                  "Push status:",
+                  error
+                );
+              }
+            }
+
+            button.textContent =
+              currentLanguage === "he"
+                ? "🔔 הפעל התראות"
+                : "🔔 تفعيل الإشعارات";
+          }
+
+          '''
+
+          anchor = "async function refreshSession(){"
+
+          if anchor not in html:
+              raise RuntimeError(
+                  "Could not find refreshSession function."
+              )
+
+          html = html.replace(
+              anchor,
+              push_code + "\n" + anchor,
+              1
+          )
+
+          # -------------------------------------------------
+          # 3. Add status check inside initializeApp()
+          # -------------------------------------------------
+
+          init_start = html.find(
+              "async function initializeApp(){"
+          )
+
+          if init_start == -1:
+              raise RuntimeError(
+                  "Could not find initializeApp function."
+              )
+
+          render_pos = html.find(
+              "renderEverything();",
+              init_start
+          )
+
+          if render_pos == -1:
+              raise RuntimeError(
+                  "Could not find renderEverything inside initializeApp."
+              )
+
+          render_end = (
+              render_pos +
+              len("renderEverything();")
+          )
+
+          status_code = r'''
+          await checkPushNotificationStatus();
+          '''
+
+          html = (
+              html[:render_end]
+              + "\n\n    "
+              + status_code.strip()
+              + html[render_end:]
+          )
+
+          # -------------------------------------------------
+          # 4. Add push notification when order advances
+          # -------------------------------------------------
+
+          advance_start = html.find(
+              "async function advanceOrder(id){"
+          )
+
+          if advance_start == -1:
+              raise RuntimeError(
+                  "Could not find advanceOrder function."
+              )
+
+          next_function = html.find(
+              "async function ",
+              advance_start + 20
+          )
+
+          if next_function == -1:
+              advance_end = len(html)
+          else:
+              advance_end = next_function
+
+          advance_block = html[
+              advance_start:advance_end
+          ]
+
+          old_stage_code = """    order.stage =
+      next.stage;
+
+    renderEverything();"""
+
+          new_stage_code = """    order.stage =
+      next.stage;
+
+    try{
+
+      const pushUserIds =
+        Array.from(
+          new Set([
+            currentUserId,
+            ...(Array.isArray(users)
+              ? users
+                  .map(u => u.id)
+                  .filter(Boolean)
+              : [])
+          ])
+        );
+
+      if(pushUserIds.length){
+
+        await rapidFunction({
+
+          action:"send_push",
+
+          user_ids:
+            pushUserIds,
+
+          title:
+            currentLanguage === "he"
+              ? "עדכון הזמנה"
+              : "تحديث الطلبية",
+
+          body:
+            currentLanguage === "he"
+              ? `הזמנה מספר ${order.order_number} נמצאת כעת ב-${next.stage}`
+              : `الطلبية رقم ${order.order_number} أصبحت في حالة ${next.stage}`,
+
+          order_id:
+            order.id,
+
+          order_number:
+            order.order_number,
+
+          status:
+            next.stage,
+
+          tag:
+            "order-" + order.id,
+
+          url:
+            "./"
+
+        });
+      }
+
+    }catch(pushError){
+
+      console.warn(
+        "Push send error:",
+        pushError
+      );
+
+    }
+
+    renderEverything();"""
+
+          if old_stage_code not in advance_block:
+
+              # Try the version with extra blank lines
+              old_stage_code = """    order.stage =
+      next.stage;
+
+
+    renderEverything();"""
+
+          if old_stage_code not in advance_block:
+              raise RuntimeError(
+                  "Could not find order.stage update inside advanceOrder."
+              )
+
+          advance_block = advance_block.replace(
+              old_stage_code,
+              new_stage_code,
+              1
+          )
+
+          html = (
+              html[:advance_start]
+              + advance_block
+              + html[advance_end:]
+          )
+
+          # -------------------------------------------------
+          # Save
+          # -------------------------------------------------
+
+          path.write_text(
+              html,
+              encoding="utf-8"
+          )
+
+          print(
+              "Successfully installed Web Push integration."
+          )
+
+      - name: Commit changes
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add index.html
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Add Web Push notifications"
+            git push
+          fi
