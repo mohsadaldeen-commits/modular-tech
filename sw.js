@@ -1,4 +1,4 @@
-const CACHE_NAME = "modular-tech-v2";
+const CACHE_NAME = "modular-tech-v3";
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
@@ -11,9 +11,11 @@ const FILES_TO_CACHE = [
 ===================================================== */
 self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(FILES_TO_CACHE);
-    })
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(FILES_TO_CACHE))
+      .catch(error => {
+        console.error("Cache install error:", error);
+      })
   );
   self.skipWaiting();
 });
@@ -22,15 +24,16 @@ self.addEventListener("install", event => {
 ===================================================== */
 self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys
-          .filter(key => key !== CACHE_NAME)
-          .map(key => caches.delete(key))
-      )
-    )
+    caches.keys()
+      .then(keys => {
+        return Promise.all(
+          keys
+            .filter(key => key !== CACHE_NAME)
+            .map(key => caches.delete(key))
+        );
+      })
+      .then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 /* =====================================================
    FETCH
@@ -51,12 +54,24 @@ self.addEventListener("fetch", event => {
           caches.open(CACHE_NAME)
             .then(cache => {
               cache.put(event.request, copy);
+            })
+            .catch(error => {
+              console.warn(
+                "Cache update error:",
+                error
+              );
             });
         }
         return response;
       })
       .catch(() => {
-        return caches.match(event.request);
+        return caches.match(event.request)
+          .then(cachedResponse => {
+            if (cachedResponse) {
+              return cachedResponse;
+            }
+            return caches.match("./index.html");
+          });
       })
   );
 });
@@ -69,15 +84,25 @@ self.addEventListener("push", event => {
     body: "لديك إشعار جديد",
     icon: "./icon-192.png",
     badge: "./icon-192.png",
-    url: "./"
+    url: "./",
+    tag: "modular-tech"
   };
   try {
     if (event.data) {
-      const incoming = event.data.json();
-      data = {
-        ...data,
-        ...incoming
-      };
+      let incoming;
+      try {
+        incoming = event.data.json();
+      } catch {
+        incoming = {
+          body: event.data.text()
+        };
+      }
+      if (incoming && typeof incoming === "object") {
+        data = {
+          ...data,
+          ...incoming
+        };
+      }
     }
   } catch (error) {
     console.warn(
@@ -86,19 +111,44 @@ self.addEventListener("push", event => {
     );
   }
   const options = {
-    body: data.body,
-    icon: data.icon || "./icon-192.png",
-    badge: data.badge || "./icon-192.png",
-    tag: data.tag || "modular-tech",
+    body:
+      data.body ||
+      "لديك إشعار جديد",
+    icon:
+      data.icon ||
+      "./icon-192.png",
+    badge:
+      data.badge ||
+      "./icon-192.png",
+    tag:
+      data.tag ||
+      "modular-tech",
     renotify: true,
     requireInteraction: false,
+    vibrate: [
+      200,
+      100,
+      200
+    ],
     data: {
-      url: data.url || "./"
+      url:
+        data.url ||
+        "./",
+      order_id:
+        data.order_id ||
+        null,
+      order_number:
+        data.order_number ||
+        null,
+      status:
+        data.status ||
+        null
     }
   };
   event.waitUntil(
     self.registration.showNotification(
-      data.title || "MODULAR TECH",
+      data.title ||
+      "MODULAR TECH",
       options
     )
   );
@@ -110,8 +160,10 @@ self.addEventListener(
   "notificationclick",
   event => {
     event.notification.close();
+    const notificationData =
+      event.notification.data || {};
     const targetUrl =
-      event.notification?.data?.url ||
+      notificationData.url ||
       "./";
     event.waitUntil(
       clients.matchAll({
@@ -120,12 +172,27 @@ self.addEventListener(
       })
       .then(clientList => {
         for (const client of clientList) {
-          if ("focus" in client) {
-            client.navigate(targetUrl);
+          if (
+            "focus" in client
+          ) {
+            if (
+              "navigate" in client
+            ) {
+              return client
+                .navigate(targetUrl)
+                .then(() =>
+                  client.focus()
+                )
+                .catch(() =>
+                  client.focus()
+                );
+            }
             return client.focus();
           }
         }
-        if (clients.openWindow) {
+        if (
+          clients.openWindow
+        ) {
           return clients.openWindow(
             targetUrl
           );
@@ -135,21 +202,39 @@ self.addEventListener(
   }
 );
 /* =====================================================
-   MESSAGE FROM APP
+   CLEAR APP BADGE
 ===================================================== */
 self.addEventListener(
   "message",
   event => {
     if (
       event.data &&
-      event.data.type === "CLEAR_BADGE"
+      event.data.type ===
+        "CLEAR_BADGE"
     ) {
       if (
         "clearAppBadge" in navigator
       ) {
-        navigator.clearAppBadge()
+        navigator
+          .clearAppBadge()
           .catch(() => {});
       }
+    }
+  }
+);
+/* =====================================================
+   SKIP WAITING
+   يسمح للتطبيق بتفعيل النسخة الجديدة فورًا
+===================================================== */
+self.addEventListener(
+  "message",
+  event => {
+    if (
+      event.data &&
+      event.data.type ===
+        "SKIP_WAITING"
+    ) {
+      self.skipWaiting();
     }
   }
 );
