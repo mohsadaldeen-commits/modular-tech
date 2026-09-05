@@ -1330,7 +1330,6 @@ html[dir="ltr"] .order-search-clear{
 
 <body>
 
-
 <!-- ================= LOGIN ================= -->
 
 <section id="loginScreen">
@@ -1587,8 +1586,6 @@ html[dir="ltr"] .order-search-clear{
 
       <div class="top-actions">
 
-        <!-- زر الإشعارات -->
-
         <button
           id="notificationButton"
           class="btn btn-secondary notification-btn"
@@ -1633,7 +1630,6 @@ html[dir="ltr"] .order-search-clear{
 
     <div class="content">
 
-
       <!-- DASHBOARD -->
 
       <section
@@ -1647,17 +1643,13 @@ html[dir="ltr"] .order-search-clear{
             <div
               class="stat-title"
               data-i18n="totalOrders">
-
               إجمالي الطلبيات
-
             </div>
 
             <div
               id="statTotal"
               class="stat-value">
-
               0
-
             </div>
 
           </div>
@@ -1668,17 +1660,13 @@ html[dir="ltr"] .order-search-clear{
             <div
               class="stat-title"
               data-i18n="activeOrders">
-
               الطلبيات النشطة
-
             </div>
 
             <div
               id="statActive"
               class="stat-value">
-
               0
-
             </div>
 
           </div>
@@ -1689,17 +1677,13 @@ html[dir="ltr"] .order-search-clear{
             <div
               class="stat-title"
               data-i18n="urgentOrders">
-
               الطلبيات المهمة
-
             </div>
 
             <div
               id="statUrgent"
               class="stat-value">
-
               0
-
             </div>
 
           </div>
@@ -1710,17 +1694,13 @@ html[dir="ltr"] .order-search-clear{
             <div
               class="stat-title"
               data-i18n="overdueOrders">
-
               الطلبيات المتأخرة
-
             </div>
 
             <div
               id="statOverdue"
               class="stat-value">
-
               0
-
             </div>
 
           </div>
@@ -1737,17 +1717,13 @@ html[dir="ltr"] .order-search-clear{
               <h2
                 class="card-title"
                 data-i18n="latestOrders">
-
                 آخر الطلبيات
-
               </h2>
 
               <button
                 class="btn btn-secondary"
                 onclick="showPage('orders')">
-
                 عرض الكل
-
               </button>
 
             </div>
@@ -1764,9 +1740,7 @@ html[dir="ltr"] .order-search-clear{
               <h2
                 class="card-title"
                 data-i18n="productionStatus">
-
                 حالة الإنتاج
-
               </h2>
 
             </div>
@@ -1813,9 +1787,7 @@ html[dir="ltr"] .order-search-clear{
                 type="button"
                 onclick="clearOrderSearch()"
                 aria-label="مسح البحث">
-
                 ×
-
               </button>
 
             </div>
@@ -1825,9 +1797,7 @@ html[dir="ltr"] .order-search-clear{
               id="addOrderButton"
               class="btn btn-primary"
               onclick="openOrderModal()">
-
               ＋ إضافة طلبية
-
             </button>
 
 
@@ -1913,9 +1883,7 @@ html[dir="ltr"] .order-search-clear{
             <button
               class="btn btn-primary"
               onclick="openUserModal()">
-
               ＋ إضافة مستخدم
-
             </button>
 
           </div>
@@ -1968,17 +1936,13 @@ html[dir="ltr"] .order-search-clear{
       <h2
         id="orderModalTitle"
         class="modal-title">
-
         إضافة طلبية
-
       </h2>
 
       <button
         class="close"
         onclick="closeOrderModal()">
-
         ×
-
       </button>
 
     </div>
@@ -1992,7 +1956,6 @@ html[dir="ltr"] .order-search-clear{
 
 
       <div class="modal-grid">
-
 
         <div class="modal-group">
 
@@ -2095,8 +2058,7 @@ html[dir="ltr"] .order-search-clear{
 
           <textarea
             id="orderNotes"
-            class="modal-textarea">
-          </textarea>
+            class="modal-textarea"></textarea>
 
         </div>
 
@@ -2109,9 +2071,7 @@ html[dir="ltr"] .order-search-clear{
           id="saveOrderButton"
           type="submit"
           class="btn btn-primary">
-
           حفظ
-
         </button>
 
 
@@ -2119,9 +2079,7 @@ html[dir="ltr"] .order-search-clear{
           type="button"
           class="btn btn-secondary"
           onclick="closeOrderModal()">
-
           إلغاء
-
         </button>
 
       </div>
@@ -2150,9 +2108,7 @@ html[dir="ltr"] .order-search-clear{
       <button
         class="close"
         onclick="closeUserModal()">
-
         ×
-
       </button>
 
     </div>
@@ -2161,7 +2117,6 @@ html[dir="ltr"] .order-search-clear{
     <form id="userForm">
 
       <div class="modal-grid">
-
 
         <div class="modal-group">
 
@@ -2243,9 +2198,7 @@ html[dir="ltr"] .order-search-clear{
           id="createUserButton"
           type="submit"
           class="btn btn-primary">
-
           إنشاء المستخدم
-
         </button>
 
 
@@ -2253,9 +2206,7 @@ html[dir="ltr"] .order-search-clear{
           type="button"
           class="btn btn-secondary"
           onclick="closeUserModal()">
-
           إلغاء
-
         </button>
 
       </div>
@@ -2303,17 +2254,12 @@ let currentLanguage =
 
 let toastTimer = null;
 
+let notifications = [];
+
 
 /* =========================================================
    NOTIFICATIONS
 ========================================================= */
-
-let notifications = [];
-
-
-/*
-  تحميل الإشعارات المحفوظة لهذا الجهاز
-*/
 
 function loadNotifications(){
 
@@ -2348,10 +2294,6 @@ function loadNotifications(){
 }
 
 
-/*
-  حفظ الإشعارات
-*/
-
 function saveNotifications(){
 
   try{
@@ -2373,10 +2315,6 @@ function saveNotifications(){
   }
 }
 
-
-/*
-  إضافة إشعار
-*/
 
 function addNotification(
   title,
@@ -2441,10 +2379,6 @@ function addNotification(
 }
 
 
-/*
-  Toast خاص بالإشعار
-*/
-
 function showNotificationToast(
   notification
 ){
@@ -2465,10 +2399,6 @@ function showNotificationToast(
   );
 }
 
-
-/*
-  تحديث رقم الإشعارات
-*/
 
 function updateNotificationBadge(){
 
@@ -2507,10 +2437,6 @@ function updateNotificationBadge(){
   }
 }
 
-
-/*
-  فتح وإغلاق لوحة الإشعارات
-*/
 
 function toggleNotifications(){
 
@@ -2562,9 +2488,7 @@ function toggleNotifications(){
 
         <button
           onclick="closeNotificationPanel()">
-
           ✕
-
         </button>
 
       </div>
@@ -2619,9 +2543,7 @@ function toggleNotifications(){
 
           <button
             onclick="closeNotificationPanel()">
-
             ✕
-
           </button>
 
         </div>
@@ -2656,38 +2578,30 @@ function toggleNotifications(){
                   ">
 
                   <div class="notification-icon">
-
                     ${icon}
-
                   </div>
 
 
                   <div class="notification-content">
 
                     <strong>
-
                       ${escapeHtml(
                         notification.title
                       )}
-
                     </strong>
 
 
                     <div>
-
                       ${escapeHtml(
                         notification.message
                       )}
-
                     </div>
 
 
                     <small>
-
                       ${escapeHtml(
                         notification.time
                       )}
-
                     </small>
 
                   </div>
@@ -2713,10 +2627,6 @@ function toggleNotifications(){
 }
 
 
-/*
-  إغلاق اللوحة
-*/
-
 function closeNotificationPanel(){
 
   document
@@ -2727,10 +2637,6 @@ function closeNotificationPanel(){
 
 }
 
-
-/*
-  قراءة إشعار
-*/
 
 function readNotification(id){
 
@@ -2759,10 +2665,6 @@ function readNotification(id){
 }
 
 
-/*
-  قراءة جميع الإشعارات
-*/
-
 function markAllNotificationsRead(){
 
   notifications.forEach(
@@ -2780,10 +2682,6 @@ function markAllNotificationsRead(){
 
 }
 
-
-/*
-  مسح جميع الإشعارات
-*/
 
 function clearAllNotifications(){
 
@@ -2924,7 +2822,7 @@ function showToast(
 
 
 /* =========================================================
-   GET ACCESS TOKEN
+   ACCESS TOKEN
 ========================================================= */
 
 function getAccessToken(){
@@ -3285,7 +3183,7 @@ async function request(
 
 
 /* =========================================================
-   SERPAPI TEST
+   SERPAPI
 ========================================================= */
 
 async function testSerpApi(){
@@ -3390,10 +3288,6 @@ async function testSerpApi(){
   }
 }
 
-
-/* =========================================================
-   SERPAPI SEARCH
-========================================================= */
 
 async function serpApiSearch(query){
 
@@ -3895,10 +3789,8 @@ async function loadProfile(){
   if(!data?.success){
 
     throw new Error(
-
       data?.error ||
       "تعذر تحميل بيانات المستخدم"
-
     );
 
   }
@@ -5018,12 +4910,27 @@ function openOrderModal(
         order.phone || "";
 
 
+    /*
+      مهم:
+      input type=date يحتاج YYYY-MM-DD فقط.
+      لذلك إذا كان Supabase يعيد timestamp
+      نأخذ أول 10 أحرف.
+    */
+
+    const existingDate =
+      order.due_date
+        ? String(order.due_date).slice(0,10)
+        : "";
+
+
     document
       .getElementById(
         "dueDate"
       )
       .value =
-        order.due_date || "";
+        /^\d{4}-\d{2}-\d{2}$/.test(existingDate)
+          ? existingDate
+          : "";
 
 
     document
@@ -5107,6 +5014,7 @@ function closeOrderModal(){
 
 /* =========================================================
    SAVE ORDER
+   التعديل الأساسي هنا
 ========================================================= */
 
 document
@@ -5139,6 +5047,68 @@ document
           .value;
 
 
+      /*
+        نقرأ التاريخ من input.
+        إذا كان صحيحًا نحوله إلى ISO.
+        إذا كان فارغًا نرسل null.
+      */
+
+      const rawDueDate =
+        document
+          .getElementById(
+            "dueDate"
+          )
+          .value
+          .trim();
+
+
+      let normalizedDueDate = null;
+
+
+      if(rawDueDate){
+
+        if(
+          /^\d{4}-\d{2}-\d{2}$/.test(
+            rawDueDate
+          )
+        ){
+
+          const testDate =
+            new Date(
+              rawDueDate + "T00:00:00"
+            );
+
+
+          if(
+            !Number.isNaN(
+              testDate.getTime()
+            )
+          ){
+
+            normalizedDueDate =
+              testDate.toISOString();
+
+          }
+
+        }else{
+
+          showToast(
+
+            currentLanguage === "he"
+              ? "תאריך המסירה אינו תקין"
+              : "تاريخ التسليم غير صالح",
+
+            true
+
+          );
+
+          return;
+
+        }
+
+      }
+
+
       const payload = {
 
         order_number:
@@ -5165,13 +5135,15 @@ document
             .value
             .trim(),
 
+        /*
+          التعديل:
+          بدل إرسال YYYY-MM-DD
+          نرسل ISO مثل:
+          2026-09-05T00:00:00.000Z
+        */
+
         due_date:
-          document
-            .getElementById(
-              "dueDate"
-            )
-            .value ||
-          null,
+          normalizedDueDate,
 
         stage:
           document
@@ -5196,6 +5168,55 @@ document
             .trim()
 
       };
+
+
+      /*
+        تحقق إضافي قبل الإرسال
+      */
+
+      if(!payload.order_number){
+
+        showToast(
+          currentLanguage === "he"
+            ? "נא להזין מספר הזמנה"
+            : "يرجى إدخال رقم الطلبية",
+          true
+        );
+
+        return;
+      }
+
+
+      if(!payload.customer_name){
+
+        showToast(
+          currentLanguage === "he"
+            ? "נא להזין שם לקוח"
+            : "يرجى إدخال اسم الزبون",
+          true
+        );
+
+        return;
+      }
+
+
+      if(!payload.stage){
+
+        showToast(
+          currentLanguage === "he"
+            ? "שלב ההזמנה אינו תקין"
+            : "حالة الطلبية غير صالحة",
+          true
+        );
+
+        return;
+      }
+
+
+      console.log(
+        "ORDER PAYLOAD:",
+        payload
+      );
 
 
       const saveButton =
@@ -5351,9 +5372,15 @@ document
       }catch(error){
 
         console.error(
+          "SAVE ORDER ERROR:",
           error
         );
 
+
+        /*
+          نعرض رسالة الخطأ الحقيقية من Supabase
+          حتى نعرف الحقل المسبب للمشكلة إذا بقي الخطأ.
+        */
 
         showToast(
 
