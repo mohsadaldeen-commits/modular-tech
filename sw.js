@@ -3,40 +3,40 @@ const CACHE_NAME = "modular-tech-v4";
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
-  "./manifest.webmanifest",
-  "./sw.js",
-  "./icon-192.png"
+  "./manifest.webmanifest"
 ];
 
-/* =====================================================
-   INSTALL
-===================================================== */
-
+// ===============================
+// INSTALL
+// ===============================
 self.addEventListener("install", event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(FILES_TO_CACHE))
-      .catch(error => {
-        console.error("Cache install error:", error);
+      .then(cache => {
+        return Promise.all(
+          FILES_TO_CACHE.map(file =>
+            cache.add(file).catch(error => {
+              console.warn("Cache failed:", file, error);
+            })
+          )
+        );
       })
+      .then(() => self.skipWaiting())
   );
-
-  self.skipWaiting();
 });
 
 
-/* =====================================================
-   ACTIVATE
-===================================================== */
-
+// ===============================
+// ACTIVATE
+// ===============================
 self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys()
-      .then(keys => {
+      .then(cacheNames => {
         return Promise.all(
-          keys
-            .filter(key => key !== CACHE_NAME)
-            .map(key => caches.delete(key))
+          cacheNames
+            .filter(name => name !== CACHE_NAME)
+            .map(name => caches.delete(name))
         );
       })
       .then(() => self.clients.claim())
@@ -44,575 +44,161 @@ self.addEventListener("activate", event => {
 });
 
 
-/* =====================================================
-   FETCH
-   إصلاح stage و due_date قبل إرسالها إلى Supabase
-===================================================== */
-
+// ===============================
+// FETCH
+// ===============================
 self.addEventListener("fetch", event => {
 
-  const request = event.request;
-
-  /*
-    لا نتدخل في الطلبات التي ليست POST أو PATCH
-  */
-  if (
-    request.method !== "POST" &&
-    request.method !== "PATCH"
-  ) {
-    if (request.method !== "GET") {
-      return;
-    }
-
-    event.respondWith(
-      fetch(request)
-        .then(response => {
-
-          if (
-            response &&
-            response.status === 200 &&
-            response.type === "basic"
-          ) {
-            const copy = response.clone();
-
-            caches.open(CACHE_NAME)
-              .then(cache => {
-                cache.put(request, copy);
-              })
-              .catch(error => {
-                console.warn(
-                  "Cache update error:",
-                  error
-                );
-              });
-          }
-
-          return response;
-        })
-        .catch(() => {
-
-          return caches.match(request)
-            .then(cachedResponse => {
-
-              if (cachedResponse) {
-                return cachedResponse;
-              }
-
-              return caches.match("./index.html");
-            });
-
-        })
-    );
-
+  if (event.request.method !== "GET") {
     return;
   }
-
-
-  /* ===================================================
-     SUPABASE ORDERS
-  =================================================== */
-
-  const url = request.url;
-
-  const isOrdersRequest =
-    url.includes(
-      "bvrfrcmblwzuqprjknam.supabase.co/rest/v1/orders"
-    );
-
-
-  /*
-    إذا كان POST/PATCH على orders
-    نصلح البيانات قبل إرسالها
-  */
-
-  if (isOrdersRequest) {
-
-    event.respondWith(
-
-      (async () => {
-
-        try {
-
-          /*
-            نقرأ البيانات الأصلية
-          */
-
-          const originalBody =
-            await request.clone().text();
-
-
-          /*
-            إذا لم يوجد Body
-            نرسل الطلب كما هو
-          */
-
-          if (!originalBody) {
-
-            return fetch(request);
-
-          }
-
-
-          let data;
-
-          try {
-
-            data = JSON.parse(originalBody);
-
-          } catch (error) {
-
-            /*
-              إذا لم يكن JSON
-            */
-
-            return fetch(request);
-
-          }
-
-
-          /* =================================================
-             تحويل stage من اسم المرحلة إلى رقم
-          ================================================= */
-
-          const STAGE_TO_ID = {
-
-            "في العمل": 1,
-
-            "تم القص": 2,
-
-            "تم الكنت": 3,
-
-            "تم CNC": 4,
-
-            "تم التركيب": 5,
-
-            "تم الدهان": 6,
-
-            "تم التغليف": 7,
-
-            "تم التحميل": 8,
-
-            "تم التسليم": 9
-
-          };
-
-
-          /*
-            POST عادة يرسل object
-            PATCH أيضًا يرسل object
-          */
-
-          if (
-            data &&
-            typeof data === "object" &&
-            !Array.isArray(data)
-          ) {
-
-            /*
-              stage إذا كان نصًا
-              نحوله إلى رقم
-            */
-
-            if (
-              typeof data.stage === "string" &&
-              STAGE_TO_ID[data.stage]
-            ) {
-
-              data.stage =
-                STAGE_TO_ID[data.stage];
-
-            }
-
-
-            /*
-              إذا كان stage رقمًا كنص
-              مثل "3"
-              نحوله إلى 3
-            */
-
-            else if (
-              typeof data.stage === "string" &&
-              /^\d+$/.test(data.stage)
-            ) {
-
-              data.stage =
-                Number(data.stage);
-
-            }
-
-
-            /*
-              إصلاح due_date
-              قاعدة البيانات تريد DATE
-              وليس Timestamp
-            */
-
-            if (
-              typeof data.due_date === "string" &&
-              data.due_date
-            ) {
-
-              /*
-                إذا وصل مثل:
-                2026-09-05T00:00:00.000Z
-
-                نحوله إلى:
-                2026-09-05
-              */
-
-              if (
-                data.due_date.includes("T")
-              ) {
-
-                data.due_date =
-                  data.due_date.split("T")[0];
-
-              }
-
-            }
-
-          }
-
-
-          /*
-            إنشاء الطلب الجديد بالبيانات المصححة
-          */
-
-          const newRequest =
-            new Request(
-              request.url,
-              {
-                method: request.method,
-
-                headers: request.headers,
-
-                body: JSON.stringify(data),
-
-                mode: request.mode,
-
-                credentials: request.credentials,
-
-                cache: request.cache,
-
-                redirect: request.redirect,
-
-                referrer: request.referrer,
-
-                referrerPolicy:
-                  request.referrerPolicy
-              }
-            );
-
-
-          /*
-            إرسال الطلب إلى Supabase
-          */
-
-          return fetch(newRequest);
-
-
-        } catch (error) {
-
-          console.error(
-            "Supabase orders request error:",
-            error
-          );
-
-          /*
-            في حالة حدوث أي مشكلة
-            نرسل الطلب الأصلي
-          */
-
-          return fetch(request);
-
-        }
-
-      })()
-
-    );
-
-    return;
-
-  }
-
-
-  /*
-    أي POST/PATCH آخر
-    نرسله بدون تعديل
-  */
 
   event.respondWith(
-    fetch(request)
-  );
+    fetch(event.request)
+      .then(response => {
 
+        if (
+          response &&
+          response.status === 200 &&
+          response.type === "basic"
+        ) {
+          const responseClone = response.clone();
+
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, responseClone);
+          });
+        }
+
+        return response;
+      })
+      .catch(() => {
+        return caches.match(event.request);
+      })
+  );
 });
 
 
-/* =====================================================
-   PUSH NOTIFICATION
-===================================================== */
-
+// ===============================
+// PUSH NOTIFICATION
+// ===============================
 self.addEventListener("push", event => {
 
   let data = {
-
     title: "MODULAR TECH",
-
     body: "لديك إشعار جديد",
-
     icon: "./icon-192.png",
-
     badge: "./icon-192.png",
-
-    url: "./",
-
-    tag: "modular-tech"
-
+    url: "./"
   };
 
-
   try {
-
     if (event.data) {
+      const incoming = event.data.json();
 
-      let incoming;
-
-      try {
-
-        incoming =
-          event.data.json();
-
-      } catch {
-
-        incoming = {
-
-          body:
-            event.data.text()
-
-        };
-
-      }
-
-
-      if (
-        incoming &&
-        typeof incoming === "object"
-      ) {
-
-        data = {
-
-          ...data,
-
-          ...incoming
-
-        };
-
-      }
-
+      data = {
+        ...data,
+        ...incoming
+      };
     }
-
   } catch (error) {
+    console.warn("Push data error:", error);
 
-    console.warn(
-      "Push data error:",
-      error
-    );
-
+    try {
+      if (event.data) {
+        data.body = event.data.text();
+      }
+    } catch (_) {}
   }
 
+  const notificationOptions = {
+    body: data.body,
+    icon: data.icon,
+    badge: data.badge,
 
-  const options = {
+    dir: "rtl",
+    lang: "ar",
 
-    body:
-      data.body ||
-      "لديك إشعار جديد",
-
-    icon:
-      data.icon ||
-      "./icon-192.png",
-
-    badge:
-      data.badge ||
-      "./icon-192.png",
-
-    tag:
-      data.tag ||
-      "modular-tech",
+    tag: data.tag || "modular-tech-notification",
 
     renotify: true,
 
-    requireInteraction: false,
-
-    vibrate: [
-      200,
-      100,
-      200
-    ],
-
     data: {
-
-      url:
-        data.url ||
-        "./",
-
-      order_id:
-        data.order_id ||
-        null,
-
-      order_number:
-        data.order_number ||
-        null,
-
-      status:
-        data.status ||
-        null
-
+      url: data.url || "./"
     }
-
   };
 
-
   event.waitUntil(
-
     self.registration.showNotification(
-
-      data.title ||
-      "MODULAR TECH",
-
-      options
-
+      data.title || "MODULAR TECH",
+      notificationOptions
     )
-
   );
-
 });
 
 
-/* =====================================================
-   NOTIFICATION CLICK
-===================================================== */
+// ===============================
+// NOTIFICATION CLICK
+// ===============================
+self.addEventListener("notificationclick", event => {
 
-self.addEventListener(
-  "notificationclick",
-  event => {
+  event.notification.close();
 
-    event.notification.close();
+  const targetUrl =
+    event.notification &&
+    event.notification.data &&
+    event.notification.data.url
+      ? event.notification.data.url
+      : "./";
 
-    const notificationData =
-      event.notification.data || {};
+  event.waitUntil(
 
-    const targetUrl =
-      notificationData.url ||
-      "./";
+    clients.matchAll({
+      type: "window",
+      includeUncontrolled: true
+    })
 
+    .then(clientList => {
 
-    event.waitUntil(
+      for (const client of clientList) {
 
-      clients.matchAll({
+        if ("focus" in client) {
 
-        type: "window",
-
-        includeUncontrolled: true
-
-      })
-
-      .then(clientList => {
-
-        for (
-          const client of clientList
-        ) {
-
-          if (
-            "focus" in client
-          ) {
+          try {
+            const url = new URL(targetUrl, self.location.origin);
 
             if (
-              "navigate" in client
+              client.url.startsWith(self.location.origin)
             ) {
-
-              return client
-                .navigate(targetUrl)
-                .then(() =>
-                  client.focus()
-                )
-                .catch(() =>
-                  client.focus()
-                );
-
+              return client.focus();
             }
-
+          } catch (_) {
             return client.focus();
-
           }
 
         }
-
-
-        if (
-          clients.openWindow
-        ) {
-
-          return clients.openWindow(
-            targetUrl
-          );
-
-        }
-
-      })
-
-    );
-
-  }
-);
-
-
-/* =====================================================
-   CLEAR APP BADGE
-===================================================== */
-
-self.addEventListener(
-  "message",
-  event => {
-
-    if (
-      event.data &&
-      event.data.type ===
-        "CLEAR_BADGE"
-    ) {
-
-      if (
-        "clearAppBadge" in navigator
-      ) {
-
-        navigator
-          .clearAppBadge()
-          .catch(() => {});
-
       }
 
-    }
+      if (clients.openWindow) {
+        return clients.openWindow(targetUrl);
+      }
 
+    })
+
+  );
+});
+
+
+// ===============================
+// MESSAGE
+// ===============================
+self.addEventListener("message", event => {
+
+  if (!event.data) {
+    return;
   }
-);
 
-
-/* =====================================================
-   SKIP WAITING
-===================================================== */
-
-self.addEventListener(
-  "message",
-  event => {
-
-    if (
-      event.data &&
-      event.data.type ===
-        "SKIP_WAITING"
-    ) {
-
-      self.skipWaiting();
-
-    }
-
+  if (event.data.type === "SKIP_WAITING") {
+    self.skipWaiting();
   }
-);
+
+});
