@@ -102,6 +102,7 @@ button:disabled{
   display:none!important;
 }
 
+
 /* ================= LOGIN ================= */
 
 #loginScreen{
@@ -287,6 +288,7 @@ button:disabled{
   display:inline-block;
 }
 
+
 /* ================= APP ================= */
 
 #app{
@@ -398,6 +400,7 @@ button:disabled{
   background:rgba(239,68,68,.10);
 }
 
+
 /* ================= MAIN ================= */
 
 .main{
@@ -443,6 +446,182 @@ button:disabled{
   margin:auto;
 }
 
+
+/* ================= NOTIFICATIONS ================= */
+
+.notification-btn{
+  position:relative;
+  min-width:46px;
+  width:46px;
+  height:42px;
+  padding:0!important;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:21px!important;
+}
+
+.notification-badge{
+  position:absolute;
+  top:-6px;
+  left:-6px;
+  min-width:20px;
+  height:20px;
+  padding:0 5px;
+  border-radius:50px;
+  background:#ef4444;
+  color:#fff;
+  font-size:11px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:2px solid #fff;
+}
+
+.notification-badge.hidden{
+  display:none;
+}
+
+.notification-panel{
+  position:fixed;
+  top:76px;
+  left:20px;
+  width:390px;
+  max-width:calc(100vw - 40px);
+  max-height:72vh;
+  background:#fff;
+  border:1px solid #dbe3ef;
+  border-radius:22px;
+  box-shadow:0 25px 70px rgba(15,23,42,.20);
+  z-index:9999;
+  overflow:hidden;
+  animation:notificationOpen .18s ease-out;
+}
+
+@keyframes notificationOpen{
+  from{
+    opacity:0;
+    transform:translateY(-8px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.notification-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:17px 18px;
+  border-bottom:1px solid #edf1f6;
+  background:#f8fafc;
+}
+
+.notification-header-title{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:18px;
+  font-weight:900;
+}
+
+.notification-header button{
+  border:0;
+  background:transparent;
+  color:#64748b;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:800;
+}
+
+.notification-list{
+  max-height:58vh;
+  overflow-y:auto;
+}
+
+.notification-item{
+  display:flex;
+  gap:12px;
+  padding:16px;
+  border-bottom:1px solid #edf1f6;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.notification-item:hover{
+  background:#f8fafc;
+}
+
+.notification-item.unread{
+  background:#eff6ff;
+}
+
+.notification-item.read{
+  opacity:.68;
+}
+
+.notification-icon{
+  width:42px;
+  height:42px;
+  min-width:42px;
+  border-radius:13px;
+  background:#eaf2ff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+}
+
+.notification-item.urgent .notification-icon{
+  background:#fee2e2;
+}
+
+.notification-item.success .notification-icon{
+  background:#dcfce7;
+}
+
+.notification-content{
+  flex:1;
+  min-width:0;
+}
+
+.notification-content strong{
+  display:block;
+  margin-bottom:4px;
+  font-size:14px;
+  color:#172033;
+}
+
+.notification-content div{
+  font-size:13px;
+  color:#475569;
+  line-height:1.55;
+}
+
+.notification-content small{
+  display:block;
+  margin-top:6px;
+  color:#94a3b8;
+  font-size:11px;
+}
+
+.notification-empty{
+  padding:50px 20px;
+  text-align:center;
+  color:#94a3b8;
+  font-size:15px;
+  font-weight:700;
+}
+
+.notification-empty-icon{
+  font-size:40px;
+  margin-bottom:12px;
+}
+
+
 /* ================= STATS ================= */
 
 .stats-grid{
@@ -485,6 +664,7 @@ button:disabled{
   font-weight:900;
 }
 
+
 /* ================= CARDS ================= */
 
 .dashboard-grid{
@@ -514,6 +694,7 @@ button:disabled{
   font-size:21px;
   font-weight:900;
 }
+
 
 /* ================= BUTTONS ================= */
 
@@ -549,6 +730,7 @@ button:disabled{
 .btn:active{
   transform:scale(.98);
 }
+
 
 /* ================= SEARCH ================= */
 
@@ -635,6 +817,7 @@ button:disabled{
   margin-top:-7px;
 }
 
+
 /* ================= TABLE ================= */
 
 .table-wrap{
@@ -717,6 +900,7 @@ tr:hover td{
   color:#334155;
 }
 
+
 /* ================= STAGES ================= */
 
 .stages{
@@ -754,6 +938,7 @@ tr:hover td{
   margin-top:5px;
   font-size:13px;
 }
+
 
 /* ================= MODAL ================= */
 
@@ -853,6 +1038,7 @@ tr:hover td{
   margin-top:22px;
 }
 
+
 /* ================= TOAST ================= */
 
 #toast{
@@ -865,7 +1051,7 @@ tr:hover td{
   padding:14px 21px;
   border-radius:17px;
   font-weight:800;
-  z-index:1000;
+  z-index:10000;
   opacity:0;
   pointer-events:none;
   transition:.25s;
@@ -889,6 +1075,7 @@ tr:hover td{
   color:#64748b;
   font-weight:700;
 }
+
 
 /* ================= MOBILE ================= */
 
@@ -1047,6 +1234,20 @@ tr:hover td{
     font-size:11px;
   }
 
+  .notification-btn{
+    width:42px!important;
+    min-width:42px!important;
+    font-size:19px!important;
+  }
+
+  .notification-panel{
+    top:65px;
+    left:10px;
+    right:10px;
+    width:auto;
+    max-width:none;
+  }
+
   .order-search-box{
     width:100%;
     min-width:100%;
@@ -1072,6 +1273,7 @@ tr:hover td{
     min-height:50px;
   }
 }
+
 
 /* ================= LTR ================= */
 
@@ -1128,6 +1330,7 @@ html[dir="ltr"] .order-search-clear{
 
 <body>
 
+
 <!-- ================= LOGIN ================= -->
 
 <section id="loginScreen">
@@ -1135,6 +1338,7 @@ html[dir="ltr"] .order-search-clear{
   <div class="login-card">
 
     <div class="login-language">
+
       <button
         id="languageButton"
         class="lang-btn"
@@ -1142,6 +1346,7 @@ html[dir="ltr"] .order-search-clear{
         onclick="toggleLanguage()">
         עברית
       </button>
+
     </div>
 
     <img
@@ -1379,20 +1584,46 @@ html[dir="ltr"] .order-search-clear{
 
       </div>
 
+
       <div class="top-actions">
+
+        <!-- زر الإشعارات -->
+
+        <button
+          id="notificationButton"
+          class="btn btn-secondary notification-btn"
+          onclick="toggleNotifications()"
+          title="الإشعارات"
+          aria-label="الإشعارات">
+
+          🔔
+
+          <span
+            id="notificationBadge"
+            class="notification-badge hidden">
+            0
+          </span>
+
+        </button>
+
 
         <button
           id="serpTestButton"
           class="btn btn-secondary hidden"
           onclick="testSerpApi()">
+
           🔎 اختبار SerpApi
+
         </button>
+
 
         <button
           id="topAddOrder"
           class="btn btn-primary"
           onclick="openOrderModal()">
+
           ＋ إضافة طلبية
+
         </button>
 
       </div>
@@ -1401,6 +1632,7 @@ html[dir="ltr"] .order-search-clear{
 
 
     <div class="content">
+
 
       <!-- DASHBOARD -->
 
@@ -1415,61 +1647,80 @@ html[dir="ltr"] .order-search-clear{
             <div
               class="stat-title"
               data-i18n="totalOrders">
+
               إجمالي الطلبيات
+
             </div>
 
             <div
               id="statTotal"
               class="stat-value">
+
               0
+
             </div>
 
           </div>
+
 
           <div class="stat-card">
 
             <div
               class="stat-title"
               data-i18n="activeOrders">
+
               الطلبيات النشطة
+
             </div>
 
             <div
               id="statActive"
               class="stat-value">
+
               0
+
             </div>
 
           </div>
+
 
           <div class="stat-card">
 
             <div
               class="stat-title"
               data-i18n="urgentOrders">
+
               الطلبيات المهمة
+
             </div>
 
             <div
               id="statUrgent"
               class="stat-value">
+
               0
+
             </div>
 
           </div>
+
 
           <div class="stat-card">
 
             <div
               class="stat-title"
               data-i18n="overdueOrders">
+
               الطلبيات المتأخرة
+
             </div>
 
             <div
               id="statOverdue"
               class="stat-value">
+
               0
+
             </div>
 
           </div>
@@ -1486,13 +1737,17 @@ html[dir="ltr"] .order-search-clear{
               <h2
                 class="card-title"
                 data-i18n="latestOrders">
+
                 آخر الطلبيات
+
               </h2>
 
               <button
                 class="btn btn-secondary"
                 onclick="showPage('orders')">
+
                 عرض الكل
+
               </button>
 
             </div>
@@ -1509,7 +1764,9 @@ html[dir="ltr"] .order-search-clear{
               <h2
                 class="card-title"
                 data-i18n="productionStatus">
+
                 حالة الإنتاج
+
               </h2>
 
             </div>
@@ -1556,17 +1813,23 @@ html[dir="ltr"] .order-search-clear{
                 type="button"
                 onclick="clearOrderSearch()"
                 aria-label="مسح البحث">
+
                 ×
+
               </button>
 
             </div>
+
 
             <button
               id="addOrderButton"
               class="btn btn-primary"
               onclick="openOrderModal()">
+
               ＋ إضافة طلبية
+
             </button>
+
 
             <div
               id="searchResultInfo"
@@ -1583,6 +1846,7 @@ html[dir="ltr"] .order-search-clear{
               <thead>
 
                 <tr>
+
                   <th>رقم الطلبية</th>
                   <th>الزبون</th>
                   <th>الهاتف</th>
@@ -1590,6 +1854,7 @@ html[dir="ltr"] .order-search-clear{
                   <th>الحالة</th>
                   <th>الأهمية</th>
                   <th>الإجراءات</th>
+
                 </tr>
 
               </thead>
@@ -1648,7 +1913,9 @@ html[dir="ltr"] .order-search-clear{
             <button
               class="btn btn-primary"
               onclick="openUserModal()">
+
               ＋ إضافة مستخدم
+
             </button>
 
           </div>
@@ -1660,11 +1927,13 @@ html[dir="ltr"] .order-search-clear{
               <thead>
 
                 <tr>
+
                   <th>اسم المستخدم</th>
                   <th>الاسم الكامل</th>
                   <th>الدور</th>
                   <th>البريد</th>
                   <th>الحالة</th>
+
                 </tr>
 
               </thead>
@@ -1699,16 +1968,21 @@ html[dir="ltr"] .order-search-clear{
       <h2
         id="orderModalTitle"
         class="modal-title">
+
         إضافة طلبية
+
       </h2>
 
       <button
         class="close"
         onclick="closeOrderModal()">
+
         ×
+
       </button>
 
     </div>
+
 
     <form id="orderForm">
 
@@ -1716,7 +1990,9 @@ html[dir="ltr"] .order-search-clear{
         id="orderId"
         type="hidden">
 
+
       <div class="modal-grid">
+
 
         <div class="modal-group">
 
@@ -1731,6 +2007,7 @@ html[dir="ltr"] .order-search-clear{
 
         </div>
 
+
         <div class="modal-group">
 
           <label class="modal-label">
@@ -1743,6 +2020,7 @@ html[dir="ltr"] .order-search-clear{
             required>
 
         </div>
+
 
         <div class="modal-group">
 
@@ -1757,6 +2035,7 @@ html[dir="ltr"] .order-search-clear{
 
         </div>
 
+
         <div class="modal-group">
 
           <label class="modal-label">
@@ -1770,6 +2049,7 @@ html[dir="ltr"] .order-search-clear{
 
         </div>
 
+
         <div class="modal-group">
 
           <label class="modal-label">
@@ -1782,6 +2062,7 @@ html[dir="ltr"] .order-search-clear{
           </select>
 
         </div>
+
 
         <div class="modal-group">
 
@@ -1805,6 +2086,7 @@ html[dir="ltr"] .order-search-clear{
 
         </div>
 
+
         <div class="modal-group full">
 
           <label class="modal-label">
@@ -1813,11 +2095,13 @@ html[dir="ltr"] .order-search-clear{
 
           <textarea
             id="orderNotes"
-            class="modal-textarea"></textarea>
+            class="modal-textarea">
+          </textarea>
 
         </div>
 
       </div>
+
 
       <div class="modal-actions">
 
@@ -1825,14 +2109,19 @@ html[dir="ltr"] .order-search-clear{
           id="saveOrderButton"
           type="submit"
           class="btn btn-primary">
+
           حفظ
+
         </button>
+
 
         <button
           type="button"
           class="btn btn-secondary"
           onclick="closeOrderModal()">
+
           إلغاء
+
         </button>
 
       </div>
@@ -1861,14 +2150,18 @@ html[dir="ltr"] .order-search-clear{
       <button
         class="close"
         onclick="closeUserModal()">
+
         ×
+
       </button>
 
     </div>
 
+
     <form id="userForm">
 
       <div class="modal-grid">
+
 
         <div class="modal-group">
 
@@ -1883,6 +2176,7 @@ html[dir="ltr"] .order-search-clear{
 
         </div>
 
+
         <div class="modal-group">
 
           <label class="modal-label">
@@ -1895,6 +2189,7 @@ html[dir="ltr"] .order-search-clear{
             required>
 
         </div>
+
 
         <div class="modal-group">
 
@@ -1910,6 +2205,7 @@ html[dir="ltr"] .order-search-clear{
 
         </div>
 
+
         <div class="modal-group">
 
           <label class="modal-label">
@@ -1923,6 +2219,7 @@ html[dir="ltr"] .order-search-clear{
             required>
 
         </div>
+
 
         <div class="modal-group full">
 
@@ -1939,20 +2236,26 @@ html[dir="ltr"] .order-search-clear{
 
       </div>
 
+
       <div class="modal-actions">
 
         <button
           id="createUserButton"
           type="submit"
           class="btn btn-primary">
+
           إنشاء المستخدم
+
         </button>
+
 
         <button
           type="button"
           class="btn btn-secondary"
           onclick="closeUserModal()">
+
           إلغاء
+
         </button>
 
       </div>
@@ -1971,7 +2274,6 @@ html[dir="ltr"] .order-search-clear{
 
 /* =========================================================
    SUPABASE CONFIGURATION
-   مهم جداً: تم إصلاح الخطأ هنا
 ========================================================= */
 
 const SUPABASE_URL =
@@ -2003,10 +2305,505 @@ let toastTimer = null;
 
 
 /* =========================================================
+   NOTIFICATIONS
+========================================================= */
+
+let notifications = [];
+
+
+/*
+  تحميل الإشعارات المحفوظة لهذا الجهاز
+*/
+
+function loadNotifications(){
+
+  try{
+
+    const saved =
+      localStorage.getItem(
+        "modular_notifications"
+      );
+
+    notifications =
+      saved
+        ? JSON.parse(saved)
+        : [];
+
+    if(!Array.isArray(notifications)){
+      notifications=[];
+    }
+
+  }catch(error){
+
+    console.warn(
+      "Notifications load:",
+      error
+    );
+
+    notifications=[];
+
+  }
+
+  updateNotificationBadge();
+}
+
+
+/*
+  حفظ الإشعارات
+*/
+
+function saveNotifications(){
+
+  try{
+
+    localStorage.setItem(
+      "modular_notifications",
+      JSON.stringify(
+        notifications.slice(0,50)
+      )
+    );
+
+  }catch(error){
+
+    console.warn(
+      "Notifications save:",
+      error
+    );
+
+  }
+}
+
+
+/*
+  إضافة إشعار
+*/
+
+function addNotification(
+  title,
+  message,
+  type="info"
+){
+
+  const notification = {
+
+    id:
+      Date.now() +
+      Math.random(),
+
+    title:
+      String(title || ""),
+
+    message:
+      String(message || ""),
+
+    type:
+      type,
+
+    time:
+      new Date().toLocaleTimeString(
+        currentLanguage === "he"
+          ? "he-IL"
+          : "ar-PS",
+        {
+          hour:"2-digit",
+          minute:"2-digit"
+        }
+      ),
+
+    timestamp:
+      new Date().toISOString(),
+
+    read:false
+
+  };
+
+
+  notifications.unshift(
+    notification
+  );
+
+
+  if(notifications.length > 50){
+
+    notifications =
+      notifications.slice(0,50);
+
+  }
+
+
+  saveNotifications();
+
+  updateNotificationBadge();
+
+  showNotificationToast(
+    notification
+  );
+}
+
+
+/*
+  Toast خاص بالإشعار
+*/
+
+function showNotificationToast(
+  notification
+){
+
+  if(!notification)
+    return;
+
+  const icon =
+    notification.type === "urgent"
+      ? "🚨"
+      : notification.type === "success"
+        ? "✅"
+        : "🔔";
+
+
+  showToast(
+    `${icon} ${notification.title} — ${notification.message}`
+  );
+}
+
+
+/*
+  تحديث رقم الإشعارات
+*/
+
+function updateNotificationBadge(){
+
+  const badge =
+    document.getElementById(
+      "notificationBadge"
+    );
+
+  if(!badge)
+    return;
+
+
+  const unread =
+    notifications.filter(
+      n=>!n.read
+    ).length;
+
+
+  if(unread > 0){
+
+    badge.textContent =
+      unread > 99
+        ? "99+"
+        : unread;
+
+    badge.classList.remove(
+      "hidden"
+    );
+
+  }else{
+
+    badge.classList.add(
+      "hidden"
+    );
+
+  }
+}
+
+
+/*
+  فتح وإغلاق لوحة الإشعارات
+*/
+
+function toggleNotifications(){
+
+  let panel =
+    document.getElementById(
+      "notificationPanel"
+    );
+
+
+  if(panel){
+
+    panel.remove();
+
+    return;
+
+  }
+
+
+  panel =
+    document.createElement(
+      "div"
+    );
+
+
+  panel.id =
+    "notificationPanel";
+
+  panel.className =
+    "notification-panel";
+
+
+  if(!notifications.length){
+
+    panel.innerHTML = `
+
+      <div class="notification-header">
+
+        <div class="notification-header-title">
+
+          🔔
+
+          ${
+            currentLanguage === "he"
+              ? "התראות"
+              : "الإشعارات"
+          }
+
+        </div>
+
+        <button
+          onclick="closeNotificationPanel()">
+
+          ✕
+
+        </button>
+
+      </div>
+
+
+      <div class="notification-empty">
+
+        <div class="notification-empty-icon">
+          🔔
+        </div>
+
+        ${
+          currentLanguage === "he"
+            ? "אין התראות חדשות"
+            : "لا توجد إشعارات"
+        }
+
+      </div>
+
+    `;
+
+  }else{
+
+    panel.innerHTML = `
+
+      <div class="notification-header">
+
+        <div class="notification-header-title">
+
+          🔔
+
+          ${
+            currentLanguage === "he"
+              ? "התראות"
+              : "الإشعارات"
+          }
+
+        </div>
+
+        <div style="display:flex;gap:12px;align-items:center;">
+
+          <button
+            onclick="markAllNotificationsRead()">
+
+            ${
+              currentLanguage === "he"
+                ? "סמן הכל כנקרא"
+                : "تحديد الكل كمقروء"
+            }
+
+          </button>
+
+          <button
+            onclick="closeNotificationPanel()">
+
+            ✕
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="notification-list">
+
+        ${
+          notifications
+            .map(notification=>{
+
+              const icon =
+                notification.type === "urgent"
+                  ? "🚨"
+                  : notification.type === "success"
+                    ? "✅"
+                    : "🔔";
+
+
+              return `
+
+                <div
+                  class="
+                    notification-item
+                    ${notification.read ? "read" : "unread"}
+                    ${escapeAttr(notification.type)}
+                  "
+                  onclick="
+                    readNotification('${escapeAttr(notification.id)}')
+                  ">
+
+                  <div class="notification-icon">
+
+                    ${icon}
+
+                  </div>
+
+
+                  <div class="notification-content">
+
+                    <strong>
+
+                      ${escapeHtml(
+                        notification.title
+                      )}
+
+                    </strong>
+
+
+                    <div>
+
+                      ${escapeHtml(
+                        notification.message
+                      )}
+
+                    </div>
+
+
+                    <small>
+
+                      ${escapeHtml(
+                        notification.time
+                      )}
+
+                    </small>
+
+                  </div>
+
+                </div>
+
+              `;
+
+            })
+            .join("")
+        }
+
+      </div>
+
+    `;
+
+  }
+
+
+  document.body.appendChild(
+    panel
+  );
+}
+
+
+/*
+  إغلاق اللوحة
+*/
+
+function closeNotificationPanel(){
+
+  document
+    .getElementById(
+      "notificationPanel"
+    )
+    ?.remove();
+
+}
+
+
+/*
+  قراءة إشعار
+*/
+
+function readNotification(id){
+
+  const notification =
+    notifications.find(
+      n =>
+        String(n.id) ===
+        String(id)
+    );
+
+
+  if(notification){
+
+    notification.read=true;
+
+  }
+
+
+  saveNotifications();
+
+  updateNotificationBadge();
+
+  closeNotificationPanel();
+
+  toggleNotifications();
+}
+
+
+/*
+  قراءة جميع الإشعارات
+*/
+
+function markAllNotificationsRead(){
+
+  notifications.forEach(
+    notification=>{
+      notification.read=true;
+    }
+  );
+
+
+  saveNotifications();
+
+  updateNotificationBadge();
+
+  closeNotificationPanel();
+
+}
+
+
+/*
+  مسح جميع الإشعارات
+*/
+
+function clearAllNotifications(){
+
+  notifications=[];
+
+  saveNotifications();
+
+  updateNotificationBadge();
+
+  closeNotificationPanel();
+
+}
+
+
+/* =========================================================
    STAGES
 ========================================================= */
 
 const STAGES = [
+
   "في العمل",
   "تم القص",
   "تم الكنت",
@@ -2016,6 +2813,7 @@ const STAGES = [
   "تم التغليف",
   "تم التحميل",
   "تم التسليم"
+
 ];
 
 
@@ -2024,6 +2822,7 @@ const STAGES = [
 ========================================================= */
 
 const ROLES = [
+
   "المدير",
   "القص",
   "الكنت",
@@ -2033,6 +2832,7 @@ const ROLES = [
   "التغليف",
   "التحميل",
   "التسليم"
+
 ];
 
 
@@ -2077,30 +2877,49 @@ const translations = {
    TOAST
 ========================================================= */
 
-function showToast(message,error=false){
+function showToast(
+  message,
+  error=false
+){
 
   const toast =
-    document.getElementById("toast");
+    document.getElementById(
+      "toast"
+    );
 
-  if(!toast) return;
+  if(!toast)
+    return;
 
-  toast.textContent = message;
+
+  toast.textContent =
+    message;
+
 
   toast.classList.toggle(
     "error",
     error
   );
 
-  toast.classList.add("show");
 
-  clearTimeout(toastTimer);
+  toast.classList.add(
+    "show"
+  );
+
+
+  clearTimeout(
+    toastTimer
+  );
+
 
   toastTimer =
-    setTimeout(()=>{
-
-      toast.classList.remove("show");
-
-    },4000);
+    setTimeout(
+      ()=>{
+        toast.classList.remove(
+          "show"
+        );
+      },
+      4000
+    );
 }
 
 
@@ -2118,7 +2937,6 @@ function getAccessToken(){
 
 /* =========================================================
    RAPID FUNCTION
-   مع إعادة المحاولة تلقائياً بعد انتهاء الجلسة
 ========================================================= */
 
 async function rapidFunction(
@@ -2131,6 +2949,7 @@ async function rapidFunction(
     accessToken ||
     getAccessToken();
 
+
   const headers = {
 
     "apikey":
@@ -2141,12 +2960,14 @@ async function rapidFunction(
 
   };
 
+
   if(token){
 
     headers["Authorization"] =
       "Bearer " + token;
 
   }
+
 
   const response =
     await fetch(
@@ -2161,10 +2982,13 @@ async function rapidFunction(
 
     );
 
+
   const text =
     await response.text();
 
-  let data = null;
+
+  let data=null;
+
 
   try{
 
@@ -2175,14 +2999,10 @@ async function rapidFunction(
 
   }catch{
 
-    data = text;
+    data=text;
 
   }
 
-
-  /*
-    إذا انتهت الجلسة نحاول تجديدها مرة واحدة
-  */
 
   if(
     response.status === 401 &&
@@ -2192,6 +3012,7 @@ async function rapidFunction(
 
     const refreshed =
       await refreshSession();
+
 
     if(refreshed){
 
@@ -2221,6 +3042,7 @@ async function rapidFunction(
 
   }
 
+
   return data;
 }
 
@@ -2236,8 +3058,10 @@ async function refreshSession(){
       "supabase_refresh_token"
     );
 
+
   if(!refreshToken)
     return false;
+
 
   try{
 
@@ -2263,10 +3087,13 @@ async function refreshSession(){
 
       );
 
+
     const text =
       await response.text();
 
-    let data = null;
+
+    let data=null;
+
 
     try{
 
@@ -2280,6 +3107,7 @@ async function refreshSession(){
       data=text;
 
     }
+
 
     if(!response.ok){
 
@@ -2295,6 +3123,7 @@ async function refreshSession(){
 
     }
 
+
     if(!data?.access_token){
 
       throw new Error(
@@ -2303,10 +3132,12 @@ async function refreshSession(){
 
     }
 
+
     localStorage.setItem(
       "supabase_access_token",
       data.access_token
     );
+
 
     if(data.refresh_token){
 
@@ -2317,6 +3148,7 @@ async function refreshSession(){
 
     }
 
+
     return true;
 
   }catch(error){
@@ -2326,6 +3158,7 @@ async function refreshSession(){
       error
     );
 
+
     localStorage.removeItem(
       "supabase_access_token"
     );
@@ -2333,6 +3166,7 @@ async function refreshSession(){
     localStorage.removeItem(
       "supabase_refresh_token"
     );
+
 
     return false;
   }
@@ -2352,6 +3186,7 @@ async function request(
   const accessToken =
     getAccessToken();
 
+
   const headers = {
 
     "apikey":
@@ -2364,12 +3199,14 @@ async function request(
 
   };
 
+
   if(accessToken){
 
     headers["Authorization"] =
       "Bearer " + accessToken;
 
   }
+
 
   const response =
     await fetch(
@@ -2392,6 +3229,7 @@ async function request(
     const refreshed =
       await refreshSession();
 
+
     if(refreshed){
 
       return request(
@@ -2408,7 +3246,9 @@ async function request(
   const text =
     await response.text();
 
-  let data = null;
+
+  let data=null;
+
 
   try{
 
@@ -2439,6 +3279,7 @@ async function request(
 
   }
 
+
   return data;
 }
 
@@ -2458,20 +3299,24 @@ async function testSerpApi(){
         : "اختبار SerpApi متاح للمدير فقط",
 
       true
+
     );
 
     return;
   }
+
 
   try{
 
     let token =
       getAccessToken();
 
+
     if(!token){
 
       const refreshed =
         await refreshSession();
+
 
       if(refreshed){
 
@@ -2482,11 +3327,13 @@ async function testSerpApi(){
 
     }
 
+
     const data =
       await rapidFunction(
         {action:"test"},
         token
       );
+
 
     if(
       data?.success &&
@@ -2504,6 +3351,7 @@ async function testSerpApi(){
       return;
     }
 
+
     showToast(
 
       data?.error ||
@@ -2515,6 +3363,7 @@ async function testSerpApi(){
       ),
 
       true
+
     );
 
   }catch(error){
@@ -2523,6 +3372,7 @@ async function testSerpApi(){
       "SerpApi test:",
       error
     );
+
 
     showToast(
 
@@ -2534,7 +3384,9 @@ async function testSerpApi(){
       error.message,
 
       true
+
     );
+
   }
 }
 
@@ -2549,6 +3401,7 @@ async function serpApiSearch(query){
     String(query || "")
       .trim();
 
+
   if(!text){
 
     throw new Error(
@@ -2560,6 +3413,7 @@ async function serpApiSearch(query){
     );
 
   }
+
 
   const data =
     await rapidFunction({
@@ -2596,6 +3450,7 @@ async function serpApiSearch(query){
 
   }
 
+
   return data;
 }
 
@@ -2611,10 +3466,12 @@ function toggleLanguage(){
       ? "he"
       : "ar";
 
+
   localStorage.setItem(
     "modular_language",
     currentLanguage
   );
+
 
   applyLanguage();
 }
@@ -2625,24 +3482,33 @@ function applyLanguage(){
   const html =
     document.documentElement;
 
+
   const he =
     currentLanguage === "he";
 
+
   html.lang =
     he ? "he" : "ar";
+
 
   html.dir =
     he ? "ltr" : "rtl";
 
 
   document
-    .getElementById("languageButton")
+    .getElementById(
+      "languageButton"
+    )
     .textContent =
-      he ? "العربية" : "עברית";
+      he
+        ? "العربية"
+        : "עברית";
 
 
   document
-    .getElementById("loginTitle")
+    .getElementById(
+      "loginTitle"
+    )
     .textContent =
       he
         ? "מערכת ניהול הזמנות"
@@ -2650,13 +3516,17 @@ function applyLanguage(){
 
 
   document
-    .getElementById("loginBrand")
+    .getElementById(
+      "loginBrand"
+    )
     .textContent =
       "MODULAR TECH";
 
 
   document
-    .getElementById("usernameLabel")
+    .getElementById(
+      "usernameLabel"
+    )
     .textContent =
       he
         ? "שם משתמש"
@@ -2664,7 +3534,9 @@ function applyLanguage(){
 
 
   document
-    .getElementById("passwordLabel")
+    .getElementById(
+      "passwordLabel"
+    )
     .textContent =
       he
         ? "סיסמה"
@@ -2672,7 +3544,9 @@ function applyLanguage(){
 
 
   document
-    .getElementById("loginButton")
+    .getElementById(
+      "loginButton"
+    )
     .textContent =
       he
         ? "התחברות 🔐"
@@ -2680,7 +3554,9 @@ function applyLanguage(){
 
 
   document
-    .getElementById("loginMessage")
+    .getElementById(
+      "loginMessage"
+    )
     .textContent =
       he
         ? "החשבון חייב להיות פעיל. במקרה של בעיה, פנה למנהל."
@@ -2688,7 +3564,9 @@ function applyLanguage(){
 
 
   document
-    .getElementById("designedText")
+    .getElementById(
+      "designedText"
+    )
     .textContent =
       he
         ? "עוצב על ידי"
@@ -2696,7 +3574,9 @@ function applyLanguage(){
 
 
   const search =
-    document.getElementById("orderSearch");
+    document.getElementById(
+      "orderSearch"
+    );
 
 
   if(search){
@@ -2710,11 +3590,16 @@ function applyLanguage(){
 
 
   document
-    .querySelectorAll("[data-i18n]")
+    .querySelectorAll(
+      "[data-i18n]"
+    )
     .forEach(el=>{
 
       const key =
-        el.getAttribute("data-i18n");
+        el.getAttribute(
+          "data-i18n"
+        );
+
 
       if(
         translations[currentLanguage] &&
@@ -2745,6 +3630,8 @@ function applyLanguage(){
 
 
   renderEverything();
+
+  updateNotificationBadge();
 }
 
 
@@ -2760,11 +3647,13 @@ document
 
       e.preventDefault();
 
+
       const username =
         document
           .getElementById("username")
           .value
           .trim();
+
 
       const password =
         document
@@ -2796,6 +3685,7 @@ document
 
       button.disabled=true;
 
+
       button.textContent =
         currentLanguage === "he"
           ? "מתחבר..."
@@ -2803,10 +3693,6 @@ document
 
 
       try{
-
-        /*
-          نمسح الجلسة القديمة قبل تسجيل دخول جديد
-        */
 
         localStorage.removeItem(
           "supabase_access_token"
@@ -2883,11 +3769,14 @@ document
 
           }
 
+
           currentProfile =
             data.profile;
 
+
           currentUserId =
             data.profile.id;
+
 
           role =
             data.profile.role;
@@ -2949,6 +3838,7 @@ document
 
         button.disabled=false;
 
+
         button.textContent =
           currentLanguage === "he"
             ? "התחברות 🔐"
@@ -2974,6 +3864,7 @@ async function loadProfile(){
 
     const refreshed =
       await refreshSession();
+
 
     if(refreshed){
 
@@ -3034,8 +3925,10 @@ async function loadProfile(){
   currentProfile =
     data.profile;
 
+
   currentUserId =
     currentProfile.id;
+
 
   role =
     currentProfile.role;
@@ -3115,6 +4008,8 @@ async function initializeApp(){
 
   }
 
+
+  loadNotifications();
 
   renderEverything();
 }
@@ -3197,11 +4092,13 @@ function renderEverything(){
 
   renderStages();
 
+
   if(role === "المدير"){
 
     renderUsers();
 
   }
+
 }
 
 
@@ -3214,20 +4111,26 @@ function renderDashboard(){
   const total =
     orders.length;
 
+
   const active =
     orders.filter(
       o=>o.stage !== "تم التسليم"
     ).length;
+
 
   const urgent =
     orders.filter(
       o=>o.urgent
     ).length;
 
+
   const today =
     new Date();
 
-  today.setHours(0,0,0,0);
+
+  today.setHours(
+    0,0,0,0
+  );
 
 
   const overdue =
@@ -3236,13 +4139,21 @@ function renderDashboard(){
       if(!o.due_date)
         return false;
 
+
       if(o.stage === "تم التسليم")
         return false;
 
-      const date =
-        new Date(o.due_date);
 
-      date.setHours(0,0,0,0);
+      const date =
+        new Date(
+          o.due_date
+        );
+
+
+      date.setHours(
+        0,0,0,0
+      );
+
 
       return date < today;
 
@@ -3274,7 +4185,10 @@ function renderDashboard(){
 
 
   const latest =
-    orders.slice(0,6);
+    orders.slice(
+      0,
+      6
+    );
 
 
   const container =
@@ -3303,7 +4217,8 @@ function renderDashboard(){
 
     container.innerHTML =
 
-      latest.map(order=>`
+      latest.map(
+        order=>`
 
         <div
           style="
@@ -3353,7 +4268,8 @@ function renderDashboard(){
 
         </div>
 
-      `).join("");
+      `
+      ).join("");
 
   }
 
@@ -3366,41 +4282,47 @@ function renderDashboard(){
 
   stageContainer.innerHTML =
 
-    STAGES.map(stage=>{
+    STAGES.map(
+      stage=>{
 
-      const count =
-        orders.filter(
-          o=>o.stage === stage
-        ).length;
+        const count =
+          orders.filter(
+            o=>o.stage === stage
+          ).length;
 
 
-      return `
+        return `
 
-        <div class="stage-card">
+          <div class="stage-card">
 
-          <div class="stage-name">
-            ${escapeHtml(stage)}
+            <div class="stage-name">
+
+              ${escapeHtml(stage)}
+
+            </div>
+
+            <div class="stage-count">
+
+              ${count}
+
+            </div>
+
+            <div class="stage-label">
+
+              ${
+                currentLanguage === "he"
+                  ? "הזמנות"
+                  : "طلبية"
+              }
+
+            </div>
+
           </div>
 
-          <div class="stage-count">
-            ${count}
-          </div>
+        `;
 
-          <div class="stage-label">
-
-            ${
-              currentLanguage === "he"
-                ? "הזמנות"
-                : "طلبية"
-            }
-
-          </div>
-
-        </div>
-
-      `;
-
-    }).join("");
+      }
+    ).join("");
 }
 
 
@@ -3422,8 +4344,10 @@ function clearOrderSearch(){
       "orderSearch"
     );
 
+
   if(!input)
     return;
+
 
   input.value="";
 
@@ -3444,36 +4368,45 @@ function renderOrders(){
       "ordersTable"
     );
 
+
   if(!tbody)
     return;
 
 
   const search =
     document
-      .getElementById("orderSearch")
+      .getElementById(
+        "orderSearch"
+      )
       ?.value
       .trim()
-      .toLowerCase() || "";
+      .toLowerCase() ||
+      "";
 
 
   const filtered =
-    orders.filter(order=>{
+    orders.filter(
+      order=>{
 
-      const text = [
+        const text = [
 
-        order.order_number,
-        order.customer_name,
-        order.phone,
-        order.stage,
-        order.notes,
-        order.due_date
+          order.order_number,
+          order.customer_name,
+          order.phone,
+          order.stage,
+          order.notes,
+          order.due_date
 
-      ].join(" ").toLowerCase();
+        ].join(" ")
+         .toLowerCase();
 
 
-      return text.includes(search);
+        return text.includes(
+          search
+        );
 
-    });
+      }
+    );
 
 
   const clearButton =
@@ -3559,107 +4492,130 @@ function renderOrders(){
 
   tbody.innerHTML =
 
-    filtered.map(order=>{
+    filtered.map(
+      order=>{
 
-      const urgent =
-        order.urgent;
-
-      const actions =
-        renderOrderActions(order);
+        const urgent =
+          order.urgent;
 
 
-      return `
+        const actions =
+          renderOrderActions(
+            order
+          );
 
-        <tr
-          class="${
-            urgent
-              ? "urgent-row"
-              : ""
-          }">
 
-          <td>
-            <strong>
-              ${escapeHtml(
-                order.order_number
-              )}
-            </strong>
-          </td>
+        return `
 
-          <td>
-            ${escapeHtml(
-              order.customer_name
-            )}
-          </td>
-
-          <td>
-            ${escapeHtml(
-              order.phone || "—"
-            )}
-          </td>
-
-          <td>
-            ${formatDate(
-              order.due_date
-            )}
-          </td>
-
-          <td>
-
-            <span class="badge badge-stage">
-
-              ${escapeHtml(
-                order.stage
-              )}
-
-            </span>
-
-          </td>
-
-          <td>
-
-            ${
+          <tr
+            class="${
               urgent
+                ? "urgent-row"
+                : ""
+            }">
 
-                ? `
+            <td>
 
-                  <span class="badge badge-urgent">
+              <strong>
 
-                    ${
-                      currentLanguage === "he"
-                        ? "דחוף מאוד"
-                        : "مهمة جدًا"
-                    }
+                ${escapeHtml(
+                  order.order_number
+                )}
 
-                  </span>
+              </strong>
 
-                `
+            </td>
 
-                : `
 
-                  <span class="badge badge-normal">
+            <td>
 
-                    ${
-                      currentLanguage === "he"
-                        ? "רגילה"
-                        : "عادية"
-                    }
+              ${escapeHtml(
+                order.customer_name
+              )}
 
-                  </span>
+            </td>
 
-                `
-            }
 
-          </td>
+            <td>
 
-          <td>
-            ${actions}
-          </td>
+              ${escapeHtml(
+                order.phone || "—"
+              )}
 
-        </tr>
+            </td>
 
-      `;
 
-    }).join("");
+            <td>
+
+              ${formatDate(
+                order.due_date
+              )}
+
+            </td>
+
+
+            <td>
+
+              <span class="badge badge-stage">
+
+                ${escapeHtml(
+                  order.stage
+                )}
+
+              </span>
+
+            </td>
+
+
+            <td>
+
+              ${
+                urgent
+
+                  ? `
+
+                    <span class="badge badge-urgent">
+
+                      ${
+                        currentLanguage === "he"
+                          ? "דחוף מאוד"
+                          : "مهمة جدًا"
+                      }
+
+                    </span>
+
+                  `
+
+                  : `
+
+                    <span class="badge badge-normal">
+
+                      ${
+                        currentLanguage === "he"
+                          ? "רגילה"
+                          : "عادية"
+                      }
+
+                    </span>
+
+                  `
+              }
+
+            </td>
+
+
+            <td>
+
+              ${actions}
+
+            </td>
+
+          </tr>
+
+        `;
+
+      }
+    ).join("");
 }
 
 
@@ -3667,7 +4623,9 @@ function renderOrders(){
    ORDER ACTIONS
 ========================================================= */
 
-function renderOrderActions(order){
+function renderOrderActions(
+  order
+){
 
   let html="";
 
@@ -3694,7 +4652,9 @@ function renderOrderActions(order){
 
 
   const next =
-    getNextStage(order.stage);
+    getNextStage(
+      order.stage
+    );
 
 
   if(next){
@@ -3764,10 +4724,14 @@ function renderOrderActions(order){
    NEXT STAGE
 ========================================================= */
 
-function getNextStage(currentStage){
+function getNextStage(
+  currentStage
+){
 
   const index =
-    STAGES.indexOf(currentStage);
+    STAGES.indexOf(
+      currentStage
+    );
 
 
   if(
@@ -3800,7 +4764,8 @@ function getNextStage(currentStage){
 
   return {
 
-    stage:nextStage,
+    stage:
+      nextStage,
 
     role:
       roleMap[currentStage] ||
@@ -3814,11 +4779,13 @@ function getNextStage(currentStage){
    ADVANCE ORDER
 ========================================================= */
 
-async function advanceOrder(id){
+async function advanceOrder(
+  id
+){
 
   const order =
     orders.find(
-      o=>
+      o =>
         String(o.id) ===
         String(id)
     );
@@ -3828,8 +4795,14 @@ async function advanceOrder(id){
     return;
 
 
+  const previousStage =
+    order.stage;
+
+
   const next =
-    getNextStage(order.stage);
+    getNextStage(
+      order.stage
+    );
 
 
   if(!next)
@@ -3889,20 +4862,30 @@ async function advanceOrder(id){
     renderEverything();
 
 
-    showToast(
-
+    const title =
       currentLanguage === "he"
+        ? `הזמנה ${order.order_number}`
+        : `الطلبية ${order.order_number}`;
 
-        ? `הזמנה מספר ${order.order_number} נמצאת כעת ב-${next.stage}`
 
-        : `الطلبية رقم ${order.order_number} أصبحت في حالة ${next.stage}`
+    const message =
+      currentLanguage === "he"
+        ? `הועברה מ-${previousStage} ל-${next.stage}`
+        : `انتقلت من ${previousStage} إلى ${next.stage}`;
 
+
+    addNotification(
+      title,
+      message,
+      "success"
     );
 
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
 
     showToast(
@@ -3940,13 +4923,18 @@ function populateStageSelect(){
 
   select.innerHTML =
 
-    STAGES.map(stage=>`
+    STAGES.map(
+      stage=>`
 
-      <option value="${escapeAttr(stage)}">
-        ${escapeHtml(stage)}
-      </option>
+        <option
+          value="${escapeAttr(stage)}">
 
-    `).join("");
+          ${escapeHtml(stage)}
+
+        </option>
+
+      `
+    ).join("");
 }
 
 
@@ -3954,7 +4942,9 @@ function populateStageSelect(){
    ORDER MODAL
 ========================================================= */
 
-function openOrderModal(order=null){
+function openOrderModal(
+  order=null
+){
 
   if(role !== "المدير"){
 
@@ -3976,7 +4966,9 @@ function openOrderModal(order=null){
 
 
   document
-    .getElementById("orderModal")
+    .getElementById(
+      "orderModal"
+    )
     .classList
     .remove("hidden");
 
@@ -3984,7 +4976,9 @@ function openOrderModal(order=null){
   if(order){
 
     document
-      .getElementById("orderModalTitle")
+      .getElementById(
+        "orderModalTitle"
+      )
       .textContent =
 
         currentLanguage === "he"
@@ -3993,49 +4987,68 @@ function openOrderModal(order=null){
 
 
     document
-      .getElementById("orderId")
+      .getElementById(
+        "orderId"
+      )
       .value =
         order.id || "";
 
 
     document
-      .getElementById("orderNumber")
+      .getElementById(
+        "orderNumber"
+      )
       .value =
         order.order_number || "";
 
 
     document
-      .getElementById("customerName")
+      .getElementById(
+        "customerName"
+      )
       .value =
         order.customer_name || "";
 
 
     document
-      .getElementById("customerPhone")
+      .getElementById(
+        "customerPhone"
+      )
       .value =
         order.phone || "";
 
 
     document
-      .getElementById("dueDate")
+      .getElementById(
+        "dueDate"
+      )
       .value =
         order.due_date || "";
 
 
     document
-      .getElementById("orderStage")
+      .getElementById(
+        "orderStage"
+      )
       .value =
-        order.stage || "في العمل";
+        order.stage ||
+        "في العمل";
 
 
     document
-      .getElementById("orderUrgent")
+      .getElementById(
+        "orderUrgent"
+      )
       .value =
-        String(Boolean(order.urgent));
+        String(
+          Boolean(order.urgent)
+        );
 
 
     document
-      .getElementById("orderNotes")
+      .getElementById(
+        "orderNotes"
+      )
       .value =
         order.notes || "";
 
@@ -4043,12 +5056,16 @@ function openOrderModal(order=null){
   }else{
 
     document
-      .getElementById("orderForm")
+      .getElementById(
+        "orderForm"
+      )
       .reset();
 
 
     document
-      .getElementById("orderModalTitle")
+      .getElementById(
+        "orderModalTitle"
+      )
       .textContent =
 
         currentLanguage === "he"
@@ -4057,12 +5074,16 @@ function openOrderModal(order=null){
 
 
     document
-      .getElementById("orderId")
+      .getElementById(
+        "orderId"
+      )
       .value="";
 
 
     document
-      .getElementById("orderStage")
+      .getElementById(
+        "orderStage"
+      )
       .value="في العمل";
 
   }
@@ -4076,7 +5097,9 @@ function openOrderModal(order=null){
 function closeOrderModal(){
 
   document
-    .getElementById("orderModal")
+    .getElementById(
+      "orderModal"
+    )
     .classList
     .add("hidden");
 }
@@ -4087,7 +5110,9 @@ function closeOrderModal(){
 ========================================================= */
 
 document
-  .getElementById("orderForm")
+  .getElementById(
+    "orderForm"
+  )
   .addEventListener(
     "submit",
     async function(e){
@@ -4108,7 +5133,9 @@ document
 
       const id =
         document
-          .getElementById("orderId")
+          .getElementById(
+            "orderId"
+          )
           .value;
 
 
@@ -4116,41 +5143,55 @@ document
 
         order_number:
           document
-            .getElementById("orderNumber")
+            .getElementById(
+              "orderNumber"
+            )
             .value
             .trim(),
 
         customer_name:
           document
-            .getElementById("customerName")
+            .getElementById(
+              "customerName"
+            )
             .value
             .trim(),
 
         phone:
           document
-            .getElementById("customerPhone")
+            .getElementById(
+              "customerPhone"
+            )
             .value
             .trim(),
 
         due_date:
           document
-            .getElementById("dueDate")
+            .getElementById(
+              "dueDate"
+            )
             .value ||
           null,
 
         stage:
           document
-            .getElementById("orderStage")
+            .getElementById(
+              "orderStage"
+            )
             .value,
 
         urgent:
           document
-            .getElementById("orderUrgent")
+            .getElementById(
+              "orderUrgent"
+            )
             .value === "true",
 
         notes:
           document
-            .getElementById("orderNotes")
+            .getElementById(
+              "orderNotes"
+            )
             .value
             .trim()
 
@@ -4165,6 +5206,7 @@ document
 
       saveButton.disabled=true;
 
+
       saveButton.textContent =
         currentLanguage === "he"
           ? "שומר..."
@@ -4174,6 +5216,20 @@ document
       try{
 
         if(id){
+
+          const existingOrder =
+            orders.find(
+              o =>
+                String(o.id) ===
+                String(id)
+            );
+
+
+          const oldUrgent =
+            Boolean(
+              existingOrder?.urgent
+            );
+
 
           await request(
 
@@ -4189,20 +5245,45 @@ document
               },
 
               body:
-                JSON.stringify(payload)
+                JSON.stringify(
+                  payload
+                )
 
             }
 
           );
 
 
-          showToast(
+          if(
+            !oldUrgent &&
+            payload.urgent
+          ){
 
-            currentLanguage === "he"
-              ? "ההזמנה עודכנה בהצלחה"
-              : "تم تعديل الطلبية بنجاح"
+            addNotification(
 
-          );
+              currentLanguage === "he"
+                ? `הזמנה ${payload.order_number}`
+                : `الطلبية ${payload.order_number}`,
+
+              currentLanguage === "he"
+                ? "הוגדרה כדחופה מאוד"
+                : "تم تحديدها كمهمة جدًا",
+
+              "urgent"
+
+            );
+
+          }else{
+
+            showToast(
+
+              currentLanguage === "he"
+                ? "ההזמנה עודכנה בהצלחה"
+                : "تم تعديل الطلبية بنجاح"
+
+            );
+
+          }
 
 
         }else{
@@ -4220,18 +5301,38 @@ document
               },
 
               body:
-                JSON.stringify(payload)
+                JSON.stringify(
+                  payload
+                )
 
             }
 
           );
 
 
-          showToast(
+          addNotification(
 
             currentLanguage === "he"
-              ? "ההזמנה נוספה בהצלחה"
-              : "تمت إضافة الطلبية بنجاح"
+              ? `הזמנה ${payload.order_number} נוספה`
+              : `تمت إضافة الطلبية ${payload.order_number}`,
+
+            payload.urgent
+
+              ? (
+                  currentLanguage === "he"
+                    ? "ההזמנה הוגדרה כדחופה מאוד"
+                    : "تم تحديد الطلبية كمهمة جدًا"
+                )
+
+              : (
+                  currentLanguage === "he"
+                    ? "הזמנה חדשה נוספה למערכת"
+                    : "تمت إضافة طلبية جديدة إلى النظام"
+                ),
+
+            payload.urgent
+              ? "urgent"
+              : "success"
 
           );
 
@@ -4240,14 +5341,18 @@ document
 
         closeOrderModal();
 
+
         await loadOrders();
+
 
         renderEverything();
 
 
       }catch(error){
 
-        console.error(error);
+        console.error(
+          error
+        );
 
 
         showToast(
@@ -4268,6 +5373,7 @@ document
 
         saveButton.disabled=false;
 
+
         saveButton.textContent =
           currentLanguage === "he"
             ? "שמור"
@@ -4283,11 +5389,13 @@ document
    EDIT ORDER
 ========================================================= */
 
-function editOrder(id){
+function editOrder(
+  id
+){
 
   const order =
     orders.find(
-      o=>
+      o =>
         String(o.id) ===
         String(id)
     );
@@ -4297,7 +5405,9 @@ function editOrder(id){
     return;
 
 
-  openOrderModal(order);
+  openOrderModal(
+    order
+  );
 }
 
 
@@ -4305,7 +5415,9 @@ function editOrder(id){
    DELETE ORDER
 ========================================================= */
 
-async function deleteOrder(id){
+async function deleteOrder(
+  id
+){
 
   if(role !== "المدير")
     return;
@@ -4313,7 +5425,7 @@ async function deleteOrder(id){
 
   const order =
     orders.find(
-      o=>
+      o =>
         String(o.id) ===
         String(id)
     );
@@ -4361,6 +5473,7 @@ async function deleteOrder(id){
 
     await loadOrders();
 
+
     renderEverything();
 
 
@@ -4375,7 +5488,9 @@ async function deleteOrder(id){
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
 
     showToast(
@@ -4413,45 +5528,51 @@ function renderStages(){
 
   container.innerHTML =
 
-    STAGES.map(stage=>{
+    STAGES.map(
+      stage=>{
 
-      const count =
-        orders.filter(
-          o=>o.stage === stage
-        ).length;
+        const count =
+          orders.filter(
+            o=>o.stage === stage
+          ).length;
 
 
-      return `
+        return `
 
-        <div class="stage-card">
+          <div class="stage-card">
 
-          <div class="stage-name">
+            <div class="stage-name">
 
-            ${escapeHtml(stage)}
+              ${escapeHtml(
+                stage
+              )}
+
+            </div>
+
+
+            <div class="stage-count">
+
+              ${count}
+
+            </div>
+
+
+            <div class="stage-label">
+
+              ${
+                currentLanguage === "he"
+                  ? "הזמנות"
+                  : "طلبية"
+              }
+
+            </div>
 
           </div>
 
-          <div class="stage-count">
+        `;
 
-            ${count}
-
-          </div>
-
-          <div class="stage-label">
-
-            ${
-              currentLanguage === "he"
-                ? "הזמנות"
-                : "طلبية"
-            }
-
-          </div>
-
-        </div>
-
-      `;
-
-    }).join("");
+      }
+    ).join("");
 }
 
 
@@ -4530,7 +5651,8 @@ function renderUsers(){
 
   tbody.innerHTML =
 
-    users.map(user=>`
+    users.map(
+      user=>`
 
       <tr>
 
@@ -4546,6 +5668,7 @@ function renderUsers(){
 
         </td>
 
+
         <td>
 
           ${escapeHtml(
@@ -4553,6 +5676,7 @@ function renderUsers(){
           )}
 
         </td>
+
 
         <td>
 
@@ -4566,6 +5690,7 @@ function renderUsers(){
 
         </td>
 
+
         <td>
 
           ${escapeHtml(
@@ -4573,6 +5698,7 @@ function renderUsers(){
           )}
 
         </td>
+
 
         <td>
 
@@ -4612,7 +5738,8 @@ function renderUsers(){
 
       </tr>
 
-    `).join("");
+    `
+    ).join("");
 }
 
 
@@ -4634,15 +5761,20 @@ function populateRoles(){
 
   select.innerHTML =
 
-    ROLES.map(roleName=>`
+    ROLES.map(
+      roleName=>`
 
-      <option value="${escapeAttr(roleName)}">
+        <option
+          value="${escapeAttr(roleName)}">
 
-        ${escapeHtml(roleName)}
+          ${escapeHtml(
+            roleName
+          )}
 
-      </option>
+        </option>
 
-    `).join("");
+      `
+    ).join("");
 }
 
 
@@ -4672,7 +5804,9 @@ function openUserModal(){
 
 
   document
-    .getElementById("userModal")
+    .getElementById(
+      "userModal"
+    )
     .classList
     .remove("hidden");
 }
@@ -4681,7 +5815,9 @@ function openUserModal(){
 function closeUserModal(){
 
   document
-    .getElementById("userModal")
+    .getElementById(
+      "userModal"
+    )
     .classList
     .add("hidden");
 }
@@ -4692,7 +5828,9 @@ function closeUserModal(){
 ========================================================= */
 
 document
-  .getElementById("userForm")
+  .getElementById(
+    "userForm"
+  )
   .addEventListener(
     "submit",
     async function(e){
@@ -4710,30 +5848,40 @@ document
 
         username:
           document
-            .getElementById("newUsername")
+            .getElementById(
+              "newUsername"
+            )
             .value
             .trim(),
 
         full_name:
           document
-            .getElementById("newFullName")
+            .getElementById(
+              "newFullName"
+            )
             .value
             .trim(),
 
         email:
           document
-            .getElementById("newEmail")
+            .getElementById(
+              "newEmail"
+            )
             .value
             .trim(),
 
         password:
           document
-            .getElementById("newPassword")
+            .getElementById(
+              "newPassword"
+            )
             .value,
 
         role:
           document
-            .getElementById("newRole")
+            .getElementById(
+              "newRole"
+            )
             .value
 
       };
@@ -4746,6 +5894,7 @@ document
 
 
       createButton.disabled=true;
+
 
       createButton.textContent =
         currentLanguage === "he"
@@ -4764,6 +5913,7 @@ document
           const refreshed =
             await refreshSession();
 
+
           if(!refreshed){
 
             throw new Error(
@@ -4771,6 +5921,7 @@ document
             );
 
           }
+
 
           token =
             getAccessToken();
@@ -4801,11 +5952,14 @@ document
 
 
         document
-          .getElementById("userForm")
+          .getElementById(
+            "userForm"
+          )
           .reset();
 
 
         await loadUsers();
+
 
         renderUsers();
 
@@ -4845,6 +5999,7 @@ document
 
         createButton.disabled=false;
 
+
         createButton.textContent =
           currentLanguage === "he"
             ? "צור משתמש"
@@ -4860,7 +6015,9 @@ document
    PAGE NAVIGATION
 ========================================================= */
 
-function updatePageTitle(page){
+function updatePageTitle(
+  page
+){
 
   const titles = {
 
@@ -4888,13 +6045,17 @@ function updatePageTitle(page){
 
 
   document
-    .getElementById("pageTitle")
+    .getElementById(
+      "pageTitle"
+    )
     .textContent =
       titles[page] || "";
 }
 
 
-function showPage(page){
+function showPage(
+  page
+){
 
   if(
     page === "users" &&
@@ -4907,12 +6068,18 @@ function showPage(page){
 
 
   document
-    .querySelectorAll(".page")
-    .forEach(el=>{
+    .querySelectorAll(
+      ".page"
+    )
+    .forEach(
+      el=>{
 
-      el.classList.add("hidden");
+        el.classList.add(
+          "hidden"
+        );
 
-    });
+      }
+    );
 
 
   const selected =
@@ -4934,37 +6101,48 @@ function showPage(page){
     .querySelectorAll(
       ".nav-btn[data-page]"
     )
-    .forEach(btn=>{
+    .forEach(
+      btn=>{
 
-      btn.classList.toggle(
+        btn.classList.toggle(
 
-        "active",
+          "active",
 
-        btn.dataset.page === page
+          btn.dataset.page === page
 
-      );
+        );
 
-    });
+      }
+    );
 
 
-  updatePageTitle(page);
+  updatePageTitle(
+    page
+  );
 
 
   document
-    .getElementById("sidebar")
+    .getElementById(
+      "sidebar"
+    )
     .classList
     .remove("open");
 
 
   if(page === "orders"){
 
-    setTimeout(()=>{
+    setTimeout(
+      ()=>{
 
-      document
-        .getElementById("orderSearch")
-        ?.focus();
+        document
+          .getElementById(
+            "orderSearch"
+          )
+          ?.focus();
 
-    },100);
+      },
+      100
+    );
 
   }
 }
@@ -4977,7 +6155,9 @@ function showPage(page){
 function toggleSidebar(){
 
   document
-    .getElementById("sidebar")
+    .getElementById(
+      "sidebar"
+    )
     .classList
     .toggle("open");
 }
@@ -5036,6 +6216,7 @@ async function logout(){
     "supabase_access_token"
   );
 
+
   localStorage.removeItem(
     "supabase_refresh_token"
   );
@@ -5049,33 +6230,45 @@ async function logout(){
   users=[];
 
 
+  closeNotificationPanel();
+
+
   document
-    .getElementById("app")
+    .getElementById(
+      "app"
+    )
     .classList
     .add("hidden");
 
 
   document
-    .getElementById("loginScreen")
+    .getElementById(
+      "loginScreen"
+    )
     .classList
     .remove("hidden");
 
 
   document
-    .getElementById("password")
+    .getElementById(
+      "password"
+    )
     .value="";
 
 
   document
-    .getElementById("sidebar")
+    .getElementById(
+      "sidebar"
+    )
     ?.classList
     .remove("open");
 
 
   document
-    .getElementById("username")
+    .getElementById(
+      "username"
+    )
     .focus();
-
 }
 
 
@@ -5126,13 +6319,17 @@ async function checkExistingSession(){
 
 
     document
-      .getElementById("loginScreen")
+      .getElementById(
+        "loginScreen"
+      )
       .classList
       .add("hidden");
 
 
     document
-      .getElementById("app")
+      .getElementById(
+        "app"
+      )
       .classList
       .remove("hidden");
 
@@ -5152,6 +6349,7 @@ async function checkExistingSession(){
       "supabase_access_token"
     );
 
+
     localStorage.removeItem(
       "supabase_refresh_token"
     );
@@ -5163,13 +6361,17 @@ async function checkExistingSession(){
 
 
     document
-      .getElementById("app")
+      .getElementById(
+        "app"
+      )
       .classList
       .add("hidden");
 
 
     document
-      .getElementById("loginScreen")
+      .getElementById(
+        "loginScreen"
+      )
       .classList
       .remove("hidden");
 
@@ -5181,7 +6383,9 @@ async function checkExistingSession(){
    DATE
 ========================================================= */
 
-function formatDate(date){
+function formatDate(
+  date
+){
 
   if(!date)
     return "—";
@@ -5218,22 +6422,52 @@ function formatDate(date){
    SECURITY
 ========================================================= */
 
-function escapeHtml(value){
+function escapeHtml(
+  value
+){
 
-  return String(value ?? "")
+  return String(
+    value ?? ""
+  )
 
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 }
 
 
-function escapeAttr(value){
+function escapeAttr(
+  value
+){
 
-  return escapeHtml(value)
-    .replace(/`/g,"&#096;");
+  return escapeHtml(
+    value
+  )
+    .replace(
+      /`/g,
+      "&#096;"
+    );
 }
 
 
@@ -5242,7 +6476,9 @@ function escapeAttr(value){
 ========================================================= */
 
 document
-  .getElementById("orderModal")
+  .getElementById(
+    "orderModal"
+  )
   .addEventListener(
     "click",
     function(e){
@@ -5258,7 +6494,9 @@ document
 
 
 document
-  .getElementById("userModal")
+  .getElementById(
+    "userModal"
+  )
   .addEventListener(
     "click",
     function(e){
@@ -5289,11 +6527,49 @@ document.addEventListener(
 
     closeUserModal();
 
+    closeNotificationPanel();
+
 
     document
-      .getElementById("sidebar")
+      .getElementById(
+        "sidebar"
+      )
       ?.classList
       .remove("open");
+
+  }
+);
+
+
+/* =========================================================
+   CLICK OUTSIDE NOTIFICATION PANEL
+========================================================= */
+
+document.addEventListener(
+  "click",
+  function(e){
+
+    const panel =
+      document.getElementById(
+        "notificationPanel"
+      );
+
+
+    const button =
+      document.getElementById(
+        "notificationButton"
+      );
+
+
+    if(
+      panel &&
+      !panel.contains(e.target) &&
+      !button?.contains(e.target)
+    ){
+
+      panel.remove();
+
+    }
 
   }
 );
@@ -5344,6 +6620,8 @@ if(
 /* =========================================================
    START
 ========================================================= */
+
+loadNotifications();
 
 applyLanguage();
 
