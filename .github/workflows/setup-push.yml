@@ -1,0 +1,284 @@
+name: Enable MODULAR TECH Push Notifications
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  setup-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download repository
+        uses: actions/checkout@v4
+
+      - name: Add push notification code
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path("index.html")
+          text = path.read_text(encoding="utf-8")
+
+          marker = "<!-- MODULAR-TECH-PUSH-V1 -->"
+
+          if marker in text:
+              print("Push notification code already installed.")
+              raise SystemExit(0)
+
+          code = r'''
+          <!-- MODULAR-TECH-PUSH-V1 -->
+          <script>
+          (() => {
+            const SUPABASE_URL =
+              "https://bvrfrcmblwzuqprjknam.supabase.co";
+
+            const SUPABASE_KEY =
+              "sb_publishable_vVXVJGcWpoPvPEH_bfm23Q_dZ5eXvmE";
+
+            const VAPID_PUBLIC_KEY =
+              "BFmcCH6Ftbr3eO7b2UWsTVE0rVxM2yD1nAApIaMVGQBFl8-h4-J5fJ-kA0M27kSi2WveG8C-xjxt1LDbDDT82oU";
+
+            const PUSH_FUNCTION_URL =
+              SUPABASE_URL +
+              "/functions/v1/send-notifications";
+
+            function urlBase64ToUint8Array(base64String) {
+              const padding = "=".repeat(
+                (4 - base64String.length % 4) % 4
+              );
+
+              const base64 =
+                (base64String + padding)
+                  .replace(/-/g, "+")
+                  .replace(/_/g, "/");
+
+              const rawData =
+                window.atob(base64);
+
+              return Uint8Array.from(
+                [...rawData].map(
+                  char => char.charCodeAt(0)
+                )
+              );
+            }
+
+            function getAccessToken() {
+              const direct =
+                localStorage.getItem(
+                  "supabase_access_token"
+                );
+
+              if (direct) return direct;
+
+              const keys =
+                Object.keys(localStorage);
+
+              for (const key of keys) {
+                if (
+                  key.includes(
+                    "bvrfrcmblwzuqprjknam"
+                  )
+                ) {
+                  try {
+                    const value =
+                      JSON.parse(
+                        localStorage.getItem(key)
+                      );
+
+                    if (
+                      value &&
+                      value.access_token
+                    ) {
+                      return value.access_token;
+                    }
+                  } catch {}
+                }
+              }
+
+              return null;
+            }
+
+            async function setupPushNotifications() {
+              try {
+                if (
+                  !("serviceWorker" in navigator) ||
+                  !("PushManager" in window) ||
+                  !("Notification" in window)
+                ) {
+                  console.warn(
+                    "Push notifications are not supported."
+                  );
+                  return;
+                }
+
+                const permission =
+                  await Notification.requestPermission();
+
+                if (permission !== "granted") {
+                  console.warn(
+                    "Notification permission was not granted."
+                  );
+                  return;
+                }
+
+                const registration =
+                  await navigator.serviceWorker.ready;
+
+                let subscription =
+                  await registration.pushManager
+                    .getSubscription();
+
+                if (!subscription) {
+                  subscription =
+                    await registration.pushManager
+                      .subscribe({
+                        userVisibleOnly: true,
+                        applicationServerKey:
+                          urlBase64ToUint8Array(
+                            VAPID_PUBLIC_KEY
+                          )
+                      });
+                }
+
+                const token =
+                  getAccessToken();
+
+                if (!token) {
+                  console.warn(
+                    "No Supabase access token."
+                  );
+                  return;
+                }
+
+                const response =
+                  await fetch(
+                    SUPABASE_URL +
+                    "/rest/v1/push_subscriptions",
+                    {
+                      method: "POST",
+                      headers: {
+                        "apikey":
+                          SUPABASE_KEY,
+
+                        "Authorization":
+                          "Bearer " + token,
+
+                        "Content-Type":
+                          "application/json",
+
+                        "Prefer":
+                          "resolution=merge-duplicates"
+                      },
+
+                      body: JSON.stringify({
+                        user_id:
+                          JSON.parse(
+                            atob(
+                              token.split(".")[1]
+                                .replace(/-/g, "+")
+                                .replace(/_/g, "/")
+                                .padEnd(
+                                  Math.ceil(
+                                    token.split(".")[1].length /
+                                    4
+                                  ) * 4,
+                                  "="
+                                )
+                            )
+                          ).sub,
+
+                        endpoint:
+                          subscription.endpoint,
+
+                        subscription:
+                          subscription.toJSON()
+                      })
+                    }
+                  );
+
+                if (!response.ok) {
+                  console.warn(
+                    "Could not save push subscription:",
+                    await response.text()
+                  );
+                  return;
+                }
+
+                console.log(
+                  "MODULAR TECH push notifications enabled."
+                );
+
+              } catch (error) {
+                console.error(
+                  "Push setup error:",
+                  error
+                );
+              }
+            }
+
+            let pushStarted = false;
+
+            function startPushOnce() {
+              if (pushStarted) return;
+
+              pushStarted = true;
+
+              setupPushNotifications();
+            }
+
+            window.addEventListener(
+              "click",
+              startPushOnce,
+              {
+                once: true
+              }
+            );
+
+            window.addEventListener(
+              "touchstart",
+              startPushOnce,
+              {
+                once: true
+              }
+            );
+
+          })();
+          </script>
+          '''
+
+          if "</body>" not in text:
+              raise SystemExit(
+                  "Could not find </body> in index.html"
+              )
+
+          text = text.replace(
+              "</body>",
+              code + "\n</body>",
+              1
+          )
+
+          path.write_text(
+              text,
+              encoding="utf-8"
+          )
+
+          print("Push notification code installed.")
+          PY
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add index.html
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git commit -m "Enable push notification subscription"
+          git push
