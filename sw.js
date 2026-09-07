@@ -1,4 +1,4 @@
-const CACHE_NAME = "modular-tech-v7";
+const CACHE_NAME = "modular-tech-v8";
 
 self.addEventListener("install", function(event) {
   self.skipWaiting();
@@ -51,6 +51,7 @@ self.addEventListener("push", function(event) {
     icon: "./icon-192.png",
     badge: "./icon-192.png",
     tag: payload.tag || "modular-tech-notification",
+
     data: {
       url: payload.url || "./",
       order_number: payload.order_number || "",
@@ -60,11 +61,35 @@ self.addEventListener("push", function(event) {
   };
 
   event.waitUntil(
-    self.registration.showNotification(title, options)
+    Promise.all([
+      self.registration.showNotification(title, options),
+
+      clients.matchAll({
+        type: "window",
+        includeUncontrolled: true
+      }).then(function(clientList) {
+
+        return Promise.all(
+          clientList.map(function(client) {
+
+            try {
+              client.postMessage({
+                type: "MODULAR_TECH_DATA_CHANGED",
+                payload: payload
+              });
+
+            } catch (e) {}
+
+          })
+        );
+
+      })
+    ])
   );
 });
 
 self.addEventListener("notificationclick", function(event) {
+
   event.notification.close();
 
   var target = "./";
@@ -84,7 +109,14 @@ self.addEventListener("notificationclick", function(event) {
     }).then(function(clientList) {
 
       for (var i = 0; i < clientList.length; i++) {
+
         var client = clientList[i];
+
+        try {
+          client.postMessage({
+            type: "MODULAR_TECH_DATA_CHANGED"
+          });
+        } catch (e) {}
 
         if ("focus" in client) {
           return client.focus();
@@ -94,6 +126,7 @@ self.addEventListener("notificationclick", function(event) {
       if (clients.openWindow) {
         return clients.openWindow(target);
       }
+
     })
   );
 });
