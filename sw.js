@@ -1,96 +1,99 @@
-const CACHE_NAME = "modular-tech-v4";
+const CACHE_NAME = "modular-tech-v7";
 
-const APP_SHELL = [
-  "./",
-  "./index.html",
-  "./manifest.webmanifest",
-  "./icon-192.png"
-];
+self.addEventListener("install", function(event) {
+  self.skipWaiting();
+});
 
-self.addEventListener("install", event => {
+self.addEventListener("activate", function(event) {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(APP_SHELL).catch(() => {}))
-      .then(() => self.skipWaiting())
+    caches.keys().then(function(keys) {
+      return Promise.all(
+        keys.map(function(key) {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      );
+    }).then(function() {
+      return self.clients.claim();
+    })
   );
 });
 
-
-self.addEventListener("activate", event => {
-  event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys
-          .filter(key => key !== CACHE_NAME)
-          .map(key => caches.delete(key))
-      )
-    ).then(() => self.clients.claim())
-  );
-});
-
-
-self.addEventListener("fetch", event => {
-
-  if (event.request.method !== "GET") {
-    return;
-  }
+self.addEventListener("fetch", function(event) {
+  if (event.request.method !== "GET") return;
 
   event.respondWith(
-
-    fetch(event.request)
-
-      .then(response => {
-
-        const copy = response.clone();
-
-        caches.open(CACHE_NAME)
-          .then(cache => {
-            cache.put(event.request, copy);
-          });
-
-        return response;
-
-      })
-
-      .catch(() =>
-        caches.match(event.request)
-      )
-
+    fetch(event.request).catch(function() {
+      return caches.match(event.request);
+    })
   );
-
 });
 
+self.addEventListener("push", function(event) {
+  var payload = {};
 
-self.addEventListener(
-  "notificationclick",
-  event => {
-
-    event.notification.close();
-
-    event.waitUntil(
-
-      clients.matchAll({
-        type: "window",
-        includeUncontrolled: true
-      })
-
-      .then(clientList => {
-
-        for (const client of clientList) {
-
-          if ("focus" in client) {
-            return client.focus();
-          }
-
-        }
-
-        if (clients.openWindow) {
-          return clients.openWindow("./");
-        }
-
-      })
-
-    );
-
+  if (event.data) {
+    try {
+      payload = event.data.json();
+    } catch (e) {
+      payload = {
+        title: "MODULAR TECH",
+        body: event.data.text()
+      };
+    }
   }
-);
+
+  var title = payload.title || "MODULAR TECH";
+
+  var options = {
+    body: payload.body || "لديك إشعار جديد",
+    icon: "./icon-192.png",
+    badge: "./icon-192.png",
+    tag: payload.tag || "modular-tech-notification",
+    data: {
+      url: payload.url || "./",
+      order_number: payload.order_number || "",
+      status: payload.status || "",
+      type: payload.type || "info"
+    }
+  };
+
+  event.waitUntil(
+    self.registration.showNotification(title, options)
+  );
+});
+
+self.addEventListener("notificationclick", function(event) {
+  event.notification.close();
+
+  var target = "./";
+
+  if (
+    event.notification &&
+    event.notification.data &&
+    event.notification.data.url
+  ) {
+    target = event.notification.data.url;
+  }
+
+  event.waitUntil(
+    clients.matchAll({
+      type: "window",
+      includeUncontrolled: true
+    }).then(function(clientList) {
+
+      for (var i = 0; i < clientList.length; i++) {
+        var client = clientList[i];
+
+        if ("focus" in client) {
+          return client.focus();
+        }
+      }
+
+      if (clients.openWindow) {
+        return clients.openWindow(target);
+      }
+    })
+  );
+});
